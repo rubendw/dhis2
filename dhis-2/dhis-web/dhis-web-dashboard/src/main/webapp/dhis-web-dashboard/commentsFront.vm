@@ -1,0 +1,120 @@
+
+<html>
+	    <head>
+		        <title>DataEntry Status Form</title>		
+		        <script>
+		            // Global Variables
+		            var selCategory = "";
+		            var selFacility = "";
+		
+		            	var ouName=""; 
+            			var dsName="";
+            			var sDateIndex=0;
+            			var eDateIndex=0;			
+            			var sDate="";
+            			var eDate="";
+																											
+        </script>
+	    </head>
+	    <body>
+	        <h1>DataStatus Form</h1>
+	        <hr />	
+	        <form id="ChartGenerationForm" name="ChartGenerationForm" action="commentsResult.action" method="post" onsubmit="return formValidationsForDataStatus()" target="chartWindow1">	
+		            		<table align="center" style=" border-collapse: collapse; margin-top: 0;" cellpadding="0" cellspacing="0" width="730" border=0>
+		                <colgroup>
+                    		<col width="325">
+  		                  <col width="80">
+ 		                   <col width="325">
+  	              </colgroup>
+                			<tr>
+    			                <td class="NormalB">
+                   		     $i18n.getString( "ds_dataset_list" ) : <br>
+                        				<select multiple size="5" id="availableDataSets" name="availableDataSets" style="width:325px; height:80px" ondblclick="moveSelectedById( 'availableDataSets', 'selectedDataSets' )">
+				                            #foreach ( $dataSet in $dataSetList )
+								            	<option value='$dataSet.getId()' title='$dataSet.getName()'>$dataSet.getName()</option>
+    				                        #end
+			                        	</select>
+				                    </td>
+    			                <td class="NormalB" align="center">
+    			                    <br />
+    			 								                   <input type="button" value="&gt;" style="width:40px" onclick="moveSelectedById( 'availableDataSets', 'selectedDataSets' )"><br>
+                        			<input type="button" value="&lt;" style="width:40px" onclick="moveSelectedById( 'selectedDataSets', 'availableDataSets' )"><br>
+                        			<input type="button" value="&gt;&gt;" style="width:40px" onclick="moveAllById( 'availableDataSets', 'selectedDataSets' )"><br>
+                        			<input type="button" value="&lt;&lt;" style="width:40px" onclick="moveAllById( 'selectedDataSets', 'availableDataSets' )">		
+                    			</td>
+    			                <td class="NormalB">
+    			                    Selected DataSets <br />
+    				                    <select multiple id="selectedDataSets" name="selectedDataSets" style="width:325px; height:80px" ondblclick="moveSelectedById( 'selectedDataSets', 'selectedDataSets' )">
+                        				</select>
+                    			</td>
+  			              </tr>
+                			<tr>
+    			                <td class="NormalB">&nbsp;</td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">
+    			                    $i18n.getString( "ga_orgunit" )<br>    			                    	
+                        					<select name="orgUnitListCB" id="orgUnitListCB" multiple style="width: 325px;height: 100px">
+                        					</select>                    				                                                
+    			                </td>   
+                    			<td class="NormalB" align="center"><input type="button" name="remOUButton" id="remOUButton" value=" > " onclick="remOUFunction()" /></td>
+                    			<td class="NormalB" align="center">
+                    			    <table>
+                    			        <tr>
+                    			            <td class="NormalB">
+                    			                $i18n.getString( "ga_viewby" )<br>
+                        		            <select id="categoryLB" name="categoryLB" onchange="categoryChangeFunction(event)" disabled>
+			                                        <option value="period">Period</option>
+			                                        <option value="facility" selected>Facility</option>
+                                    </select>
+                                    <br /><br />                        
+                    			            </td>
+                    			            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    			            <td align="right" class="NormalB">
+                    			                $i18n.getString( "ga_facilityby" )<br>
+                        		            <select id="facilityLB" name="facilityLB" onchange="facilityChangeFunction(event)">
+			                                        <option value="children">Child Tree</option>
+			                                        <option value="immChildren">Immediate Children</option>
+			                                        <option value="random" selected>Selected</option>
+                                    </select>
+                                    <br /><br />                    			                	
+                    			            </td>
+                    			        </tr>                       			    
+                    			        <tr>
+                    			            <td class="NormalB">
+                    			                $i18n.getString( "ga_from" )<br>
+        					                            <select id="sDateLB" name="sDateLB">												
+								                                    #foreach($period in $monthlyPeriods)
+  									                                      <option value="$period.id">$simpleDateFormat.format($period.startDate)</option>
+								                                    #end
+			  				                                  </select>
+			  				                                  <br /><br />	
+                    			            </td>
+                    			            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    			            <td align="right" class="NormalB">
+                    			                $i18n.getString( "ga_to" )<br>
+						              	                      <select id="eDateLB" name="eDateLB">
+								                                    #foreach($period in $monthlyPeriods)
+  									                                      <option value="$period.id">$simpleDateFormat.format($period.endDate)</option>
+								                                    #end			  							
+			  				                                  </select>
+			  				                                  <br /><br />			
+			  				                              </td>
+                    			        </tr>                    			                   			        
+                    			        <tr>
+                    			            <td>&nbsp;&nbsp;</td>
+			                    			            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    			            <td align="right">
+              				                      <input type="submit" name="ViewStatus" value="View DataStatus" style="width: 120; height: 25; font-family:Arial; font-weight:bold; color:#000000">
+							  				                              </td>
+                    			        </tr>                            
+                            <input type="hidden" name="selectedButton" id="selectedButton">
+                        </table>    
+                    			</td>
+                			</tr>
+            </table>							
+        </form>
+    </body>
+</html>

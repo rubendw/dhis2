@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <joined-subclass name="org.hisp.dhis.organisationunit.OrganisationUnit"
+    extends="org.hisp.dhis.source.Source" table="organisationunit">
+    <key column="organisationunitid"/>
+		
+		<property name="uuid">
+			<column name="uuid" length="40"/>
+		</property>
+		
+    <property name="name">
+      <column name="name" not-null="true" unique="true" length="160"/>
+    </property>
+    
+		<set name="children" inverse="true" cascade="save-update,delete-orphan">
+      <key column="parentid"/>
+      <one-to-many class="org.hisp.dhis.organisationunit.OrganisationUnit"/>
+    </set>
+		
+    <many-to-one name="parent" class="org.hisp.dhis.organisationunit.OrganisationUnit"
+        column="parentid" foreign-key="fk_parentid" index="in_parentid"/>
+				
+    <property name="shortName">
+      <column name="shortname" not-null="true" unique="true" length="25"/>			
+    </property>
+		
+    <property name="organisationUnitCode">
+      <column name="code" not-null="false" unique="true" length="25"/>
+    </property>
+		
+    <property name="openingDate" column="openingdate" type="date"/>
+		
+    <property name="closedDate" column="closeddate" type="date"/>
+		
+    <property name="active"/>
+		
+    <property name="comment" length="360"/>
+    
+    <property name="geoCode"/>
+    
+    <property name="latitude"/>
+      
+    <property name="longitude"/>
+		
+  </joined-subclass>
+</hibernate-mapping>

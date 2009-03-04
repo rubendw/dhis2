@@ -1,0 +1,82 @@
+
+<h3>$encoder.htmlEncode( $i18n.getString( "run_validation" ) )</h3>
+
+<form id="runValidationForm" class="form" action="runValidationAction.action" method="post" onsubmit="return validateRunValidation()">
+
+<table>
+    <tr>
+    	<td>
+        	<label for="startDate">$i18n.getString( 'start_date' ) ($i18n.getString( "format.date.label" ))</label>
+        </td>
+        <td>
+        	<input type="text" id="startDate" name="startDate" style="width:20em">
+        	<img src="../images/calendar_icon.gif" width="16" height="16" id="getStartDate" cursor: pointer;" title="$i18n.getString( "date_selector" )" onmouseover="this.style.background='orange';" onmouseout="this.style.background=''">
+    	</td>
+    </tr>
+    <tr>    	
+        <td>
+        	<label for="endDate">$i18n.getString( 'end_date' ) ($i18n.getString( "format.date.label" ))</label>
+        </td>
+        <td>
+        	<input type="text" id="endDate" name="endDate" style="width:20em">
+        	<img src="../images/calendar_icon.gif" width="16" height="16" id="getEndDate" cursor: pointer;" title="$i18n.getString( "date_selector" )" onmouseover="this.style.background='orange';" onmouseout="this.style.background=''">
+    	</td>
+    </tr>
+    <tr>
+    	<td>
+    		<label for="validationRuleGroup">$i18n.getString( "validation_rule_group" )</label>
+	    </td>
+	    <td>
+	    	<select id="validationRuleGroupId" name="validationRuleGroupId" style="width:20em">
+	    		<option value="-1">[ $i18n.getString( "all_validation_rules" ) ]</option>
+	    		#foreach( $group in $validationRuleGroups )
+	    			<option value="$group.id">$group.name</option>
+		    	#end
+            </select>
+    	</td>
+    </tr>
+    <tr>
+    	<td style="height:10px" colspan="2"></td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( 'select_organisation_unit' ):</td>
+        <td>
+    	    <select id="includeChildren" name="includeChildren" style="width:20em">
+                <option value="true" selected="selected">$i18n.getString( "organisation_unit_with_children" )</option>
+                <option value="false">$i18n.getString( "organisation_unit_only" )</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+    		<div id="selectionTree" style="width:35em;height:350px;overflow:auto;border:1px solid #cccccc"></div>
+    	</td>
+    </tr>
+    <tr>
+    	<td>
+    		<input type="submit" value="$i18n.getString( 'validate' )" style="width:10em">
+    	</td>
+    	<td></td>
+    </tr>
+</table>
+	
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+	selectionTreeSelection.setMultipleSelectionAllowed( true );
+	selectionTree.buildSelectionTree();
+	
+	Calendar.setup({
+        inputField     :    "startDate",      // id of the input field
+        ifFormat       :    "$i18n.getString("format.date.label")",       // format of the input field
+        button         :    "getStartDate"   // trigger for the calendar (button ID)
+    });
+	
+	Calendar.setup({
+        inputField     :    "endDate",      // id of the input field
+        ifFormat       :    "$i18n.getString("format.date.label")",       // format of the input field
+        button         :    "getEndDate"   // trigger for the calendar (button ID)
+    });
+</script>

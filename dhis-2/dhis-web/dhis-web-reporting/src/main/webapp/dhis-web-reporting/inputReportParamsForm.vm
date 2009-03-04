@@ -1,0 +1,141 @@
+
+#if ( $!reportParams.isSet() )
+    <h3>$i18n.getString( "report_table_parameters" )</h3>
+#end
+
+<input type="hidden" id="id" name="id" value="$!id">
+<input type="hidden" id="mode" name="mode" value="$!mode">
+
+#if ( $mode == "status" )
+	<script type="text/javascript">
+	   getTableStatus();
+	</script>
+#end
+
+<!-- Report mode and no report parameters: proceed to generate report tables and view report -->
+
+#if ( $mode == "report" && $!reportParams.isSet() == false )
+    <script type="text/javascript">
+       runAndViewReport( "$id", "$url" );
+    </script>
+#end
+
+<!-- Report table mode and no report parameters: proceed to generate report table -->
+
+#if ( $mode == "table" && $!reportParams.isSet() == false )
+	<script type="text/javascript">
+		reCreateTable( "$id" );
+	</script>
+#end
+
+<!-- Report / report table parameters exists: input parameters -->
+
+<table>
+    
+    <!-- Reporting month -->
+    
+    #if ( $!reportParams.isParamReportingMonth() )
+    
+    <tr>
+        <th>$i18n.getString( "reporting_month" )</th>
+    </tr>
+    <tr>
+        <td>
+            <select id="reportingPeriod" name="reportingPeriod" style="min-width:325px">               
+                #foreach ( $key in $reportingPeriods.keySet() )
+                    <option value="$key">$reportingPeriods.get( $key )</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="height:10px"></td>
+    </tr>
+    
+    #end
+    
+    <!-- Parent OrganisationUnit -->
+    
+    #if ( $!reportParams.isParamParentOrganisationUnit() )
+    
+    <tr>
+        <th>$i18n.getString( "parent_organisationunit" )</th>
+    </tr>
+    <tr>
+        <td>
+            <select id="organisationUnitLevelParent" name="organisationUnitLevelParent" style="min-width:325px" onchange="getOrganisationUnitsParent()">
+                <option value="$ALL">[ $i18n.getString( "select_organisationunit_level_all" ) ]</option>
+                #foreach ( $level in $levels )
+                    <option value="$level.level">$encoder.htmlEncode( $level.name )</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <select id="parentOrganisationUnitId" name="parentOrganisationUnitId" style="min-width:325px">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="height:10px"></td>
+    </tr>
+    
+    #end
+    
+    <!-- OrganisationUnit -->
+    
+    #if ( $!reportParams.isParamOrganisationUnit() )
+    
+    <tr>
+        <th>$i18n.getString( "organisation_unit" )</th>
+    </tr>
+    <tr>
+        <td>
+            <select id="organisationUnitLevelSingle" name="organisationUnitLevelSingle" style="min-width:325px" onchange="getOrganisationUnitsSingle()">
+                <option value="$ALL">[ $i18n.getString( "select_organisationunit_level_all" ) ]</option>
+                #foreach ( $level in $levels )
+                    <option value="$level.level">$encoder.htmlEncode( $level.name )</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <select id="organisationUnitId" name="organisationUnitId" style="min-width:325px">
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="height:10px"></td>
+    </tr>
+    
+    #end
+    
+    <!-- Submit -->    
+    
+    <tr>        
+        <td>
+        #if ( $mode == "table" && $!reportParams.isSet() )
+            <input type="button" value="$i18n.getString( 'ok' )" onclick="reCreateTable( '$id' )" style="width:120px">
+        #end
+        #if ( $mode == "table" || $mode == "status" )
+            <input type="button" value="$i18n.getString( 'back' )" onclick="javascript:window.location.href='displayManageTableForm.action'" style="width:120px">
+        #end
+        #if ( $mode == "report" && $!reportParams.isSet() )
+            <input type="button" value="$i18n.getString( 'ok' )" style="width:120px" onclick="runAndViewReport( '$id', '$url' )">
+        #end
+        #if ( $mode == "report" )
+            <input type="button" value="$i18n.getString( 'back' )" onclick="javascript:window.location.href='displayViewReportForm.action'" style="width:120px">
+        #end
+        </td>
+    </tr>
+        
+</table>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+    var i18n_process_completed = '$encoder.jsEscape( $i18n.getString( "process_completed" ), "'")';
+    var i18n_please_wait = '$encoder.jsEscape( $i18n.getString( "please_wait" ), "'")';
+</script>

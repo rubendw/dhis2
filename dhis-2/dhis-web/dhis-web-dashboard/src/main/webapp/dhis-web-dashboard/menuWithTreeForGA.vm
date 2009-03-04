@@ -1,0 +1,26 @@
+
+#parse( "/dhis-web-dashboard/menu.vm" )
+#parse( "/dhis-web-commons/ouwt/orgunittree.vm" )
+
+<!-- The script that registeres selctions in the orgunit tree -->
+<script type="text/javascript">
+
+function orgUnitHasBeenSelected( orgUnitIds )
+{    
+	if(document.getElementById( 'ougSetCB' ).checked)
+	{
+	 return;
+	}
+	if(orgUnitIds != null)
+	{
+		getOUDeatilsForGA(orgUnitIds);
+	}		
+}
+
+selection.setListenerFunction( orgUnitHasBeenSelected );
+
+</script>
+
+
+
+

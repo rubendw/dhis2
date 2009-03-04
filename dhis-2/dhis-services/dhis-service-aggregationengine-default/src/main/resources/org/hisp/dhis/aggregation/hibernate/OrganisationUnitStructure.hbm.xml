@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.aggregation.OrganisationUnitStructure" table="orgunitstructure">
+    <id name="id" column="orgunitstructureid">
+      <generator class="native"/>
+    </id>
+    
+    <property name="organisationUnitId" column="organisationunitid"/>
+    <property name="level" column="level"/>
+    
+    <property name="idLevel1" column="idlevel1"/>
+    <property name="geoCodeLevel1" column="geolevel1"/>
+    
+    <property name="idLevel2" column="idlevel2"/>
+    <property name="geoCodeLevel2" column="geolevel2"/>
+    
+    <property name="idLevel3" column="idlevel3"/>
+    <property name="geoCodeLevel3" column="geolevel3"/>
+    
+    <property name="idLevel4" column="idlevel4"/>
+    <property name="geoCodeLevel4" column="geolevel4"/>
+    
+    <property name="idLevel5" column="idlevel5"/>
+    <property name="geoCodeLevel5" column="geolevel5"/>
+    
+    <property name="idLevel6" column="idlevel6"/>
+    <property name="geoCodeLevel6" column="geolevel6"/>
+    
+    <property name="idLevel7" column="idlevel7"/>
+    <property name="geoCodeLevel7" column="geolevel7"/>
+    
+    <property name="idLevel8" column="idlevel8"/>
+    <property name="geoCodeLevel8" column="geolevel8"/>
+    
+  </class>
+</hibernate-mapping>

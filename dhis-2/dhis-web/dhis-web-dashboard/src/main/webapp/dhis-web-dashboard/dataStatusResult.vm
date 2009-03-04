@@ -1,0 +1,88 @@
+
+<html>
+	<head>
+    	<title>DataStatus Result</title>
+        <link type="text/css" rel="stylesheet" media="screen" href="css/StylesForTags.css">
+        <script>
+        	var startDate = "$sDateLB"; 
+        	var endDate = "$eDateLB";
+        	
+        	function getImmChildInfo(evt, dsId, selOrgUnit)
+        	{
+        		immChildOption = "yes";        		
+        		
+        		evt.target.href = "dataStatusResult.action?immChildOption="+immChildOption+"&dsId="+dsId+"&sDateLB="+startDate+"&eDateLB="+endDate+"&ouId="+selOrgUnit;
+        	}
+        </script>	
+   	</head>
+	<body>
+		        <div align="center" class="NormalB">Data Entry Status</div>
+        <div align="right">
+            			<table width="30%">
+                				<tr class="TableDataCellStyles" >
+                				    <td bgcolor="#a0c0a0">&nbsp;</td>
+                				    <td align="left">&nbsp;Completed (75+)</td>
+                				</tr>
+                				<tr class="TableDataCellStyles">
+                				    <td bgcolor="#a0a0ff">&nbsp;</td>
+                				    <td align="left">&nbsp;Partially Completed (41 - 75)</td>
+                				</tr>
+                				<tr class="TableDataCellStyles">
+                				    <td bgcolor="#905090">&nbsp;</td>
+                				    <td align="left">&nbsp;Not Completed (1 - 40)</td>
+                				</tr>
+                				<tr class="TableDataCellStyles">
+                				    <td bgcolor="#ff0000">&nbsp;</td>
+                				    <td align="left">&nbsp;Not Entered ( 0 )</td>
+                				</tr>
+            			</table>
+        		</div>
+        		#set($count2 = 0)
+        			#foreach($dataset in $dataSetList)
+            <br><br>
+            			<div align="left" class="NormalB">DataSet : $dataset.name</div>
+            			<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%">		
+  				              <tr class="TableHeadingCellStyles" align="center">
+  				                  #foreach($levelName in $levelNames)
+  				                      <th>$levelName</th>
+  				                  #end
+  				                  
+  				                  #set($periods = $dataSetPeriods.get($dataset))
+  				                  #foreach($period in $periods)
+  				                      <th>$period.startDate To $period.endDate</th>
+  				                  #end
+  				              </tr>
+  				              #foreach($chiildorgUnit in $orgUnitList)
+  				                  #set($count1 = $minOULevel)
+  				                  #set($curOrgUnitLevel = $organisationUnitService.getLevelOfOrganisationUnit($chiildorgUnit))
+  				                  <tr class="TableHeadingCellStyles">
+  				                      #foreach($levelName in $levelNames)
+  				                          #if($count1 == $curOrgUnitLevel)
+  				                              <td><a href="#" onclick="javascript:getImmChildInfo(event, '$dataset.id', '$chiildorgUnit.id')" target="_blank">$chiildorgUnit.name</a></td>
+  				                          #else
+  				                              <td>&nbsp;</td>
+  				                          #end
+  				                          #set($count1 = $count1 + 1)
+  				                      #end
+  					                      #set($periods = $dataSetPeriods.get($dataset))
+  					                      #foreach($period in $periods)
+  					                          #set($result = $results.get($count2))
+                            #set($count2 = $count2 + 1)
+                            #if($result < 0)
+                                <td  bgcolor="white">&nbsp;</td>
+  					                          #elseif($result == 0)
+  					                              <td align="center" bgcolor="#ff0000"><font color="#ffffff">$result</font></td>
+  					                          #elseif($result > 75)
+  					                              <td align="center" bgcolor="#a0c0a0"><font color="#ffffff">$result</font></td>
+  					                          #elseif($result > 40 && $result <= 75 )
+  					                              <td align="center" bgcolor="#a0a0ff"><font color="#ffffff">$result</font></td>
+  					                          #else
+  					                              <td align="center" bgcolor="#905090"><font color="#ffffff">$result</font></td>
+  					                          #end
+  					                      #end
+  					                  </tr>
+                #end
+            </table>
+			        #end
+    </body>
+</html>

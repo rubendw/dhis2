@@ -1,0 +1,28 @@
+
+<h3>$i18n.getString( "data_completeness_configuration" )</h3>
+
+<form action="setDataCompletenessConfiguration.action" method="post">
+
+<table>
+    <tr>
+        <th colspan="2">$i18n.getString( "reporting_deadline" )</th>
+    </tr>
+    <tr>
+        <td><label for="days">$i18n.getString( "nr_of_days" )</label></td>
+        <td><input type="text" id="days" name="days" style="width:12em; text-align:center" value="$!configuration.days"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="$i18n.getString( 'save' )" style="width:6em"><input
+                   type="button" value="$i18n.getString( 'cancel' )" style="width:6em" 
+                   onclick="window.location.href='displayViewDataCompletenessForm.action'"></td>
+    </tr>
+</table>
+
+</form>
+
+<span id="info">$i18n.getString( "completeness_configuration_explanation" ).</span>
+
+#if ( $message )
+    <span id="message" style="display:block">$!message</span>
+#end

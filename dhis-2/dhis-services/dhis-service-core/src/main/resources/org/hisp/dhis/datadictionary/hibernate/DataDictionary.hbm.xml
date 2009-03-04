@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.datadictionary.DataDictionary" table="datadictionary">
+    <id name="id" column="datadictionaryid">
+      <generator class="native"/>
+    </id>
+    
+    <property name="name">
+      <column name="name" not-null="true" unique="true" length="160"/>
+    </property>
+    
+    <property name="description" type="text"/>
+    
+    <property name="region"/>
+    
+    <set name="dataElements" table="datadictionarydataelements">
+      <key column="datadictionaryid"/>
+      <many-to-many class="org.hisp.dhis.dataelement.DataElement" column="dataelementid"/>
+    </set>
+    
+    <set name="indicators" table="datadictionaryindicators">
+      <key column="datadictionaryid"/>
+      <many-to-many class="org.hisp.dhis.indicator.Indicator" column="indicatorid"/>      
+    </set>
+    
+  </class>
+</hibernate-mapping>

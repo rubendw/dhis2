@@ -1,0 +1,4 @@
+<dataElementCategoryOption>
+  <id>$dataElementCategoryOption.id</id>
+  <name>$encoder.xmlEncode( $dataElementCategoryOption.name )</name>    
+</dataElementCategoryOption>

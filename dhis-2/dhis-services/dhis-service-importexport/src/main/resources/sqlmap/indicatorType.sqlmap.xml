@@ -1,0 +1,36 @@
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="indicatorType">
+	
+	<!-- TypeAlias -->
+	
+	<typeAlias alias="indicatorType" type="org.hisp.dhis.indicator.IndicatorType"/>	
+	
+	<!-- ResultMap -->
+	
+	<resultMap class="indicatorType" id="indicatorTypeResultMap">
+		<result property="id" column="IndicatorTypeID"/>
+		<result property="name" column="IndicatorTypeName"/>
+		<result property="factor" column="Factor"/>
+	</resultMap>
+	
+	<!-- Statement -->
+	
+	<select id="getIndicatorTypes" resultMap="indicatorTypeResultMap">
+		SELECT * FROM IndicatorType
+	</select>
+	
+	<select id="getIndicatorType" parameterClass="java.lang.Integer" resultMap="indicatorTypeResultMap">
+		SELECT * FROM IndicatorType WHERE IndicatorTypeID = #value#
+	</select>
+	
+	<select id="getFactor" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+		SELECT IndicatorType.Factor 
+		FROM IndicatorType, Indicator
+		WHERE Indicator.IndicatorTypeID = IndicatorType.IndicatorTypeID
+		AND Indicator.IndicatorID = #value#
+	</select>
+		
+</sqlMap>

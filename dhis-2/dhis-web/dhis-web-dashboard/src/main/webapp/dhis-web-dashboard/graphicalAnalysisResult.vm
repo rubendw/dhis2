@@ -1,0 +1,451 @@
+
+
+<html>
+<head>
+<title>Chart Result Screen</title>
+<link type="text/css" rel="stylesheet" href="css/StylesForTags.css">
+<script type="text/javascript" src="../dhis-web-commons/request.js"></script>
+<script type="text/javascript" src="javascript/lists.js"></script>
+<script type="text/javascript" src="javascript/ga.js"></script>
+<script type="text/javascript" src="javascript/hashtable.js"></script>
+
+<script>
+ 
+  var indexForChart = 0;
+  var chartNamesToView = new Array();
+  chartNamesToView[0] = new Array("Nothing");
+  chartNamesToView[1] = new Array("Vertical3DBarChart","Horizontal3DBarChart","LineChart","LineAndBarChart","DualAxisChart","AreaChart","PieChart3D");	
+  chartNamesToView[2] = new Array("Vertical3DBarChart","Horizontal3DBarChart","LineChart","LineAndBarChart","DualAxisChart","AreaChart");  							  						
+  	
+  function nextCharttoView()
+   {         
+     indexForChart++;
+     var chartType = 0;
+     var tempICount = $selectedServiceList.size();
+     if(tempICount==0)  chartType=0;
+     else if(tempICount==1) chartType=1;
+     else chartType=2;
+
+     var chartDisplayOptionList = document.getElementById("chartDisplayOption");
+   	 var chartDisplayOptionValue = chartDisplayOptionList.options[ chartDisplayOptionList.selectedIndex ].value;
+   
+     if(indexForChart >= chartNamesToView[chartType].length) indexForChart=0;
+     iframeForChart.location.href = "generateChart.action?currentChart="+chartNamesToView[chartType][indexForChart]+"&chartDisplayOption="+chartDisplayOptionValue;
+   }
+   
+   function prevCharttoView()
+   {      
+     indexForChart--;
+     var chartType = 0;
+     var tempICount = $selectedServiceList.size();
+     if(tempICount==0)  chartType=0;
+     else if(tempICount==1) chartType=1;
+     else chartType=2;
+
+     var chartDisplayOptionList = document.getElementById("chartDisplayOption");
+   	 var chartDisplayOptionValue = chartDisplayOptionList.options[ chartDisplayOptionList.selectedIndex ].value;
+   
+     if(indexForChart < 0) indexForChart=chartNamesToView[chartType].length-1;
+     iframeForChart.location.href = "generateChart.action?currentChart="+chartNamesToView[chartType][indexForChart]+"&chartDisplayOption="+chartDisplayOptionValue;     
+   }   
+   
+   function chartDisplayOptionChange(evt)
+   {
+   	 
+     var chartType = 0;
+     var tempICount = $selectedServiceList.size();
+     if(tempICount==0)  chartType=0;
+     else if(tempICount==1) chartType=1;
+     else chartType=2;
+
+     var chartDisplayOptionList = document.getElementById("chartDisplayOption");
+   	 var chartDisplayOptionValue = chartDisplayOptionList.options[ chartDisplayOptionList.selectedIndex ].value;
+ 
+   	 iframeForChart.location.href = "generateChart.action?currentChart="+chartNamesToView[chartType][indexForChart]+"&chartDisplayOption="+chartDisplayOptionValue;
+
+	 getSortedList(chartDisplayOptionValue);   	 
+   }
+
+
+function getSortedList(chartDisplayOptionValue)
+{
+	var url = "getSortedData.action?chartDisplayOption=" + chartDisplayOptionValue;
+		
+	var request = new Request();
+	request.setResponseTypeXML( 'messages' );
+	request.setCallbackSuccess( getSortedListReceived );
+	request.send( url );		
+}
+
+function getSortedListReceived(xmlObject)
+{	
+	var messages = xmlObject.getElementsByTagName("message");
+	document.getElementById("headingInfoId").innerHTML = "";
+	document.getElementById("testId").value = "";
+	
+	for ( var i = 0; i < messages.length; i++ )
+    {
+        var hinfo = messages[ i ].firstChild.nodeValue;
+        //document.getElementById("headingInfoId").innerHTML += hinfo;
+        document.getElementById("testId").value += hinfo;
+    }
+    
+    document.getElementById("headingInfoId").innerHTML = document.getElementById("testId").value; 	    	
+}
+
+function exportToExcelFunction1( summaryOption )
+{
+	var chartDisplayOptionList = document.getElementById("chartDisplayOption");
+   	var chartDisplayOptionValue = chartDisplayOptionList.options[ chartDisplayOptionList.selectedIndex ].value;
+   	
+   	document.getElementById("exportExcelAnchor1").href="exportToExcel.action?viewSummary="+summaryOption+"&chartDisplayOption="+chartDisplayOptionValue;
+
+}
+ 
+</script>
+
+<script>
+
+
+// -----------------------------------------------------------------------------
+// Author:   Torgeir Lorange Ostby, torgeilo@gmail.com
+// Version:  $Id: request.js 2644 2007-01-03 13:24:56Z torgeilo $
+// -----------------------------------------------------------------------------
+
+/*
+ * Usage:
+ *
+ * function processResponse( response ) { ... }       		// Text or XML
+ * function requestFailed( httpStatusCode ) { ... }
+ *
+ * var request = new Request();
+ * request.setResponseTypeXML( 'rootElement' );       		// Optional
+ * request.sendAsPost( 'value=1&value=2' );					// Optional
+ * request.setCallbackSuccess( processResponse );     		// Optional
+ * request.setCallbackError( requestFailed );         		// Optional
+ * request.send( 'url.action?value=1' );
+ */
+
+function Request()
+{
+    var request;
+    var responseType = 'TEXT';
+    var requestMethod = 'GET';
+    var requestParameters = null;
+    var rootElementName;
+    var callbackSuccess;
+    var callbackError;
+
+    this.setResponseTypeXML = function( rootElementName_ )
+    {
+        responseType = 'XML';
+        rootElementName = rootElementName_;
+    };
+    
+    this.sendAsPost = function( requestParameters_ )
+	{
+		requestMethod = 'POST';
+		requestParameters = requestParameters_;
+	};
+
+    this.setCallbackSuccess = function( callbackSuccess_ )
+    {
+        callbackSuccess = callbackSuccess_;
+    };
+    
+    this.setCallbackError = function( callbackError_ )
+    {
+        callbackError = callbackError_;
+    };
+
+    this.send = function( url )
+    {
+        request = newXMLHttpRequest();
+
+        if ( !request )
+        {
+            window.alert( "Your browser doesn't support XMLHttpRequest" );
+            return;
+        }
+
+		request.onreadystatechange = responseReceived;
+        request.open( requestMethod, url, true );
+        request.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );		 
+        request.send( requestParameters );
+    };
+	
+    function newXMLHttpRequest()
+    {
+        if ( window.XMLHttpRequest )
+        {
+            try
+            {
+                return new XMLHttpRequest();
+            }
+            catch ( e )
+            {
+                return false;
+            }
+        }
+        else if ( window.ActiveXObject )
+        {
+            try
+            {
+                return new ActiveXObject( 'Msxml2.XMLHTTP' );
+            }
+            catch ( e )
+            {
+                try
+                {
+                    return new ActiveXObject( 'Microsoft.XMLHTTP' );
+                }
+                catch ( ee )
+                {
+                    return false;
+                }
+            }
+        }
+        
+        return false;
+    }
+
+    function responseReceived()
+    {
+        if ( request.readyState == 4 )
+        {
+        	switch( request.status )
+        	{
+        	case 200:
+                if ( callbackSuccess )
+                {
+                    if ( responseType == 'TEXT' )
+                    {
+                        callbackSuccess( request.responseText );
+                    }
+                    else
+                    {
+                        var xml = textToXML( request.responseText, rootElementName );
+
+                        callbackSuccess( xml );
+                    }
+                }
+                break;
+            case 204:
+            	if ( callbackSuccess )
+            	{
+            	    callbackSuccess( null );
+            	}
+            	break;
+            case 500:
+                var message = 'Operation failed - internal server error';
+                
+                var serverMessage = request.responseText;
+
+                if ( serverMessage )
+                {
+                    var maxLength = 512;
+                    
+                    if ( serverMessage.length > maxLength )
+                    {
+                        serverMessage = serverMessage.substring( 0, maxLength - 3 ) + '...';
+                    }
+                    
+                    if ( serverMessage.length > 0 )
+                    {
+                        message += '\n\n' + serverMessage;
+                    }
+                }
+
+                message += '\n\nThe error details are logged';
+
+                window.alert( message );
+
+                break;
+            default:
+                if ( callbackError )
+                {
+                    callbackError( request.status );
+                }
+            }
+        }
+    }
+
+    function textToXML( text, rootElementName )
+    {
+        var docImpl = document.implementation;
+        var parser, dom;
+
+        // For standards compliant browsers
+        if ( docImpl && docImpl.createLSParser )
+        {
+            parser = docImpl.createLSParser( docImpl.MODE_SYNCHRONOUS, null );
+            var input = docImpl.createLSInput();
+            input.stringData = text;
+            return parser.parse( input ).documentElement;
+        }
+
+        // For IE
+        else if ( window.ActiveXObject )
+        {
+            dom = new ActiveXObject( 'Microsoft.XMLDOM' );
+            dom.async = "false";
+            dom.loadXML( text );
+            return dom.getElementsByTagName( rootElementName )[0];
+        }
+
+        // For Mozilla
+        else if ( window.DOMParser )
+        {
+            parser = new DOMParser();
+            dom = parser.parseFromString( text, 'application\/xml' );
+            return dom.documentElement;
+        }
+
+        // No parsing abilities
+        return null;
+    }
+}
+
+
+
+</script>
+
+</head>
+<body >
+    <div align="right">
+        
+        #if($selectedButton.equals("ViewSummary"))
+			            <a href="exportToExcel.action?viewSummary=yes" target="_blank">Export To Excel</a>
+			                  <br><br>
+			            
+			        #else
+			        	<a id="exportExcelAnchor1" name="exportExcelAnchor1" href="#" onclick="javascript:exportToExcelFunction1('no')" target="_blank">Export To Excel</a>
+			        	&nbsp;&nbsp;
+			        	<select id="chartDisplayOption" name="chartDisplayOption" onchange="chartDisplayOptionChange(event)">
+			        		<option value="none">Select Sort Type</option>
+			        		<option value="ascend">Ascending</option>
+			        		<option value="desend">Desending</option>
+			        		<option value="alphabet">Alphabetical</option>
+			        	</select>
+			        	&nbsp;&nbsp;
+			        	<input type="button" name="prevChartButton" id="prevChartButton" style="width: 40; height: 35; background-image: url('images/moveLeft.gif'); background-repeat: no-repeat; background-position: center; " onClick="prevCharttoView()" title="Previous">
+		            	<input type="button" name="nextChartButton" id="nextChartButton" style="width: 40; height: 35; background-image: url('images/moveRight.gif'); background-repeat: no-repeat; background-position: center;" onClick="nextCharttoView()" title="Next">				
+		            	<br>
+			        #end          
+    </div> 
+    <br>
+    
+    #if($riRadio.equals("indicatorsRadio1") && $categoryLB.equals( "period" )) 
+    <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-style: dotted" bordercolor="#111111" width="100%">                
+        <tr>
+            <td class="TableHeadingCellStyles" style="border-style: dotted; border-width: 1" rowspan="2">Service Name</td>            	
+            	#foreach($xaxisvalue in $xseriesList)
+            	    <td class="TableHeadingCellStyles" align="center" style="border-style: dotted; border-width: 1" colspan="3">$xaxisvalue</td>				     
+            	#end
+            </tr>
+            <tr>	
+            	#foreach($xaxisvalue in $xseriesList)
+            	    <td class="TableHeadingCellStyles" align="center" style="border-style: dotted; border-width: 1" >Num</td>
+            	    <td class="TableHeadingCellStyles" align="center" style="border-style: dotted; border-width: 1" >Den</td>
+            	    <td class="TableHeadingCellStyles" align="center" style="border-style: dotted; border-width: 1" >Val</td>            	    				     
+            	#end            	
+        	</tr>
+        	#set($count1 = 0)                         	
+        #foreach($onedataList in $dataList)
+        	#set($oneNumList = $numList.get($count1))
+        	#set($oneDenList = $denList.get($count1))                    
+            <tr>
+                <td class="TableHeadingCellStyles" style="border-style: dotted; border-width: 1">$yseriesList.get($count1)</td>
+                	#set($count2 = 0)
+               		 #foreach($data in $onedataList)               		 	
+               		 	 <td class="TableDataCellStyles" align="center" style="border-style: dotted; border-width: 1">$oneNumList.get($count2)</td>
+               		 	 <td class="TableDataCellStyles" align="center" style="border-style: dotted; border-width: 1">$oneDenList.get($count2)</td>
+               		     <td class="TableDataCellStyles" align="center" style="border-style: dotted; border-width: 1">$data</td>
+               		     #set($count2 = $count2 + 1)               		             
+               		 #end
+               		 #set($count1 = $count1 + 1)
+            </tr>    
+        #end	
+    </table>
+    
+    #else
+    <textarea id="testId" rows="10" cols="70" style="display:none">&nbsp;</textarea>
+    <div id="headingInfoId">
+    <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-style: dotted" bordercolor="#111111" width="100%">                
+        <tr>
+            <td class="TableHeadingCellStyles" style="border-style: dotted; border-width: 1">Service Name</td>
+            	#foreach($xaxisvalue in $xseriesList)
+            	    <td class="TableHeadingCellStyles" align="center" style="border-style: dotted; border-width: 1">$xaxisvalue</td>				     
+            	#end
+        </tr>
+        	#set($count1 = 0)                         	
+        #foreach($onedataList in $dataList)                    
+            <tr>
+                <td class="TableHeadingCellStyles" style="border-style: dotted; border-width: 1">$yseriesList.get($count1)</td>
+               		 #foreach($data in $onedataList)
+               		     <td class="TableDataCellStyles" align="center" style="border-style: dotted; border-width: 1">$data</td>               		             
+               		 #end
+               		 #set($count1 = $count1 + 1)
+            </tr>    
+        #end	
+    </table>
+    </div>
+    #end
+    
+    #if($riRadio.equals("indicatorsRadio"))    	
+
+<div align="right">
+        #foreach($service in $selectedServiceList)
+        	<br>
+    		<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-style: dotted">
+        		<tr class="TableHeadingCellStyles">
+            		<td  style="border-style: dotted; border-width: 1">Service Name</td>            	
+            			#set($surveys = $indicatorSurveyList.get($service))
+            			#foreach($survey in $surveys)
+            	    		<td class="TableHeadingCellStyles" align="center" style="border-style: dotted; border-width: 1">$survey.name</td>
+            	    	#end
+            	</tr>            	    	
+        		<tr class="TableHeadingCellStyles">
+            		<td  style="border-style: dotted; border-width: 1">$service.name</td>            	
+            			#foreach($survey in $surveys)
+            	    		<td align="center" style="border-style: dotted; border-width: 1">$survey.value</td>
+            	    	#end
+            	</tr>
+            </table>	    						     
+        #end        
+</div>
+    #end
+    
+    #if($selectedButton.equals("ViewSummary"))
+   	     <br><br>
+   	 #else
+   	     <br>
+   	     <div align="center">
+   	         <iframe name="iframeForChart" id="iframeForChart" src="generateChart.action?currentChart=Vertical3DBarChart" width="850px" height="550px" scrolling=auto frameborder="0"></iframe>
+   	     </div>    
+   	     <br>
+   	 #end
+
+   	 #if($riRadio.equals("indicatorsRadio"))
+   	     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-style: dotted" bordercolor="#111111" width="100%">
+            					<tr>
+                						<td class="TableHeadingCellStyles" width="30%" style="border-left-style:dotted; border-left-width:1; border-right-width:1; border-top-style:dotted; border-top-width:1; border-bottom-style:dotted; border-bottom-width:1"><font color="maroon">Indicator Names</font></td>
+                						<td class="TableHeadingCellStyles" width="30%" colspan="2" style="border-left-style:dotted; border-left-width:1; border-right-width:1; border-top-style:dotted; border-top-width:1; border-bottom-style:dotted; border-bottom-width:1"><font color="maroon">Formula</font></td>
+                						<td class="TableHeadingCellStyles" width="20%" style="border-left-style:dotted; border-left-width:1; border-right-width:1; border-top-style:dotted; border-top-width:1; border-bottom-style:dotted; border-bottom-width:1"><font color="maroon">Numerator DataElements</font></td>
+                						<td class="TableHeadingCellStyles" width="20%" style="border-left-style:dotted; border-left-width:1; border-right-width:1; border-top-style:dotted; border-top-width:1; border-bottom-style:dotted; border-bottom-width:1"><font color="maroon">Denominator DataElements</font></td>					
+					            </tr>
+					            #set($count1 = 0)
+					            #foreach($service in $selectedServiceList)
+					                <tr>
+                    							<td class="TableHeadingCellStyles" width="30%" style="border-left-style:dotted; border-left-width:1; border-right-width:1; border-top-style:dotted; border-top-width:1; border-bottom-style:dotted; border-bottom-width:1">$service.getName()</td>
+                    							<td class="TableHeadingCellStyles" width="25%" align="center" style="border-left-style:dotted; border-left-width:1; border-right-width:0; border-top-style:dotted; border-top-width:1; border-bottom-style:dotted; border-bottom-width:1"><u>$service.getNumeratorDescription()</u><br>$service.getDenominatorDescription()</td>
+                    							<td class="TableHeadingCellStyles" width="5%" align="left" style="border-left-style:dotted; border-left-width:0; border-right-width:1; border-top-style:dotted; border-top-width:1; border-bottom-style:dotted; border-bottom-width:1">&nbsp;X&nbsp;$service.getIndicatorType().getFactor()</td>
+                    							<td class="TableHeadingCellStyles" width="20%" style="border-left-style:dotted; border-left-width:1; border-right-width:1; border-top-style:dotted; border-top-width:1; border-bottom-style:dotted; border-bottom-width:1">$numeratorDEList.get($count1)</td>
+                    							<td class="TableHeadingCellStyles" width="20%" style="border-left-style:dotted; border-left-width:1; border-right-width:1; border-top-style:dotted; border-top-width:1; border-bottom-style:dotted; border-bottom-width:1">$denominatorDEList.get($count1)</td>
+					                	</tr>						                        
+					                #set($count1 = $count1 + 1)
+					            #end
+					        </table>   
+   	 #end
+ </body>
+ </html>   

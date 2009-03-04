@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.i18n.Translation" table="translation">
+
+    <composite-id>
+      <key-property name="className" column="objectclass" length="127"/>
+      <key-property name="id" column="objectid"/>
+      <key-property name="locale" column="locale" length="15"/>
+      <key-property name="property" column="objectproperty" length="63"/>
+    </composite-id>
+
+    <property name="value">
+      <column name="value" not-null="true" length="360" />
+    </property>
+
+  </class>
+</hibernate-mapping>

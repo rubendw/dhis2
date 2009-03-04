@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="onChangePeriod">
+	
+	<!-- TypeAlias -->
+	
+	<typeAlias alias="period" type="org.hisp.dhis.period.Period"/>
+	<typeAlias alias="dateTypeHandler" type="org.hisp.dhis.importexport.dhis14.file.typehandler.DateTypeHandler"/>
+	
+	<!-- ResultMap -->
+	
+	<resultMap class="period" id="onChangePeriodResultMap">
+		<result property="startDate" column="ValidFrom" typeHandler="dateTypeHandler"/>
+		<result property="endDate" column="ValidTo" typeHandler="dateTypeHandler"/>
+	</resultMap>
+	
+	<!-- Statement -->
+	
+	<select id="getOnChangePeriods" resultMap="onChangePeriodResultMap">
+		SELECT ValidFrom, ValidTo FROM SemiPermanentData
+	</select>
+		
+</sqlMap>

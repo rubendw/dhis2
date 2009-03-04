@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.hisp.dhis</groupId>
+    <artifactId>dhis-support</artifactId>
+    <version>2.0</version>
+  </parent>
+  
+  <artifactId>dhis-support-hibernate</artifactId>
+  <packaging>jar</packaging>
+  <name>DHIS Hibernate Support</name>
+  
+  <dependencies>
+    
+    <!-- DHIS -->
+    
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-support-test</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-support-external</artifactId>
+    </dependency>
+    
+    <!-- Hibernate -->
+    
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate</artifactId>
+      <version>3.2.6.ga</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.transaction</groupId>
+          <artifactId>jta</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>pull-parser</groupId>
+          <artifactId>pull-parser</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>geronimo-spec</groupId>
+      <artifactId>geronimo-spec-jta</artifactId>
+      <version>1.0-M1</version>
+    </dependency>
+    <dependency>
+      <groupId>c3p0</groupId>
+      <artifactId>c3p0</artifactId>
+      <version>0.9.1.2</version>
+    </dependency>
+    
+    <!-- Database connectors -->
+    
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.0.5</version>
+    </dependency>
+    <dependency>
+      <groupId>postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>8.2-504.jdbc3</version>
+    </dependency>
+    
+    <!-- Other -->
+    
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.7</version>
+    </dependency>    
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.0.20070617</version>
+    </dependency>
+  </dependencies>
+</project>

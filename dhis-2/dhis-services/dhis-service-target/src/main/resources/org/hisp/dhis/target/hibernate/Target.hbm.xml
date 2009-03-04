@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+  
+<hibernate-mapping>
+  <class name="org.hisp.dhis.target.Target" table="target">
+	  
+	  <id name="id" column="targetid">
+		  <generator class="native"/>
+	  </id>
+	  
+	  <many-to-one name="indicator" class="org.hisp.dhis.indicator.Indicator"
+			column="indicatorid" not-null="true" foreign-key="fk_target_indicatorid"/>
+    
+	  <many-to-one name="period" class="org.hisp.dhis.period.Period"
+			column="periodid" not-null="true" foreign-key="fk_target_periodid"/>
+    
+	  <many-to-one name="source" class="org.hisp.dhis.source.Source" lazy="false"
+			column="sourceid" not-null="true" foreign-key="fk_target_sourceid"/>
+        
+	  <property name="name" not-null="true" unique="true" length="160"/>
+	  
+    <property name="shortName">
+      <column name="shortname" length="25" />
+    </property>
+
+    <property name="description" type="text" />
+
+    <property name="value" />
+
+  </class>
+</hibernate-mapping>

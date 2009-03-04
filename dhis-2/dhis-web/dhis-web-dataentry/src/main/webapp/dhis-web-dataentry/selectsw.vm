@@ -1,0 +1,86 @@
+<div id="currentSelection">
+	#if ( $organisationUnit) $encoder.htmlEncode( $organisationUnit.name )#else $i18n.getString("no_organisationunit_selected") #end - 
+	#set( $period = $selectedStateManager.getSelectedPeriod() )
+	#if ( $period ) $format.formatPeriod( $period ) #else $i18n.getString("no_period_selected") #end - 
+	<span id="currentDataElement">$i18n.getString("no_dataelement_selected")</span>
+</div>
+
+<form id="selectForm" name="selectForm" method="post" action="select.action">
+<!--
+<div id="actions" style="width:200px text-align:right">
+	<input type="button" value="$i18n.getString( "change_order" )" onclick="changeOrder()" style="width:100% text-align:right" #if( !$selectedDataSetId || !$auth.hasAccess( "dhis-web-dataentry", "getDataElementOrder" ) ) disabled="disabled" #end>
+	<input type="button" value="$i18n.getString( "generate_min_max" )" onclick="javascript:generateMinMaxValues();" style="width:100% text-align:right" #if( !$selectedPeriodIndex || !$auth.hasAccess( "dhis-web-dataentry", "minMaxGeneration" )) disabled="disabled" #end >
+	<input type="button" value="$i18n.getString( "run_validation" )" onclick="javascript:validate();" style="width:100% text-align:right" #if( !$selectedPeriodIndex ) disabled="disabled" #end>
+	<input type="button" id="calculateCDEs" value="$i18n.getString( "save_calculated" )" name="calculateCDEs" onclick="calculateAndSaveCDEs();" style="width:100% text-align:right" #if( !$selectedPeriodIndex ) disabled="disabled" #end>
+	<br><label for="useShortName">$i18n.getString( "use_short_names" )</label>&nbsp;
+	<input type="checkbox" id="useShortName" name="useShortName" #if( $useShortName ) checked="checked" #end onchange="document.getElementById( 'selectForm' ).submit();">	
+			
+</div>	
+-->	
+
+<div id="actions" style="width:200px text-align:right">
+<table width="100%" border="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="button" value="$i18n.getString( "change_order" )" onclick="changeOrder()" style="width:100% text-align:right" #if( !$selectedDataSetId || !$auth.hasAccess( "dhis-web-dataentry", "getDataElementOrder" ) || !$useDefaultForm) disabled="disabled" #end></td>
+  </tr>
+  <tr>
+    <td><label for="useShortName">$i18n.getString( "use_short_names" )</label>&nbsp;
+	<input type="checkbox" id="useShortName" name="useShortName" #if( $useShortName ) checked="checked" #end #if( !$selectedDataSetId || !$selectedPeriodIndex || !$useDefaultForm ) disabled="disabled" #end onchange="document.getElementById( 'selectForm' ).submit();"></td>
+    <td><input type="button" value="$i18n.getString( "generate_min_max" )" onclick="javascript:generateMinMaxValues();" style="width:100% text-align:right" #if( !$selectedPeriodIndex || !$auth.hasAccess( "dhis-web-dataentry", "minMaxGeneration" )) disabled="disabled" #end ></td>
+  </tr>
+  <tr>
+    <td><label>$i18n.getString( "use_standard_form" )</label>
+	<input type="checkbox" id="useDefaultForm" name="useDefaultForm" #if( $useDefaultForm || !$customDataEntryFormExists) checked="checked" #end #if( !$customDataEntryFormExists ) disabled="disabled" #end onchange="document.getElementById( 'selectForm' ).submit();"></td>
+    <td><input type="button" value="$i18n.getString( "run_validation" )" onclick="javascript:validate();" style="width:100% text-align:right" #if( !$selectedPeriodIndex ) disabled="disabled" #end></td>
+  </tr>
+  <tr>
+    <td><label>$i18n.getString( "use_secction_form" )</label>
+	<input type="checkbox" id="userSectionForm" name="userSectionForm" #if($userSectionForm) disabled="disabled" #end onchange="document.getElementById( 'selectForm' ).submit();"></td>
+    <td><input type="button" id="calculateCDEs" value="$i18n.getString( "save_calculated" )" name="calculateCDEs" onclick="calculateAndSaveCDEs();" style="width:100% text-align:right" #if( !$selectedPeriodIndex ) disabled="disabled" #end></td>
+  </tr>
+</table>
+	
+</div>
+	
+<table>
+	<!--
+	<col width="140">
+	<col width="200">
+	-->
+	<tr>
+		<td><label>$i18n.getString( "organisation_unit" )</label></td>
+		<td><input type="text" readonly="readonly" #if( $organisationUnit ) value="$encoder.htmlEncode( $organisationUnit.name )" #else value="[$i18n.getString( "select" )]" #end style="width:200px"></td>
+	</tr>
+	
+	<tr>
+		<td><label for="selectedDataSetId">$i18n.getString( "data_set" )</label></td>
+		<td>
+			<select id="selectedDataSetId" name="selectedDataSetId" style="min-width:200px" onchange="document.getElementById( 'selectForm' ).submit();" #if( $dataSets.size() == 0 ) disabled="disabled" #end>
+				<option value="null">[$i18n.getString( "select" )]</option>
+			#foreach( $dataSet in $dataSets )
+				<option value="$dataSet.id" #if( $selectedDataSetId && $dataSet.id == $selectedDataSetId ) selected="selected" #end>$encoder.htmlEncode( $dataSet.name )</option>
+			#end
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td><label for="selectedPeriodIndex">$i18n.getString( "period" )</label></td>
+		<td>
+			<input type="button" value="&lt;&lt;" title="$i18n.getString('earlier_periods')" onclick="window.location.href='previousPeriods.action'" #if( $periods.size() == 0 ) disabled="disabled" #end>
+			<input type="button" value="&gt;&gt;" title="$i18n.getString('later_periods')" onclick="window.location.href='nextPeriods.action'" #if( $periods.size() == 0 ) disabled="disabled" #end><br>
+			<select id="selectedPeriodIndex" name="selectedPeriodIndex" style="min-width:200px" onchange="document.getElementById( 'selectForm' ).submit();" #if( $periods.size() == 0 ) disabled="disabled" #end>
+				<option value="null">[$i18n.getString( "select" )]</option>
+			#foreach( $period in $periods )
+				#set( $index = $velocityCount - 1 )
+				<option value="$index" #if( $index && $selectedPeriodIndex && $index == $selectedPeriodIndex ) selected="selected" #end>$format.formatPeriod( $period )</option>
+			#end
+			</select>
+		</td>
+	</tr>	
+</table>
+
+</form>
+
+<hr style="clear:both;">

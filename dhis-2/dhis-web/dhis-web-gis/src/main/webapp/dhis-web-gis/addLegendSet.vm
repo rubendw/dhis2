@@ -1,0 +1,117 @@
+<h2>$i18n.getString( "add_legendset" )</h2>
+<form name="addLegendSet" action="addLegendSet.action" method="post" onsubmit="submitForm(); return validateAddLegendSet();">
+	 <table id="list" style="width:50%">
+	 	<tr>
+			<td><label>$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+			<td><input type="text" id="name" name="name" style="width:200px"/></td>
+		</tr>		
+	</table>
+	
+	<table id="indicatorArea">
+    <col> ## Selected DataElements
+    <col> ## Actions
+    <col> ## Filter
+    <col> ## Available DataElements
+    <thead>
+      <tr>
+        <th>$i18n.getString( "selected_indicators" )</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>       
+        <th>$i18n.getString( "available_indicators" )</th>
+      </tr>
+    </thead>
+    <tbody>
+		<tr> 			 
+        <td colspan=3 align="right"><label>$i18n.getString( "group_filter" )</label></td>
+        <td>
+          <select id="indicatorGroupId" name="indicatorGroupId" style="min-width:20em"
+              onchange="javascript:getIndicatorByIndicatorGroup( this.options[this.selectedIndex].value ,'add')">
+            <option value="ALL" selected="selected">$i18n.getString( "all" )</option>
+            #foreach ( $indicatorGroup in $indicatorGroups )
+              <option value="$indicatorGroup.id">$encoder.htmlEncode( $indicatorGroup.name )</option>
+            #end
+          </select>
+        </td>
+      </tr>
+      <tr>
+	 	
+        <td>
+          <select id="selectedIndicatorList" name="selectedIndicatorList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="moveIndicator( 'selectedIndicatorList' )">
+            <!-- initially empty -->
+          </select>
+        </td>
+        <td valign="top">
+          <input type="button" value="&lt;" title="$i18n.getString('move_selected')" onclick="moveIndicator( 'availableIndicatorList' )">
+          <br>
+          <input type="button" value="&gt;" title="$i18n.getString('remove_selected')" onclick="moveIndicator ( 'selectedIndicatorList' )">
+        </td>
+        <td></td>
+        <td>
+          <!-- List of all available DataElements -->
+          <select size="15" id="availableIndicatorList" name="availableIndicatorList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="moveIndicator( 'availableIndicatorList' )">
+            <!-- Show all available DataElements -->
+            #foreach ( $indicator in $indicators )
+              <option value="$indicator.id">$encoder.htmlEncode( $indicator.name )</option>
+            #end
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+	
+  <table id="legendArea">
+    <col> ## Selected DataElements
+    <col> ## Actions
+    <col> ## Filter
+    <col> ## Available DataElements
+    <thead>
+      <tr>
+        <th>$i18n.getString( "selected_legends" )</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>       
+        <th>$i18n.getString( "available_legends" )</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <select id="selectedList" name="selectedList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="move( 'selectedList' )">
+            <!-- initially empty -->
+          </select>
+        </td>
+        <td valign="top">
+          <input type="button" value="&lt;" title="$i18n.getString('move_selected')" onclick="move( 'availableList' )">
+          <br>
+          <input type="button" value="&gt;" title="$i18n.getString('remove_selected')" onclick="move ( 'selectedList' )">
+        </td>
+        <td></td>
+        <td>
+          <!-- List of all available DataElements -->
+          <select size="15" id="availableList" name="availableList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="move( 'availableList' )">
+            <!-- Show all available DataElements -->
+            #foreach ( $legend in $legends )
+              <option value="$legend.id">$encoder.htmlEncode( $legend.name )</option>
+            #end
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="4">
+          <span id="message"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="4">
+          <input type="submit" name="add" value="$i18n.getString( "add_legendset" )">
+          <!--
+            Cancel and go back to the overview
+          -->
+          <input type="button" name="cancel"
+            onclick="window.location.href='listLegendSets.action'" value="$i18n.getString( "cancel" )">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="org.hisp.dhis.organisationunit.OrganisationUnitStore"
+    class="org.hisp.dhis.organisationunit.hibernate.HibernateOrganisationUnitStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    <property name="sourceStore"
+      ref="org.hisp.dhis.source.SourceStore"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.organisationunit.OrganisationUnitService"
+    class="org.hisp.dhis.organisationunit.DefaultOrganisationUnitService">
+    <property name="sourceStore"
+      ref="org.hisp.dhis.source.SourceStore"/>
+    <property name="organisationUnitStore"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitStore"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.organisationunit.OrganisationUnitGroupStore"
+    class="org.hisp.dhis.organisationunit.hibernate.HibernateOrganisationUnitGroupStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"
+    class="org.hisp.dhis.organisationunit.DefaultOrganisationUnitGroupService">
+    <property name="organisationUnitGroupStore"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitGroupStore"/>
+  </bean>
+  
+  <!-- Transactio AOP definitions -->
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readOnlyTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.OrganisationUnitStore\.get.*</value>
+        <value>.*\.OrganisationUnitGroupStore\.get.*</value>
+        <value>.*\.OrganisationUnitService\.get.*</value>
+        <value>.*\.OrganisationUnitGroupService\.getExclusiveOrganisationUnitGroupSetsContainingGroup.*</value>
+      </list>
+    </property>
+  </bean>
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readWriteTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.OrganisationUnitStore\.add.*</value>
+        <value>.*\.OrganisationUnitStore\.update.*</value>
+        <value>.*\.OrganisationUnitStore\.delete.*</value>
+				<value>.*\.OrganisationUnitStore\.clear.*</value>
+        <value>.*\.OrganisationUnitService\.delete.*</value>
+        <value>.*\.OrganisationUnitGroupStore\.add.*</value>
+        <value>.*\.OrganisationUnitGroupStore\.update.*</value>
+        <value>.*\.OrganisationUnitGroupStore\.delete.*</value>
+      </list>
+    </property>
+  </bean>
+
+  <!-- Startup routine definitions -->
+
+  <bean id="org.hisp.dhis.organisationunit.OrganisationUnitHierarchyVerifier"
+    class="org.hisp.dhis.organisationunit.OrganisationUnitHierarchyVerifier">
+    <property name="organisationUnitService"
+			ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+  </bean>
+  
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject"
+      ref="org.hisp.dhis.system.startup.StartupRoutineExecutor"/>
+    <property name="targetMethod" value="addStartupRoutines"/>
+    <property name="arguments">
+		  <list>
+        <list>
+          <ref local="org.hisp.dhis.organisationunit.OrganisationUnitHierarchyVerifier"/>
+        </list>
+		  </list>
+    </property>
+  </bean>	
+	
+  <!-- I18n AOP definitions -->
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="I18nObjectInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.OrganisationUnitService\.add.*</value>
+        <value>.*\.OrganisationUnitService\.update.*</value>
+        <value>.*\.OrganisationUnitService\.delete.*</value>
+        <value>.*\.OrganisationUnitGroupService\.add.*</value>
+        <value>.*\.OrganisationUnitGroupService\.update.*</value>
+        <value>.*\.OrganisationUnitGroupService\.delete.*</value>  
+      </list>
+    </property>
+  </bean>
+  
+  <!-- Deletion Handler -->
+  
+  <bean id="org.hisp.dhis.organisationunit.OrganisationUnitGroupDeletionHandler"
+    class="org.hisp.dhis.organisationunit.OrganisationUnitGroupDeletionHandler">
+    <property name="organisationUnitGroupService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.organisationunit.OrganisationUnitGroupSetDeletionHandler"
+    class="org.hisp.dhis.organisationunit.OrganisationUnitGroupSetDeletionHandler">
+    <property name="organisationUnitGroupService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+  </bean>
+  
+  <!-- DeletionManager -->
+  
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+    <property name="targetMethod" value="addDeletionHandlers"/>
+    <property name="arguments">
+		  <list>
+        <list>
+          <ref local="org.hisp.dhis.organisationunit.OrganisationUnitGroupDeletionHandler"/>
+          <ref local="org.hisp.dhis.organisationunit.OrganisationUnitGroupSetDeletionHandler"/>
+        </list>
+		  </list>
+    </property>
+  </bean>
+  
+  <!-- Deletion AOP definitions -->
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="deletionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.OrganisationUnitService\.delete.*</value>
+        <value>.*\.OrganisationUnitGroupService\.delete.*</value>
+      </list>
+    </property>
+  </bean>
+  
+</beans>

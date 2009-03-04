@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="dataElementGroup">
+	
+	<!-- TypeAlias -->
+	
+	<typeAlias alias="dataElementGroup" type="org.hisp.dhis.dataelement.DataElementGroup"/>
+
+	<!-- ResultMap -->
+	
+	<resultMap class="dataElementGroup" id="dataElementGroupResultMap">
+		<result property="id" column="DataElementAndIndicatorGroupID"/>
+		<result property="name" column="DataElementAndIndicatorGroupName"/>
+	</resultMap>
+
+	<!-- Statement -->
+	
+	<select id="getDataElementGroups" resultMap="dataElementGroupResultMap">
+			SELECT * FROM DataElementAndIndicatorGroup
+	</select>
+	
+</sqlMap>
+	

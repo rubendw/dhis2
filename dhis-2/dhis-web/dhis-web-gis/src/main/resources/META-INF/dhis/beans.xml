@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!--
+	<bean id="org.hisp.dhis.gis.action.configuration.GISConfigurationManager"
+	class="org.hisp.dhis.gis.action.configuration.GISConfigurationManager"
+	init-method="init">
+	<property name="statementManager"
+	  ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+	</bean>
+	-->
+	
+	<!-- bean -->
+	<bean id="org.hisp.dhis.gis.state.SelectionManager"
+		class="org.hisp.dhis.gis.state.SelectionManager" scope="prototype">
+	</bean>
+	
+	<bean id="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService"
+	class="org.hisp.dhis.gis.action.configuration.DefaultGISConfigurationManagerService">
+	<property name="gisConfigurationService"
+	  ref="org.hisp.dhis.gis.GISConfigurationService"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.gis.action.export.FileFeatureStore"
+		class="org.hisp.dhis.gis.action.export.FileFeatureStore">
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+		<property name="selectionManager"
+			ref="org.hisp.dhis.gis.state.SelectionManager" />
+	</bean>
+	
+	<bean id="org.hisp.dhis.gis.action.EmptyAction"
+		class="org.hisp.dhis.gis.action.EmptyAction">
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.SelectAction"
+		class="org.hisp.dhis.gis.action.SelectAction" scope="prototype">
+		<property name="selectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="periodService"
+			ref="org.hisp.dhis.period.PeriodService" />
+		<property name="indicatorService"
+			ref="org.hisp.dhis.indicator.IndicatorService" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+		<property name="selectionGISManager"
+			ref="org.hisp.dhis.gis.state.SelectionManager" />
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+	</bean>
+
+	<!-- action bean -->
+	
+	<bean id="org.hisp.dhis.gis.action.management.AssignMapAction"
+		class="org.hisp.dhis.gis.action.management.AssignMapAction"
+		scope="prototype">
+		<property name="organisationUnitSelectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+		<property name="selectionManager"
+			ref="org.hisp.dhis.gis.state.SelectionManager" />
+
+	</bean>
+
+	<bean
+		id="org.hisp.dhis.gis.action.management.SelectOrganisationUnitAction"
+		class="org.hisp.dhis.gis.action.management.SelectOrganisationUnitAction"
+		scope="prototype">
+		<property name="organisationUnitSelectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+		<property name="selectionManager"
+			ref="org.hisp.dhis.gis.state.SelectionManager" />
+	</bean>
+
+	<bean
+		id="org.hisp.dhis.gis.action.management.SelectMapAndUnitAction"
+		class="org.hisp.dhis.gis.action.management.SelectMapAndUnitAction"
+		scope="prototype">
+		<property name="organisationUnitSelectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+		<property name="selectionManager"
+			ref="org.hisp.dhis.gis.state.SelectionManager" />
+	</bean>
+
+	<bean
+		id="org.hisp.dhis.gis.action.management.SelectOrgunitAjaxAction"
+		class="org.hisp.dhis.gis.action.management.SelectOrgunitAjaxAction"
+		scope="prototype">
+		<property name="organisationUnitService"
+			ref="org.hisp.dhis.organisationunit.OrganisationUnitService" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+
+	</bean>
+
+	<bean
+		id="org.hisp.dhis.gis.action.management.ValidateAssignMapAction"
+		class="org.hisp.dhis.gis.action.management.ValidateAssignMapAction"
+		scope="prototype">
+		<property name="organisationUnitService"
+			ref="org.hisp.dhis.organisationunit.OrganisationUnitService" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+	</bean>
+
+	
+
+	<bean id="org.hisp.dhis.gis.action.management.DeleteFeatureAction"
+		class="org.hisp.dhis.gis.action.management.DeleteFeatureAction"
+		scope="prototype">
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+	</bean>
+
+
+	<bean
+		id="org.hisp.dhis.gis.action.management.DeleteAllFeatureAction"
+		class="org.hisp.dhis.gis.action.management.DeleteAllFeatureAction"
+		scope="prototype">
+		<property name="organisationUnitSelectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+	</bean>
+	
+	<bean
+		id="org.hisp.dhis.gis.action.management.ShowAllFeatureAssignedAction"
+		class="org.hisp.dhis.gis.action.management.ShowAllFeatureAssignedAction"
+		scope="prototype">
+		<property name="organisationUnitSelectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+	</bean>
+
+	<!-- Map management -->
+
+
+
+	<bean id="org.hisp.dhis.gis.action.management.AddMapFileAction"
+		class="org.hisp.dhis.gis.action.management.AddMapFileAction"
+		scope="prototype">
+		<property name="organisationUnitSelectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.management.AssignUnitSaveAction"
+		class="org.hisp.dhis.gis.action.management.AssignUnitSaveAction"
+		scope="prototype">
+		<property name="organisationUnitService"
+			ref="org.hisp.dhis.organisationunit.OrganisationUnitService" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.management.PreviewMapAction"
+		class="org.hisp.dhis.gis.action.management.PreviewMapAction"
+		scope="prototype">
+		<property name="organisationUnitSelectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.management.AssignRootAction"
+		class="org.hisp.dhis.gis.action.management.AssignRootAction"
+		scope="prototype">
+		<property name="organisationUnitSelectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+	</bean>	
+
+	<bean id="org.hisp.dhis.gis.action.management.UploadSVGFileAction"
+		class="org.hisp.dhis.gis.action.management.UploadSVGFileAction"
+		scope="prototype">
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.management.GetListMapFileAction"
+		class="org.hisp.dhis.gis.action.management.GetListMapFileAction"
+		scope="prototype">
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.management.DeleteFileMapAction"
+		class="org.hisp.dhis.gis.action.management.DeleteFileMapAction"
+		scope="prototype">
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+	</bean>
+
+	<!-- Search -->
+
+<!-- Fill map -->
+
+
+
+	<bean
+		id="org.hisp.dhis.gis.action.dataanlysis.FillMapByIndicatorAction"
+		class="org.hisp.dhis.gis.action.dataanlysis.FillMapByIndicatorAction"
+		scope="prototype">
+		<property name="selectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+		<property name="indicatorService"
+			ref="org.hisp.dhis.indicator.IndicatorService" />	
+		<property name="aggregationService"
+			ref="org.hisp.dhis.aggregation.AggregationService" />
+		<property name="selectionGISManager"
+			ref="org.hisp.dhis.gis.state.SelectionManager" />
+		<property name="statementManager"
+			ref="org.hisp.dhis.aggregation.batch.statement.StatementManager" />
+			
+	</bean>
+	
+	<bean
+		id="org.hisp.dhis.gis.action.dataanlysis.AnlysisIndicatorAction"
+		class="org.hisp.dhis.gis.action.dataanlysis.AnlysisIndicatorAction"
+		scope="prototype">
+		<property name="selectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+		<property name="featureService"
+			ref="org.hisp.dhis.gis.FeatureService" />
+		<property name="indicatorService"
+			ref="org.hisp.dhis.indicator.IndicatorService" />	
+		<property name="selectionGISManager"
+			ref="org.hisp.dhis.gis.state.SelectionManager" />
+		<property name="statementManager"
+			ref="org.hisp.dhis.aggregation.batch.statement.StatementManager" />
+		<property name="periodService"
+			ref="org.hisp.dhis.period.PeriodService" />
+		<property name="jdbcIndicatorService"
+			ref="org.hisp.dhis.gis.hibernate.JDBCIndicatorService" />
+		
+			
+	</bean>
+
+	<bean
+		id="org.hisp.dhis.gis.action.dataanlysis.GetIndicatorByGroupAction"
+		class="org.hisp.dhis.gis.action.dataanlysis.GetIndicatorByGroupAction">
+		<property name="indicatorService"
+			ref="org.hisp.dhis.indicator.IndicatorService" />
+		<property name="selectionManager"
+			ref="org.hisp.dhis.gis.state.SelectionManager" />
+	</bean>
+	
+	<bean
+		id="org.hisp.dhis.gis.action.dataanlysis.GetPeriodByPeriodTypeAction"
+		class="org.hisp.dhis.gis.action.dataanlysis.GetPeriodByPeriodTypeAction">
+		<property name="periodService"
+			ref="org.hisp.dhis.period.PeriodService" />
+		<property name="selectionManager"
+			ref="org.hisp.dhis.gis.state.SelectionManager" />
+	</bean>
+
+	<!-- Legend -->
+
+	<bean id="org.hisp.dhis.gis.action.legend.ListLegendAction"
+		class="org.hisp.dhis.gis.action.legend.ListLegendAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.AddLegendAction"
+		class="org.hisp.dhis.gis.action.legend.AddLegendAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.ValidateLegendAction"
+		class="org.hisp.dhis.gis.action.legend.ValidateLegendAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.DeleteLegendAction"
+		class="org.hisp.dhis.gis.action.legend.DeleteLegendAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.EditLegendAction"
+		class="org.hisp.dhis.gis.action.legend.EditLegendAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.UpdateLegendAction"
+		class="org.hisp.dhis.gis.action.legend.UpdateLegendAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.ShowLegendDetailAction"
+		class="org.hisp.dhis.gis.action.legend.ShowLegendDetailAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+
+	<!-- Legend Set -->
+
+	<bean id="org.hisp.dhis.gis.action.legend.ListLegendSetAction"
+		class="org.hisp.dhis.gis.action.legend.ListLegendSetAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.AddLegendSetAction"
+		class="org.hisp.dhis.gis.action.legend.AddLegendSetAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+		<property name="indicatorService"
+			ref="org.hisp.dhis.indicator.IndicatorService" />
+	</bean>
+
+
+	<bean id="org.hisp.dhis.gis.action.legend.ValidateLegendSetAction"
+		class="org.hisp.dhis.gis.action.legend.ValidateLegendSetAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.DeleteLegendSetAction"
+		class="org.hisp.dhis.gis.action.legend.DeleteLegendSetAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.EditLegendSetAction"
+		class="org.hisp.dhis.gis.action.legend.EditLegendSetAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+		<property name="indicatorService"
+			ref="org.hisp.dhis.indicator.IndicatorService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.UpdateLegendSetAction"
+		class="org.hisp.dhis.gis.action.legend.UpdateLegendSetAction">
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+		<property name="indicatorService"
+			ref="org.hisp.dhis.indicator.IndicatorService" />
+	</bean>
+
+	<bean id="org.hisp.dhis.gis.action.legend.GetIndicatorByGroup"
+		class="org.hisp.dhis.gis.action.legend.GetIndicatorByGroup">
+		<property name="indicatorService"
+			ref="org.hisp.dhis.indicator.IndicatorService" />
+		<property name="legendService"
+			ref="org.hisp.dhis.gis.LegendService" />
+	</bean>
+	
+	
+
+	<bean id="org.hisp.dhis.gis.action.export.ExportImageAction"
+		class="org.hisp.dhis.gis.action.export.ExportImageAction">
+		<property name="fileFeatureStore"
+			ref="org.hisp.dhis.gis.action.export.FileFeatureStore" />
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+	</bean>
+	
+	<bean id="org.hisp.dhis.gis.action.export.ExportToImageAction"
+		class="org.hisp.dhis.gis.action.export.ExportToImageAction">
+		<property name="fileFeatureStore"
+			ref="org.hisp.dhis.gis.action.export.FileFeatureStore" />
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+	</bean>	
+	
+	
+	<bean id="org.hisp.dhis.gis.action.export.ExportExcelAction"
+		class="org.hisp.dhis.gis.action.export.ExportExcelAction">
+		<property name="fileFeatureStore"
+			ref="org.hisp.dhis.gis.action.export.FileFeatureStore" />
+		<property name="indicatorService"
+			ref="org.hisp.dhis.indicator.IndicatorService" />
+		<property name="organisationUnitSelectionManager"
+			ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager" />
+		<property name="organisationUnitService"
+			ref="org.hisp.dhis.organisationunit.OrganisationUnitService" />
+		<property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+		<property name="selectionManager"
+			ref="org.hisp.dhis.gis.state.SelectionManager" />
+	</bean>
+	
+  <!-- ConfigFile -->
+
+  
+  <bean id="org.hisp.dhis.gis.action.management.ChangeGISConfigurationAction"
+    class="org.hisp.dhis.gis.action.management.ChangeGISConfigurationAction">
+    <property name="gisConfigurationManagerService"
+			ref="org.hisp.dhis.gis.action.configuration.GISConfigurationManagerService" />
+	 <property name="gisConfigurationService"
+			ref="org.hisp.dhis.gis.GISConfigurationService" />		
+			
+  </bean>
+
+</beans>
+

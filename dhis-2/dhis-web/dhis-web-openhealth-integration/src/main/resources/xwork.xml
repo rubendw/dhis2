@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN" "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+	<include file="dhis-web-commons.xml"/>
+	
+	<package name="dhis-web-openhealth-integration" extends="dhis-web-commons" namespace="/dhis-web-openhealth-integration">
+	
+		<action name="index" class="org.hisp.dhis.openhealth.action.DisplayAction">
+			<result name="success" type="redirect">getAllOlapURLs.action</result>
+		</action>	
+		
+		<action name="display" class="org.hisp.dhis.openhealth.action.DisplayAction">
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-openhealth-integration/display.vm</param>
+      <param name="menu">/dhis-web-openhealth-integration/menu.vm</param>
+		</action>
+    
+    <action name="getAllOlapURLs" class="org.hisp.dhis.openhealth.action.GetAllOlapURLsAction">
+      <result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-openhealth-integration/viewForm.vm</param>
+      <param name="menu">/dhis-web-openhealth-integration/menu.vm</param>
+      <param name="javascripts">javascript/view.js</param>
+    </action>
+    
+    <action name="saveOlapURL" class="org.hisp.dhis.openhealth.action.SaveOlapURLAction">
+      <result name="success" type="redirect">getAllOlapURLs.action</result>
+    </action>
+    
+    <action name="showSaveOlapURL" class="org.hisp.dhis.openhealth.action.GetOlapURLAction">
+      <result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-openhealth-integration/saveViewForm.vm</param>
+      <param name="menu">/dhis-web-openhealth-integration/menu.vm</param>
+    </action>
+    
+    <action name="deleteOlapURL" class="org.hisp.dhis.openhealth.action.DeleteOlapURLAction">
+      <result name="success" type="redirect">getAllOlapURLs.action</result>
+    </action>
+    
+	</package>
+</xwork>

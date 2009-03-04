@@ -1,0 +1,220 @@
+
+<script type="text/javascript">
+	getExportStatus();
+</script>
+
+<h3>$i18n.getString( "export_to_datamart" )</h3>
+
+<form id="exportForm" name="exportForm" method="post" action="export.action">
+
+<input type="hidden" id="exportId" name="exportId" value="$!id">
+
+<table width="730">
+	
+	<colgroup>
+  		<col style="width:325px">
+  		<col style="width:80px">
+ 		<col style="width:325px">
+  	</colgroup>
+
+	<!-- DataElements -->
+	
+	<tr>
+		<th>$i18n.getString( "available_dataelements" )</th>
+		<td></td>
+		<th>$i18n.getString( "selected_dataelements" )</th>
+	</tr>	
+	<tr>
+		<td>
+			<select id="dataElementGroupId" name="dataElementGroupId" style="min-width:325px" onchange="getDataElements()">
+				<option value="$ALL">[ $i18n.getString( "select_dataelementgroup_all" ) ]</option>
+				#foreach ( $group in $dataElementGroups )
+					<option value="$group.id">$group.name</option>
+				#end
+			</select><br>
+			<select multiple size="6" id="availableDataElements" name="availableDataElements" style="min-width:325px" ondblclick="moveSelectedById( 'availableDataElements', 'selectedDataElements' )">				
+				#foreach ( $element in $dataElements )
+					<option value="$element.id">$element.name</option>
+				#end                
+			</select>
+		</td>
+		<td align="center">
+			<input type="button" value="&gt;" title="$i18n.getString('move_selected')" style="width:40px" onclick="moveSelectedById( 'availableDataElements', 'selectedDataElements' )"><br>
+			<input type="button" value="&lt;" title="$i18n.getString('remove_selected')" style="width:40px" onclick="moveSelectedById( 'selectedDataElements', 'availableDataElements' )"><br>		
+			<input type="button" value="&gt;&gt;" title="$i18n.getString('move_all')" style="width:40px" onclick="moveAllById( 'availableDataElements', 'selectedDataElements' )"><br>
+			<input type="button" value="&lt;&lt;" title="$i18n.getString('remove_all')" style="width:40px" onclick="moveAllById( 'selectedDataElements', 'availableDataElements' )">
+		</td>
+		<td>
+		    <select multiple id="selectedDataElements" name="selectedDataElements" style="min-width:325px; height:96px" ondblclick="moveSelectedById( 'selectedDataElements', 'availableDataElements' )">
+			    #foreach( $element in $selectedDataElements )
+				    <option value="$element.id">$element.name</option>
+			    #end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3" height="5px"></td>
+	</tr>
+	
+	<!-- Indicators -->
+	
+	<tr>
+		<th>$i18n.getString( "available_indicators" )</th>
+		<td></td>
+		<th>$i18n.getString( "selected_indicators" )</th>
+	</tr>
+	<tr>
+		<td>			
+			<select id="indicatorGroupId" name="indicatorGroupId" style="min-width:325px" onchange="getIndicators()">
+				<option value="$ALL">[ $i18n.getString( "select_indicatorgroup_all" ) ]</option>
+				#foreach ( $group in $indicatorGroups )
+					<option value="$group.id">$group.name</option>
+				#end
+			</select><br>
+			<select multiple size="6" id="availableIndicators" name="availableIndicators" style="min-width:325px" ondblclick="moveSelectedById( 'availableIndicators', 'selectedIndicators' )">				
+				#foreach ( $indicator in $indicators )
+					<option value="$indicator.id">$indicator.name</option>
+				#end
+			</select>
+		</td>
+		<td align="center">
+			<input type="button" value="&gt;" title="$i18n.getString('move_selected')" style="width:40px" onclick="moveSelectedById( 'availableIndicators', 'selectedIndicators' )"><br>
+			<input type="button" value="&lt;" title="$i18n.getString('remove_selected')" style="width:40px" onclick="moveSelectedById( 'selectedIndicators', 'availableIndicators' )"><br>		
+			<input type="button" value="&gt;&gt;" title="$i18n.getString('move_all')" style="width:40px" onclick="moveAllById( 'availableIndicators', 'selectedIndicators' )"><br>
+			<input type="button" value="&lt;&lt;" title="$i18n.getString('remove_all')" style="width:40px" onclick="moveAllById( 'selectedIndicators', 'availableIndicators' )">
+		</td>
+		<td>
+			<select multiple id="selectedIndicators" name="selectedIndicators" style="min-width:325px; height:96px" ondblclick="moveSelectedById( 'selectedIndicators', 'availableIndicators' )">
+			    #foreach ( $indicator in $selectedIndicators )
+                    <option value="$indicator.id">$indicator.name</option>
+                #end
+			</select>
+		</td>
+	</tr>
+    <tr>
+        <td colspan="3" height="5px"></td>
+    </tr>
+	
+	<!-- OrganisationUnits -->
+	
+	<tr>
+		<th>$i18n.getString( "available_organisationunits" )</th>
+		<td></td>
+		<th>$i18n.getString( "selected_organisationunits" )</th>
+	</tr>
+	<tr>
+		<td>
+			<select id="organisationUnitLevel" name="organisationUnitLevel" style="min-width:325px" onchange="getOrganisationUnits()">
+				<option value="$ALL">[ $i18n.getString( "select_organisationunit_level_all" ) ]</option>
+				#foreach ( $level in $levels )
+					<option value="$level.level">$level.name</option>
+				#end
+			</select><br>
+			<select multiple size="6" id="availableOrganisationUnits" name="availableOrganisationUnits" style="min-width:325px" ondblclick="moveSelectedById( 'availableOrganisationUnits', 'selectedOrganisationUnits' )">
+				#foreach ( $unit in $organisationUnits )
+					<option value="$unit.id">$encoder.htmlEncode( $unit.name )</option>
+				#end
+			</select>
+		</td>
+		<td align="center">
+			<input type="button" value="&gt;" title="$i18n.getString('move_selected')" style="width:40px" onclick="moveSelectedById( 'availableOrganisationUnits', 'selectedOrganisationUnits' )"><br>
+			<input type="button" value="&lt;" title="$i18n.getString('remove_selected')" style="width:40px" onclick="moveSelectedById( 'selectedOrganisationUnits', 'availableOrganisationUnits' )"><br>		
+			<input type="button" value="&gt;&gt;" title="$i18n.getString('move_all')" style="width:40px" onclick="moveAllById( 'availableOrganisationUnits', 'selectedOrganisationUnits' )"><br>
+			<input type="button" value="&lt;&lt;" title="$i18n.getString('remove_all')" style="width:40px" onclick="moveAllById( 'selectedOrganisationUnits', 'availableOrganisationUnits' )"><br>
+			<input type="button" value="&gt;&gt;&gt;" title="$i18n.getString('move_children')" style="width:40px" onclick="getOrganisationUnitChildren()">
+		</td>
+		<td>
+			<select multiple id="selectedOrganisationUnits" name="selectedOrganisationUnits" style="min-width:325px; height:96px" ondblclick="moveSelectedById( 'selectedOrganisationUnits', 'availableOrganisationUnits' )">				
+			    #foreach ( $unit in $selectedOrganisationUnits )
+                    <option value="$unit.id">$unit.name</option>
+                #end
+			</select>
+		</td>
+	</tr>
+    <tr>
+        <td colspan="3" height="5px"></td>
+    </tr>
+	
+	<!-- Periods -->
+	
+	<tr>
+		<th>$i18n.getString( "available_periods" )</th>
+		<td></td>
+		<th>$i18n.getString( "selected_periods" )</th>
+	</tr>	
+	<tr>
+		<td>
+			<select id="periodTypeId" name="periodTypeId" style="min-width:325px" onchange="getPeriods()">
+				<option value="null">[ $i18n.getString( "select_period_type_all" ) ]</option>
+				#foreach ( $type in $periodTypes )
+					<option value="$type.name">$type.name</option>
+				#end
+			</select><br>
+			<select multiple size="6" id="availablePeriods" name="availablePeriods" style="min-width:325px" ondblclick="moveSelectedById( 'availablePeriods', 'selectedPeriods' )">
+				#foreach ( $period in $periods )
+					<option value="$period.id">$period.name</option>
+				#end
+			</select>
+		</td>
+		<td align="center">
+			<input type="button" value="&gt;" title="$i18n.getString('move_selected')" style="width:40px" onclick="moveSelectedById( 'availablePeriods', 'selectedPeriods' )"><br>
+			<input type="button" value="&lt;" title="$i18n.getString('remove_selected')" style="width:40px" onclick="moveSelectedById( 'selectedPeriods', 'availablePeriods' )"><br>
+			<input type="button" value="&gt;&gt;" title="$i18n.getString('move_all')" style="width:40px" onclick="moveAllById( 'availablePeriods', 'selectedPeriods' )"><br>
+			<input type="button" value="&lt;&lt;" title="$i18n.getString('remove_all')" style="width:40px" onclick="moveAllById( 'selectedPeriods', 'availablePeriods' )">
+		</td>
+		<td>
+			<select multiple id="selectedPeriods" name="selectedPeriods" style="min-width:325px; height:96px" ondblclick="moveSelectedById( 'selectedPeriods', 'availablePeriods' )">				
+			    #foreach ( $period in $selectedPeriods )
+                    <option value="$period.id">$period.name</option>
+                #end
+			</select>
+		</td>
+	</tr>
+    <tr>
+        <td colspan="3" height="5px"></td>
+    </tr>
+    
+    <!-- Name -->
+    
+    <tr>
+        <th>$i18n.getString( "name" )</th>
+        <td colspan="2"></td>
+    </tr>
+    <tr>
+    	<td><input type="text" id="exportName" name="exportName" style="min-width:325px" value="$!name"></td>
+    	<td colspan="2"></td>
+    </tr>
+    
+    <!-- Submit -->
+    
+	<tr>		
+		<td><input type="button" value='$i18n.getString( "export" )' onclick="exportValues()" style="width:25%"><input
+		           type="button" value='$i18n.getString( "cancel" )' onclick="cancelExport()" style="width:25%"><input
+                   type="button" value='$i18n.getString( "save" )' onclick="saveExport()" style="width:25%"><input
+                   type="button" value='$i18n.getString( "back" )' onclick="javascript:window.location.href='getDataMartExports.action'" style="width:25%"></ttd>
+		<td></td>
+		<td></td>
+	</tr>
+	
+</table>
+
+</form>
+
+<span id="message" style="display:block">$!statusMessage</span>
+
+<script type="text/javascript">
+    var i18n_hours = '$encoder.jsEscape( $i18n.getString( "hours" ), "'" )';
+    var i18n_minutes = '$encoder.jsEscape( $i18n.getString( "minutes" ), "'" )';
+    var i18n_seconds = '$encoder.jsEscape( $i18n.getString( "seconds" ), "'" )';
+    var i18n_estimated_time = '$encoder.jsEscape( $i18n.getString( "estimated_time" ), "'" )';
+    var i18n_select_min_datatype = '$encoder.jsEscape( $i18n.getString( "select_min_datatype" ), "'" )';
+    var i18n_select_min_level = '$encoder.jsEscape( $i18n.getString( "select_min_level" ), "'" )';
+    var i18n_select_min_period = '$encoder.jsEscape( $i18n.getString( "select_min_period" ), "'" )';
+    var i18n_nr_of_comb = '$encoder.jsEscape( $i18n.getString( "nr_of_comb" ), "'" )';
+    var i18n_completed = '$encoder.jsEscape( $i18n.getString( "completed" ), "'" )';	
+    var i18n_export_process_started = '$encoder.jsEscape( $i18n.getString( "export_process_started" ), "'" )';
+    var i18n_export_saved = '$encoder.jsEscape( $i18n.getString( "export_saved" ), "'" )';
+    var i18n_must_select_at_least_one_dataelement_or_indicator = '$encoder.jsEscape( $i18n.getString( "must_select_at_least_one_dataelement_or_indicator" ), "'" )';
+    var i18n_must_select_at_least_one_organisation_unit = '$encoder.jsEscape( $i18n.getString( "must_select_at_least_one_organisation_unit" ), "'" )';
+    var i18n_must_select_at_least_one_period = '$encoder.jsEscape( $i18n.getString( "must_select_at_least_one_period" ), "'" )';
+</script>

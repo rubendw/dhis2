@@ -1,0 +1,45 @@
+<h3>$i18n.getString( "role_management" )</h3>
+
+<table style="width:100%">
+	<tr>
+		<td style="vertical-align:top">
+
+			<table style="width:100%">
+				<col>
+				<col>
+				<col width="20">
+				<col width="20">
+				<tr>
+					<td>$i18n.getString( "filter_by_rolename" ): <form style="display:inline" action="none" onsubmit="return false"><input type="text" onkeyup="filterValues( this.value )"></form></td>					
+					<td colspan="3" style="text-align:right"><input type="button" value="$i18n.getString( "add_new" )" onclick="window.location.href='showAddRoleForm.action'"></td>
+				</tr>
+				<tr>
+					<th>$i18n.getString( "role" )</th>
+					<th>$i18n.getString( "description" )</th>
+					<th colspan="2">$i18n.getString( "operations" )</th>
+				</tr>
+				<tbody id="list">
+				#set( $mark = false )
+				#foreach( $userAuthorityGroup in $userAuthorityGroups )
+				<tr #if( $mark ) style="background-color:#dddddd" #end>
+					<td>$!encoder.htmlEncode( $userAuthorityGroup.name )</td>
+					<td>$!encoder.htmlEncode( $userAuthorityGroup.description )</td>
+					<td style="text-align:center"><a href="showUpdateRoleForm.action?id=$userAuthorityGroup.id" title="$i18n.getString( "edit" )"><img src="../images/edit.png" alt="$i18n.getString( "edit" )"></a></td>
+					<td style="text-align:center"><a href="javascript:removeRole( $userAuthorityGroup.id, '$encoder.jsEncode( $userAuthorityGroup.name )' )" title="$i18n.getString( "remove" )"><img src="../images/delete.png" alt="$i18n.getString( "remove" )"></a></td>					
+				</tr>
+				#if( $mark )
+					#set( $mark = false )
+				#else
+					#set( $mark = true )
+				#end
+				#end
+				</tbody>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<script type="text/javascript">
+	var i18n_confirm_delete = '$encoder.jsEscape( $i18n.getString( "confirm_delete_role" ) , "'")';
+	var i18n_none = '$encoder.jsEscape( $i18n.getString( "none" ) , "'")';
+</script>

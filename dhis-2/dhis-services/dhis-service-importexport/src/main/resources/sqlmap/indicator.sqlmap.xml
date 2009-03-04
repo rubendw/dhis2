@@ -1,0 +1,34 @@
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="indicator">
+	
+	<!-- TypeAlias -->
+	
+	<typeAlias alias="indicator" type="org.hisp.dhis.indicator.Indicator"/>
+	<typeAlias alias="indicatorTypeTypeHandler" type="org.hisp.dhis.importexport.dhis14.file.typehandler.IndicatorTypeTypeHandler"/>
+	
+	<!-- ResultMap -->
+	
+	<resultMap class="indicator" id="indicatorResultMap">
+		<result property="id" column="IndicatorID"/>
+		<result property="name" column="IndicatorName"/>
+		<result property="alternativeName" column="IndicatorNameAlt1"/>
+		<result property="shortName" column="IndicatorShort"/>
+		<result property="code" column="IndicatorCode"/>
+		<result property="description" column="IndicatorDescription"/>
+		<result property="indicatorType" column="IndicatorTypeID" typeHandler="indicatorTypeTypeHandler"/>
+		<result property="numerator" column="IndicatorNumerator"/>
+		<result property="numeratorDescription" column="IndicatorNumeratorDescription"/>
+		<result property="denominator" column="IndicatorDenominator"/>
+		<result property="denominatorDescription" column="IndicatorDenominatorDescription"/>		
+	</resultMap>
+	
+	<!-- Statement -->
+	
+	<select id="getIndicators" resultMap="indicatorResultMap">
+		SELECT * FROM Indicator
+	</select>
+	
+</sqlMap>

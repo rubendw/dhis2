@@ -1,0 +1,233 @@
+<h1>The DHIS 2 Help Page</h1>
+
+<h3><a name="index">Index</a></h3>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#navigation">Navigation</a></li>
+<li><a href="#basicoperations">Basic Operations</a></li>
+<li><a href="#orgunits">Organisational Unit Management</a></li>
+<li><a href="#deandind">Data Elements and Indicators</a></li>
+<li><a href="#datadictionary">Data Dictionary</a></li>
+<li><a href="#datasets">Dataset Management</a></li> 
+<li><a href="#dataentry">Data Entry</a></li>
+<li><a href="#groups">Managing Groups</a></li></li>
+<li><a href="#importexport">Import-Export</a></li>
+<li><a href="#dataanalysis">Data Analysis</a></li>
+<li><a href="#reports">Reports</a></li>
+<li></li>
+</ol>
+
+<a href="#navigation">Navigation</a>
+
+<h2><a name="navigation">Navigation</a> <a href="#index">To top</a></h2>
+
+<h3>The top menu</h3>
+<p>Using the top menu you can navigate between the various modules or "sections" of the application. Which modules that are available to you depend on the current installation and your user privileges defined by the system administrator. See <a href="#users">User Management</a> for more details on user privileges. </p> 
+
+<p>The modules covered in this manual are <a href="#settings">Settings</a>, <a href="#users">User Management</a>, <a href="#orgunits">Organisational Unit Management</a>, <a href="#deandind">Data Elements and Indicators</a>, <a href="#datasets">Dataset Management</a>, <a href="#dataentry">Data Entry</a>, <a href="#reporttool">Report Tool</a>, <a href="#datamart">Data Mart</a>, <a href="#importexport">Import-Export</a>, <a href="#validation">Validation</a>, <a href="#birtviewer">BIRT Viewer</a> </p>
+
+<h3>The left-side menus</h3>
+<p>To navigate within each module you must use the left-side menu. This menu can be hidden and restored using the green arrow in the top right corner of the menu. </p>
+
+
+<h2><a name="basicoperations">Basic Operations</a> <a href="#index">To top</a></h2>
+<p>The different parts (modules) of the user interface has been standardised to simplify how the user can do basic operations like add, edit and remove for many different "elements" of the system. These elements are explained in detail below, but are e.g. data elements, indicators, organisational units, and datasets.</p>
+
+<p> Use the top menu to navigate to the desired module and then the left-side menu to get to the sub-section managing for the element you want to access. </p>  
+<p>The main page for all of these sub-sections will show you a list of already created elements. Next to each element in the list you will find icons for edit, translate, remove and show details. These icons will take you to the desired operation for the desired element. Above the column with the operation icons you will see an 'Add new' button.</p>
+
+<h3>Add new</h3>
+<p>In the main page of the module click on the &lt;Add new&gt; button. This will open a form where you can fill in the information about the element, and to finalise the operation click the &lt;Add&gt; button at the bottom of the form. Click on &lt;Cancel&gt; at any time to abort the add operation. &lt;Add&gt; will take you back to the list where you will see your new element.</p>
+
+<h3>Translate</h3>
+<p>Here you can translate the element (in the database) to any desired language. Please read the <a href="#internationalisation">Internationalisation</a> section in this manual for further details on how to maintain translations.</p>
+
+<h3>Edit</h3>
+<p>In the main page look for your element in the list and click on the edit icon next to it. This will open a form similar to the Add form, but this time displaying the stored information about your element. Make the changes you like and click on the &lt;Save&gt; button to finalise the operation. Click on &lt;Cancel&gt; at any time to abort the add operation.</p>
+
+<h3>Remove</h3>
+<p>In the main page look for your element in the list and click on the remove icon next to it. You will be asked to confirm the deletion, and click &lt;OK&gt; to finalise the operation.</p>
+
+<h3>Show details</h3>
+<p>In the main page look for your element in the list and click on the show details icon next to it. This will display the information about the element on the right side of the page next to the list.</p>
+
+<h2><a name="orgunits">Organisational Unit Management</a> <a href="#index">To top</a></h2>
+<p>This module can be accessed by clicking on "Organisation Unit Management" in the top menu.</p>
+
+<p>The organisational units represent the health offices and facilities in the health system. These units are organised in a hierarchy to reflect the hierarchical structure of the health system.</p>
+
+<h3>Organisational unit (org unit) properties</h3>
+<dl>
+	<dt>Name</dt><dd>self explanatory</dd>
+	<dt>Short name</dt><dd>maximum 20 characters and used in reports etc. with limited space</dd>
+	<dt>Organisational Unit Code</dt><dd>optional field to reflect a health system's unit codification system</dd>
+	<dt>Opening Date</dt><dd>Used to provide a history of the organisational structure. E.g. to avoid new units being part of (historical) reports from a period when they did not exist.</dd>
+	<dt>Registers Data</dt><dd>This field is used to identify whether this unit registers any data or not. Most administrative units in the hierarchy do not register any data, whereas typically the data is registered at health facilities at the bottom level. Data is then reported upwards in the hierarchy using export/import functionality and not through data registration (data entry).</dd>
+	<dt>Comment</dt><dd>this field is optional and can provide additional information such as name changes etc.</dd>
+</dl>
+
+<h3>The organisational hierarchy</h3>
+<p>The org unit hierarchy is used to mimic the real life organisational structure and is used to organise how data is reported between the units and how data is aggregated to make reports at the various levels. The org unit hierarchy is displayed as a tree structure in the application and when doing operations that need a selected org unit you will have to select an org unit in the tree displayed in the left side menu. Navigation in the menu tree is done by clicking on the '+' and '-' symbols to expand and collapse the tree.</p>
+
+<h4>Add a new org unit</h4>
+<p>Org units are positioned in the hierarchy directly through the "add new" operation. In the menu tree on the left side select the parent of the new org unit you would like to add. Then you will see a list of all org units that have the selected org unit as their parent. Follow the general instructions to add a new unit above. See org unit properties above for explanations to each field in the Add new form. After adding the unit you will again see the list of org unit children, this time including your new unit. In the menu tree you will see your new unit in the list of children under the selected parent unit. If this list is not shown, please click on the '+' symbol to expand the tree node and display the child units.</p>
+ 
+<h4>How to modify the org unit hierarchy/how to move units in the tree</h4>
+<p>Click on "Hierarchy Operations" in the left side menu, select the unit to move, the new parent and then &lt;move&gt;.</p>
+
+<p>Note that changing the position of an org unit with children will automatically move all units below the moved unit as well. This operation has three steps:</p>
+<ol>
+	<li>Select the unit to move in the menu tree and click on &lt;Confirm&gt;</li>
+	<li>Select the new parent (to the unit you are moving) in the menu tree and click on &lt;Confirm&gt;</li>
+	<li>Go through with the move by clicking on &lt;Move&gt;.</li>
+</ol>
+<p>&lt;Reset&gt; will reset the confirmed selections from step 1. and 2.</p>
+<p>Click on any other menu item to cancel this operation.</p>
+
+<h3>Organisational Unit Groups</h3>
+<p>See the general instruction for groups.</p>
+
+
+<h2><a name="deandind">Data Elements And Indicators</a> <a href="#index">To top</a></h2>
+
+<h3><a name="dataelements">Data Elements</a> <a href="#index">To top</a></h3>
+<p>Data elements represent every piece of information registered in the DHIS. The data elements are flexible in the way that they can represent any kind of information. Often data elements are called meta-information or meta-data, as they provide information of what is being captured in the system and does not represent the data values itself. The three main types of data that a data element in DHIS represents are routine, semi-permanent and survey data. These will be explained further down.</p>
+
+<p>To work on the data elements you will have to click on "Data Element" in the left side menu of the Data Element and Indicator module (accessed from the top menu).</p>
+
+<h4>Data element properties</h4>
+<dl>
+	<dt>Name</dt><dd>self explanatory</dd>
+	<dt>Short name</dt><dd>maximum 20 characters and used in reports etc. with limited space</dd>
+	<dt>Description</dt><dd>Additional textual information</dd>
+	<dt>Active</dt><dd>Identifies whether the data element is in use at the moment or not</dd>
+	<dt>Type</dt><dd>Identifies what kind of data values that is captured: Number, text, or Yes/no answers</dd>
+	<dt>Aggregation Operator</dt><dd>This identifies how data values of this data element are aggregated over time. There are two options: Sum and Average. An example can be that you would like to make a yearly report and your data is captured at a monthly frequency. Then the aggregation operator is used to tell whether the 12 monthly values should be summarised to a total for the year or that an average value should be calculated and used as a yearly value. Typically routine data like vaccinations, patient visits etc. use SUM as these services are summarised over time, and more permanent data like number of beds, population estimates etc. use AVERAGE as these are not summarised over time, but in stead an average value is calculated to represent a longer interval of time than the registration frequency.</dd>
+</dl>
+
+<h4>Data Element Groups</h4>
+<p>See the general instruction for groups.</p>
+
+
+<h4>Data Element Categories (dimensions)</h4>
+Data elements can flexibly be breaken up into any number of categories. The most common examples of categories are gender and age groups, but can in practice be any thing.
+
+<h3><a name="indicators">Indicators</a> <a href="#index">To top</a></h3>
+<p>Indicators in DHIS are formulas of data elements that can provide more useful and contextual information than the "raw" data values that are captured in the system. The simplest indicator example can be:</p>
+<p>BCG < 1 year coverage = 100 % * (  (BCG vaccine < 1 year male + BCG vaccine < 1 year) female )  / ( Population < 1 year male + Population < 1 year female)  )</p>
+
+<p>"BCG vaccine < 1 year male", "BCG vaccine < 1 year female", "Population < 1 year male" and "Population < 1 year female" are data elements defined in the system by the user. The 100 % operator is an operator that is added based on the type (%, rate, 1/ 100 000 etc.) of the indicator. The user can flexibly define types (operators) as well as indicator formulas that are combinations of the numerator formula and the dominator formula.</p>
+
+<p>There are some constraints to defining indicators:</p>
+<p>All the data elements in the numerator or denominator must have the same aggregation operator (see Data Element). In the example above the BCG vaccine < 1 year data elements both have the aggregation operator SUM and the Population < 1 year data elements both have the type AVERAGE. This constraint is to make sure that this indicator can be aggregated properly.</p>
+
+<h4>Indicator properties</h4>
+<dl>
+	<dt>Name</dt><dd>self-explanatory</dd>
+	<dt>Description</dt><dd>additional textual information: its use etc.</dd>
+	<dt>Indicator type</dt><dd>used to calculate the indicator, e.g. "%" is a type.</dd>
+</dl>
+<p>The indicator types must be created before the indicator. Select "Indicator type" in the left side menu to add/edit/remove/view types. The type consists of a name (used in add indicator) and a factor (used to calculate the indicator). An example is the "%" type with name "%" and factor "100". This factor is multiplied with the value of the indicator formula (numerator/denominator) value when the indicator value is calculated.</p>
+
+<h4>How to add a new indicator</h4>
+<p>The indicators follow the standard for operations like add, edit, remove and view details. In addition the indicator has two more operations in the list, one for defining numerator formula and one for the denominator formula. To add an indicator first use the standard "add"-procedure and create an indicator with name, description and type. Then look for the indicator in the list and click on the numerator and denominator icons to define the formulas.</p>
+
+<h4>Defining indicator formulas</h4>
+<p>The formulas for numerator and denominator are defined separately. They are done in the same way. The pop-up window for indicator formula will show a formula window in the top left corner with available operators below. To the left is a list of available data elements sorted on aggregation operator (see the constraint note above). Add a data element to the formula by double-clicking on it and add operators between data elements by clicking on the operators. Activate and move the cursor in the formula window by clicking in the window, this cursor controls where the next data element or operator is positioned in the formula. Write a description for the numerator/denominator in the text field. Click &lt;update&gt; to save the formula and then &lt;close&gt; to close the window.</p>
+
+<h4>Indicator Groups</h4>
+<p>See the general instruction for groups.<p>
+
+<h4>Data Dictionary</h4>
+<p>A data dictionary can contain any number of data elements, and a data element can be a member of any number of data dictionaries.</p>
+
+<p>A data dictionary is intended to be used for separating multiple sets of data elements which are used in various geographical places. The current data dictionary is stored as a user setting.</p>
+
+<h2><a name="datadictionary">Extended Data Dictionary</a> <a href="#index">To top</a></h2>
+<p>DHIS 2 can be configured to run as an extended data dictionary, allowing for capturing more extensive data for each data element. This is a user specific setting which can be set in the user settings part of the user module.</p>
+
+<p>When DHIS 2 is run in extended data dictionary mode, some 35 additional fields are presented in the add and update data element form. Also, the import and export functionality, including export to pdf, adheres to this setting and lets you export and import the extended information for each data element.</p>
+
+<h2><a name="datasets">Dataset Management</a> <a href="#index">To top</a></h2>
+<p>A dataset is used to organise the data entry (registration of data) and to organise the reporting (import/export) of data between organisation units in the organisation hierarchy.</h2>
+
+<h3>Dataset properties</h3>
+<dl>
+	<dt>Name</dt><dd>e.g. "Immunisation program", "Population estimates"</dd>
+	<dt>Frequency</dt><dd>the frequency by which this dataset is being registered and or reported</dd>
+
+<h4>The purpose of the datasets</h4>
+<p>The data entry (see below) and the import/export (see below) are organised around the datasets. Data are registered for 1 dataset at a time. All the data elements in one data entry form must come from the same dataset. In the data entry module, orgunits are only allowed to register data for the datasets that have been assigned to them in the Dataset Management section. A dataset will often represent the paper forms used in the health information system, but note that this is not a requirement for generating reports that look just like the paper forms. Reports can be designed based on the more fine-grained data elements and are not dependent on the datasets. See the report module below for more information on how to make reports.</p>
+ 
+<h4>How to add a new dataset</h4>
+<p>Click on the "Add new" button on the main page just above the operations list. You need to provide a name and select the frequency (period type) at which the dataset will be used for data entry. Then use the list of data elements to add the elements you would like for your dataset. Note that a data element can be added to multiple data sets. To avoid overlap of data, be careful so that the same data element is not part of to different datasets that are both assigned to the same orgunit and have different frequencies (e.g Monthly and Quarterly). When you have finished adding the data elements you need, click on the "Add dataset" button below the list boxes.  
+
+<h4>How to assign a datset to sorgunits (enable data entry)</h4>
+In order to use the dataset for data entry you must assign it to the orgunits that are going to register data. In the dataset list select the wand symbol (leftmost symbol) next to your dataset. In the "Assign datasets to orgunits" window you can either select all orgunits at one specific level or assign or remove individual orgunits. You can also easily remove all selected orgunits by clicking on the "Select none" button. To assign to all orgunits at one level write in the desired level in the textbox and click on the "Select level" button. Then the tree will appear with all the selected orgunits in yellow colour. In the same tree you can assign more orgunits or remove some already selected. When you are finished click on the "Update" button. If you do not want to save your changes click the "Cancel" button. 
+
+<h2><a name="dataentry">Data Entry</a> <a href="#index">To top</a></h2>
+<p>This is the module where the data values are registered into the system. Data can only be registered for one org unit, one dataset and one period at a time. The dataset controls which data elements that can be registered and which periods that are available for registration (see the dataset section above).</p>
+
+<h3>How to enter data</h3>
+<p>First select an orgunit in the tree in the left-side menu, and then select the dataset. If the dataset field is disabled, it means that there are no datasets assigned to the selected org unit (see Dataset above). When a dataset is selected the available periods will appear in the field next to "Period". These periods are determined based on the frequency defined for that dataset. If a dataset has a monthly frequency all the months for the current year are displayed in the drop-down list. If you want to select a month from a previous year click on the double left arrow button, and the double right arrow button to move back. After selecting the desired period you will see the data entry form with all the data elements that belong to the dataset. The order of the data elements in the list can be changed by clicking on the Data Element Order "Change" button above the form. The entry field is for the data valued you register and the comment field is an optional field where additional information about that specific entry can be registered. Use the "Tab" button on your keyboard to quickly move down the fields when entering data. Green entry fields means that the data value has been validated and stored in the database. If you violate the entry field validation rule (e.g. enter a letter when a number is expected) a pop-up window will inform you of this. A yellow entry field means that the value is not accepted and must be changed. When you finish a form you can quickly access a new form for the same orgunit by changing dataset or period, or use the same form and period for another orgunit by changing the orgunit in the menu tree. When finished with data entry, just navigate to the desired module using the top menu.</p>
+
+<h4>Quick guide to set up a new system needed to register data</h4>
+
+<ol>
+	<li>Define the organisational hierarchy and org units</li>
+	<li>Define the data elements</li>
+	<li>Define the dataset and assign it to the orgunits that are going to use it for registration</li>
+</ol>
+<p>Additional setup:</p>
+<ol style="marker-offset:4" start="4">
+	<li>Define indicators</li>
+	<li>Define groups for org units, data elements and indicators</li>
+</ol>
+
+<h2><a name="groups">Groups</a> <a href="#index">To top</a></h2>
+<p>Several of the elements (data elements, indicators, org units) of the DHIS can be organised in groups. This is done to assign additional information to the elements as well as to group them in clusters that are useful when making reports or analysing data.</p>
+ 
+<p>The groups are handled in the same way as the other elements accessible from the left side menu in a specific module and presented in a list with icons for edit/remove/show details operations next to each element in the list. The "add new" group button is as always found above the operations column.</p>
+
+<h3>Add/edit groups</h3>
+<p>Assigning elements to a group is done through moving elements between two lists, one list for the selected elements (the group members) and one list for the available elements that are not yet selected. When the selected list contains all the desired group members click the &lt;Save&gt; button and the group is created/updated.</p>
+
+<h2><a name="importexport">Import-Export</a> <a href="#index">To top</a></h2>
+
+<p>This module allows organisation units to send or receive standardized set of data in the absence of a networked system. Please read about datasets above before you continue reading these instructions. The datasets are defining what data that are being exported/imported between organisation units.</p>
+
+<h3>Export</h3>
+
+<p>You can choose between exporting data or only meta (definitions) data. Meta data export gives you the ability to export the various concepts by ticking off the various check-boxes and click Export. In data export, select the source / sending organisation unit, the start and end date of the data periods and which data sets you want to include. Data sets are basically collections of data elements, and by selecting a data set, all data elements in that data set are included in the export.</p>
+
+<p>The exported data is stored in an XML file which is zipped, sent to the client, and made available for download. The default internal import-export format in DHIS 2 is called DXF. Export to the IXF format and PDF format is also supported, and can be selected in the menu and used similarly.</p>
+
+<h3>Import</h3>
+
+<p>Click Import in the left side menu. On the import page, select whether you want to preview the contents of the import file before you import it. Then select which import file you want to import from before clicking Import. By clicking on Show advanced options you are able to select whether you want to import or preview new and updated objects or only new objects. You may also select whether you you want to include data values from the import file.</p>
+
+<p>The preview page gives an overview over updates and new objects. If present, after clicking on the number of new objects of any type can can choose to discard that specific object, discard all objects of that type, or match that object to an existing object. The latter is useful if you already have that particular object in the database only with a minor naming variation or similar.</p>
+
+<p>If present, after clicking on the number of updates you can choose to discard that object, to discard all objects of that same type, or to compare that object to an existing object in the database. After comparing you may decide to keep the existing object or overwrite it with the previewed object. When you have completed your preview, you may use the Import all button to import all objects in the preview, or to cancel the operation.</p>
+
+<p>Other import formats like the IXF format and a DHIS 1.4 datafile / datamart are also accepted. The IXF import works similarly as the default import, but can be configured in the IXF Configuration section. The DHIS 1.4 import functionality needs to be configured through an ibatis.properties file put in the DHIS 2 external resource directory.</p>
+
+<h2><a name="reports">Reports</a> <a href="#index">To top</a></h2>
+
+<h3>Viewing reports</h3>	
+
+<h3>Report tables</h3>
+
+<h3>Designing reports</h3>
+
+<h2><a name="dataanalysis">Data Analysis</a> <a href="#index">To top</a></h2>
+This module integrates the OpenHealth system's web-based pivottables and GIS functionality.
+
+<b>Basic usage</b>
+
+<b>Advanced usage</b>
+
+<b>Customisation of the data access</b>
+
+<h2><a name="internationalisation">Internationalisation</a> <a href="#index">To top</a></h2>
+Coming soon...

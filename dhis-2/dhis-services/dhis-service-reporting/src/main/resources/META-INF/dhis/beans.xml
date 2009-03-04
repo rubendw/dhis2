@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+  <!-- OLAP -->
+  
+  <bean id="org.hisp.dhis.olap.OlapURLStore"
+    class="org.hisp.dhis.olap.hibernate.HibernateOlapURLStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <!-- ReportTable -->
+  
+  <bean id="internal-process-ReportTable"
+    class="org.hisp.dhis.reporttable.DefaultReportTableCreator"
+    scope="prototype">
+    <property name="statementManager"
+      ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+    <property name="reportTableManager"
+      ref="org.hisp.dhis.reporttable.jdbc.ReportTableManager"/>
+    <property name="reportTableService"
+      ref="org.hisp.dhis.reporttable.ReportTableService"/>
+    <property name="batchHandlerFactory"
+      ref="org.hisp.dhis.aggregation.batch.factory.BatchHandlerFactory"/>
+    <property name="dataMartService"
+      ref="internal-process-DataMart"/>
+    <property name="dataMartStore"
+      ref="org.hisp.dhis.datamart.DataMartStore"/>
+    <property name="completenessExportService"
+      ref="internal-process-DataSetCompleteness"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.reporttable.jdbc.ReportTableManager"
+    class="org.hisp.dhis.reporttable.jdbc.JDBCReportTableManager">
+    <property name="statementManager"
+      ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+    <property name="configurationProvider"
+      ref="org.hisp.dhis.aggregation.batch.configuration.JDBCConfigurationProvider"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.reporttable.ReportTableStore"
+    class="org.hisp.dhis.reporttable.hibernate.HibernateReportTableStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.reporttable.ReportTableService"
+    class="org.hisp.dhis.reporttable.impl.DefaultReportTableService">
+    <property name="reportTableStore"
+      ref="org.hisp.dhis.reporttable.ReportTableStore"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+  </bean>
+
+  <!-- Report -->
+  
+  <bean id="org.hisp.dhis.report.ReportStore"
+    class="org.hisp.dhis.report.hibernate.HibernateReportStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.report.ReportManager"
+    class="org.hisp.dhis.report.manager.DefaultReportManager">
+    <property name="reportConfigDir" 
+      value="reports"/>
+    <property name="reportConfigFile" 
+      value="reportConfiguration.xml"/>
+    <property name="locationManager"
+      ref="org.hisp.dhis.external.location.LocationManager"/>
+    <property name="configurationManager"
+      ref="org.hisp.dhis.external.configuration.ConfigurationManager"/>
+  </bean>
+  
+  <!-- DataSetCompleteness -->
+  
+  <bean id="org.hisp.dhis.completeness.DataSetCompletenessService"
+    class="org.hisp.dhis.completeness.DefaultDataSetCompletenessService">
+    <property name="configDir"
+      value="reports"/>
+    <property name="configFile"
+      value="dataSetCompletenessConfiguration.xml"/>
+    <property name="organisationUnitService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    <property name="dataSetService"
+      ref="org.hisp.dhis.dataset.DataSetService"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+    <property name="registrationService"
+      ref="org.hisp.dhis.dataset.CompleteDataSetRegistrationService"/>
+    <property name="locationManager"
+      ref="org.hisp.dhis.external.location.LocationManager"/>
+    <property name="configurationManager"
+      ref="org.hisp.dhis.external.configuration.ConfigurationManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.completeness.DataSetCompletenessStore"
+    class="org.hisp.dhis.completeness.jdbc.JDBCDataSetCompletenessStore">    
+    <property name="statementManager"
+      ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+  </bean>
+
+  <bean id="internal-process-DataSetCompleteness"
+    class="org.hisp.dhis.completeness.DataSetCompletenessInternalProcess"
+    scope="prototype">
+    <property name="completenessService"
+      ref="org.hisp.dhis.completeness.DataSetCompletenessService"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>   
+    <property name="batchHandlerFactory"
+      ref="org.hisp.dhis.aggregation.batch.factory.BatchHandlerFactory"/>
+    <property name="dataSetService"
+      ref="org.hisp.dhis.dataset.DataSetService"/>
+    <property name="organisationUnitService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    <property name="completenessCache"
+      ref="org.hisp.dhis.completeness.cache.DataSetCompletenessCache"/>
+    <property name="completenessStore"
+      ref="org.hisp.dhis.completeness.DataSetCompletenessStore"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.completeness.cache.DataSetCompletenessCache"
+    class="org.hisp.dhis.completeness.cache.MemoryDataSetCompletenessCache">    
+    <property name="completenessService"
+      ref="org.hisp.dhis.completeness.DataSetCompletenessService"/>
+  </bean>
+  
+	<!-- AOP transaction definitions -->
+	
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readOnlyTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.OlapURLStore\.get.*</value>
+        <value>.*\.ReportTableStore\.get.*</value>
+        <value>.*\.ReportStore\.get.*</value>
+      </list>
+    </property>
+  </bean>
+	
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readWriteTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.OlapURLStore\.save.*</value>
+        <value>.*\.OlapURLStore\.delete.*</value>
+        <value>.*\.ReportTableStore\.save.*</value>
+        <value>.*\.ReportTableStore\.delete.*</value>
+        <value>.*\.ReportStore\.save.*</value>
+        <value>.*\.ReportStore\.delete.*</value>
+      </list>
+    </property>
+  </bean>	
+	
+  <!-- Startup routine definitions -->
+  
+  <bean id="org.hisp.dhis.startup.OpenHealthDataSourceWriter"
+    class="org.hisp.dhis.startup.OpenHealthDataSourceWriter">
+    <property name="environmentVariable" value="OPENHEALTH_HOME"/>
+    <property name="dataSourceFile" value="datasources.xml"/>
+    <property name="databaseInfoProvider"
+      ref="org.hisp.dhis.system.database.DatabaseInfoProvider"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.startup.ReportTableUpgrader"
+    class="org.hisp.dhis.startup.ReportTableUpgrader">
+    <property name="reportTableService"
+      ref="org.hisp.dhis.reporttable.ReportTableService"/>
+  </bean>
+  
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject"
+      ref="org.hisp.dhis.system.startup.StartupRoutineExecutor"/>
+    <property name="targetMethod" value="addStartupRoutines"/>
+    <property name="arguments">
+      <list>
+        <ref local="org.hisp.dhis.startup.OpenHealthDataSourceWriter"/>
+        <ref local="org.hisp.dhis.startup.ReportTableUpgrader"/>
+      </list>
+    </property>
+  </bean>
+
+  <!-- Deletion Handler -->
+  
+  <bean id="org.hisp.dhis.report.ReportDeletionHandler"
+    class="org.hisp.dhis.report.ReportDeletionHandler">
+    <property name="reportStore"
+      ref="org.hisp.dhis.report.ReportStore"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.reporttable.ReportTableDeletionHandler"
+    class="org.hisp.dhis.reporttable.ReportTableDeletionHandler">
+    <property name="reportTableService"
+      ref="org.hisp.dhis.reporttable.ReportTableService"/>
+  </bean>
+  
+  <!-- DeletionManager -->
+  
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+    <property name="targetMethod" value="addDeletionHandlers"/>
+    <property name="arguments">
+      <list>
+        <list>
+          <ref local="org.hisp.dhis.report.ReportDeletionHandler"/>
+          <ref local="org.hisp.dhis.reporttable.ReportTableDeletionHandler"/>
+        </list>
+      </list>
+    </property>
+  </bean>
+  
+  <!-- Deletion AOP definitions -->
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="deletionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.ReportTableService\.delete.*</value>
+        <value>.*\.ReportStore\.delete.*</value>
+      </list>
+    </property>
+  </bean>
+  
+</beans>

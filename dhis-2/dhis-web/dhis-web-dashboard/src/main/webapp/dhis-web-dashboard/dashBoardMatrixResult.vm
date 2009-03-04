@@ -1,0 +1,155 @@
+<html>
+<head>
+<title>Dashboard Matrix Result Screen</title>
+<link type="text/css" rel="stylesheet" href="css/StylesForTags.css">
+<script type="text/javascript" src="javascript/hashtable.js"></script>
+
+    		        <script>
+		            // Global Variables
+			            
+			            var targets = new HashTable();
+			            #foreach($indicator in $indicators)
+			                #set($targets = $indicatorTargets.get($indicator));
+			                var targetArray = new Array();
+			                var count1 = 0;
+			                #foreach($target in $targets)
+			                	targetArray[count1] = new Array();
+			                	targetArray[count1][0] = '$target.name';
+								targetArray[count1][1] = ""+$target.value;
+			                	count1++;
+			                #end
+			                targets.put('$indicator.name',targetArray);
+			            #end	
+			            
+			            function getTargets(indicatorName)
+			            {
+			            	var tempTarget = new Array();
+			            	tempTarget = targets.get(indicatorName);
+			            	var tempName = indicatorName + "\n\n";
+			            	
+			            	for (temp=0; temp < tempTarget.length; temp++)
+			            	{
+			            		tempName += tempTarget[temp][0] + " : " + tempTarget[temp][1] + "\n";
+			            	} 
+			            	
+			            	alert(tempName);
+
+			            }
+        </script>
+</head>
+<body>
+
+		#set ($count = 0)
+				
+	
+	#if ($ougSetControl == 0)
+		
+			<div  class="TableHeadingCellStyles" align="center"><h1>$organisationUnit.shortName 	</h1></div>
+			<div  class="TableHeadingCellStyles" align="center"><h2>Period: $startPeriod.StartDate to $endPeriod.EndDate</h2></div>
+			<td></td>
+			<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%">		
+				<tr class="TableHeadingCellStyles" align="center">
+					<td class="TableHeadingCellStyles" align="center"><h3>Indicator name</h3></td>
+					<td class="TableHeadingCellStyles" align="center"><h3>Expected</h3></td>
+					<td class="TableHeadingCellStyles" align="center"><h3>Achievement</h3></td>
+					<td class="TableHeadingCellStyles" align="center"><h3>Maximum achiever</h3></td>
+					<td class="TableHeadingCellStyles" align="center"><h3>Minimum achiever</h3></td>
+		          
+				</tr>
+				
+					#foreach($indicator in $indicators)
+					<tr>
+				
+						#set($indicatorName = $indicator.name)
+						
+						<td class="TableHeadingCellStyles" align="left">$indicatorName</td>
+						
+						#set ($targetValue = $targetValues.get($count))
+						#if ($targetValue == 0.0)
+							<td class="TableHeadingCellStyles" align="center" ></td>						
+						#else
+							<td class="TableHeadingCellStyles" align="center" >$targetValue</td>
+						#end					
+										
+						#set($indicatorValue = $collectedIndicatorValues.get($count))
+						<td class="TableHeadingCellStyles" align="center">$indicatorValue</td>
+					
+						#set($maxValue = $maxValues.get($count))
+						<td class="TableHeadingCellStyles" align="center">$maxValue</td>
+	
+						#set($minValue = $minValues.get($count))
+						<td class="TableHeadingCellStyles" align="center">$minValue</td>
+						
+						</tr>
+						
+						
+						#set ($count = $count + 1)
+						
+						
+						
+					#end
+					
+					
+				
+			</table>
+		
+	#elseif ($ougSetControl == 1)
+
+		#foreach($organisationUnitGroup in $orgUnitGroups)
+	
+			<div  class="TableHeadingCellStyles" align="center"><h1>$organisationUnitGroup.name 	</h1></div>
+			<div  class="TableHeadingCellStyles" align="center"><h2>Period: $startPeriod.StartDate to $endPeriod.EndDate</h2></div>
+			<td></td>
+			<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%">		
+				<tr class="TableHeadingCellStyles" align="center">
+					<td class="TableHeadingCellStyles" align="center"><h3>Indicator name</h3></td>
+					<td class="TableHeadingCellStyles" align="center"><h3>Expected</h3></td>
+					<td class="TableHeadingCellStyles" align="center"><h3>Achievement</h3></td>
+					<td class="TableHeadingCellStyles" align="center"><h3>Maximum achiever</h3></td>
+					<td class="TableHeadingCellStyles" align="center"><h3>Minimum achiever</h3></td>
+		          
+				</tr>
+				
+					#foreach($indicator in $indicators)
+					<tr>
+				
+						#set($indicatorName = $indicator.name)
+						
+						<td class="TableHeadingCellStyles" align="left">$indicatorName</td>
+						
+						##set ($targetValue = $targetValues.get($count))
+						<td class="TableHeadingCellStyles" align="center" ></td>					
+																				
+						#set($indicatorValue = $collectedIndicatorValues.get($count))
+						<td class="TableHeadingCellStyles" align="center">$indicatorValue</td>
+					
+						#set($maxValue = $maxValues.get($count))
+						<td class="TableHeadingCellStyles" align="center">$maxValue</td>
+	
+						#set($minValue = $minValues.get($count))
+						<td class="TableHeadingCellStyles" align="center">$minValue</td>
+						
+						</tr>
+						
+						
+						#set ($count = $count + 1)
+						
+						
+						
+					#end
+					
+					
+				
+			</table>
+		
+		#end
+		
+	#else
+	
+	#end
+	
+	
+
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+  "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+  <include file="dhis-web-commons.xml"/>
+  
+  <package name="dhis-web-validationrule" extends="dhis-web-commons"
+    namespace="/dhis-web-validationrule">
+    
+    <action name="index" class="org.hisp.dhis.validationrule.action.NoAction">
+      <result name="success" type="redirect">showValidationRuleForm.action</result>
+    </action>
+    
+    <!-- ValidationRule CRUD operations -->
+    
+    <action name="showValidationRuleForm" class="org.hisp.dhis.validationrule.action.GetValidationRuleListAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-validationrule/validationRule.vm</param>
+      <param name="menu">/dhis-web-validationrule/menu.vm</param>
+      <param name="javascripts">javascript/general.js</param>
+    </action> 
+    
+    <action name="getValidationRule" class="org.hisp.dhis.validationrule.action.GetValidationRuleAction">
+      <result name="success" type="velocity">/dhis-web-validationrule/responseValidationRule.vm</result>
+      <interceptor-ref name="transactionStack"/>      
+    </action>
+        
+    <action name="showAddValidationRuleForm" class="org.hisp.dhis.validationrule.action.NoAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-validationrule/addValidationRuleForm.vm</param>
+      <param name="menu">/dhis-web-validationrule/menu.vm</param>
+      <param name="javascripts">javascript/general.js,javascript/validationForm.js,javascript/expression.js</param>
+      <param name="stylesheets">style/validationStyle.css</param>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_VALIDATIONRULE_ADD</param>
+    </action>    
+    
+    <action name="addValidationRule" class="org.hisp.dhis.validationrule.action.AddValidationRuleAction">
+      <result name="success" type="redirect">showValidationRuleForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_VALIDATIONRULE_ADD</param>
+    </action>
+    
+    <action name="removeValidationRule" class="org.hisp.dhis.validationrule.action.RemoveValidationRuleAction">
+      <result name="success" type="redirect">showValidationRuleForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_VALIDATIONRULE_DELETE</param>
+    </action>
+      
+    <action name="validateValidationRule" class="org.hisp.dhis.validationrule.action.ValidateValidationRuleAction">
+      <result name="success" type="velocity">/dhis-web-validationrule/responseSuccess.vm</result>
+      <result name="error" type="velocity">/dhis-web-validationrule/responseError.vm</result>
+      <result name="input" type="velocity">/dhis-web-validationrule/responseInput.vm</result>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="getTextualExpression"	class="org.hisp.dhis.validationrule.action.GetTextualExpressionAction">
+      <result name="success" type="velocity">/dhis-web-validationrule/responseTextualExpression.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="validateExpression" class="org.hisp.dhis.validationrule.action.ValidateExpressionAction">
+      <result name="success" type="velocity-xml">/dhis-web-validationrule/responseSuccess.vm</result>
+      <result name="input" type="velocity-xml">/dhis-web-validationrule/responseError.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>  
+    
+    <action name="showUpdateValidationRuleForm" class="org.hisp.dhis.validationrule.action.GetValidationRuleAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-validationrule/updateValidationRuleForm.vm</param>
+      <param name="javascripts">javascript/general.js,javascript/validationForm.js,javascript/expression.js </param>
+      <param name="stylesheets">style/validationStyle.css</param>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_VALIDATIONRULE_UPDATE</param>
+    </action>
+
+    <action name="updateValidationRule" class="org.hisp.dhis.validationrule.action.UpdateValidationRuleAction">
+      <result name="success" type="redirect">showValidationRuleForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_VALIDATIONRULE_UPDATE</param>
+    </action>
+    
+    <action name="showEditExpressionForm" class="org.hisp.dhis.validationrule.action.GetExpressionAction">
+      <result name="success" type="velocity">/popup.vm</result>
+      <param name="page">/dhis-web-validationrule/editExpressionForm.vm</param>
+      <param name="javascripts">javascript/general.js,javascript/expression.js</param>
+      <param name="requiredAuthorities">F_VALIDATIONRULE_UPDATE</param>
+    </action>    
+    
+    <action name="getFilteredDataElements" class="org.hisp.dhis.validationrule.action.GetFilteredDataElementsAction">
+      <result name="success" type="velocity">/dhis-web-validationrule/responseOperandList.vm</result>			
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <!-- ValidationRuleGroup CRUD operations -->
+        
+    <action name="showValidationRuleGroupForm" class="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupListAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-validationrule/validationRuleGroup.vm</param>
+      <param name="menu">/dhis-web-validationrule/menu.vm</param>
+      <param name="javascripts">javascript/validationRuleGroup.js</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="getValidationRuleGroup" class="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupAction">
+      <result name="success" type="velocity">/dhis-web-validationrule/responseValidationRuleGroup.vm</result>
+      <interceptor-ref name="transactionStack"/>      
+    </action>
+        
+    <action name="removeValidationRuleGroup" class="org.hisp.dhis.validationrule.action.validationrulegroup.RemoveValidationRuleGroupAction">
+      <result name="success" type="redirect">showValidationRuleGroupForm.action</result>
+      <param name="requiredAuthorities">F_VALIDATIONRULEGROUP_DELETE</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+      
+    <action name="showAddValidationRuleGroupForm" class="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupMembersAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-validationrule/addValidationRuleGroupForm.vm</param>
+      <param name="javascripts">javascript/validationRuleGroup.js</param>
+      <param name="requiredAuthorities">F_VALIDATIONRULEGROUP_ADD</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="addValidationRuleGroup" class="org.hisp.dhis.validationrule.action.validationrulegroup.AddValidationRuleGroupAction">
+      <result name="success" type="redirect">showValidationRuleGroupForm.action</result>
+      <param name="requiredAuthorities">F_VALIDATIONRULEGROUP_ADD</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="showUpdateValidationRuleGroupForm" class="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="chain">getGroupMembersAndAvailableValidationRules</result>
+      <param name="requiredAuthorities">F_VALIDATIONRULEGROUP_UPDATE</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="getGroupMembersAndAvailableValidationRules" class="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupMembersAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-validationrule/updateValidationRuleGroupForm.vm</param>
+      <param name="javascripts">javascript/validationRuleGroup.js</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="updateValidationRuleGroup" class="org.hisp.dhis.validationrule.action.validationrulegroup.UpdateValidationRuleGroupAction">      
+      <result name="success" type="redirect">showValidationRuleGroupForm.action</result>
+      <param name="requiredAuthorities">F_VALIDATIONRULEGROUP_UPDATE</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="validateValidationRuleGroup" class="org.hisp.dhis.validationrule.action.validationrulegroup.ValidateValidationRuleGroupAction">
+      <result name="success" type="velocity">/dhis-web-validationrule/responseSuccess.vm</result>
+      <result name="error" type="velocity">/dhis-web-validationrule/responseError.vm</result>
+      <result name="input" type="velocity">/dhis-web-validationrule/responseInput.vm</result>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <!-- Run validation -->
+    
+    <action name="showRunValidationForm" class="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupListAction">
+      <result name="success" type="chain">showRunValidationFormChain</result>
+    </action>
+    
+    <action name="showRunValidationFormChain" class="org.hisp.dhis.validationrule.action.SetupTreeAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-validationrule/runValidationForm.vm</param>
+      <param name="menu">/dhis-web-validationrule/menu.vm</param>
+      <param name="javascripts">../dhis-web-commons/oust/oust.js,../dhis-web-commons/ouwt/ouwt.js,../dhis-web-commons/calendar/calendar.js,../dhis-web-commons/calendar/calendar-lang.js,../dhis-web-commons/calendar/calendar-setup.js,javascript/general.js,javascript/runValidation.js</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+            
+    <action name="validateRunValidation" class="org.hisp.dhis.validationrule.action.ValidateRunValidationAction" >
+      <result name="success" type="velocity">/dhis-web-validationrule/responseSuccess.vm</result>
+      <result name="error" type="velocity">/dhis-web-validationrule/responseError.vm</result>
+      <result name="input" type="velocity">/dhis-web-validationrule/responseInput.vm</result> 
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="runValidationAction" class="org.hisp.dhis.validationrule.action.RunValidationAction" >
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-validationrule/viewValidationResultForm.vm</param>
+      <param name="javascripts">javascript/runValidation.js</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="viewValidationResultDetails" class="org.hisp.dhis.validationrule.action.GetValidationResultDetailsAction">
+      <result name="success" type="velocity">/popup.vm</result>
+      <param name="page">/dhis-web-validationrule/viewValidationResultDetailsForm.vm</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="generateValidationResultPDF" class="org.hisp.dhis.validationrule.action.GenerateValidationResultPDFAction">
+      <result name="success" type="stream">
+        <param name="contentType">text/pdf</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">filename="ValidationReport.pdf"</param>
+				<param name="bufferSize">10240</param>				
+			</result>
+      <result name="none" type="redirect">showRunValidationForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="generateValidationResultWorkbook" class="org.hisp.dhis.validationrule.action.GenerateValidationResultWorkbookAction">
+      <result name="success" type="stream">
+        <param name="contentType">text/pdf</param>
+        <param name="inputName">inputStream</param>
+        <param name="contentDisposition">filename="ValidationReport.xls"</param>
+        <param name="bufferSize">10240</param>        
+      </result>
+      <result name="none" type="redirect">showRunValidationForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+  </package>
+</xwork>

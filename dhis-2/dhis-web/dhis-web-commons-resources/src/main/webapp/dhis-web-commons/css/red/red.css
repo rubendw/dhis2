@@ -1,0 +1,334 @@
+
+/*----------------------------------------------------------------------------*/
+/* General                                                                    */
+/*----------------------------------------------------------------------------*/
+
+* 
+{
+  font-family: tahoma, sans-serif;
+  line-height: 125%;
+}
+
+html,body 
+{
+  margin: 0px;
+  padding: 0px;
+  background-color: white;
+}
+
+img 
+{
+  border: 0;
+}
+
+ul,ol 
+{
+  padding: 0px;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Header                                                                     */
+/*----------------------------------------------------------------------------*/
+
+div#header
+{
+  background-image:url('logo_background.png');
+  background-repeat:repeat-x;
+  height:83px;
+  position:fixed;
+  top:0px;
+  left:20px;
+  right:20px;	
+}
+
+img#header1
+{
+  float: left;
+}
+
+img#header2
+{
+  position: fixed;
+  top: 20px;
+  left: 50px;
+}
+
+img#header3
+{
+  float: right;
+}
+
+a#about
+{
+  position: fixed;
+  top: 50px;
+  right: 40px;
+  color: white;
+  font-size: 12px;
+}
+
+span#headerText
+{
+  position: fixed;
+  top: 35px;
+  left: 300px;
+  color: white;
+  font-size: 22px;
+}
+
+span#currentUser
+{
+  position: fixed;
+  top: 30px;
+  right: 40px;
+  color: white;
+  font-size: 12px;
+}
+
+span#currentUser a
+{
+  color: white;
+}
+
+div#popupHeader 
+{
+  background-color: #931B21;
+  height: 34px;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  border-bottom: 1px solid #202020;
+}
+
+span#popupHeaderText
+{
+  position: fixed;
+  top: 3px;
+  left: 30px;
+  font-size: 14px;
+  color: white;
+  margin: 5px;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Module page                                                                */
+/*----------------------------------------------------------------------------*/
+
+.moduleButton
+{
+  background-color: #D5FFC5;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  width: 220px;
+  height: 29px;
+  border: 1px solid #8AE068;
+  display: block;
+}
+
+.moduleButtonLink
+{
+  color: #303030;
+  text-decoration: none;
+  display: block;
+  width: 220px;
+  height: 23px;
+  text-align: center;
+  padding-top: 6px;
+}  
+
+.moduleButton a:hover
+{
+  background-color: #E4FEDA;
+}
+
+div#maintenanceModules
+{
+  position: fixed;
+  left: 300px;
+  top: 144px;
+}
+
+div#serviceModules
+{
+  position: fixed;
+  left: 550px;
+  top: 144px;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Main menu                                                                  */
+/*----------------------------------------------------------------------------*/
+
+#mainMenu
+{
+  background-image:url('main_menu_background.png');
+  background-repeat:repeat-x;
+  width: 250px;
+  height: 35px;
+  float: left;
+  position: fixed;
+  top: 98px;
+  left: 20px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #606060;
+}
+
+#mainMenuLink
+{
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+  display: block;
+  width: 250px;
+  height: 27px;
+  text-align: center;
+  padding-top: 8px;
+}
+
+#mainMenu a:hover
+{
+  background-color: #C75157;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Left bar                                                                   */
+/*----------------------------------------------------------------------------*/
+
+#leftBar
+{
+  background-color: #931B21;
+  height: 472px;
+  width: 250px;
+  float: left;
+  position: fixed;
+  top: 148px;
+  left: 20px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #606060;
+}
+
+#leftBarContents
+{
+  color: black;
+  font-size: 13px;
+}
+
+#leftBarContents h2
+{
+  font-size: 14px;
+  margin-top: 16px;
+  margin-right: 17px;
+  margin-left: 8px;
+  background-color: #C75157;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  color: white;
+  border-style: solid;
+  border-width: 1px;
+  border-color: white;
+}
+
+#leftBarContents ul
+{
+  margin-left: 35px;
+  list-style-type: square;
+  color: white;
+}
+
+#leftBarContents a
+{
+  color: white;
+  text-decoration: none;
+}
+
+#leftBarContents a:hover
+{
+  color: #FFE0E4;
+}
+
+/*----------------------------------------------------------------------------*/
+/* Main page                                                                  */
+/*----------------------------------------------------------------------------*/
+
+.mainPageTable 
+{
+  width: 100%;
+}
+
+.page 
+{
+  font-size: 9pt;
+}
+
+.page h1 
+{
+  font-size: 13pt;
+  color: #606060;
+}
+
+.page h2 
+{
+  font-size: 12pt;
+  color: #606060;
+}
+
+.page h3 
+{
+  font-size: 11pt;
+  color: #606060;
+}
+
+.page h4 
+{
+  font-size: 10pt;
+  color: #606060;
+}
+
+.page h5 
+{
+  font-size: 9pt;
+  color: #606060;
+}
+
+.page h6 
+{
+  font-size: 8pt;
+  color: #606060;
+}
+
+.page p,.page td,.page th,.page input,.page select,.page textarea 
+{
+  font-size: 9pt;
+}
+
+.page th 
+{
+  text-align: left;
+  background-color: #dddddd;
+  color: #404040;
+  padding: 1px 6px 2px 6px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #acacac;
+}
+
+#mainPage 
+{
+  margin: 110px 10px 10px 300px;
+}
+
+#popupPage 
+{
+  margin: 50px 10px 10px 10px;
+}
+
+.required 
+{
+  font-style: normal;
+  color: #ff0000;
+}
+

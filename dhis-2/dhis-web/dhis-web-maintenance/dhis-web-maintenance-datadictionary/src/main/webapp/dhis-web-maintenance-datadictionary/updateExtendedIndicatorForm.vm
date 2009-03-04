@@ -1,0 +1,242 @@
+
+<h3>$i18n.getString( "edit_indicator" )</h3>
+
+<form id="updateExtendedIndicatorForm" action="updateExtendedIndicator.action" method="post" onsubmit="return validateUpdateExtendedIndicator()">
+
+<div>
+	<input type="hidden" id="id" name="id" value="$indicator.id">
+	<input type="hidden" id="numerator" name="numerator" value="$indicator.numerator">
+	<input type="hidden" id="numeratorDescription" name="numeratorDescription" value="$indicator.numeratorDescription">
+	<input type="hidden" id="numeratorAggregationOperator" name="numeratorAggregationOperator" value="$indicator.numeratorAggregationOperator">
+	<input type="hidden" id="denominator" name="denominator" value="$indicator.denominator">
+	<input type="hidden" id="denominatorDescription" name="denominatorDescription" value="$indicator.denominatorDescription">
+	<input type="hidden" id="denominatorAggregationOperator" name="denominatorAggregationOperator" value="$indicator.denominatorAggregationOperator">
+</div>
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "identifying_and_definitional_atts" )</th>
+	</tr>
+	<tr>
+		<td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="name" name="name" value="$encoder.htmlEncode( $indicator.name )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="shortName">$i18n.getString( "short_name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="shortName" name="shortName" value="$encoder.htmlEncode( $indicator.shortName )" maxlength="20" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="alternativeName">$i18n.getString( "alternative_name" )</label></td>
+		<td><input type="text" id="alternativeName" name="alternativeName" value="$!encoder.htmlEncode( $indicator.alternativeName )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="code">$i18n.getString( "code" )</label></td>
+		<td><input type="text" id="code" name="code" value="$!encoder.htmlEncode( $indicator.code )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="description">$i18n.getString( "description" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="description" name="description" value="$!encoder.htmlEncode( $indicator.description )" style="width:20em"></td>
+	</tr>
+	<tr>
+        <td><label for="annualized">$i18n.getString( "annualized" )</label></td>
+        <td>
+            <select id="annualized" name="annualized" style="width:20em">
+                <option value="false">$i18n.getString( "no" )</option>
+                <option value="true"#if( $indicator.annualized ) selected="selected"#end>$i18n.getString( "yes" )</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td><label for="indicatorTypeId">$i18n.getString( "indicator_type" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td>
+            <select id="indicatorTypeId" name="indicatorTypeId" style="min-width:20em">
+                <option value="null">[$i18n.getString( "select" )]</option>
+            #foreach( $indicatorType in $indicatorTypes )
+                <option value="$indicatorType.id"#if( $indicator.indicatorType.id == $indicatorType.id ) selected="selected"#end>$encoder.htmlEncode( $indicatorType.name )</option>
+            #end
+            </select>
+        </td>
+    </tr>
+	<tr>
+		<td></td>
+		<td><input type="button" value="$i18n.getString( 'edit_numerator' )" onclick="showEditNumeratorForm()" style="width:10em"><input
+				type="button" value="$i18n.getString( 'edit_denominator' )" onclick="showEditDenominatorForm()" style="width:10em"></td>
+	</tr>
+	
+	<tr>
+		<td><label for="mnemonic">$i18n.getString( "mnemonic" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="mnemonic" name="mnemonic" value="$!encoder.htmlEncode( $indicator.extended.mnemonic )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="version">$i18n.getString( "version" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><textarea id="version" name="version" style="width:20em">$!encoder.htmlEncode( $indicator.extended.version )</textarea></td>
+	</tr>
+	<tr>
+		<td><label for="context">$i18n.getString( "context" )</label></td>
+		<td><input type="text" id="context" name="context" value="$!encoder.htmlEncode( $indicator.extended.context )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="synonyms">$i18n.getString( "synonyms" )</label></td>
+		<td><input type="text" id="synonyms" name="synonyms" value="$!encoder.htmlEncode( $indicator.extended.synonyms )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="hononyms">$i18n.getString( "hononyms" )</label></td>
+		<td><input type="text" id="hononyms" name="hononyms" value="$!encoder.htmlEncode( $indicator.extended.hononyms )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="keywords">$i18n.getString( "keywords" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="keywords" name="keywords" value="$!encoder.htmlEncode( $indicator.extended.keywords )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="status">$i18n.getString( "status" ) </label></td>
+		<td>
+			<select id="status" name="status" style="width:20em">
+				<option value="None">[$i18n.getString( "select" )]</option>
+				<option value="Current" #if( $indicator.extended.status == 'Current' ) selected="selected" #end>$i18n.getString( "current" )</option>
+				<option value="Past" #if( $indicator.extended.status == 'Past' ) selected="selected" #end>$i18n.getString( "past" )</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="statusDate">$i18n.getString( "status_date" ) ($i18n.getString( "format.date.label" ))</label></td>
+		<td><input type="text" id="statusDate" name="statusDate" value="$!format.formatDate( $!dataElement.extended.statusDate )" style="width:20em"></td>
+		<td><img src="../images/calendar_icon.gif" width="16" height="16" id="getStatusDate" style="cursor: pointer;" title="$i18n.getString("date_selector")" onmouseover="this.style.background='orange';" onmouseout="this.style.background=''" alt="$i18n.getString( "status_date" )"></td>
+	</tr>
+	
+	<script type="text/javascript">
+        Calendar.setup({
+            inputField     :    "statusDate",      // id of the input field
+            ifFormat       :    "$i18n.getString("format.date.label")",       // format of the input field
+            button         :    "getStatusDate"   // trigger for the calendar (button ID)
+        });
+  	</script>
+  	
+	<tr>
+		<td colspan="2">&nbsp;</td>
+	</tr>
+	<tr>
+		<th colspan="2">$i18n.getString( "relational_and_representational_atts" )</th>
+	</tr>
+	<tr>
+		<td><label for="dataType">$i18n.getString( "data_type" )</label></td>
+		<td>
+			<select id="dataType" name="dataType" style="width:20em">
+				<option value="None">[$i18n.getString( "select" )]</option>
+				<option value="Alphabetic" #if( $indicator.extended.dataType == 'Alphabetic' ) selected="selected" #end>$i18n.getString( "alphabetic" )</option>
+				<option value="Alphanumeric" #if( $indicator.extended.dataType == 'Alphanumeric' ) selected="selected" #end>$i18n.getString( "alphanumeric" )</option>
+				<option value="Numeric" #if( $indicator.extended.dataType == 'Numeric' ) selected="selected" #end>$i18n.getString( "numeric" )</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="representationalForm">$i18n.getString( "representational_form" )</label></td>
+		<td>
+			<select id="representationalForm" name="representationalForm" style="width:20em">
+				<option value="None">[$i18n.getString( "select" )]</option>
+				<option value="Text" #if( $indicator.extended.representationalForm == 'Text' ) selected="selected" #end>$i18n.getString( "text" )</option>
+				<option value="Code" #if( $indicator.extended.representationalForm == 'Code' ) selected="selected" #end>$i18n.getString( "code" )</option>
+				<option value="Quantitative" #if( $indicator.extended.representationalForm == 'Quantitative' ) selected="selected" #end>$i18n.getString( "quantitative" )</option>
+				<option value="Date" #if( $indicator.extended.representationalForm == 'Date' ) selected="selected" #end>$i18n.getString( "date" )</option>
+				<option value="Identification" #if( $indicator.extended.representationalForm == 'Identification' ) selected="selected" #end>$i18n.getString( "identification" )</option>				
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="representationalLayout">$i18n.getString( "representational_layout" )</label></td>
+		<td><input type="text" id="representationalLayout" name="representationalLayout" value="$!encoder.htmlEncode( $indicator.extended.representationalLayout )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="minimumSize">$i18n.getString( "minimum_size" )</label></td>
+		<td><input type="text" id="minimumSize" name="minimumSize" value="$!encoder.htmlEncode( $indicator.extended.minimumSize )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="maximumSize">$i18n.getString( "maximum_size" )</label></td>
+		<td><input type="text" id="maximumSize" name="maximumSize" value="$!encoder.htmlEncode( $indicator.extended.maximumSize )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="dataDomain">$i18n.getString( "data_domain" )</label></td>
+		<td><textarea id="dataDomain" name="dataDomain" style="width:20em; height:6em">$!encoder.htmlEncode( $indicator.extended.dataDomain )</textarea></td>
+	</tr>
+	<tr>
+		<td><label for="validationRules">$i18n.getString( "validation_rules" )</label></td>
+		<td><textarea id="validationRules" name="validationRules" style="width:20em; height:6em">$!encoder.htmlEncode( $indicator.extended.validationRules )</textarea></td>
+	</tr>
+	<tr>
+		<td><label for="relatedDataReferences">$i18n.getString( "related_data_references" )</label></td>
+		<td><textarea id="relatedDataReferences" name="relatedDataReferences" style="width:20em; height:6em">$!encoder.htmlEncode( $indicator.extended.relatedDataReferences )</textarea></td>
+	</tr>
+	<tr>
+		<td><label for="guideForUse">$i18n.getString( "guide_for_use" )</label></td>
+		<td><textarea id="guideForUse" name="guideForUse" style="width:20em; height:6em">$!encoder.htmlEncode( $indicator.extended.guideForUse )</textarea></td>
+	</tr>
+	<tr>
+		<td><label for="collectionMethods">$i18n.getString( "collection_methods" )</label></td>
+		<td><textarea id="collectionMethods" name="collectionMethods" style="width:20em; height:6em">$!encoder.htmlEncode( $indicator.extended.collectionMethods )</textarea></td>
+	</tr>
+	<tr>
+		<td colspan="2">&nbsp;</td>
+	</tr>
+	<tr>
+		<th colspan="2">$i18n.getString( "administrative_atts" )</th>
+	</tr>
+	<tr>
+		<td><label for="responsibleAuthority">$i18n.getString( "responsible_authority" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="responsibleAuthority" name="responsibleAuthority" value="$!encoder.htmlEncode( $indicator.extended.responsibleAuthority )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="updateRules">$i18n.getString( "update_rules" )</label></td>
+		<td><textarea id="updateRules" name="updateRules" style="width:20em; height:6em">$!encoder.htmlEncode( $indicator.extended.updateRules )</textarea></td>
+	</tr>
+	<tr>
+		<td><label for="accessAuthority">$i18n.getString( "access_authority" )</label></td>
+		<td><input type="text" id="accessAuthority" name="accessAuthority" value="$!encoder.htmlEncode( $indicator.extended.accessAuthority )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="updateFrequency">$i18n.getString( "update_frequency" )</label></td>
+		<td><input type="text" id="updateFrequency" name="updateFrequency" value="$!encoder.htmlEncode( $indicator.extended.updateFrequency )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="location">$i18n.getString( "location" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="location" name="location" value="$!encoder.htmlEncode( $indicator.extended.location )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="reportingMethods">$i18n.getString( "reporting_methods" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><textarea id="reportingMethods" name="reportingMethods" style="width:20em; height:6em">$!encoder.htmlEncode( $indicator.extended.reportingMethods )</textarea></td>
+	</tr>
+	<tr>
+		<td><label for="versionStatus">$i18n.getString( "version_status" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="versionStatus" name="versionStatus" value="$!encoder.htmlEncode( $indicator.extended.versionStatus )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="previousVersionReferences">$i18n.getString( "previous_version_references" )</label></td>
+		<td><textarea id="previousVersionReferences" name="previousVersionReferences" style="width:20em; height:6em">$!encoder.htmlEncode( $indicator.extended.previousVersionReferences )</textarea></td>
+	</tr>
+	<tr>
+		<td><label for="sourceDocument">$i18n.getString( "source_document" )</label></td>
+		<td><input type="text" id="sourceDocument" name="sourceDocument" value="$!encoder.htmlEncode( $indicator.extended.sourceDocument )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="sourceOrganisation">$i18n.getString( "source_organisation" )</label></td>
+		<td><input type="text" id="sourceOrganisation" name="sourceOrganisation" value="$!encoder.htmlEncode( $indicator.extended.sourceOrganisation )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="comment">$i18n.getString( "comment" )</label></td>
+		<td><textarea id="comment" name="comment" style="width:20em; height:6em">$!encoder.htmlEncode( $indicator.extended.comment )</textarea></td>
+	</tr>	
+	<tr>
+		<td></td>
+		<td><input type="submit" value="$i18n.getString( "save" )" style="width:10em"><input type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='indicator.action'" style="width:10em"></td>
+	</tr>
+</table>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+
+</script>

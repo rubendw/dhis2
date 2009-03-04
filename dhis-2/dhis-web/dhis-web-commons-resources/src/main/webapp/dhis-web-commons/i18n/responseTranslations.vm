@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations>
+#foreach( $key in $translations.keySet() )
+	<translation>
+	    <key>$key</key>
+	    <value>$encoder.xmlEncode( $translations.get( $key ) )</value>
+	</translation>
+#end
+</translations>

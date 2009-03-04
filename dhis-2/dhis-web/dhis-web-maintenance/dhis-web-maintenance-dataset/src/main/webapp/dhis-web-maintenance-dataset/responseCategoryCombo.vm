@@ -1,0 +1,8 @@
+
+<categoryCombo>
+  <categories>
+    #foreach( $category in $categoryList )
+      <category id="$category.id">$encoder.xmlEncode( $category.name )</category>
+    #end
+  </categories>
+</categoryCombo>

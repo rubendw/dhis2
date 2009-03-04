@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.dataelement.DataElementCategory" table="dataelementcategory">
+    
+    <id name="id" column="categoryid">
+      <generator class="native"/>
+    </id>
+        	
+    <property name="name">
+      <column name="name" not-null="true" unique="true" length="160"/>
+    </property>
+    
+    <set name="categoryOptions" table="categories_categoryoptions">
+      <key column="categoryid"/>
+      <many-to-many class="org.hisp.dhis.dataelement.DataElementCategoryOption" 
+        column="categoryoptionid" foreign-key="fk_category_categoryoptionid"/>
+    </set>
+        
+  </class>
+</hibernate-mapping>

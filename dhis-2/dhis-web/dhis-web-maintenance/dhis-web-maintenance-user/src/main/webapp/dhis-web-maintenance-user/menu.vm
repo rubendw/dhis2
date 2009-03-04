@@ -1,0 +1,7 @@
+<h2>$i18n.getString( "user" )</h2>
+<ul>
+	<li><a href="alluser.action" title="$i18n.getString( "user" )">$i18n.getString( "user" )</a></li>
+	<li><a href="user.action" title="$i18n.getString( "user_by_orgunit" )">$i18n.getString( "user_by_orgunit" )</a></li>
+	<li><a href="allRole.action" title="$i18n.getString( "user_role" )">$i18n.getString( "user_role" )</a></li>
+	<li><a href="changePassword.action" title="$i18n.getString( "change_password" )">$i18n.getString( "change_password" )</a></li>	
+</ul>

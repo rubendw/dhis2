@@ -1,0 +1,67 @@
+
+<h3>$i18n.getString( "ixf_configuration" )</h3>
+
+<form id="configForm" name="configForm" method="post" action="configIXF.action">
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "configuration" )</th>
+	</tr>
+	<tr>
+		<td><label for="source">$i18n.getString( "source" )</label></td>
+		<td><input type="text" value="$!encoder.htmlEncode( $configuration.source )" style="width:24em" readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td><label for="sourceKey">$i18n.getString( "source_key" )</label></td>
+		<td><input type="text" value="$!encoder.htmlEncode( $configuration.sourceKey )" style="width:24em" readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td><label for="comment">$i18n.getString( "comment" )</label></td>
+		<td><input type="text" id="comment" name="comment" value="$!encoder.htmlEncode( $configuration.comment )" style="width:24em"></td>
+	</tr>
+	<tr>
+		<td><label for="country">$i18n.getString( "country" )</label></td>
+		<td>
+			<select id="countryKey" name="countryKey" style="min-width:24em">
+				<option value="0">[ $i18n.getString( "select_country" ) ]</option>
+			#foreach( $cntry in $countries )
+				<option value="$cntry.key"#if ( $configuration.country.key == $cntry.key ) selected="selected"#end>$cntry.longName</option>
+			#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="levelName">$i18n.getString( "level_names" )</label></td>
+		<td><input type="text" id="levelName" name="levelName" style="width:24em"></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<input type="button" value="$i18n.getString( 'add' )" style="width:6em" onclick="addLevel()"
+				><input type="button" value="$i18n.getString( 'del' )" style="width:6em" onclick="deleteLevel()"
+				><input type="button" value="$i18n.getString( 'up' )" style="width:6em" onclick="moveLevelUp()"
+				><input type="button" value="$i18n.getString( 'down' )" style="width:6em" onclick="moveLevelDown()">
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<select multiple size="8" id="levelNames" name="levelNames" style="min-width:24em">
+			#foreach ( $level in $configuration.levelNames )
+				<option value="$level">$level</option>
+			#end
+			</select>			
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="button" value="$i18n.getString( 'update' )" onclick="submitConfigForm()" style="width:12em"><input 
+			type="button" value="$i18n.getString( 'cancel' )" onclick="window.location.href='displayMetaDataExportForm.action?exportFormat=IXF'" style="width:12em"></td>
+	</tr>
+</table>
+
+</form>
+
+#if ( $message )
+    <span id="message" style="display:block">$!message</span>
+#end

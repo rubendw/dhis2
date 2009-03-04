@@ -1,0 +1,46 @@
+
+<html>
+	    <head>
+		        <title>Validation Analysis Result</title>
+		        <link type="text/css" rel="stylesheet" media="screen" href="css/StylesForTags.css">
+			    </head>
+	    <body>
+        <div align="center" class="NormalB">
+            Validation Analysis Result
+        </div>
+        #set($count = 0)
+        #set($count1 = 0)
+        #foreach( $orgUnit in $orgUnitList)
+            <br /><br />
+            <div class="NormalB">OrganisationUnit : $orgUnit.shortName</div>
+            <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-style: dotted" width="100%">
+        		        <thead>
+                			    <tr class="TableHeadingCellStyles">
+                    				    <th>Validation Rule</th>				
+                     				   #foreach($period in $selectedPeriodList)
+                        				    <th>$simpleDateFormat.format($period.startDate)</th>				
+                        				#end
+                    </tr>
+                		</thead>
+	                <tbody>		
+                #foreach( $validationRule in $validationRuleList )
+                    			<tr class="TableDataCellStyles">
+                    			    #set($validationRuleInfo = "LeftSide Description : "+$validationRule.getLeftside().getDescription()+"\n Operator : "+$validationRule.operator+"\nRightSide Description : "+$validationRule.getRightside().getDescription())
+                    				    <td align="left" class="TableHeadingCellStyles" align="left">
+                    				        <a href="javascript:alert(' LeftSide Description : $validationRule.getLeftside().getDescription() \n Operator : $validationRule.operator \n RightSide Description : $validationRule.getRightside().getDescription()')">$validationRule.name</a>
+                    				    </td>
+                     				   #foreach($period in $selectedPeriodList)
+                            #if($resultStatus.get($count).equals("PASS"))
+                                <td><font color="green">$results.get($count)</font></td>
+                            #else
+                                <td><font color="red">$results.get($count)</font></td>
+                            #end
+                            #set($count = $count + 1)
+                        				#end
+                    			</tr>
+                #end
+		                </tbody>
+            	</table>			
+        #end    	
+    </body>
+</html>    

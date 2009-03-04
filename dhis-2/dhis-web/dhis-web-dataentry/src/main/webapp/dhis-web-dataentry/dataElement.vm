@@ -1,0 +1,120 @@
+<table class="mainPageTable" cellpadding="0">
+	<col id="noCol">
+	<col id="deCol">
+	<col id="typeCol">
+	<col id="minCol">
+    <col id="entryCol">
+	<col id="maxCol">
+	<col id="commentCol">
+	<!--
+	<col>
+	<col>
+	-->
+	<tr>
+		<th>$i18n.getString( "nr" )</th>
+		<th>$i18n.getString( "data_element" )</th>
+		<th>$i18n.getString( "type" )</th>
+		<th>$i18n.getString( "min" )</th>
+		<th>$i18n.getString( "entry" )</th>
+		<th>$i18n.getString( "max" )</th>
+		<th>$i18n.getString( "comment" )</th>
+		<!--<th>$i18n.getString( "timestamp" )</th>-->
+		<!--<th>$i18n.getString( "stored_by" )</th>-->
+	</tr>
+#set( $count = 0 )
+#set( $mark = 0 )
+#set( $tabIndex = 1 )
+#foreach( $dataElement in $section.dataElements )
+	#set( $count = $count + 1 )
+	#if( $mark == 1 )
+		#set( $mark = 0 )
+	#else
+		#set( $mark = 1 )
+	#end
+	#set( $dataValue = false )
+	#set( $dataValue = $dataValueMap.get( $dataElement.id ) )
+	#set( $calculatedValue = false )
+	#set( $calculatedValue = $calculatedValueMap.get( $dataElement ) )
+	#set( $minMax = false )
+	#set( $minMax = $minMaxMap.get( $dataElement.id ) )
+	#set( $calculated = false )
+	#set( $calculated = ($calculatedDataElementIds.contains($dataElement.id)) )
+	<tr #if( $mark == 0 ) style="background-color:#dddddd" #end>
+		##count
+		<td style="text-align:right">$count</td>
+		
+		##data element name
+		<td>
+			<span id="value[$dataElement.id].name" title="$!encoder.htmlEncode( $dataElement.description )">
+			#if( $dataElement.type == "int" && $auth.hasAccess( "dhis-web-dataentry", "viewHistory" ) )
+				<a href="javascript:viewHistory( $dataElement.id  )">
+			#end
+			#if( $useShortName )
+				$encoder.htmlEncode( $dataElement.shortName )
+			#else
+				$encoder.htmlEncode( $dataElement.name )
+			#end
+			#if( $dataElement.type == "int" && $auth.hasAccess( "dhis-web-dataentry", "viewHistory" ) )
+				</a>
+			#end
+		    </span>
+		</td>
+		
+		##type
+		<td>$dataElementTypeMap.get( $dataElement.type )<span id="value[$dataElement.id].type" style="display:none">$dataElement.type</span></td>
+		
+		##min value
+		<td>
+		#if( $dataElement.type == "int" )
+			<div id="value[$dataElement.id].min" style="text-align:center">$!minMax.min</div>
+		#end
+		</td>
+		
+		##entry
+		<td>
+		#if( $dataElement.type == "bool" )
+			<select name="entryselect" id="value[$dataElement.id].boolean" #if( $auth.hasAccess( "dhis-web-dataentry", "saveValue" )) onchange="saveBoolean( $dataElement.id, this )" #else disabled="disabled" #end style="width:100%" tabindex="$tabIndex">
+				<option value="">[$i18n.getString( "no_value" )]</option>
+				<option value="true" #if( $datavalue && $dataValue.value == "true" ) selected="selected" #end>$i18n.getString( "yes" )</option>
+				<option value="false" #if( $datavalue && $dataValue.value == "false" ) selected="selected" #end>$i18n.getString( "no" )</option>
+			</select>
+		#else
+			#set( $minMaxError = false )
+			#if( $dataElement.type == "int" && $dataValue && $minMax )
+				#if( $integer.parseInt( $dataValue.value ) < $minMax.min || $integer.parseInt( $dataValue.value ) > $minMax.max )
+					#set( $minMaxError = true )
+				#end
+			#end
+			#if ( $calculated )
+			<input name="entryfield" id="value[$dataElement.id].value" class="calculated" type="text" value="#if($dataValue) $!encoder.htmlEncode( $dataValue.value ) #elseif( $calculatedValue )$!encoder.htmlEncode( $calculatedValue ) #end" disabled="disabled" onkeypress="return keyPress(event, this)" style="width:100% #if( $minMaxError ) ;background-color:#ffcccc #end #if( $dataElement.type == "int" ) ;text-align:center #end">
+			#else
+			<input name="entryfield" id="value[$dataElement.id].value" type="text" value="$!encoder.htmlEncode( $dataValue.value )" #if( $auth.hasAccess( "dhis-web-dataentry", "saveValue") ) onchange="saveValue( $dataElement.id, '$encoder.jsEncode( $dataElement.name )' )" #else disabled="disabled" #end onkeypress="return keyPress(event, this)" style="width:100% #if( $minMaxError ) ;background-color:#ffcccc #end #if( $dataElement.type == "int" ) ;text-align:center #end" tabindex="$tabIndex">
+            #end
+		#end
+		</td>
+		
+		##max value
+		<td>
+		#if( $dataElement.type == "int" )
+			<div id="value[$dataElement.id].max" style="text-align:center">$!minMax.max</div>
+		#end
+		</td>
+		
+		##comment
+		<td>
+			<select id="value[$dataElement.id].comments" #if( $auth.hasAccess( "dhis-web-dataentry", "saveComment" )) onchange="commentSelected( $dataElement.id )" #else disabled="disabled" #end #if( $dataValue.comment && !$standardComments.contains( $dataValue.comment )) style="display:none; width:100%" #end>
+				<option value="">[$i18n.getString( "no_comment" )]</option>
+				<option value="custom">[$i18n.getString( "custom_comment" )]</option>
+			#foreach( $comment in $standardComments )
+				<option value="$encoder.htmlEncode( $comment )" #if( $datavalue.comment && $comment == $dataValue.comment ) selected="selected" #end>$encoder.htmlEncode( $comment )</option>
+			#end
+			</select>
+			<input id="value[$dataElement.id].comment" type="text" value="$!encoder.htmlEncode( $dataValue.comment )" #if( $auth.hasAccess( "dhis-web-dataentry", "saveComment" ))
+			    onblur="commentLeft( $dataElement.id )" #else disabled="disabled" #end style="width:100% #if( !$dataValue.comment || $standardComments.contains( $dataValue.comment )) ;display:none #end">
+		</td>
+		<!--<td><span id="value[$dataElement.id].timestamp">#if( $dataValue.timestamp ) $format.formatDateTime( $dataValue.timestamp ) #end</span></td>-->
+		<!--<td><span id="value[$dataElement.id].storedBy">$!encoder.htmlEncode( $dataValue.storedBy )</span></td>-->
+	</tr>
+	#set( $tabIndex = $tabIndex + 1 )
+#end
+</table>

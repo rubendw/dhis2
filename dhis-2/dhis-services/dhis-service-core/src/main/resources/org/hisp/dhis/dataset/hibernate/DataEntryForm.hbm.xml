@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.dataset.DataEntryForm" table="dataentryform">
+    <id name="id" column="dataentryformid">
+      <generator class="native"/>
+    </id>
+
+    <property name="name" not-null="true" unique="true" length="160"/>
+
+    <many-to-one name="dataSet" class="org.hisp.dhis.dataset.DataSet" column="datasetid" foreign-key="fk_dataentryform_datasetid" unique="true"/>
+
+    <property name="htmlCode" column="htmlcode" length="10000000"/>
+  </class>
+</hibernate-mapping>

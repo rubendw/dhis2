@@ -1,0 +1,68 @@
+#parse( "/dhis-web-maintenance-datadictionary/multidimensional/select.vm" )
+
+<h3>$i18n.getString( "create_new_data_element_category_option_comb" )</h3>
+
+<form id="selectOption" name="selectOption" method="post" action="addDataElementCategoryOptionCombo.action">
+	
+	<input type="hidden" id="selectedCategoryComboId" name="selectedCategoryComboId" value="$selectedCategoryComboId">
+	<table id="dataElementCategorySelectionArea">
+		<col width="200">
+		#foreach ( $dataElementCategory in $dataElementCategories )
+			<col width="200"> ## preparing columns for the available categories			
+		#end
+		<thead>
+			<tr>
+				<th></th>
+				#foreach ( $dataElementCategory in $dataElementCategories )
+					<th>$dataElementCategory.name</th> ## Creating column headers with category name as label			
+				#end				
+			</tr>
+		</thead>		
+		<tbody>      
+			<tr>
+				<td>$i18n.getString( "selected_options" )</td>
+				#foreach ( $dataElementCategory in $dataElementCategories )
+					<td>
+						<select id="$dataElementCategory.id" name="$dataElementCategory.id" style="min-width:200px" onchange="addToSelectedList( $dataElementCategory.id );" >							
+							<option value="null">[$i18n.getString( "select" )]</option>							
+							#set( $catOptions = $categoryOptions.get( $dataElementCategory.id ) )
+							#foreach( $categoryOption in $catOptions )
+								<option value="$categoryOption.id">$encoder.htmlEncode( $categoryOption.name )</option>
+							#end						
+						</select>						
+					</td>								
+				#end
+			</tr>
+			
+			<tr>
+				<td>
+					<select id="selectedList" name="selectedList" multiple="multiple" style="min-width:20em;height:20em" >
+						<!-- initially empty -->
+					</select>
+				</td>
+			</tr>
+		</tbody>
+		
+	</table>	
+	
+	<table>
+		<tbody>
+			<tr>
+				<td colspan="4">
+					<span id="message"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">					
+					<input type="submit" name="add" value="$i18n.getString( "add" )">
+						<!--
+            				Cancel and go back to the overview
+          				-->
+					<input type="button" name="cancel"
+						onclick="window.location.href='categoryOptionCombo.action'" value="$i18n.getString( "cancel" )">
+        		</td>
+      		</tr>
+    	</tbody>
+  </table>
+	
+</form>

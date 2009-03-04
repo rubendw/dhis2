@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.dataset.DataSet" table="dataset">
+    <id name="id" column="datasetid">
+      <generator class="native"/>
+    </id>
+
+    <property name="name" not-null="true" unique="true" length="160"/>
+    
+    <property name="shortName" unique="true" length="25"/>
+
+    <many-to-one name="periodType" class="org.hisp.dhis.period.PeriodType" lazy="false"
+        column="periodtypeid" not-null="true" foreign-key="fk_dataset_periodtypeid"/>
+
+    <set name="dataElements" table="datasetmembers">
+      <key column="datasetid"/>
+      <many-to-many class="org.hisp.dhis.dataelement.DataElement" 
+          column="dataelementid" foreign-key="fk_dataset_dataelementid"/>
+    </set>
+    
+    <set name="sources" table="datasetsource">
+      <key column="datasetid"/>
+      <many-to-many column="sourceid" 
+        class="org.hisp.dhis.source.Source"/>
+    </set>
+	  
+    <set name="lockedPeriods" table="datasetlockedperiods">
+      <key column="datasetid"/>
+      <many-to-many column="periodid" 
+        class="org.hisp.dhis.period.Period"/>
+    </set>
+	  
+  </class>
+</hibernate-mapping>

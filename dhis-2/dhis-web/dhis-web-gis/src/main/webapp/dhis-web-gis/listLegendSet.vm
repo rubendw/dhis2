@@ -1,0 +1,55 @@
+<h2>$i18n.getString( "legend_set" )</h2>
+<form name="listLegendSet" action="addLegendSet.action" method="POST">
+<table class="mainPageTable">
+	<tr>		
+		<td align="right" align="right" colspan=""> 
+			<input type="submit" value="$i18n.getString( "add_legendset" )" />
+		</td>
+		
+	</tr>
+  <tr>
+    <td style="vertical-align:top" colspan=3>
+      <table id="list" style="width:100%">
+	  	  <tr>
+            <th>$i18n.getString( "name" )</th>
+			<th>$i18n.getString( "indicator" )</th>			
+            <th>$i18n.getString( "operations" )</th>
+          </tr>
+		  <tbody>
+            #set( $mark = false )
+            #foreach( $legendSet in $legendSets )
+				<tr #if( $mark ) style="background-color:#dddddd" #end>
+					<td>$encoder.htmlEncode( $legendSet.name )</td>					
+					<td>
+						#foreach( $indicator in $legendSet.indicators  )
+							$encoder.htmlEncode( $indicator.name ) <br>
+						#end
+					</td>					
+					<td>
+						<a href="javascript:editLegendSet('$legendSet.id');" title="$i18n.getString( "edit" )"><img src="../images/edit.png" width="16" height="16" alt="$i18n.getString( "edit" )"></a> &nbsp;
+						<a href="javascript:removeLegendSet( '$legendSet.id' )" title="$i18n.getString( "remove" )"><img src="../images/delete.png" width="16" height="16" alt="$i18n.getString( "remove" )"></a>
+						 <a href="javascript:showLegendDetails( $legendSet.id )" title="$i18n.getString( "show_details" )"><img src="../images/information.png" width="16" height="16" alt="$i18n.getString( "show_details" )"></a>
+					</td>
+				</tr>
+				#if( $mark )
+				#set( $mark = false )
+			  #else
+				#set( $mark = true )
+			  #end
+			#end
+		  </tbody>
+	  </table>
+	 </td>	
+  </tr>
+  
+</table>
+</form>
+
+<script type="text/javascript">
+function removeLegendSet(id){
+	window.location = "deleteLegendSet.action?id=" + id;
+}
+function editLegendSet(id){
+	window.location = "updateLegendSet.action?id=" + id;
+}
+</script>

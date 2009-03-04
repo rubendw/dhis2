@@ -1,0 +1,78 @@
+
+<h3>$i18n.getString( "create_new_data_element_category_combo" )</h3>
+
+<form id="addDataElementCategoryComboForm" name="addDataElementCategoryComboForm" action="addDataElementCategoryCombo.action" method="post" onsubmit="submitForm(); return validateAddDataElementCategoryCombo()">
+  <table id="detailsList">
+    <col> ## Labels
+    <col> ## Input
+    <thead>
+      <tr>
+        <th colspan="2">$i18n.getString( "details" )</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><label>$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" id="nameField" name="nameField" style="width:20em"></td>
+      </tr>      
+      <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <table id="dataElementCategorySelectionArea">
+    <col> ## Selected DataElementCategories
+    <col> ## Actions    
+	<col> ## only a space
+    <col> ## Available DataElementCategories
+    <thead>
+      <tr>        
+		<th>$i18n.getString( "available_categories" )</th>
+		<th></th>        
+		<th>$i18n.getString( "selected_categories" )</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td>
+          <!-- List of all available DataElementCategoryOptions -->
+          <select size="15" id="availableList" name="availableList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="move( 'availableList' )">
+            <!-- Show all available DataElementCategoryOptions -->
+            #foreach ( $availableDataElementCategory in $dataElementCategories )
+              <option value="$availableDataElementCategory.id">$encoder.htmlEncode( $availableDataElementCategory.name )</option>
+            #end
+          </select>
+        </td>
+		 <td valign="top" align="center">		 
+          <input type="button" value="&gt;" onclick="move( 'availableList' )"><br>	
+		  <input type="button" value="&lt;" onclick="move ( 'selectedList' )">	<br>	<br>  	
+		  <a href="#" onclick="moveUp('selectedList')"><img src="../images/move_up.png" border="0" alt=""></a><br><br>
+		  <a href="#" onclick="moveDown('selectedList')"><img src="../images/move_down.png" border="0" alt=""></a>		  
+        </td> 
+		<td>
+          <select id="selectedList" name="selectedList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="move( 'selectedList' )">
+            <!-- initially empty -->
+          </select>
+        </td>		
+       
+      </tr>
+
+      <tr>
+        <td colspan="4">
+          <span id="message"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="4">
+          <input type="submit" name="add" value="$i18n.getString( "add" )">
+          <!--
+            Cancel and go back to the overview
+          -->
+		  <input type="button" name="cancel"
+					onclick="window.location.href='categoryCombo.action'" value="$i18n.getString( "cancel" )">          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

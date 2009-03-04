@@ -1,0 +1,7 @@
+<dataElementGroup>
+  <dataElements>
+    #foreach( $dataElement in $dataElements )
+      <dataElement id="$dataElement.id">$encoder.xmlEncode( $dataElement.name )</dataElement>
+    #end
+  </dataElements>
+</dataElementGroup>

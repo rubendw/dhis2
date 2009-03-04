@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+	<!-- Store definitions -->
+
+  <bean id="org.hisp.dhis.dataelement.DataElementStore"
+    class="org.hisp.dhis.dataelement.hibernate.HibernateDataElementStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.datadictionary.DataDictionaryStore"
+    class="org.hisp.dhis.datadictionary.hibernate.HibernateDataDictionaryStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.datavalue.DataValueStore"
+    class="org.hisp.dhis.datavalue.hibernate.HibernateDataValueStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    <property name="periodStore" 
+      ref="org.hisp.dhis.period.PeriodStore"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.indicator.IndicatorStore"
+    class="org.hisp.dhis.indicator.hibernate.HibernateIndicatorStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.period.PeriodStore"
+    class="org.hisp.dhis.period.hibernate.HibernatePeriodStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.source.SourceStore"
+    class="org.hisp.dhis.source.hibernate.HibernateSourceStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.DataSetStore"
+    class="org.hisp.dhis.dataset.hibernate.HibernateDataSetStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    <property name="periodStore"
+      ref="org.hisp.dhis.period.PeriodStore"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.dataset.CompleteDataSetRegistrationStore"
+    class="org.hisp.dhis.dataset.hibernate.HibernateCompleteDataSetRegistrationStore">    
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.DataEntryFormStore"
+    class="org.hisp.dhis.dataset.hibernate.HibernateDataEntryFormStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.minmax.MinMaxDataElementStore"
+    class="org.hisp.dhis.minmax.hibernate.HibernateMinMaxDataElementStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.expression.ExpressionStore"
+     class="org.hisp.dhis.expression.hibernate.HibernateExpressionStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.validation.ValidationRuleStore"
+    class="org.hisp.dhis.validation.hibernate.HibernateValidationRuleStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+	
+	<bean id="org.hisp.dhis.dataelement.DataElementCategoryStore"
+    class="org.hisp.dhis.dataelement.hibernate.HibernateDataElementCategoryStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>  
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementCategoryOptionStore"
+    class="org.hisp.dhis.dataelement.hibernate.HibernateDataElementCategoryOptionStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.dataelement.DataElementCategoryComboStore"
+    class="org.hisp.dhis.dataelement.hibernate.HibernateDataElementCategoryComboStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.dataelement.DataElementCategoryOptionComboStore"
+    class="org.hisp.dhis.dataelement.hibernate.HibernateDataElementCategoryOptionComboStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>       
+  </bean>
+
+  <bean id="org.hisp.dhis.dataelement.DataElementDimensionColumnOrderStore"
+    class="org.hisp.dhis.dataelement.hibernate.HibernateDataElementDimensionColumnOrderStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>  
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementDimensionRowOrderStore"
+    class="org.hisp.dhis.dataelement.hibernate.HibernateDataElementDimensionRowOrderStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>  
+  
+  <bean id="org.hisp.dhis.dataset.SectionStore"
+    class="org.hisp.dhis.dataset.hibernate.HibernateSectionStore">
+    <property name="sessionManager"
+   	  ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean> 
+	
+	<!-- Service definitions -->
+
+  <bean id="org.hisp.dhis.datavalue.DataValueService"
+    class="org.hisp.dhis.datavalue.DefaultDataValueService">
+    <property name="dataValueStore"
+      ref="org.hisp.dhis.datavalue.DataValueStore"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementService"
+    class="org.hisp.dhis.dataelement.DefaultDataElementService">
+    <property name="dataElementStore"
+      ref="org.hisp.dhis.dataelement.DataElementStore"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.minmax.MinMaxDataElementService"
+    class="org.hisp.dhis.minmax.DefaultMinMaxDataElementService">
+    <property name="minMaxDataElementStore"
+      ref="org.hisp.dhis.minmax.MinMaxDataElementStore"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.datadictionary.DataDictionaryService"
+    class="org.hisp.dhis.datadictionary.DefaultDataDictionaryService">
+    <property name="dataDictionaryStore"
+      ref="org.hisp.dhis.datadictionary.DataDictionaryStore"/>
+  </bean>
+  
+	<bean id="org.hisp.dhis.indicator.IndicatorService"
+		class="org.hisp.dhis.indicator.DefaultIndicatorService">
+    <property name="indicatorStore"
+      ref="org.hisp.dhis.indicator.IndicatorStore"/>
+	</bean>
+	
+  <bean id="org.hisp.dhis.period.PeriodService"
+    class="org.hisp.dhis.period.DefaultPeriodService">
+    <property name="periodStore"
+      ref="org.hisp.dhis.period.PeriodStore"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.dataset.DataSetService"
+    class="org.hisp.dhis.dataset.DefaultDataSetService">
+    <property name="dataSetStore"
+      ref="org.hisp.dhis.dataset.DataSetStore"/>
+    <property name="dataEntryFormService"
+      ref="org.hisp.dhis.dataset.DataEntryFormService"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.dataset.CompleteDataSetRegistrationService"
+    class="org.hisp.dhis.dataset.DefaultCompleteDataSetRegistrationService">    
+    <property name="completeDataSetRegistrationStore"
+      ref="org.hisp.dhis.dataset.CompleteDataSetRegistrationStore"/>
+  </bean>
+  
+	<bean id="org.hisp.dhis.dataset.SectionService"
+    class="org.hisp.dhis.dataset.DefaultSectionService">
+    <property name="sectionStore"
+      ref="org.hisp.dhis.dataset.SectionStore"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.dataset.DataEntryFormService"
+    class="org.hisp.dhis.dataset.DefaultDataEntryFormService">
+    <property name="dataEntryFormStore"
+      ref="org.hisp.dhis.dataset.DataEntryFormStore"/>
+  </bean>
+    
+  <bean id="org.hisp.dhis.expression.ExpressionService"
+    class="org.hisp.dhis.expression.DefaultExpressionService">
+    <property name="expressionStore"
+      ref="org.hisp.dhis.expression.ExpressionStore"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="dataValueService"
+      ref="org.hisp.dhis.datavalue.DataValueService"/>
+    <property name="categoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.validation.ValidationRuleService"
+    class="org.hisp.dhis.validation.DefaultValidationRuleService">
+    <property name="validationRuleStore"
+      ref="org.hisp.dhis.validation.ValidationRuleStore"/> 
+    <property name="expressionService"
+      ref="org.hisp.dhis.expression.ExpressionService"/>
+    <property name="dataSetService"
+      ref="org.hisp.dhis.dataset.DataSetService"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.dataelement.DataElementCategoryService"
+    class="org.hisp.dhis.dataelement.DefaultDataElementCategoryService">
+    <property name="dataElementCategoryStore"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryStore"/> 
+    <property name="dataElementDimensionColumnOrderService"
+      ref="org.hisp.dhis.dataelement.DataElementDimensionColumnOrderService"/>   
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementCategoryComboService"
+    class="org.hisp.dhis.dataelement.DefaultDataElementCategoryComboService">
+    <property name="dataElementCategoryComboStore"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryComboStore"/>
+    <property name="dataElementDimensionRowOrderService"
+      ref="org.hisp.dhis.dataelement.DataElementDimensionRowOrderService"/>          
+  </bean>  
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementCategoryOptionService"
+    class="org.hisp.dhis.dataelement.DefaultDataElementCategoryOptionService">
+    <property name="dataElementCategoryOptionStore"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionStore"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"
+    class="org.hisp.dhis.dataelement.DefaultDataElementCategoryOptionComboService">
+    <property name="dataElementCategoryOptionComboStore"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboStore"/>
+    <property name="dataElementCategoryComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryComboService"/>
+    <property name="dataElementCategoryService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryService"/>
+    <property name="dataElementCategoryOptionService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionService"/>
+    <property name="dataElementDimensionRowOrderService"
+      ref="org.hisp.dhis.dataelement.DataElementDimensionRowOrderService"/>
+    <property name="dataElementDimensionColumnOrderService"
+      ref="org.hisp.dhis.dataelement.DataElementDimensionColumnOrderService"/>
+  </bean>      
+
+  <bean id="org.hisp.dhis.dataelement.DataElementDimensionRowOrderService"
+    class="org.hisp.dhis.dataelement.DefaultDataElementDimensionRowOrderService">
+    <property name="dataElementDimensionRowOrderStore"
+      ref="org.hisp.dhis.dataelement.DataElementDimensionRowOrderStore"/>    
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementDimensionColumnOrderService"
+    class="org.hisp.dhis.dataelement.DefaultDataElementDimensionColumnOrderService">
+    <property name="dataElementDimensionColumnOrderStore"
+      ref="org.hisp.dhis.dataelement.DataElementDimensionColumnOrderStore"/>    
+  </bean>
+  
+	<!-- AOP transaction definitions -->
+	
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readOnlyTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\DataElementDimensionRowOrderStore\.get.*</value>
+        <value>.*\DataElementDimensionColumnOrderStore\.get.*</value>  
+        <value>.*\.DataElementCategoryStore\.get.*</value>
+        <value>.*\.DataElementCategoryOptionStore\.get.*</value>
+        <value>.*\.DataElementCategoryComboStore\.get.*</value>
+        <value>.*\.DataElementCategoryOptionComboStore\.get.*</value>
+        <value>.*\.DataElementStore\.get.*</value>
+        <value>.*\.DataDictionaryStore\.get.*</value>
+        <value>.*\.DataValueStore\.get.*</value>
+        <value>.*\.IndicatorStore\.get.*</value>
+        <value>.*\.PeriodStore\.get.*</value>
+        <value>.*\.SourceStore\.get.*</value>
+        <value>.*\.DataSetStore\.get.*</value>
+        <value>.*\.CompleteDataSetRegistrationStore\.get.*</value>
+        <value>.*\.SectionStore\.get.*</value>
+        <value>.*\.DataEntryFormStore\.get.*</value>
+        <value>.*\.ExpressionStore\.get.*</value>
+        <value>.*\.MinMaxDataElementStore\.get.*"</value>
+        <value>.*\.ValidationRuleStore\.get.*</value>
+      </list>
+    </property>
+  </bean>
+	
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readWriteTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\DataElementDimensionRowOrderStore\.add.*</value>
+        <value>.*\DataElementDimensionRowOrderStore\.update.*</value>
+        <value>.*\DataElementDimensionRowOrderStore\.delete.*</value>		  
+        <value>.*\DataElementDimensionColumnOrderStore\.add.*</value>
+        <value>.*\DataElementDimensionColumnOrderStore\.update.*</value>
+        <value>.*\DataElementDimensionColumnOrderStore\.delete.*</value>	    
+        <value>.*\.DataElementCategoryStore\.add.*</value>
+        <value>.*\.DataElementCategoryStore\.update.*</value>
+        <value>.*\.DataElementCategoryStore\.delete.*</value>
+        <value>.*\.DataElementCategoryOptionStore\.add.*</value>
+        <value>.*\.DataElementCategoryOptionStore\.update.*</value>
+        <value>.*\.DataElementCategoryOptionStore\.delete.*</value>
+        <value>.*\.DataElementCategoryOptionComboStore\.add.*</value>
+        <value>.*\.DataElementCategoryOptionComboStore\.update.*</value>
+        <value>.*\.DataElementCategoryOptionComboStore\.delete.*</value>
+        <value>.*\.DataElementCategoryComboStore\.add.*</value>
+        <value>.*\.DataElementCategoryComboStore\.update.*</value>
+        <value>.*\.DataElementCategoryComboStore\.delete.*</value>
+        <value>.*\.DataElementStore\.add.*</value>
+        <value>.*\.DataElementStore\.update.*</value>
+        <value>.*\.DataElementStore\.delete.*</value>
+        <value>.*\.DataDictionaryStore\.save.*</value>
+        <value>.*\.DataDictionaryStore\.delete.*</value>
+        <value>.*\.DataValueStore\.add.*</value>
+        <value>.*\.DataValueStore\.update.*</value>
+        <value>.*\.DataValueStore\.delete.*</value>
+        <value>.*\.IndicatorStore\.add.*</value>
+        <value>.*\.IndicatorStore\.update.*</value>
+        <value>.*\.IndicatorStore\.delete.*</value>
+        <value>.*\.PeriodStore\.add.*</value>
+        <value>.*\.PeriodStore\.delete.*</value>
+        <value>.*\.SourceStore\.add.*</value>
+        <value>.*\.SourceStore\.update.*</value>
+        <value>.*\.SourceStore\.delete.*</value>
+        <value>.*\.DataSetStore\.add.*</value>
+        <value>.*\.DataSetStore\.update.*</value>
+        <value>.*\.DataSetStore\.delete.*</value>
+        <value>.*\.DataSetStore\.remove.*</value>
+        <value>.*\.CompleteDataSetRegistrationStore\.save.*</value>
+        <value>.*\.CompleteDataSetRegistrationStore\.delete.*</value>
+        <value>.*\.DataEntryFormStore\.add.*</value>
+        <value>.*\.DataEntryFormStore\.update.*</value>
+        <value>.*\.DataEntryFormStore\.delete.*</value>
+        <value>.*\.ExpressionStore\.add.*</value>
+        <value>.*\.ExpressionStore\.update.*</value>
+        <value>.*\.ExpressionStore\.delete.*</value>
+        <value>.*\.MinMaxDataElementStore\.add.*</value>
+        <value>.*\.MinMaxDataElementStore\.update.*</value>
+        <value>.*\.MinMaxDataElementStore\.del.*</value>
+        <value>.*\.ValidationRuleStore\.add.*</value>
+        <value>.*\.ValidationRuleStore\.update.*</value>
+        <value>.*\.ValidationRuleStore\.delete.*</value>
+        <value>.*\.SectionStore\.add.*</value>
+        <value>.*\.SectionStore\.update.*</value>
+        <value>.*\.SectionStore\.delete.*</value>
+        <value>.*\.FeatureStore\.remove.*</value>
+        <value>.*\.FeatureStore\.update.*</value>
+        <value>.*\.FeatureStore\.save.*</value>
+      </list>
+    </property>
+  </bean>	
+	
+	<!-- Startup routine definitions -->
+	
+  <bean id="org.hisp.dhis.period.PeriodTypePopulator"
+    class="org.hisp.dhis.period.PeriodTypePopulator">
+    <property name="periodStore"
+      ref="org.hisp.dhis.period.PeriodStore"/>
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    <property name="transactionManager"
+      ref="org.hisp.dhis.transaction.TransactionManager"/>
+    <property name="runlevel" value="1"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementDefaultDimensionPopulator"
+    class="org.hisp.dhis.dataelement.DataElementDefaultDimensionPopulator">
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="categoryComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryComboService"/>
+    <property name="optionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.expression.MultiDimensionExpressionUpgrader"
+    class="org.hisp.dhis.expression.MultiDimensionExpressionUpgrader">
+    <property name="expressionService"
+      ref="org.hisp.dhis.expression.ExpressionService"/>
+    <property name="indicatorService"
+      ref="org.hisp.dhis.indicator.IndicatorService"/>	  
+    <property name="categoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>  
+    <property name="runlevel" value="2"/>  
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.DataSetShortNamePopulator"
+    class="org.hisp.dhis.dataset.DataSetShortNamePopulator">
+    <property name="dataSetService"
+      ref="org.hisp.dhis.dataset.DataSetService"/>
+  </bean>
+  
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject"
+      ref="org.hisp.dhis.system.startup.StartupRoutineExecutor"/>
+    <property name="targetMethod" value="addStartupRoutines"/>
+    <property name="arguments">
+      <list>
+        <list>
+          <ref local="org.hisp.dhis.period.PeriodTypePopulator"/>
+          <ref local="org.hisp.dhis.dataelement.DataElementDefaultDimensionPopulator"/>
+          <ref local="org.hisp.dhis.expression.MultiDimensionExpressionUpgrader"/>
+          <ref local="org.hisp.dhis.dataset.DataSetShortNamePopulator"/>  		
+        </list>
+      </list>
+    </property>
+  </bean>
+
+  <!-- I18n AOP definitions -->
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="I18nObjectInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.DataElementService\.add.*</value>
+        <value>.*\.DataElementService\.update.*</value>
+        <value>.*\.DataElementService\.delete.*</value>
+        <value>.*\.DataDictionaryService\.save.*</value>
+        <value>.*\.DataDictionaryService\.delete.*</value>
+        <value>.*\.IndicatorService\.add.*</value>
+        <value>.*\.IndicatorService\.update.*</value>
+        <value>.*\.IndicatorService\.delete.*</value>
+        <value>.*\.DataSetService\.add.*</value>
+        <value>.*\.DataSetService\.update.*</value>
+        <value>.*\.DataSetService\.delete.*</value>
+      </list>
+    </property>
+  </bean>
+  
+  <!-- DeletionHandlers -->
+    
+  <bean id="org.hisp.dhis.datadictionary.DataDictionaryDeletionHandler"
+    class="org.hisp.dhis.datadictionary.DataDictionaryDeletionHandler">
+    <property name="dataDictionaryService"
+      ref="org.hisp.dhis.datadictionary.DataDictionaryService"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.dataelement.DataElementDeletionHandler"
+    class="org.hisp.dhis.dataelement.DataElementDeletionHandler">
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.dataelement.DataElementGroupDeletionHandler"
+    class="org.hisp.dhis.dataelement.DataElementGroupDeletionHandler">
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementDimensionRowOrderDeletionHandler"
+    class="org.hisp.dhis.dataelement.DataElementDimensionRowOrderDeletionHandler">
+    <property name="rowOrderService"
+      ref="org.hisp.dhis.dataelement.DataElementDimensionRowOrderService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementDimensionColumnOrderDeletionHandler"
+    class="org.hisp.dhis.dataelement.DataElementDimensionColumnOrderDeletionHandler">
+    <property name="columnOrderService"
+      ref="org.hisp.dhis.dataelement.DataElementDimensionColumnOrderService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementCategoryOptionComboDeletionHandler"
+    class="org.hisp.dhis.dataelement.DataElementCategoryOptionComboDeletionHandler">
+    <property name="categoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementCategoryDeletionHandler"
+    class="org.hisp.dhis.dataelement.DataElementCategoryDeletionHandler">
+    <property name="categoryService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataelement.DataElementCategoryComboDeletionHandler"
+    class="org.hisp.dhis.dataelement.DataElementCategoryComboDeletionHandler">
+    <property name="categoryComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryComboService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.DataSetDeletionHandler"
+    class="org.hisp.dhis.dataset.DataSetDeletionHandler">
+    <property name="dataSetService"
+      ref="org.hisp.dhis.dataset.DataSetService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.CompleteDataSetRegistrationDeletionHandler"
+    class="org.hisp.dhis.dataset.CompleteDataSetRegistrationDeletionHandler">
+    <property name="completeDataSetRegistrationService"
+      ref="org.hisp.dhis.dataset.CompleteDataSetRegistrationService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.SectionDeletionHandler"
+    class="org.hisp.dhis.dataset.SectionDeletionHandler">
+    <property name="sectionService"
+      ref="org.hisp.dhis.dataset.SectionService"/>
+    <property name="deletionManager"
+      ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.DataEntryFormDeletionHandler"
+    class="org.hisp.dhis.dataset.DataEntryFormDeletionHandler">
+    <property name="dataEntryFormService"
+      ref="org.hisp.dhis.dataset.DataEntryFormService"/>
+    <property name="deletionManager"
+      ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+  </bean>
+    
+  <bean id="org.hisp.dhis.dataset.FrequencyOverrideAssociationDeletionHandler"
+    class="org.hisp.dhis.dataset.FrequencyOverrideAssociationDeletionHandler">
+    <property name="dataSetService"
+      ref="org.hisp.dhis.dataset.DataSetService"/>
+    <property name="deletionManager"
+      ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.expression.ExpressionDeletionHandler"
+    class="org.hisp.dhis.expression.ExpressionDeletionHandler">
+    <property name="expressionService"
+      ref="org.hisp.dhis.expression.ExpressionService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.indicator.IndicatorDeletionHandler"
+    class="org.hisp.dhis.indicator.IndicatorDeletionHandler">
+    <property name="indicatorService"
+      ref="org.hisp.dhis.indicator.IndicatorService"/>
+    <property name="deletionManager"
+      ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.indicator.IndicatorGroupDeletionHandler"
+    class="org.hisp.dhis.indicator.IndicatorGroupDeletionHandler">
+    <property name="indicatorService"
+      ref="org.hisp.dhis.indicator.IndicatorService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.minmax.MinMaxDataElementDeletionHandler"
+    class="org.hisp.dhis.minmax.MinMaxDataElementDeletionHandler">
+    <property name="minMaxDataElementService"
+      ref="org.hisp.dhis.minmax.MinMaxDataElementService"/>
+    <property name="deletionManager"
+      ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.validation.ValidationRuleDeletionHandler"
+    class="org.hisp.dhis.validation.ValidationRuleDeletionHandler">
+    <property name="validationRuleService"
+      ref="org.hisp.dhis.validation.ValidationRuleService"/>
+    <property name="deletionManager"
+      ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.validation.ValidationRuleGroupDeletionHandler"
+    class="org.hisp.dhis.validation.ValidationRuleGroupDeletionHandler">
+    <property name="validationRuleService"
+      ref="org.hisp.dhis.validation.ValidationRuleService"/>
+  </bean>
+  
+  <!-- DeletionManager -->
+  
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+    <property name="targetMethod" value="addDeletionHandlers"/>
+    <property name="arguments">
+		  <list>
+        <list>
+          <ref local="org.hisp.dhis.datadictionary.DataDictionaryDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataelement.DataElementDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataelement.DataElementGroupDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataelement.DataElementDimensionRowOrderDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataelement.DataElementDimensionColumnOrderDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataelement.DataElementCategoryOptionComboDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataelement.DataElementCategoryDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataelement.DataElementCategoryComboDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataset.DataSetDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataset.CompleteDataSetRegistrationDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataset.SectionDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataset.DataEntryFormDeletionHandler"/>
+          <ref local="org.hisp.dhis.dataset.FrequencyOverrideAssociationDeletionHandler"/>
+          <ref local="org.hisp.dhis.expression.ExpressionDeletionHandler"/>
+          <ref local="org.hisp.dhis.indicator.IndicatorDeletionHandler"/>
+          <ref local="org.hisp.dhis.indicator.IndicatorGroupDeletionHandler"/>
+          <ref local="org.hisp.dhis.minmax.MinMaxDataElementDeletionHandler"/>
+          <ref local="org.hisp.dhis.validation.ValidationRuleDeletionHandler"/>
+          <ref local="org.hisp.dhis.validation.ValidationRuleGroupDeletionHandler"/>
+        </list>
+		  </list>
+    </property>
+  </bean>
+  
+  <!-- Deletion AOP definitions -->
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="deletionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.DataDictionaryService\.delete.*</value>
+        <value>.*\.DataElementService\.delete.*</value>
+        <value>.*\.DataElementCategoryService\.delete.*</value>
+        <value>.*\.DataElementCategoryComboService\.delete.*</value>
+        <value>.*\.DataElementCategoryOptionService\.delete.*</value>
+        <value>.*\.DataSetService\.delete.*</value>
+        <value>.*\.DataSetService\.remove.*</value>
+        <value>.*\.IndicatorService\.delete.*</value>
+        <value>.*\.ExpressionService\.delete.*</value>
+        <value>.*\.MinMaxDataElementService\.delete.*</value>
+        <value>.*\.ValidationRuleService\.delete.*</value>
+      </list>
+    </property>
+  </bean>
+  
+</beans>

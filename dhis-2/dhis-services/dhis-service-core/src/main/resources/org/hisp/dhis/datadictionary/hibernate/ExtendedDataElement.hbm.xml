@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>  
+  <class name="org.hisp.dhis.datadictionary.ExtendedDataElement" table="extendeddataelement">    
+    <id name="id" column="extendeddataelementid">
+      <generator class="native"/>
+    </id>
+    
+		<!-- Identifying and Definitional attributes -->
+		
+    <property name="mnemonic" not-null="true"/>
+		
+		<property name="version" not-null="true"/>
+
+    <property name="context" type="text"/>
+		
+    <property name="synonyms"/>
+
+    <property name="hononyms"/>
+
+    <property name="keywords" not-null="true"/>
+
+    <property name="status"/>
+		
+		<property name="statusDate" type="date"/>
+		
+    <property name="dataElementType"/>
+		
+		<!-- Relational and Representational attributes -->
+		
+    <property name="dataType"/>
+		
+    <property name="representationalForm"/>
+		
+    <property name="representationalLayout"/>
+		
+    <property name="minimumSize"/>
+		
+    <property name="maximumSize"/>
+		
+    <property name="dataDomain" type="text"/>
+		
+    <property name="validationRules" type="text"/>
+		
+    <property name="relatedDataReferences" type="text"/>
+		
+    <property name="guideForUse" type="text"/>
+		
+    <property name="collectionMethods" type="text"/>
+    
+		<!-- Administrative attributes -->
+		
+    <property name="responsibleAuthority" not-null="true"/>
+		
+    <property name="updateRules" type="text"/>
+		
+    <property name="accessAuthority"/>
+		
+    <property name="updateFrequency"/>
+		
+    <property name="location" not-null="true"/>
+		
+    <property name="reportingMethods" type="text" not-null="true"/>
+		
+    <property name="versionStatus" not-null="true"/>
+		
+    <property name="previousVersionReferences" type="text"/>
+		
+    <property name="sourceDocument"/>
+		
+    <property name="sourceOrganisation"/>
+		
+    <property name="comment" type="text"/>
+		
+		<property name="saved" type="date"/>
+		
+		<property name="lastUpdated" type="date"/>
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+  "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+  <include file="webwork-default.xml"/>
+  
+  <package name="dhis-support-webwork" extends="webwork-default">
+    <result-types>
+      <result-type name="plainTextErrorResult" 
+        class="org.hisp.dhis.webwork.result.PlainTextErrorResult"/>
+      <result-type name="chart" 
+        class="org.hisp.dhis.webwork.result.ChartResult"/>
+      <result-type name="velocity-xml" 
+        class="org.hisp.dhis.webwork.result.VelocityXMLResult"/>
+    </result-types>
+    
+    <interceptors>
+      <interceptor name="transactionInterceptor"
+        class="org.hisp.dhis.webwork.interceptor.WebWorkTransactionInterceptor"/>
+      <interceptor name="exceptionInterceptor"
+        class="org.hisp.dhis.webwork.interceptor.WebWorkExceptionInterceptor"/>
+      <interceptor name="i18nInterceptor"
+        class="org.hisp.dhis.webwork.interceptor.WebWorkI18nInterceptor"/>
+      <interceptor name="sortOrderInterceptor"
+        class="org.hisp.dhis.webwork.interceptor.WebWorkSortOrderInterceptor"/>
+      <interceptor name="displayPropertyInterceptor"
+        class="org.hisp.dhis.webwork.interceptor.WebWorkDisplayPropertyInterceptor"/>
+      <interceptor name="dataDictionaryModeInterceptor"
+        class="org.hisp.dhis.webwork.interceptor.WebWorkDataDictionaryModeInterceptor"/>
+      <interceptor name="systemSettingInterceptor"
+        class="org.hisp.dhis.webwork.interceptor.WebWorkSystemSettingInterceptor"/>
+      <interceptor name="styleInterceptor"
+        class="org.hisp.dhis.webwork.interceptor.WebWorkStyleInterceptor"/>
+    </interceptors>
+  </package>
+  
+</xwork>

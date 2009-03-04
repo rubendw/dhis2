@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.hisp.dhis</groupId>
+    <artifactId>dhis-i18n</artifactId>
+    <version>2.0</version>
+  </parent>
+
+  <artifactId>dhis-i18n-db</artifactId>
+  <packaging>jar</packaging>
+  <name>DHIS I18n DB</name>
+
+  <dependencies>
+
+    <!-- DHIS -->
+
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-i18n-translationstore-hibernate</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-support-hibernate</artifactId>
+    </dependency>
+    
+    <!-- Other -->
+    
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+
+  </dependencies>
+</project>

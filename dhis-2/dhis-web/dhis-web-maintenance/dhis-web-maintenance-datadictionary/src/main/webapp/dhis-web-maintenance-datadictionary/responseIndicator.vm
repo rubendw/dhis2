@@ -1,0 +1,12 @@
+<indicator>
+	<id>$indicator.id</id>
+	<name>$encoder.xmlEncode( $indicator.name )</name>
+	<shortName>$encoder.xmlEncode( $indicator.shortName )</shortName>
+	<alternativeName>$!encoder.xmlEncode( $indicator.alternativeName )</alternativeName>
+	<code>$!encoder.xmlEncode( $indicator.code )</code>
+	<description>$!encoder.xmlEncode( $indicator.description )</description>
+	<annualized>$!encoder.xmlEncode( $indicator.annualized )</annualized>
+	<indicatorTypeName>$encoder.xmlEncode( $indicatorTypeName )</indicatorTypeName>
+	<numeratorDescription>$encoder.xmlEncode( $indicator.numeratorDescription )</numeratorDescription>
+	<denominatorDescription>$encoder.xmlEncode( $indicator.denominatorDescription )</denominatorDescription>
+</indicator>

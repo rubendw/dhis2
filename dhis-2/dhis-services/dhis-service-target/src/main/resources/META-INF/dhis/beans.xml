@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  
+	<bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="statementInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.TargetService\.aggregate.*</value>
+      </list>
+    </property>
+  </bean>
+      
+  <bean id="org.hisp.dhis.target.TargetStore"
+    class="org.hisp.dhis.target.hibernate.HibernateTargetStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    <property name="periodStore"
+      ref="org.hisp.dhis.period.PeriodStore"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.target.TargetService"
+	  class="org.hisp.dhis.target.DefaultTargetService">
+	  <property name="targetStore"
+		  ref="org.hisp.dhis.target.TargetStore" />
+    <property name="aggregationService"
+      ref="org.hisp.dhis.aggregation.AggregationService" />    
+  </bean>
+  
+  	<!-- AOP transaction definitions -->
+	
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readOnlyTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.TargetStore\.get.*</value>
+      </list>
+    </property>
+  </bean>
+	
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readWriteTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.TargetStore\.add.*</value>
+        <value>.*\.TargetStore\.update.*</value>
+        <value>.*\.TargetStore\.delete.*</value>
+      </list>
+    </property>  
+  </bean>
+  
+  <!-- Deletion Handlers -->
+  
+  <bean id="org.hisp.dhis.target.TargetDeletionHandler"
+    class="org.hisp.dhis.target.TargetDeletionHandler">
+    <property name="targetService"
+      ref="org.hisp.dhis.target.TargetService"/>
+    <property name="deletionManager"
+      ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+  </bean>
+    
+    
+  <!-- DeletionManager -->
+  
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="org.hisp.dhis.system.deletion.DeletionManager"/>
+    <property name="targetMethod" value="addDeletionHandlers"/>
+    <property name="arguments">
+		  <list>
+        <list>
+          <ref local="org.hisp.dhis.target.TargetDeletionHandler"/>
+        </list>
+		  </list>
+    </property>
+  </bean>
+  
+  <!-- Deletion AOP definitions -->
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="deletionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.TargetService\.delete.*</value>
+      </list>
+    </property>
+  </bean>
+  
+</beans>

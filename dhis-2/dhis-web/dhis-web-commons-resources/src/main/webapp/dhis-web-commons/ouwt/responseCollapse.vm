@@ -1,0 +1,5 @@
+<units>
+#foreach( $unit in $collapsedUnits )
+	<unit>$unit.id</unit>
+#end
+</units>

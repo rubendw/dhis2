@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+  "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+  <include file="dhis-web-commons.xml"/>
+  
+  <package name="dhis-web-dataentry" extends="dhis-web-commons"
+    namespace="/dhis-web-dataentry">
+    
+    <action name="index" class="org.hisp.dhis.de.action.EmptyAction">
+      <result name="success" type="redirect">select.action</result>
+    </action>
+    
+    <action name="select" class="org.hisp.dhis.de.action.SelectAction">
+      <interceptor-ref name="organisationUnitTreeStack"/>
+      <result name="defaultform" type="chain">defaultform</result>
+      <result name="sectionform" type="chain">sectionform</result>
+      <result name="multidimensionalform" type="chain">multidimensionalform</result>
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-dataentry/select.vm</param>
+      <param name="menu">/dhis-web-dataentry/menu.vm</param>
+      <param name="menuTreeHeight">420</param>
+      <param name="javascripts">
+        ../dhis-web-commons/ouwt/ouwt.js,
+        javascript/general.js,javascript/form.js,
+        ../dhis-web-commons/calendar/calendar.js,
+        ../dhis-web-commons/calendar/calendar-lang.js,
+        ../dhis-web-commons/calendar/calendar-setup.js
+      </param>
+      <param name="stylesheets">style/dhis-web-dataentry.css,style/custom_data_entry_form_styles.css</param>
+    </action>
+    
+    <action name="nextPeriods" class="org.hisp.dhis.de.action.NextPeriodsAction">
+      <result name="success" type="redirect">select.action</result>
+    </action>
+    
+    <action name="previousPeriods" class="org.hisp.dhis.de.action.PreviousPeriodsAction">
+      <result name="success" type="redirect">select.action</result>
+    </action>
+    
+    <action name="defaultform" class="org.hisp.dhis.de.action.FormAction">
+      <interceptor-ref name="organisationUnitTreeStack"/>
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-dataentry/form.vm</param>
+      <param name="menu">/dhis-web-dataentry/menu.vm</param>
+      <param name="menuTreeHeight">420</param>
+      <param name="javascripts">
+        ../dhis-web-commons/ouwt/ouwt.js,
+        javascript/general.js,javascript/form.js,
+        javascript/form.js,../dhis-web-commons/calendar/calendar.js,
+        ../dhis-web-commons/calendar/calendar-lang.js,
+        ../dhis-web-commons/calendar/calendar-setup.js
+      </param>
+      <param name="stylesheets">style/dhis-web-dataentry.css,style/custom_data_entry_form_styles.css</param>
+    </action>
+    
+    <action name="sectionform" class="org.hisp.dhis.de.action.SectionFormAction">
+      <interceptor-ref name="organisationUnitTreeStack"/>
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-dataentry/sectionform.vm</param>
+      <param name="menu">/dhis-web-dataentry/menu.vm</param>
+      <param name="menuTreeHeight">420</param>
+      <param name="javascripts">
+        ../dhis-web-commons/ouwt/ouwt.js,
+        javascript/general.js,javascript/form.js,
+        javascript/form.js,../dhis-web-commons/calendar/calendar.js,
+        ../dhis-web-commons/calendar/calendar-lang.js,
+        ../dhis-web-commons/calendar/calendar-setup.js
+      </param>
+      <param name="stylesheets">style/dhis-web-dataentry.css</param>
+    </action>
+    
+    <action name="multidimensionalform" class="org.hisp.dhis.de.action.multidimensional.FormAction">
+      <interceptor-ref name="organisationUnitTreeStack"/>
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-dataentry/multidimensional/form.vm</param>
+      <param name="menu">/dhis-web-dataentry/menu.vm</param>
+      <param name="menuTreeHeight">420</param>
+      <param name="javascripts">
+        ../dhis-web-commons/ouwt/ouwt.js,
+        javascript/multidimensional.js,javascript/form.js,
+        javascript/form.js,../dhis-web-commons/calendar/calendar.js,
+        ../dhis-web-commons/calendar/calendar-lang.js,
+        ../dhis-web-commons/calendar/calendar-setup.js
+      </param>
+      <param name="stylesheets">style/dhis-web-dataentry.css,style/custom_data_entry_form_styles.css</param>
+    </action>    
+    
+    <action name="saveMultiDimensionalValue" class="org.hisp.dhis.de.action.multidimensional.SaveValueAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="velocity">status.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+      <param name="requiredAuthorities">F_DATAVALUE_ADD,F_DATAVALUE_UPDATE,F_DATAVALUE_DELETE</param>
+    </action>
+    
+    <action name="saveValue" class="org.hisp.dhis.de.action.SaveValueAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="velocity">status.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+      <param name="requiredAuthorities">F_DATAVALUE_ADD,F_DATAVALUE_UPDATE,F_DATAVALUE_DELETE</param>
+    </action>    
+    
+    <action name="saveComment" class="org.hisp.dhis.de.action.SaveCommentAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="velocity">status.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+      <param name="requiredAuthorities">F_DATAVALUE_ADD,F_DATAVALUE_UPDATE,F_DATAVALUE_DELETE</param>
+    </action>
+    
+    <action name="saveMinMaxLimits"
+      class="org.hisp.dhis.de.action.SaveMinMaxLimitsAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="httpheader">
+        <param name="status">204</param>
+      </result>
+      <param name="onExceptionReturn">plainTextError</param>
+      <param name="requiredAuthorities">F_DATAELEMENT_MINMAX_ADD,F_DATAELEMENT_MINMAX_UPDATE</param>
+    </action>
+    
+    <action name="removeMinMaxLimits"
+      class="org.hisp.dhis.de.action.RemoveMinMaxLimitsAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="httpheader">
+        <param name="status">204</param>
+      </result>
+      <param name="onExceptionReturn">plainTextError</param>
+      <param name="requiredAuthorities">F_DATAELEMENT_MINMAX_DELETE</param>
+    </action>
+    
+    <action name="calculateCDEs"
+      class="org.hisp.dhis.de.action.CalculateCDEsAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="velocity">responseCalculateCDEs.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+      <param name="requiredAuthorities">F_DATAVALUE_ADD,F_DATAVALUE_UPDATE,F_DATAVALUE_DELETE</param>
+    </action>
+    
+    <action name="getDataElementOrder"
+      class="org.hisp.dhis.de.action.order.GetDataElementOrderAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="velocity">/popup.vm</result>
+      <param name="page">/dhis-web-dataentry/order.vm</param>
+      <param name="javascripts">javascript/order.js</param>
+    </action>
+    
+    <action name="moveDataElementUp"
+      class="org.hisp.dhis.de.action.order.MoveDataElementUpAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="chain">getDataElementOrder</result>
+      <param name="requiredAuthorities">F_DATASET_ORDER_CHANGE</param>
+    </action>
+    
+    <action name="moveDataElementDown"
+      class="org.hisp.dhis.de.action.order.MoveDataElementDownAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="chain">getDataElementOrder</result>
+      <param name="requiredAuthorities">F_DATASET_ORDER_CHANGE</param>
+    </action>
+    
+    <action name="orderDataElementsByCode"
+      class="org.hisp.dhis.de.action.order.OrderDataElementsByCodeAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="chain">getDataElementOrder</result>
+      <param name="requiredAuthorities">F_DATASET_ORDER_CHANGE</param>
+    </action>
+    
+    <action name="orderDataElementsByEntry"
+      class="org.hisp.dhis.de.action.order.OrderDataElementsByEntryAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="chain">getDataElementOrder</result>
+      <param name="requiredAuthorities">F_DATASET_ORDER_CHANGE</param>
+    </action>
+    
+    <action name="orderDataElementsByName"
+      class="org.hisp.dhis.de.action.order.OrderDataElementsByNameAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="chain">getDataElementOrder</result>
+      <param name="requiredAuthorities">F_DATASET_ORDER_CHANGE</param>
+    </action>
+    
+    <action name="resetDataElementOrder"
+      class="org.hisp.dhis.de.action.order.ResetDataElementOrderAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="chain">getDataElementOrder</result>
+      <param name="requiredAuthorities">F_DATASET_ORDER_CHANGE</param>
+    </action>
+    
+    <action name="viewHistory" class="org.hisp.dhis.de.action.HistoryAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="velocity">/popup.vm</result>
+      <param name="page">/dhis-web-dataentry/history.vm</param>
+      <param name="javascripts">../dhis-web-commons/jsgraphics/wz_jsgraphics.js,javascript/history.js</param>
+    </action>
+    
+    <action name="minMaxGeneration" class="org.hisp.dhis.de.action.MinMaxGeneratingAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="velocity">responseMinMaxGeneration.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+      <param name="requiredAuthorities">F_DATAELEMENT_MINMAX_ADD,F_DATAELEMENT_MINMAX_UPDATE</param>
+    </action>
+    
+    <action name="registerCompleteDataSet" class="org.hisp.dhis.de.action.RegisterCompleteDataSetAction">
+      <result name="success" type="velocity">/dhis-web-dataentry/responseVoid.vm</result>
+    </action>
+    
+    <action name="undoCompleteDataSet" class="org.hisp.dhis.de.action.UndoCompleteDataSetAction">
+      <result name="success" type="velocity">/dhis-web-dataentry/responseVoid.vm</result>
+    </action>
+    
+    <action name="validate" class="org.hisp.dhis.de.action.ValidationAction">
+      <interceptor-ref name="transactionStack"/>
+      <result name="success" type="velocity">/popup.vm</result>
+      <param name="page">/dhis-web-dataentry/validationResult.vm</param>
+    </action>
+    
+  </package>
+</xwork>

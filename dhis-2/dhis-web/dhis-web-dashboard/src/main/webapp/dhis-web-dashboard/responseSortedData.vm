@@ -1,0 +1,6 @@
+
+<messages>
+	#foreach($partofHeadingInfo in $headingInfo)
+		<message>$encoder.xmlEncode( $partofHeadingInfo )</message>
+	#end	
+</messages>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<indicators>
+#foreach( $indicator in $indicators )
+	<indicator>
+		<id>$indicator.id</id>
+		<name>$encoder.xmlEncode( $indicator.name )</name>
+	</indicator>
+#end
+</indicators>

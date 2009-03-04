@@ -1,0 +1,662 @@
+
+#macro( compare $value1 $value2 )
+	#if ( ( $value1 && !$value2 ) || ( !$value1 && $value2 ) || ( $value1 != $value2 ) ) style="background-color:#CEEACC"#end
+#end
+
+#macro( getExtendedProperties )
+	
+    <!-- Identifying and Definitional attributes -->
+    
+    <tr>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.mnemonic )>$i18n.getString( "mnemonic" )</td>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.mnemonic )>$!importObject.object.extended.mnemonic</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.version $importObject.compareObject.extended.version )>$i18n.getString( "version" )</td>
+        <td#compare( $importObject.object.extended.version $importObject.compareObject.extended.version )>$!importObject.object.extended.version</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.context $importObject.compareObject.extended.context )>$i18n.getString( "context" )</td>
+        <td#compare( $importObject.object.extended.context $importObject.compareObject.extended.context )>$!importObject.object.extended.context</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.synonyms )>$i18n.getString( "synonyms" )</td>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.synonyms )>$!importObject.object.extended.synonyms</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.hononyms )>$i18n.getString( "hononyms" )</td>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.hononyms )>$!importObject.object.extended.hononyms</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.keywords $importObject.compareObject.extended.keywords )>$i18n.getString( "keywords" )</td>
+        <td#compare( $importObject.object.extended.keywords $importObject.compareObject.extended.keywords )>$!importObject.object.extended.keywords</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.status $importObject.compareObject.extended.status )>$i18n.getString( "status" )</td>
+        <td#compare( $importObject.object.extended.status $importObject.compareObject.extended.status )>$!importObject.object.extended.status</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.dataElementType $importObject.compareObject.extended.dataElementType )>$i18n.getString( "data_element_type" )</td>
+        <td#compare( $importObject.object.extended.dataElementType $importObject.compareObject.extended.dataElementType )>$!importObject.object.extended.dataElementType</td>
+    </tr>
+    
+    <!-- Relational and Representational attributes -->
+    
+    <tr>
+        <td#compare( $importObject.object.extended.dataType $importObject.compareObject.extended.dataType )>$i18n.getString( "data_type" )</td>
+        <td#compare( $importObject.object.extended.dataType $importObject.compareObject.extended.dataType )>$!importObject.object.extended.dataType</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.representationalForm $importObject.compareObject.extended.representationalForm )>$i18n.getString( "representational_form" )</td>
+        <td#compare( $importObject.object.extended.representationalForm $importObject.compareObject.extended.representationalForm )>$!importObject.object.extended.representationalForm</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.representationalLayout $importObject.compareObject.extended.representationalLayout )>$i18n.getString( "representational_layout" )</td>
+        <td#compare( $importObject.object.extended.representationalLayout $importObject.compareObject.extended.representationalLayout )>$!importObject.object.extended.representationalLayout</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.minimumSize $importObject.compareObject.extended.minimumSize )>$i18n.getString( "minimum_size" )</td>
+        <td#compare( $importObject.object.extended.minimumSize $importObject.compareObject.extended.minimumSize )>$!importObject.object.extended.minimumSize</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.maximumSize $importObject.compareObject.extended.maximumSize )>$i18n.getString( "maximum_size" )</td>
+        <td#compare( $importObject.object.extended.maximumSize $importObject.compareObject.extended.maximumSize )>$!importObject.object.extended.maximumSize</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.dataDomain $importObject.compareObject.extended.dataDomain )>$i18n.getString( "data_domain" )</td>
+        <td#compare( $importObject.object.extended.dataDomain $importObject.compareObject.extended.dataDomain )>$!importObject.object.extended.dataDomain</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.validationRules $importObject.compareObject.extended.validationRules )>$i18n.getString( "validation_rules" )</td>
+        <td#compare( $importObject.object.extended.validationRules $importObject.compareObject.extended.validationRules )>$!importObject.object.extended.validationRules</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.relatedDataReferences $importObject.compareObject.extended.relatedDataReferences )>$i18n.getString( "related_data_references" )</td>
+        <td#compare( $importObject.object.extended.relatedDataReferences $importObject.compareObject.extended.relatedDataReferences )>$!importObject.object.extended.relatedDataReferences</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.guideForUse $importObject.compareObject.extended.guideForUse )>$i18n.getString( "guide_for_use" )</td>
+        <td#compare( $importObject.object.extended.guideForUse $importObject.compareObject.extended.guideForUse )>$!importObject.object.extended.guideForUse</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.collectionMethods $importObject.compareObject.extended.collectionMethods )>$i18n.getString( "collection_methods" )</td>
+        <td#compare( $importObject.object.extended.collectionMethods $importObject.compareObject.extended.collectionMethods )>$!importObject.object.extended.collectionMethods</td>
+    </tr>
+    
+    <!-- Administrative attributes -->
+    
+    <tr>
+        <td#compare( $importObject.object.extended.responsibleAuthority $importObject.compareObject.extended.responsibleAuthority )>$i18n.getString( "responsible_authority" )</td>
+        <td#compare( $importObject.object.extended.responsibleAuthority $importObject.compareObject.extended.responsibleAuthority )>$!importObject.object.extended.responsibleAuthority</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.updateRules $importObject.compareObject.extended.updateRules )>$i18n.getString( "update_rules" )</td>
+        <td#compare( $importObject.object.extended.updateRules $importObject.compareObject.extended.updateRules )>$!importObject.object.extended.updateRules</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.accessAuthority $importObject.compareObject.extended.accessAuthority )>$i18n.getString( "access_authority" )</td>
+        <td#compare( $importObject.object.extended.accessAuthority $importObject.compareObject.extended.accessAuthority )>$!importObject.object.extended.accessAuthority</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.updateFrequency $importObject.compareObject.extended.updateFrequency )>$i18n.getString( "update_frequency" )</td>
+        <td#compare( $importObject.object.extended.updateFrequency $importObject.compareObject.extended.updateFrequency )>$!importObject.object.extended.updateFrequency</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.location $importObject.compareObject.extended.location )>$i18n.getString( "location" )</td>
+        <td#compare( $importObject.object.extended.location $importObject.compareObject.extended.location )>$!importObject.object.extended.location</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.reportingMethods $importObject.compareObject.extended.reportingMethods )>$i18n.getString( "reporting_methods" )</td>
+        <td#compare( $importObject.object.extended.reportingMethods $importObject.compareObject.extended.reportingMethods )>$!importObject.object.extended.reportingMethods</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.versionStatus $importObject.compareObject.extended.versionStatus )>$i18n.getString( "version_status" )</td>
+        <td#compare( $importObject.object.extended.versionStatus $importObject.compareObject.extended.versionStatus )>$!importObject.object.extended.versionStatus</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.previousVersionReferences $importObject.compareObject.extended.previousVersionReferences )>$i18n.getString( "previous_version_references" )</td>
+        <td#compare( $importObject.object.extended.previousVersionReferences $importObject.compareObject.extended.previousVersionReferences )>$!importObject.object.extended.previousVersionReferences</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.sourceDocument $importObject.compareObject.extended.sourceDocument )>$i18n.getString( "source_document" )</td>
+        <td#compare( $importObject.object.extended.sourceDocument $importObject.compareObject.extended.sourceDocument )>$!importObject.object.extended.sourceDocument</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.sourceOrganisation $importObject.compareObject.extended.sourceOrganisation )>$i18n.getString( "source_organisation" )</td>
+        <td#compare( $importObject.object.extended.sourceOrganisation $importObject.compareObject.extended.sourceOrganisation )>$!importObject.object.extended.sourceOrganisation</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.comment $importObject.compareObject.extended.comment )>$i18n.getString( "comment" )</td>
+        <td#compare( $importObject.object.extended.comment $importObject.compareObject.extended.comment )>$!importObject.object.extended.comment</td>
+    </tr>
+    
+#end
+
+#macro ( getExtendedCompareProperties )
+	
+    <!-- Identifying and Definitional attributes -->
+    
+    <tr>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.mnemonic )>$i18n.getString( "mnemonic" )</td>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.mnemonic )>$!importObject.compareObject.extended.mnemonic</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.version $importObject.compareObject.extended.version )>$i18n.getString( "version" )</td>
+        <td#compare( $importObject.object.extended.version $importObject.compareObject.extended.version )>$!importObject.compareObject.extended.version</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.context $importObject.compareObject.extended.context )>$i18n.getString( "context" )</td>
+        <td#compare( $importObject.object.extended.context $importObject.compareObject.extended.context )>$!importObject.compareObject.extended.context</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.synonyms )>$i18n.getString( "synonyms" )</td>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.synonyms )>$!importObject.compareObject.extended.synonyms</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.hononyms )>$i18n.getString( "hononyms" )</td>
+        <td#compare( $importObject.object.extended.mnemonic $importObject.compareObject.extended.hononyms )>$!importObject.compareObject.extended.hononyms</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.keywords $importObject.compareObject.extended.keywords )>$i18n.getString( "keywords" )</td>
+        <td#compare( $importObject.object.extended.keywords $importObject.compareObject.extended.keywords )>$!importObject.compareObject.extended.keywords</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.status $importObject.compareObject.extended.status )>$i18n.getString( "status" )</td>
+        <td#compare( $importObject.object.extended.status $importObject.compareObject.extended.status )>$!importObject.compareObject.extended.status</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.dataElementType $importObject.compareObject.extended.dataElementType )>$i18n.getString( "data_element_type" )</td>
+        <td#compare( $importObject.object.extended.dataElementType $importObject.compareObject.extended.dataElementType )>$!importObject.compareObject.extended.dataElementType</td>
+    </tr>
+    
+    <!-- Relational and Representational attributes -->
+    
+    <tr>
+        <td#compare( $importObject.object.extended.dataType $importObject.compareObject.extended.dataType )>$i18n.getString( "data_type" )</td>
+        <td#compare( $importObject.object.extended.dataType $importObject.compareObject.extended.dataType )>$!importObject.compareObject.extended.dataType</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.representationalForm $importObject.compareObject.extended.representationalForm )>$i18n.getString( "representational_form" )</td>
+        <td#compare( $importObject.object.extended.representationalForm $importObject.compareObject.extended.representationalForm )>$!importObject.compareObject.extended.representationalForm</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.representationalLayout $importObject.compareObject.extended.representationalLayout )>$i18n.getString( "representational_layout" )</td>
+        <td#compare( $importObject.object.extended.representationalLayout $importObject.compareObject.extended.representationalLayout )>$!importObject.compareObject.extended.representationalLayout</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.minimumSize $importObject.compareObject.extended.minimumSize )>$i18n.getString( "minimum_size" )</td>
+        <td#compare( $importObject.object.extended.minimumSize $importObject.compareObject.extended.minimumSize )>$!importObject.compareObject.extended.minimumSize</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.maximumSize $importObject.compareObject.extended.maximumSize )>$i18n.getString( "maximum_size" )</td>
+        <td#compare( $importObject.object.extended.maximumSize $importObject.compareObject.extended.maximumSize )>$!importObject.compareObject.extended.maximumSize</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.dataDomain $importObject.compareObject.extended.dataDomain )>$i18n.getString( "data_domain" )</td>
+        <td#compare( $importObject.object.extended.dataDomain $importObject.compareObject.extended.dataDomain )>$!importObject.compareObject.extended.dataDomain</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.validationRules $importObject.compareObject.extended.validationRules )>$i18n.getString( "validation_rules" )</td>
+        <td#compare( $importObject.object.extended.validationRules $importObject.compareObject.extended.validationRules )>$!importObject.compareObject.extended.validationRules</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.relatedDataReferences $importObject.compareObject.extended.relatedDataReferences )>$i18n.getString( "related_data_references" )</td>
+        <td#compare( $importObject.object.extended.relatedDataReferences $importObject.compareObject.extended.relatedDataReferences )>$!importObject.compareObject.extended.relatedDataReferences</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.guideForUse $importObject.compareObject.extended.guideForUse )>$i18n.getString( "guide_for_use" )</td>
+        <td#compare( $importObject.object.extended.guideForUse $importObject.compareObject.extended.guideForUse )>$!importObject.compareObject.extended.guideForUse</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.collectionMethods $importObject.compareObject.extended.collectionMethods )>$i18n.getString( "collection_methods" )</td>
+        <td#compare( $importObject.object.extended.collectionMethods $importObject.compareObject.extended.collectionMethods )>$!importObject.compareObject.extended.collectionMethods</td>
+    </tr>
+    
+    <!-- Administrative attributes -->
+    
+    <tr>
+        <td#compare( $importObject.object.extended.responsibleAuthority $importObject.compareObject.extended.responsibleAuthority )>$i18n.getString( "responsible_authority" )</td>
+        <td#compare( $importObject.object.extended.responsibleAuthority $importObject.compareObject.extended.responsibleAuthority )>$!importObject.compareObject.extended.responsibleAuthority</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.updateRules $importObject.compareObject.extended.updateRules )>$i18n.getString( "update_rules" )</td>
+        <td#compare( $importObject.object.extended.updateRules $importObject.compareObject.extended.updateRules )>$!importObject.compareObject.extended.updateRules</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.accessAuthority $importObject.compareObject.extended.accessAuthority )>$i18n.getString( "access_authority" )</td>
+        <td#compare( $importObject.object.extended.accessAuthority $importObject.compareObject.extended.accessAuthority )>$!importObject.compareObject.extended.accessAuthority</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.updateFrequency $importObject.compareObject.extended.updateFrequency )>$i18n.getString( "update_frequency" )</td>
+        <td#compare( $importObject.object.extended.updateFrequency $importObject.compareObject.extended.updateFrequency )>$!importObject.compareObject.extended.updateFrequency</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.location $importObject.compareObject.extended.location )>$i18n.getString( "location" )</td>
+        <td#compare( $importObject.object.extended.location $importObject.compareObject.extended.location )>$!importObject.compareObject.extended.location</td>
+    </tr>   
+    <tr>
+        <td#compare( $importObject.object.extended.reportingMethods $importObject.compareObject.extended.reportingMethods )>$i18n.getString( "reporting_methods" )</td>
+        <td#compare( $importObject.object.extended.reportingMethods $importObject.compareObject.extended.reportingMethods )>$!importObject.compareObject.extended.reportingMethods</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.versionStatus $importObject.compareObject.extended.versionStatus )>$i18n.getString( "version_status" )</td>
+        <td#compare( $importObject.object.extended.versionStatus $importObject.compareObject.extended.versionStatus )>$!importObject.compareObject.extended.versionStatus</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.previousVersionReferences $importObject.compareObject.extended.previousVersionReferences )>$i18n.getString( "previous_version_references" )</td>
+        <td#compare( $importObject.object.extended.previousVersionReferences $importObject.compareObject.extended.previousVersionReferences )>$!importObject.compareObject.extended.previousVersionReferences</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.sourceDocument $importObject.compareObject.extended.sourceDocument )>$i18n.getString( "source_document" )</td>
+        <td#compare( $importObject.object.extended.sourceDocument $importObject.compareObject.extended.sourceDocument )>$!importObject.compareObject.extended.sourceDocument</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.sourceOrganisation $importObject.compareObject.extended.sourceOrganisation )>$i18n.getString( "source_organisation" )</td>
+        <td#compare( $importObject.object.extended.sourceOrganisation $importObject.compareObject.extended.sourceOrganisation )>$!importObject.compareObject.extended.sourceOrganisation</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.extended.comment $importObject.compareObject.extended.comment )>$i18n.getString( "comment" )</td>
+        <td#compare( $importObject.object.extended.comment $importObject.compareObject.extended.comment )>$!importObject.compareObject.extended.comment</td>
+    </tr>
+	
+#end
+
+<h3>$i18n.getString( 'compare_to_existing' )</h3>
+
+<form id="previewForm" name="previewForm" method="post" action="">
+
+<input type="hidden" id="objectType" name="objectType" value="$!objectType">
+<input type="hidden" id="objectId" name="objectId" value="$!importObject.id">
+
+<table style="width:700px">
+
+	<!-- Import object -->
+	
+	<tr>
+		<th style="width:25%">$i18n.getString( "new_object" )</th>
+		<th style="width:75%"></th>
+	</tr>
+	
+	<tr>
+		<td#compare( $importObject.object.name $importObject.compareObject.name )>$i18n.getString( "name" )</td>
+		<td#compare( $importObject.object.name $importObject.compareObject.name )>$!importObject.object.name</td>
+	</tr>	
+	
+	#if ( $objectType == "DATAELEMENT" )
+	
+	<tr>
+		<td#compare( $importObject.object.alternativeName $importObject.compareObject.alternativeName )>$i18n.getString( "alternative_name" )</td>
+		<td#compare( $importObject.object.alternativeName $importObject.compareObject.alternativeName )>$!importObject.object.alternativeName</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$i18n.getString( "short_name" )</td>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$!importObject.object.shortName</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.code $importObject.compareObject.code )>$i18n.getString( "code" )</td>
+		<td#compare( $importObject.object.code $importObject.compareObject.code )>$!importObject.object.code</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$i18n.getString( "description" )</td>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$!importObject.object.description</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.active $importObject.compareObject.active )>$i18n.getString( "active" )</td>
+		<td#compare( $importObject.object.active $importObject.compareObject.active )>$!importObject.object.active</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.type $importObject.compareObject.type )>$i18n.getString( "type" )</td>
+		<td#compare( $importObject.object.type $importObject.compareObject.type )>$i18n.getString( $!importObject.object.type )</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.aggregationOperator $importObject.compareObject.aggregationOperator )>$i18n.getString( "aggregation_operator" )</td>
+		<td#compare( $importObject.object.aggregationOperator $importObject.compareObject.aggregationOperator )>$i18n.getString( $!importObject.object.aggregationOperator )</td>
+	</tr>
+	
+	#end
+	
+	#if ( $objectType == "DATAELEMENT" && $dataDictionaryMode == "extended" )
+	
+	#getExtendedProperties()
+	
+	#end
+	
+	#if ( $objectType == "INDICATORTYPE" )
+	
+	<tr>
+		<td#compare( $importObject.object.factor $importObject.compareObject.factor )>$i18n.getString( "factor" )</td>
+		<td#compare( $importObject.object.factor $importObject.compareObject.factor )>$!importObject.object.factor</td>
+	</tr>	
+	
+	#end
+	
+	#if ( $objectType == "INDICATOR" )
+	
+	<tr>
+		<td#compare( $importObject.object.alternativeName $importObject.compareObject.alternativeName )>$i18n.getString( "alternative_name" )</td>
+		<td#compare( $importObject.object.alternativeName $importObject.compareObject.alternativeName )>$!importObject.object.alternativeName</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$i18n.getString( "short_name" )</td>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$!importObject.object.shortName</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.code $importObject.compareObject.code )>$i18n.getString( "code" )</td>
+		<td#compare( $importObject.object.code $importObject.compareObject.code )>$!importObject.object.code</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$i18n.getString( "description" )</td>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$!importObject.object.description</td>
+	</tr>
+    <tr>
+        <td#compare( $importObject.object.annualized $importObject.compareObject.annualized )>$i18n.getString( "annualized" )</td>
+        <td#compare( $importObject.object.annualized $importObject.compareObject.annualized )>$!importObject.object.annualized</td>
+    </tr>
+	<tr>
+		<td#compare( $importObject.object.numerator $importObject.compareObject.numerator )>$i18n.getString( "numerator" )</td>
+		<td#compare( $importObject.object.numerator $importObject.compareObject.numerator )>$!importObject.object.numerator</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.numeratorDescription $importObject.compareObject.numeratorDescription )>$i18n.getString( "numerator_description" )</td>
+		<td#compare( $importObject.object.numeratorDescription $importObject.compareObject.numeratorDescription )>$!importObject.object.numeratorDescription</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.numeratorAggregationOperator $importObject.compareObject.numeratorAggregationOperator )>$i18n.getString( "numerator_aggregation_operator" )</td>
+		<td#compare( $importObject.object.numeratorAggregationOperator $importObject.compareObject.numeratorAggregationOperator )>$i18n.getString( $!importObject.object.numeratorAggregationOperator )</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.denominator $importObject.compareObject.denominator )>$i18n.getString( "denominator" )</td>
+		<td#compare( $importObject.object.denominator $importObject.compareObject.denominator )>$!importObject.object.denominator</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.denominatorDescription $importObject.compareObject.denominatorDescription )>$i18n.getString( "denominator_description" )</td>
+		<td#compare( $importObject.object.denominatorDescription $importObject.compareObject.denominatorDescription )>$!importObject.object.denominatorDescription</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.denominatorAggregationOperator $importObject.compareObject.denominatorAggregationOperator )>$i18n.getString( "denominator_aggregation_operator" )</td>
+		<td#compare( $importObject.object.denominatorAggregationOperator $importObject.compareObject.denominatorAggregationOperator )>$i18n.getString( $!importObject.object.denominatorAggregationOperator )</td>
+	</tr>
+	
+	#end
+	
+    #if ( $objectType == "INDICATOR" && $dataDictionaryMode == "extended" )
+    
+    #getExtendedProperties()
+    
+    #end
+    
+	#if ( $objectType == "DATADICTIONARY" )
+		
+	<tr>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$i18n.getString( "description" )</td>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$!importObject.object.description</td>
+	</tr>
+    <tr>
+        <td#compare( $importObject.object.region $importObject.compareObject.region )>$i18n.getString( "region" )</td>
+        <td#compare( $importObject.object.region $importObject.compareObject.region )>$!importObject.object.region</td>
+    </tr>
+		
+	#end
+		
+	#if ( $objectType == "ORGANISATIONUNIT" )
+	
+	<tr>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$i18n.getString( "short_name" )</td>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$!importObject.object.shortName</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.organisationUnitCode $importObject.compareObject.organisationUnitCode )>$i18n.getString( "code" )</td>
+		<td#compare( $importObject.object.organisationUnitCode $importObject.compareObject.organisationUnitCode )>$!importObject.object.organisationUnitCode</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.active $importObject.compareObject.active )>$i18n.getString( "active" )</td>
+		<td#compare( $importObject.object.active $importObject.compareObject.active )>$!importObject.object.active</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.comment $importObject.compareObject.comment )>$i18n.getString( "comment" )</td>
+		<td#compare( $importObject.object.comment $importObject.compareObject.comment )>$!importObject.object.comment</td>
+	</tr>
+    <tr>
+        <td#compare( $importObject.object.geoCode $importObject.compareObject.geoCode )>$i18n.getString( "geo_code" )</td>
+        <td#compare( $importObject.object.geoCode $importObject.compareObject.geoCode )>$!importObject.object.geoCode</td>
+    </tr>
+	
+	#end
+	
+	#if ( $objectType == "VALIDATIONRULE" )
+	
+	<tr>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$i18n.getString( "description" )</td>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$!importObject.object.description</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.operator $importObject.compareObject.operator )>$i18n.getString( "operator" )</td>
+		<td#compare( $importObject.object.operator $importObject.compareObject.operator )>$!importObject.object.operator</td>
+	</tr>	
+		
+	#end
+	
+    #if ( $objectType == "REPORTTABLE" )
+       
+    <tr>
+        <td#compare( $importObject.object.tableName $importObject.compareObject.tableName )>$i18n.getString( "table_name" )</td>
+        <td#compare( $importObject.object.tableName $importObject.compareObject.tableName )>$!importObject.object.tableName</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.doIndicators $importObject.compareObject.doIndicators )>$i18n.getString( "do_indicators" )</td>
+        <td#compare( $importObject.object.doIndicators $importObject.compareObject.doIndicators )>$!importObject.object.doIndicators</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.doPeriods $importObject.compareObject.doPeriods )>$i18n.getString( "do_periods" )</td>
+        <td#compare( $importObject.object.doPeriods $importObject.compareObject.doPeriods )>$!importObject.object.doPeriods</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.doUnits $importObject.compareObject.doUnits )>$i18n.getString( "do_units" )</td>
+        <td#compare( $importObject.object.doUnits $importObject.compareObject.doUnits )>$!importObject.object.doUnits</td>
+    </tr>
+        
+    #end
+        
+	<tr>
+		<td colspan="2" style="height:15px"></td>
+	</tr>
+	
+	<!-- Compare object -->
+	
+	<tr>
+		<th style="width:25%">$i18n.getString( "existing_object" )</th>
+		<th style="width:75%"></th>
+	</tr>
+	
+	<tr>
+		<td>$i18n.getString( "name" )</td>
+		<td>$!importObject.compareObject.name</td>
+	</tr>	
+	
+	#if ( $objectType == "DATAELEMENT" || $objectType == "EXTENDEDDATAELEMENT"  )
+			
+	<tr>
+		<td#compare( $importObject.object.alternativeName $importObject.compareObject.alternativeName )>$i18n.getString( "alternative_name" )</td>
+		<td#compare( $importObject.object.alternativeName $importObject.compareObject.alternativeName )>$!importObject.compareObject.alternativeName</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$i18n.getString( "short_name" )</td>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$!importObject.compareObject.shortName</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.code $importObject.compareObject.code )>$i18n.getString( "code" )</td>
+		<td#compare( $importObject.object.code $importObject.compareObject.code )>$!importObject.compareObject.code</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$i18n.getString( "description" )</td>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$!importObject.compareObject.description</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.active $importObject.compareObject.active )>$i18n.getString( "active" )</td>
+		<td#compare( $importObject.object.active $importObject.compareObject.active )>$!importObject.compareObject.active</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.type $importObject.compareObject.type )>$i18n.getString( "type" )</td>
+		<td#compare( $importObject.object.type $importObject.compareObject.type )>$i18n.getString( $!importObject.compareObject.type )</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.aggregationOperator $importObject.compareObject.aggregationOperator )>$i18n.getString( "aggregation_operator" )</td>
+		<td#compare( $importObject.object.aggregationOperator $importObject.compareObject.aggregationOperator )>$i18n.getString( $!importObject.compareObject.aggregationOperator )</td>
+	</tr>	
+	
+	#end
+	
+	#if ( $objectType == "DATAELEMENT" && $dataDictionaryMode == "extended" )
+	
+	#getExtendedCompareProperties()
+	
+	#end
+	
+	#if ( $objectType == "INDICATORTYPE" )
+	
+	<tr>
+		<td#compare( $importObject.object.factor $importObject.compareObject.factor )>$i18n.getString( "factor" )</td>
+		<td#compare( $importObject.object.factor $importObject.compareObject.factor )>$!importObject.compareObject.factor</td>
+	</tr>	
+	
+	#end
+	
+	#if( $objectType == "INDICATOR" )
+	
+	<tr>
+		<td#compare( $importObject.object.alternativeName $importObject.compareObject.alternativeName )>$i18n.getString( "alternative_name" )</td>
+		<td#compare( $importObject.object.alternativeName $importObject.compareObject.alternativeName )>$!importObject.compareObject.alternativeName</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$i18n.getString( "short_name" )</td>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$!importObject.compareObject.shortName</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.code $importObject.compareObject.code )>$i18n.getString( "code" )</td>
+		<td#compare( $importObject.object.code $importObject.compareObject.code )>$!importObject.compareObject.code</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$i18n.getString( "description" )</td>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$!importObject.compareObject.description</td>
+	</tr>
+    <tr>
+        <td#compare( $importObject.object.annualized $importObject.compareObject.annualized )>$i18n.getString( "annualized" )</td>
+        <td#compare( $importObject.object.annualized $importObject.compareObject.annualized )>$!importObject.compareObject.annualized</td>
+    </tr>
+	<tr>
+		<td#compare( $importObject.object.numerator $importObject.compareObject.numerator )>$i18n.getString( "numerator" )</td>
+		<td#compare( $importObject.object.numerator $importObject.compareObject.numerator )>$!importObject.compareObject.numerator</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.numeratorDescription $importObject.compareObject.numeratorDescription )>$i18n.getString( "numerator_description" )</td>
+		<td#compare( $importObject.object.numeratorDescription $importObject.compareObject.numeratorDescription )>$!importObject.compareObject.numeratorDescription</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.numeratorAggregationOperator $importObject.compareObject.numeratorAggregationOperator )>$i18n.getString( "numerator_aggregation_operator" )</td>
+		<td#compare( $importObject.object.numeratorAggregationOperator $importObject.compareObject.numeratorAggregationOperator )>$i18n.getString( $!importObject.compareObject.numeratorAggregationOperator )</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.denominator $importObject.compareObject.denominator )>$i18n.getString( "denominator" )</td>
+		<td#compare( $importObject.object.denominator $importObject.compareObject.denominator )>$!importObject.compareObject.denominator</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.denominatorDescription $importObject.compareObject.denominatorDescription )>$i18n.getString( "denominator_description" )</td>
+		<td#compare( $importObject.object.denominatorDescription $importObject.compareObject.denominatorDescription )>$!importObject.compareObject.denominatorDescription</td>
+	</tr>	
+	<tr>
+		<td#compare( $importObject.object.denominatorAggregationOperator $importObject.compareObject.denominatorAggregationOperator )>$i18n.getString( "denominator_aggregation_operator" )</td>
+		<td#compare( $importObject.object.denominatorAggregationOperator $importObject.compareObject.denominatorAggregationOperator )>$i18n.getString( $!importObject.compareObject.denominatorAggregationOperator )</td>
+	</tr>
+	
+	#end
+	
+    #if ( $objectType == "INDICATOR" && $dataDictionaryMode == "extended" )
+    
+    #getExtendedCompareProperties()
+    
+    #end
+    
+	#if ( $objectType == "DATADICTIONARY" )
+		
+	<tr>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$i18n.getString( "description" )</td>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$!importObject.compareObject.description</td>
+	</tr>
+    <tr>
+        <td#compare( $importObject.object.region $importObject.compareObject.region )>$i18n.getString( "region" )</td>
+        <td#compare( $importObject.object.region $importObject.compareObject.region )>$!importObject.compareObject.region</td>
+    </tr>
+		
+	#end
+	
+	#if( $objectType == "ORGANISATIONUNIT" )
+	
+	<tr>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$i18n.getString( "short_name" )</td>
+		<td#compare( $importObject.object.shortName $importObject.compareObject.shortName )>$!importObject.compareObject.shortName</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.organisationUnitCode $importObject.compareObject.organisationUnitCode )>$i18n.getString( "code" )</td>
+		<td#compare( $importObject.object.organisationUnitCode $importObject.compareObject.organisationUnitCode )>$!importObject.compareObject.organisationUnitCode</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.active $importObject.compareObject.active )>$i18n.getString( "active" )</td>
+		<td#compare( $importObject.object.active $importObject.compareObject.active )>$!importObject.compareObject.active</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.comment $importObject.compareObject.comment )>$i18n.getString( "comment" )</td>
+		<td#compare( $importObject.object.comment $importObject.compareObject.comment )>$!importObject.compareObject.comment</td>
+	</tr>
+    <tr>
+        <td#compare( $importObject.object.geoCode $importObject.compareObject.geoCode )>$i18n.getString( "geo_code" )</td>
+        <td#compare( $importObject.object.geoCode $importObject.compareObject.geoCode )>$!importObject.compareObject.geoCode</td>
+    </tr>
+
+	#end
+	
+	#if ( $objectType == "VALIDATIONRULE" )
+	
+	<tr>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$i18n.getString( "description" )</td>
+		<td#compare( $importObject.object.description $importObject.compareObject.description )>$!importObject.compareObject.description</td>
+	</tr>
+	<tr>
+		<td#compare( $importObject.object.operator $importObject.compareObject.operator )>$i18n.getString( "operator" )</td>
+		<td#compare( $importObject.object.operator $importObject.compareObject.operator )>$!importObject.compareObject.operator</td>
+	</tr>
+	
+	#end
+	
+	#if ( $objectType == "REPORTTABLE" )
+		
+    <tr>
+        <td#compare( $importObject.object.tableName $importObject.compareObject.tableName )>$i18n.getString( "table_name" )</td>
+        <td#compare( $importObject.object.tableName $importObject.compareObject.tableName )>$!importObject.compareObject.tableName</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.doIndicators $importObject.compareObject.doIndicators )>$i18n.getString( "do_indicators" )</td>
+        <td#compare( $importObject.object.doIndicators $importObject.compareObject.doIndicators )>$!importObject.compareObject.doIndicators</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.doPeriods $importObject.compareObject.doPeriods )>$i18n.getString( "do_periods" )</td>
+        <td#compare( $importObject.object.doPeriods $importObject.compareObject.doPeriods )>$!importObject.compareObject.doPeriods</td>
+    </tr>
+    <tr>
+        <td#compare( $importObject.object.doUnits $importObject.compareObject.doUnits )>$i18n.getString( "do_units" )</td>
+        <td#compare( $importObject.object.doUnits $importObject.compareObject.doUnits )>$!importObject.compareObject.doUnits</td>
+    </tr>
+
+	#end
+	
+	<!-- Actions -->
+	
+	<tr>
+		<td colspan="2">
+			<input type="button" value="$i18n.getString( 'ok' )" style="width:25%" onclick="cancelObject()"><input 
+			type="button" value="$i18n.getString( 'discard_update' )" style="width:25%" onclick="discardObject()">
+		</td>
+	</tr>
+	
+</table>
+
+</form>

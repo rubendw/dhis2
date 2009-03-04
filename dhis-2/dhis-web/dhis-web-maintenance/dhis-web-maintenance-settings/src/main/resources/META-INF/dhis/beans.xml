@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+  <!-- System settings -->
+  
+  <bean id="org.hisp.dhis.settings.action.system.GetSystemSettingsAction"
+    class="org.hisp.dhis.settings.action.system.GetSystemSettingsAction"
+    scope="prototype">
+    <property name="systemSettingManager">
+      <ref bean="org.hisp.dhis.options.SystemSettingManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.settings.action.system.SetSystemSettingsAction"
+    class="org.hisp.dhis.settings.action.system.SetSystemSettingsAction"
+    scope="prototype">
+    <property name="systemSettingManager">
+      <ref bean="org.hisp.dhis.options.SystemSettingManager"/>
+    </property>
+  </bean>
+  
+  <!-- User settings -->
+  
+  <bean id="org.hisp.dhis.settings.action.user.GetAvailableLocalesAction"
+		class="org.hisp.dhis.settings.action.user.GetAvailableLocalesAction" 
+		scope="prototype">
+    <property name="resourceBundleManager">
+      <ref bean="org.hisp.dhis.i18n.resourcebundle.ResourceBundleManager"/>
+    </property>
+    <property name="localeManager">
+      <ref bean="org.hisp.dhis.i18n.locale.LocaleManager"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.settings.action.user.GetAvailableLocalesDbAction"
+		class="org.hisp.dhis.settings.action.user.GetAvailableLocalesDbAction" 
+		scope="prototype">
+    <property name="i18nService">
+      <ref bean="org.hisp.dhis.i18n.I18nService"/>
+    </property>
+    <property name="localeManager">
+      <ref bean="org.hisp.dhis.i18n.locale.LocaleManagerDb"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.settings.action.user.GetAvailableSortOrdersAction"
+		class="org.hisp.dhis.settings.action.user.GetAvailableSortOrdersAction" 
+		scope="prototype">
+    <property name="sortOrderManager">
+      <ref bean="org.hisp.dhis.options.sortorder.SortOrderManager"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.settings.action.user.GetAvailableDisplayPropertiesAction"
+		class="org.hisp.dhis.settings.action.user.GetAvailableDisplayPropertiesAction" 
+		scope="prototype">
+    <property name="displayPropertyManager">
+      <ref bean="org.hisp.dhis.options.displayproperty.DisplayPropertyManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.settings.action.user.GetAvailableDataDictionaryModesAction"
+    class="org.hisp.dhis.settings.action.user.GetAvailableDataDictionaryModesAction"
+    scope="prototype">
+    <property name="dataDictionaryModeManager">
+      <ref bean="org.hisp.dhis.options.datadictionary.DataDictionaryModeManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.settings.action.user.GetAvailableStylesAction"
+    class="org.hisp.dhis.settings.action.user.GetAvailableStylesAction"
+    scope="prototype">
+    <property name="styleManager">
+      <ref bean="org.hisp.dhis.options.style.StyleManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.settings.action.user.SetCurrentLocaleAction"
+    class="org.hisp.dhis.settings.action.user.SetCurrentLocaleAction" 
+		scope="prototype">
+    <property name="localeManager">
+      <ref bean="org.hisp.dhis.i18n.locale.LocaleManager"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.settings.action.user.SetCurrentLocaleDbAction"
+    class="org.hisp.dhis.settings.action.user.SetCurrentLocaleDbAction" 
+		scope="prototype">
+    <property name="localeManager">
+      <ref bean="org.hisp.dhis.i18n.locale.LocaleManagerDb"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.settings.action.user.SetCurrentSortOrderAction"
+    class="org.hisp.dhis.settings.action.user.SetCurrentSortOrderAction" 
+		scope="prototype">
+    <property name="sortOrderManager">
+      <ref bean="org.hisp.dhis.options.sortorder.SortOrderManager"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.settings.action.user.SetCurrentDisplayPropertyAction"
+		class="org.hisp.dhis.settings.action.user.SetCurrentDisplayPropertyAction"
+		scope="prototype">
+    <property name="displayPropertyManager">
+      <ref bean="org.hisp.dhis.options.displayproperty.DisplayPropertyManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.settings.action.user.SetCurrentDataDictionaryModeAction"
+    class="org.hisp.dhis.settings.action.user.SetCurrentDataDictionaryModeAction"
+    scope="prototype">
+    <property name="dataDictionaryModeManager">
+      <ref bean="org.hisp.dhis.options.datadictionary.DataDictionaryModeManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.settings.action.user.SetCurrentStyleAction"
+    class="org.hisp.dhis.settings.action.user.SetCurrentStyleAction"
+    scope="prototype">
+    <property name="styleManager">
+      <ref bean="org.hisp.dhis.options.style.StyleManager"/>
+    </property>
+  </bean>
+	
+</beans>

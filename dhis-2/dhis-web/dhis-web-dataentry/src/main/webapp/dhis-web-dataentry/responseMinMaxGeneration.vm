@@ -1,0 +1,9 @@
+<minmax>
+	#foreach( $minMaxDataElement in $minMaxDataElements )
+    	<dataelement>
+    		<dataelementId>$encoder.xmlEncode( $minMaxDataElement.dataElement.id )</dataelementId>
+    		<minLimit>$encoder.xmlEncode( $minMaxDataElement.min )</minLimit>
+    		<maxLimit>$encoder.xmlEncode( $minMaxDataElement.max )</maxLimit>
+    	</dataelement>
+	#end
+</minmax>

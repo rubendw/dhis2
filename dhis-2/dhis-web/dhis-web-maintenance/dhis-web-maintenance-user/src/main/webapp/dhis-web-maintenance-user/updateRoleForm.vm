@@ -1,0 +1,106 @@
+
+<h3>$i18n.getString( "edit_role" )</h3>
+
+<form id="updateRoleForm" action="updateRole.action" method="post" onsubmit="return validateUpdateRole()">
+	<div>
+		<input type="hidden" id="id" name="id" value="$userAuthorityGroup.id">
+  	</div>
+
+  	<table>
+		<tr>
+			<th colspan="4">$i18n.getString( "details" )</th>        
+		</tr>
+		<tr>
+			<td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+			<td><input type="text" id="name" name="name" value="$!encoder.htmlEncode( $userAuthorityGroup.name )" style="width:20em"></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><label for="description">$i18n.getString( "description" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+			<td><input type="text" id="description" name="description" value="$!encoder.htmlEncode( $userAuthorityGroup.description )" style="width:20em"></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="4" height="10"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<th>$i18n.getString( "available" )</th>
+			<td></td>
+			<th>$i18n.getString( "selected" )</th>
+		</tr>
+		<tr>
+			<td><label>$i18n.getString( "data_sets" )</label></td>	
+			<td>
+          		<select size="15" id="availableList" name="availableList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="moveSelectedById( 'availableList', 'selectedList' )">
+            	#foreach ( $availableDataSet in $availableDataSets )
+              		<option value="$availableDataSet.id">$encoder.htmlEncode( $availableDataSet.name )</option>
+            	#end
+        		</select>
+        	</td>
+        	<td>
+        		<input type="button" value="&lt;" onclick="moveSelectedById( 'selectedList', 'availableList' )">
+        		<input type="button" value="&gt;" onclick="moveSelectedById ( 'availableList', 'selectedList' )">
+			</td>
+        	<td>
+        		<select id="selectedList" name="selectedList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="moveSelectedById( 'selectedList', 'availableList' )">
+            	#foreach ( $selectedDataSet in $roleDataSets )
+              		<option value="$selectedDataSet.id">$encoder.htmlEncode( $selectedDataSet.name )</option>
+            	#end
+        		</select>
+        	</td>
+		</tr>
+        <tr>
+            <td><label>$i18n.getString( "reports" )</label></td>
+            <td>
+                <select size="15" id="availableListReport" name="availableListReport" multiple="multiple" style="min-width:20em;height:20em" ondblclick="moveSelectedById( 'availableListReport', 'selectedListReport' )">
+                    #foreach( $report in $availableReports )
+                        <option value="$report.id">$encoder.htmlEncode( $report.name )</option>
+                    #end
+                </select>
+            </td>
+            <td>
+                <input type="button" value="&lt;" title="$i18n.getString('remove_selected')" onclick="moveSelectedById( 'selectedListReport', 'availableListReport' )">
+                <input type="button" value="&gt;" title="$i18n.getString('move_selected')" onclick="moveSelectedById( 'availableListReport', 'selectedListReport' )">
+            </td>
+            <td>
+                <select id="selectedListReport" name="selectedListReport" multiple="multiple" style="min-width:20em;height:20em" ondblclick="moveSelectedById( 'selectedListReport', 'availableListReport' )">
+                #foreach ( $report in $roleReports )
+                	<option value="$report.id">$encoder.htmlEncode( $report.name )</option>
+                #end
+                </select>
+            </td>
+        </tr>
+		<tr>
+			<td><label>$i18n.getString( "authorities" )</label></td>
+			<td>
+          		<select size="15" id="availableListAuthority" name="availableListAuthority" multiple="multiple" style="min-width:20em;height:20em" ondblclick="moveSelectedById( 'availableListAuthority', 'selectedListAuthority' )">
+				#foreach( $availableAuthority in $availableAuthorities )
+              		<option value="$availableAuthority">$i18n.getString( $availableAuthority )</option>
+				#end
+          		</select>
+        	</td>
+        	<td>
+        		<input type="button" value="&lt;" onclick="moveSelectedById( 'selectedListAuthority', 'availableListAuthority' )">
+        		<input type="button" value="&gt;" onclick="moveSelectedById ( 'availableListAuthority', 'selectedListAuthority' )">
+			</td>
+        	<td>
+				<select id="selectedListAuthority" name="selectedListAuthority" multiple="multiple" style="min-width:20em;height:20em" ondblclick="moveSelectedById( 'selectedListAuthority', 'availableListAuthority' )">
+            	#foreach ( $selectedAuthority in $roleAuthorities )
+					<option value="$selectedAuthority">$i18n.getString( $selectedAuthority )</option>
+            	#end
+          		</select>
+        	</td>
+		</tr>	
+		<tr>
+			<td></td>
+			<td valign="top"><input type="submit" value="$i18n.getString( "save" )" style="width:10em"><input type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='allRole.action'" style="width:10em"></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+</form>
+
+<span id="message"></span>

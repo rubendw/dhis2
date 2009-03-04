@@ -1,0 +1,6 @@
+<dataDictionary>
+	<id>$dataDictionary.id</id>
+	<name>$encoder.xmlEncode( $dataDictionary.name )</name>
+	<description>$encoder.xmlEncode( $dataDictionary.description )</description>
+	<region>$encoder.xmlEncode( $dataDictionary.region )</region>
+</dataDictionary>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.datamart.DataMartExport" table="datamartexport">
+    <id name="id" column="datamartexportid">
+      <generator class="native"/>
+    </id>
+    
+    <property name="name" column="name" unique="true" not-null="true"/>
+    
+    <set name="dataElements" table="datamartexportdataelements">
+      <key column="datamartexportid"/>
+      <many-to-many class="org.hisp.dhis.dataelement.DataElement" column="dataelementid"/>
+    </set>
+    
+    <set name="indicators" table="datamartexportindicators">
+      <key column="datamartexportid"/>
+      <many-to-many class="org.hisp.dhis.indicator.Indicator" column="indicatorid"/>
+    </set>
+    
+    <set name="organisationUnits" table="datamartexportorgunits">
+      <key column="datamartexportid"/>
+      <many-to-many class="org.hisp.dhis.organisationunit.OrganisationUnit" column="orgunitid"/>
+    </set>
+    
+    <set name="periods" table="datamartexportperiods">
+      <key column="datamartexportid"/>
+      <many-to-many class="org.hisp.dhis.period.Period" column="periodid"/>
+    </set>
+    
+  </class>
+</hibernate-mapping>

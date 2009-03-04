@@ -1,0 +1,5 @@
+<selected>
+#foreach( $unit in $selectedUnits )
+	<unitId>$unit.id</unitId>
+#end
+</selected>

@@ -1,0 +1,83 @@
+
+<h3>$i18n.getString( "add_section" )</h3>
+
+
+<form id="addSectionForm" name="addSectionForm" action="addSectionAction.action" method="post" onsubmit="submitForm(); return validateAddSection()">
+  <table id="detailsList">
+    <col> ## Labels
+    <col> ## Input
+    <thead>
+      <tr>
+        <th colspan="2">$i18n.getString( "section_details" )</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><label>$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" id="sectionName" name="sectionName" style="width:20em"></td>
+      </tr>
+	   <tr>
+        <td><label>$i18n.getString( "label" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" id="sectionLabel" name="sectionLabel" style="width:20em"></td>
+      </tr>
+	  
+	   <tr>
+        <td><label>$i18n.getString( "dataset" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" style="width:20em" value="$dataset.name" disabled="disabled"><input type="hidden" id="dataSetId" name="dataSetId" value="$dataset.id"></td>
+      </tr>
+     
+      <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <table id="dataElementSelectionArea">
+    <col> ## Selected DataElements
+    <col> ## Actions
+    <col> ## Available DataElements
+    <thead>
+      <tr>                
+        <th>$i18n.getString( "available_data_elements" )</th>
+		<th></th>
+		<th>$i18n.getString( "selected_data_elements" )</th>
+      </tr>
+    </thead>
+    <tbody>      
+      <tr>
+        <td>
+          <!-- List of all available DataElements -->
+          <select size="15" id="availableList" name="availableList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="move( 'availableList' )">
+            <!-- Show all available DataElements -->
+            #foreach ( $availableDataElement in $dataElements )
+              <option value="$availableDataElement.id">$encoder.htmlEncode( $availableDataElement.name )</option>
+            #end
+          </select>
+        </td>
+		
+        <td valign="top">
+          <input type="button" value=">" title="$i18n.getString('move_selected')" onclick="move( 'availableList' )">
+          <br>
+          <input type="button" value="<" title="$i18n.getString('remove_selected')" onclick="move ( 'selectedList' )">
+        </td>
+       
+		 <td>
+          <select id="selectedList" name="selectedList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="move( 'selectedList' )">
+            <!-- initially empty -->			
+          </select>
+		</td>
+      </tr>
+
+      <tr>
+        <td colspan="3">
+          <span id="message"></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="3">
+          <input type="submit" value="$i18n.getString( "save" )"><input type="button" 
+            onclick="window.location.href='section.action'" value="$i18n.getString( "cancel" )">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

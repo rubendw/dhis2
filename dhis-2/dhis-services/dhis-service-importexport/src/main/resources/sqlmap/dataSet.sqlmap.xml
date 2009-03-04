@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="dataSet">
+	
+	<!-- TypeAlias -->
+
+  <typeAlias alias="dataSet" type="org.hisp.dhis.dataset.DataSet"/>
+	
+	<!-- ResultMap -->
+	
+	<resultMap class="dataSet" id="dataSetResultMap">
+		<result property="id" column="DataSetID"/>
+		<result property="name" column="DataSetName"/>
+    <result property="periodType" column="DataPeriodTypeID" typeHandler="periodTypeTypeHandler"/>
+  </resultMap>
+
+	<!-- Statement -->
+		
+	<select id="getDataSets" resultMap="dataSetResultMap">
+		SELECT * FROM DataSet
+	</select>
+	
+</sqlMap>

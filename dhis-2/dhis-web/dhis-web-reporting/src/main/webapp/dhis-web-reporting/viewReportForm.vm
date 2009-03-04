@@ -1,0 +1,51 @@
+
+<h3>$i18n.getString( "standard_report" )</h3>
+
+<table class="mainPageTable">
+	<col>		
+	<col width="280">
+    <tr>
+        <td style="vertical-align:top">
+            
+            <table style="width:100%">
+                <col>
+                <col width="20">
+                <col width="20">
+                <col width="20">
+                <col width="20">
+                <tr>
+                	<td colspan="5" style="text-align:right"><input type="button" value="$i18n.getString( "add_new" )" onclick="window.location.href='displayAddReportForm.action'"></td>
+                </tr>
+                <tr>
+                    <th>$i18n.getString( "name" )</th>
+                    <th colspan="5">$i18n.getString( "operations" )</th>
+                </tr>
+                #set( $mark = false )
+                #foreach ( $report in $reports )
+                <tr #if( $mark ) style="background-color:#dddddd" #end>
+                    <td>$encoder.htmlEncode( $report.name )</td>
+                    <td style="text-align:center">#if ( $report.hasReportTable )<a href="getReportParams.action?id=$report.id&url=$report.url&mode=report" title="$i18n.getString( 'generate_datasource_and_view_report' )"><img src="../images/open.png" alt="$i18n.getString( 'generate_datasource_and_view_report' )"></a>#end</td>
+                    <td style="text-align:center"><a href="javascript:viewReport( '$encoder.htmlEncode( $report.url )' )" title="$i18n.getString( 'view_report_based_on_existing_datasource' )" title="$i18n.getString( 'view_report_based_on_existing_datasource' )"><img src="../images/view_report.png" alt="$i18n.getString( 'view_report_based_on_existing_datasource' )"></a></td>
+                    <td style="text-align:center"><a href="displayAddReportForm.action?id=$report.id" title="$i18n.getString( 'edit_report' )"><img src="../images/edit.png" alt="$i18n.getString( 'edit_report' )"></a></td>
+                    <td style="text-align:center"><a href="javascript:removeReport( '$encoder.htmlEncode( $report.id )' )" title="$i18n.getString( 'remove_report' )" title="$i18n.getString( 'remove_report' )"><img src="../images/delete.png" alt="$i18n.getString( 'remove_report' )"></a></td>
+                </tr>
+                    #if( $mark )
+                        #set( $mark = false )
+                    #else
+                        #set( $mark = true )
+                    #end
+                #end
+            </table>
+                        
+        </td>
+        <td style="width:20em; padding-left:2em; vertical-align:top">
+
+            <div id="detailsArea" style="display:none; padding-top:1em; padding-bottom:1em"></div>
+            
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    var i18n_confirm_remove_report = '$encoder.jsEscape( $i18n.getString( "confirm_remove_report" ) , "'")';
+</script>

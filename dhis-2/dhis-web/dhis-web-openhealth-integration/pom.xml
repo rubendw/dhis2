@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.hisp.dhis</groupId>
+    <artifactId>dhis-web</artifactId>
+    <version>2.0</version>
+  </parent>
+  
+  <artifactId>dhis-web-openhealth-integration</artifactId>
+  <packaging>war</packaging>
+  <name>DHIS OpenHealth integration</name>
+  
+  <build>
+    <finalName>dhis-web-openhealth-integration</finalName>
+  </build>
+  
+  <dependencies>
+    
+    <!-- DHIS -->
+    
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-web-commons</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-web-commons-resources</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-service-reporting</artifactId>
+    </dependency>
+    
+    <!-- Web -->
+    
+    <dependency>
+      <groupId>com.opensymphony</groupId>
+      <artifactId>webwork</artifactId>
+    </dependency>
+    
+    <!-- Other -->
+    
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+  </dependencies>
+</project>

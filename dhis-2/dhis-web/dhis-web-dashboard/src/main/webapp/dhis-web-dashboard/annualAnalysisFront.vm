@@ -1,0 +1,140 @@
+
+<html>
+	    <head>
+		        <title>Graphical Analyser - Annual</title>
+        		
+		        <script>
+		            // Global Variables
+		            var selriRadioButton = "indicatorsRadio";
+		            var selCategory = "";
+		            var selFacility = "";
+		            
+		            // OrganisationUnit ids and its Names
+			        </script>
+	    </head>
+	    <body>
+	        <h1>$i18n.getString( "aa_annual_analyser" )</h1>
+	        <hr />	
+	        <br />        
+	        <form id="ChartGenerationForm" name="ChartGenerationForm" action="generateAnnualData.action" method="post" onsubmit="return formValidations()" target="chartWindow1">	
+		            		<table align="center" style=" border-collapse: collapse; margin-top: 0;" cellpadding="0" cellspacing="0" width="730" border=0>
+		                <colgroup>
+                    		<col width="325">
+  		                  <col width="80">
+ 		                   <col width="325">
+  	              </colgroup>
+		                <tr>
+    			                <td class="NormalB">
+    			                    <input type="radio" id="riRadio" name="riRadio" value="dataElementsRadio" onclick="riradioSelection(event)"> $i18n.getString( "ga_data_elements" )
+							                        &nbsp;&nbsp;&nbsp;
+        					                <input type="radio" id="riRadio" name="riRadio" value="indicatorsRadio" onclick="riradioSelection(event)" checked> $i18n.getString( "ga_indicators" )
+    			                </td>   
+                    			<td class="NormalB" width="80">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">&nbsp;</td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">
+    			                    $i18n.getString( "ga_filter_by_degroup" )<br />
+                    				    <select id="dataElementGroupId" name="dataElementGroupId" style="width:325px" onchange="getDataElementsWithOutOptionCombo()" disabled>
+                            <option value="$ALL">[ Select DataElementGroup / All ]</option>				
+                            				#foreach ( $group in $dataElementGroups )
+            					                    <option value="$group.id" title="$group.name">$group.name</option>
+        				                    #end
+     		                   	</select>
+                    </td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">
+                        $i18n.getString( "ga_filter_by_indicatorgroup" )<br />
+                    				    <select id="indicatorGroupId" name="indicatorGroupId" style="width:325px" onchange="getIndicators()">
+                            				<option value="$ALL">[ Select IndicatorGroup / All ]</option>
+                            				#foreach ( $group in $indicatorGroups )
+                                					<option value="$group.id">$group.name</option>
+                            				#end
+                        			</select>			
+                    			</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">&nbsp;</td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">$i18n.getString( "ga_available_delist" )<br>
+                        				<select id="availableDataElements" name="availableDataElements" disabled style="width:325px;">
+				                            #foreach ( $element in $dataElements )
+                                			    <option value="$element.id" title="$element.name">$element.name</option>
+    				                        #end
+			                        	</select>
+			                        <br>
+			                        <select multiple id="selectedDataElements" name="selectedDataElements" disabled style="width:325px; height:0px; display:none" ondblclick="moveSelectedById( 'selectedDataElements', 'availableDataElements' )">                           
+                        			</select>
+				                    </td>
+    			                <td class="NormalB" align="center">&nbsp;</td>
+    			                <td class="NormalB">
+    			                    $i18n.getString( "ga_available_indicatorlist" )<br />
+                        				<select id="availableIndicators" name="availableIndicators" style="width:325px;" ondblclick="moveSelectedById( 'availableIndicators', 'selectedIndicators' )">
+				                            #foreach ( $indicator in $indicators )
+                                				<option value="$indicator.id">$indicator.name</option>
+                            				#end
+			                        	</select>
+			                        <br />
+			                        <select multiple id="selectedIndicators" name="selectedIndicators" style="width:325px; height:0px; display:none" ondblclick="moveSelectedById( 'selectedIndicators', 'availableIndicators' )">
+                        			</select>    			                    
+                    			</td>
+  			              </tr>
+  			              <tr>
+    			                <td class="NormalB">&nbsp;<br/></td>   
+                    			<td class="NormalB">&nbsp;<br/></td>
+                    			<td class="NormalB">&nbsp;<br/></td>
+                			</tr>
+  			              <tr>
+    			                <td class="NormalB">&nbsp;</td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">
+    			                    $i18n.getString( "aa_annual_periods" )<br />
+                        					<select name="annualPeriodsListCB" id="annualPeriodsListCB" multiple style="width: 325px;height: 100px">
+                        									    #foreach($period in $yearlyPeriods)
+                                <option value="$simpleDateFormat.format($period.startDate)">$simpleDateFormat.format($period.startDate)</option>
+                            #end
+                        					</select>                    				                                                
+    			                </td>   
+                    			<td class="NormalB" align="center">&nbsp;</td>
+                    			<td class="NormalB">
+    			                    $i18n.getString( "aa_months" )<br />                	
+                        					<select name="monthlyPeriodsListCB" id="monthlyPeriodsListCB" multiple style="width: 325px;height: 100px">
+                        					    #set($count1 = 0)                        					    
+                        					    #foreach($month in $monthNames)
+                        					        <option value="$count1">$month</option>
+                        					        #set($count1 = $count1 + 1)
+                        					    #end
+                        					</select>                        
+                    			</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">&nbsp;</td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">
+    			                    $i18n.getString( "aa_orgunit" ) : <br />
+                        <input type="text" name="ouNameTB" id="ouNameTB" size="20">
+    			                </td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">
+                        <input type="submit" name="View Chart" value="$i18n.getString( 'ga_viewchart' )" style="width: 120; height: 25; font-family:Arial; font-weight:bold; color:#000000">
+                        <input type="hidden" name="ouIDTB" id="ouIDTB">			
+                    			</td>
+                			</tr>
+            </table>							
+        </form>
+    </body>
+</html>            

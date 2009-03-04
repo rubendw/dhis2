@@ -1,0 +1,6 @@
+
+#if( $helpPage )
+  #parse( $helpPage )
+#else
+  <p>Help page not found</p>
+#end

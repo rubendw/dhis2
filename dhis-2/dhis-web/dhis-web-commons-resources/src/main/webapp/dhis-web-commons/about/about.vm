@@ -1,0 +1,12 @@
+<h1>$i18n.getString( "about" ) DHIS 2</h1>
+
+<dl>
+  <dt>$i18n.getString( "version" ):</dt><dd>$!version</dd>
+  <dt>$i18n.getString( "build_date" ):</dt><dd>$format.formatDateTime( $!buildTime )</dd>
+  <dt>$i18n.getString( "user_agent" ):</dt><dd>$!userAgent</dd>
+  <dt>$i18n.getString( "external_configuration_directory" ):</dt><dd>$!externalDirectory</dd>
+  <dt>$i18n.getString( "environment_variable" ):</dt><dd>$!environmentVariable</dd>
+  <dt>$i18n.getString( "database_type" ):</dt><dd>$!info.type</dd>
+  <dt>$i18n.getString( "database_name" ):</dt><dd>$!info.name</dd>
+  <dt>$i18n.getString( "database_user" ):</dt><dd>$!info.user</dd>
+</dl>

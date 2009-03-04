@@ -1,0 +1,26 @@
+#leftBar {
+	float: left; /* leftBar will take 100% of the width, moving everything else down */
+	overflow: visible; /* Removes the outer scrollbars */
+}
+
+#mainPage {
+	position: float;
+}
+
+.mainPageTable {
+	width: 99%; /* IE starts a new "row" if 100%, moving the table under leftBar*/
+}
+
+/* IE 6 thinks "absolute" means "fixed" */
+
+div#header,
+img#header2,
+div#mainMenu,
+a#about,
+span#headerText,
+span#currentUser,
+div#maintenanceModules,
+div#serviceModules,
+div#leftBar {
+	position: absolute;
+}

@@ -1,0 +1,14 @@
+<h2>$i18n.getString( "map_configuration" )</h2>
+<ul>
+	<li><a href="changeConfiguration.action?action=1" title="$i18n.getString( "configuration" )">$i18n.getString( "configuration" )</a></li>
+	<li><a href="listLegends.action" title="$i18n.getString( "legend" )">$i18n.getString( "legend" )</a></li>
+	<li><a href="listLegendSets.action" title="$i18n.getString( "legend_set" )">$i18n.getString( "legend_set" )</a></li>
+	<li><a href="getListFileMap.action" title="$i18n.getString( "list_map" )">$i18n.getString( "list_map" )</a></li>
+	<li><a href="assignRoot.action" title="$i18n.getString( "assign_root_map" )">$i18n.getString( "assign_root_map" )</a></li>
+	<li><a href="selectMapAndUnit.action" title="$i18n.getString( "assignunit_map" )">$i18n.getString( "assignunit_map" )</a></li>	
+</ul>
+<h2><a href="index.action">$i18n.getString( "map_analysis" )</a></h2>
+<ul>
+	<li><a href="index.action" title="$i18n.getString( "map_analysis" )">$i18n.getString( "map_analysis" )</a></li>
+	
+</ul>

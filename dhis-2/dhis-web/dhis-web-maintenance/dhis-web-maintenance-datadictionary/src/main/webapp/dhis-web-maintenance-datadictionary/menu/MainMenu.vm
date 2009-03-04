@@ -1,0 +1,29 @@
+
+<h2><a href="dataElement.action">$i18n.getString( "data_element" )</a></h2>
+  <ul>
+	<li><a href="dataElement.action">$i18n.getString( "data_element" )</a></li>
+	##<li><a href="multiDimensionalDataElement.action">$i18n.getString( "data_element" )</a></li>
+	<li><a href="dataElementGroup.action">$i18n.getString( "data_element_group" )</a></li>
+  </ul>
+
+<h2><a href="indicator.action">$i18n.getString( "indicator" )</a></h2>
+  <ul>
+	<li><a href="indicator.action">$i18n.getString( "indicator" )</a></li>
+ 	<li><a href="indicatorType.action">$i18n.getString( "indicator_type" )</a></li>	
+	<li><a href="indicatorGroup.action">$i18n.getString( "indicator_group" )</a></li>
+	<!--<li><a href="target.action">$i18n.getString( "target" )</a></li>-->
+  </ul>
+ 
+<h2><a href="dataDictionary.action">$i18n.getString( "data_dictionary" )</a></h2>
+  <ul>
+  	<li><a href="dataDictionary.action">$i18n.getString( "data_dictionary" )</a></li>
+  </ul>
+
+<h2><a href="category.action">$i18n.getString( "data_element_category" )</a></h2>
+  <ul>
+	<li><a href="category.action">$i18n.getString( "category" )</a></li>
+	<li><a href="categoryCombo.action">$i18n.getString( "category_combination" )</a></li>
+ 	<li><a href="categoryOption.action">$i18n.getString( "category_option" )</a></li>		
+  </ul>
+
+#parse( "/dhis-web-commons/ouwt/orgunittree.vm" )

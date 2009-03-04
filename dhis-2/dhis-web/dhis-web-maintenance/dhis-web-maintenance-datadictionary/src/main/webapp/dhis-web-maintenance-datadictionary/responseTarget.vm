@@ -1,0 +1,10 @@
+<target>
+	<id>$target.id</id>
+	<name>$encoder.xmlEncode( $target.name )</name>
+	<shortName>$encoder.xmlEncode( $target.shortName )</shortName>
+	<value>$target.value</value>
+	<description>$!encoder.xmlEncode( $target.description )</description>
+	<indicatorName>$encoder.xmlEncode( $target.indicator.name )</indicatorName>
+	<currentIndicatorValue>$encoder.xmlEncode( $target.currentValue )</currentIndicatorValue>
+	<periodId>$target.period.id</periodId>
+</target>

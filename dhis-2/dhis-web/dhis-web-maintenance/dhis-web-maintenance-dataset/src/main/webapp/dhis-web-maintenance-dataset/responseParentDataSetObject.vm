@@ -1,0 +1,10 @@
+<parentDataSet>
+  <id>$parentDataSet.id</id>
+  <name>$encoder.xmlEncode( $parentDataSet.name )</name>
+  <frequency>$parentDataSet.periodType.id</frequency>
+  <parentDataSetDataElements>
+    #foreach( $parentDataSetDataElement in $parentDataSetDataElements )
+      <parentDataSetDataElement>$encoder.xmlEncode( $parentDataSetDataElement.name )</parentDataSetDataElement>
+    #end
+  </parentDataSetDataElements>
+</parentDataSet>

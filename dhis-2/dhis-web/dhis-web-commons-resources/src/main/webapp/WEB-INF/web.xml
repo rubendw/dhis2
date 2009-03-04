@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+  <display-name>DHIS Common Resources for Web</display-name>
+
+  <!--
+    IMPORTANT NOTE:
+
+    * This module is not a stand-alone web application. Thus this file is not
+      properly set up.
+    
+    * Any web module wanting to use the security functionality this module
+      provides must include the following filter configurations in its own
+      web.xml file (the dhis-web-portal module does this).
+  -->
+
+  <filter>
+    <filter-name>Acegi Filter Chain</filter-name>
+    <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+    <init-param>
+      <param-name>targetBean</param-name>
+      <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>Acegi Filter Chain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+</web-app>

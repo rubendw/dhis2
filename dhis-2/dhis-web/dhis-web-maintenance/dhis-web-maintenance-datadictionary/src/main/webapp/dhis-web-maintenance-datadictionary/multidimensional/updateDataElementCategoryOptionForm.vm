@@ -1,0 +1,38 @@
+
+<h3>$i18n.getString( "edit_data_element_category_option" )</h3>
+
+<form id="updateDataElementCategoryOptionForm" action="updateDataElementCategoryOption.action" method="post" onsubmit="return validateUpdateDataElementCategoryOption()">
+
+<div>
+	<input type="hidden" id="id" name="id" value="$dataElementCategoryOption.id">
+</div>
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "details" )</th>
+	</tr>
+	<tr>
+		<td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="name" name="name" value="$encoder.htmlEncode( $dataElementCategoryOption.name )" onchange="nameChanged()" style="width:20em"></td>
+	</tr>
+	
+	<tr>
+		<td></td>
+		<td><input type="submit" value="$i18n.getString( "save" )" style="width:10em"><input 
+		  type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='dataElementCategoryOption.action'" style="width:10em"></td>
+	</tr>
+</table>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+	var previousName = '$encoder.jsEscape( $dataElementCategoryOption.name, "'" )';
+	
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+
+</script>

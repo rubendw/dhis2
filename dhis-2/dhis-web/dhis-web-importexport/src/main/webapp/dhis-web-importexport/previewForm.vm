@@ -1,0 +1,384 @@
+
+<h3>$i18n.getString( 'import_preview' )</h3>
+
+<form id="previewForm" name="previewForm" method="post">
+
+<input type="hidden" id="type" name="type" value="$!type">
+<input type="hidden" id="status" name="status" value="$!status">
+
+<table style="width:700px">
+	
+  	<tr>
+  		<th style="width:224px">$i18n.getString( "element" )</th>
+  		<th style="width:108px">$i18n.getString( "new" )</th>
+  		<th style="width:108px">$i18n.getString( "update" )</th>
+  		<td style="width:260px"></td>
+	</tr>
+  	<tr>
+  		<td>$i18n.getString( "data_element" )</td>
+  		#if ( $newDataElements > 0 )
+  			<td id="newDataElementTd" style="background-color:#CEEACC">
+  				<a href="displayPreviewForm.action?type=DATAELEMENT&status=NEW" style="width:100%; display:block; text-align:center">
+  					<span id="newDataElementSpan">
+  						$newDataElements
+  					</span>
+  				</a>
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateDataElements > 0 )
+  			<td id="updateDataElementTd" style="background-color:#D1D9E5">
+  				<a href="displayPreviewForm.action?type=DATAELEMENT&status=UPDATE" style="width:100%; display:block; text-align:center">
+  					<span id="updateDataElementSpan">
+  						$updateDataElements
+  					</span>	
+  				</a>
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+	<tr>
+  		<td>$i18n.getString( "data_element_group" )</td>
+  		#if ( $newDataElementGroups > 0 )
+  			<td id="newDataElementGroupTd" style="background-color:#CEEACC">
+  				<a href="displayPreviewForm.action?type=DATAELEMENTGROUP&status=NEW" style="width:100%; display:block; text-align:center">
+  					<span id="newDataElementGroupSpan">
+  						$newDataElementGroups
+  					</span>
+  				</a>
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateDataElementGroups > 0 )
+  			<td id="updateDataElementGroupTd" style="background-color:#D1D9E5">
+  				<a href="displayPreviewForm.action?type=DATAELEMENTGROUP&status=UPDATE" style="width:100%; display:block; text-align:center">
+  					<span id="updateDataElementGroupSpan">
+  						$updateDataElementGroups
+  					</span>
+  				</a>
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+	<tr>
+  		<td>$i18n.getString( "indicator_type" )</td>
+  		#if ( $newIndicatorTypes > 0 )
+  			<td id="newIndicatorTypeTd" style="background-color:#CEEACC">
+  				<a href="displayPreviewForm.action?type=INDICATORTYPE&status=NEW" style="width:100%; display:block; text-align:center">
+  					<span id="newIndicatorTypeSpan">
+  						$newIndicatorTypes
+  					</span>
+  				</a>
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateIndicatorTypes > 0 )
+  			<td id="updateIndicatorTypeTd" style="background-color:#D1D9E5">
+  				<a href="displayPreviewForm.action?type=INDICATORTYPE&status=UPDATE" style="width:100%; display:block; text-align:center">
+  					<span id="updateIndicatorTypeSpan">
+  						$updateIndicatorTypes
+  					</span>
+  				</a>  					
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+	<tr>
+  		<td>$i18n.getString( "indicator" )</td>
+  		#if ( $newIndicators > 0 )
+  			<td id="newIndicatorTd" style="background-color:#CEEACC">
+  				<a href="displayPreviewForm.action?type=INDICATOR&status=NEW" style="width:100%; display:block; text-align:center">
+  					<span id="newIndicatorSpan">
+  						$newIndicators
+  					</span>
+  				</a>
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateIndicators > 0 )
+  			<td id="updateIndicatorTd" style="background-color:#D1D9E5">
+  				<a href="displayPreviewForm.action?type=INDICATOR&status=UPDATE" style="width:100%; display:block; text-align:center">
+  					<span id="updateIndicatorSpan">
+  						$updateIndicators
+  					</span>
+  				</a>  					
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+	<tr>
+  		<td>$i18n.getString( "indicator_group" )</td>
+  		#if ( $newIndicatorGroups > 0 )
+  			<td id="newIndicatorGroupTd" style="background-color:#CEEACC">
+  				<a href="displayPreviewForm.action?type=INDICATORGROUP&status=NEW" style="width:100%; display:block; text-align:center">
+  					<span id="newIndicatorGroupSpan">  						
+  						$newIndicatorGroups
+  					</span>	
+  				</a>
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateIndicatorGroups > 0 )
+  			<td id="updateIndicatorGroupTd" style="background-color:#D1D9E5">
+  				<a href="displayPreviewForm.action?type=INDICATORGROUP&status=UPDATE" style="width:100%; display:block; text-align:center">
+  					<span id="updateIndicatorGroupSpan">
+  						$updateIndicatorGroups
+  					</span>
+  				</a>
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+    <tr>
+        <td>$i18n.getString( "data_dictionary" )</td>
+        #if ( $newDataDictionaries > 0 )
+            <td id="newDataDictionaryTd" style="background-color:#CEEACC">
+                <a href="displayPreviewForm.action?type=DATADICTIONARY&status=NEW" style="width:100%; display:block; text-align:center">
+                    <span id="newDataDictionarySpan">
+                        $newDataDictionaries
+                    </span>     
+                </a>
+            </td>
+        #else
+            <td>$i18n.getString( "none" )</td>
+        #end
+        #if ( $updateDataDictionaries > 0 )
+            <td id="updateDataDictionaryTd" style="background-color:#D1D9E5">
+                <a href="displayPreviewForm.action?type=DATADICTIONARY&status=UPDATE" style="width:100%; display:block; text-align:center">
+                    <span id="updateDataDictionarySpan">
+                        $updateDataDictionaries
+                    </span>     
+                </a>
+            </td>
+        #else
+            <td>$i18n.getString( "none" )</td>
+        #end
+        <td></td>
+    </tr>
+	<tr>
+  		<td>$i18n.getString( "dataset" )</td>
+  		#if ( $newDataSets > 0 )
+  			<td id="newDataSetTd" style="background-color:#CEEACC">
+  				<a href="displayPreviewForm.action?type=DATASET&status=NEW" style="width:100%; display:block; text-align:center">
+  					<span id="newDataSetSpan">
+  						$newDataSets
+  					</span>		
+  				</a>
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateDataSets > 0 )
+  			<td id="updateDataSetTd" style="background-color:#D1D9E5">
+  				<a href="displayPreviewForm.action?type=DATASET&status=UPDATE" style="width:100%; display:block; text-align:center">
+  					<span id="updateDataSetSpan">
+  						$updateDataSets
+  					</span>		
+  				</a>
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+	<tr>
+  		<td>$i18n.getString( "organisation_unit" )</td>
+  		#if ( $newOrganisationUnits > 0 )
+  			<td id="newOrganisationUnitTd" style="background-color:#CEEACC">
+  				<a href="displayPreviewForm.action?type=ORGANISATIONUNIT&status=NEW" style="width:100%; display:block; text-align:center">
+  					<span id="newOrganisationUnitSpan">
+  						$newOrganisationUnits
+  					</span>		
+  				</a>
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateOrganisationUnits > 0 )
+  			<td id="updateOrganisationUnitTd" style="background-color:#D1D9E5">
+  				<a href="displayPreviewForm.action?type=ORGANISATIONUNIT&status=UPDATE" style="width:100%; display:block; text-align:center">
+  					<span id="updateOrganisationUnitSpan">
+  						$updateOrganisationUnits
+  					</span>		
+  				</a>
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+	<tr>
+  		<td>$i18n.getString( "organisation_unit_group" )</td>
+  		#if ( $newOrganisationUnitGroups > 0 )
+  			<td id="newOrganisationUnitGroupTd" style="background-color:#CEEACC">
+  				<a href="displayPreviewForm.action?type=ORGANISATIONUNITGROUP&status=NEW" style="width:100%; display:block; text-align:center">
+  					<span id="newOrganisationUnitGroupSpan">
+  						$newOrganisationUnitGroups
+  					</span>	
+  				</a>
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateOrganisationUnitGroups > 0 )
+  			<td id="updateOrganisationUnitGroupTd" style="background-color:#D1D9E5">
+  				<a href="displayPreviewForm.action?type=ORGANISATIONUNITGROUP&status=UPDATE" style="width:100%; display:block; text-align:center">
+  					<span id="updateOrganisationUnitGroupSpan">
+  						$updateOrganisationUnitGroups
+  					</span>	
+  				</a>
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+	<tr>
+  		<td>$i18n.getString( "organisation_unit_group_set" )</td>
+  		#if ( $newOrganisationUnitGroupSets > 0 )
+  			<td id="newOrganisationUnitGroupSetTd" style="background-color:#CEEACC">
+  				<a href="displayPreviewForm.action?type=ORGANISATIONUNITGROUPSET&status=NEW" style="width:100%; display:block; text-align:center">
+  					<span id="newOrganisationUnitGroupSetSpan">
+  						$newOrganisationUnitGroupSets
+  					</span>
+  				</a>
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateOrganisationUnitGroupSets > 0 )
+  			<td id="updateOrganisationUnitGroupSetTd" style="background-color:#D1D9E5">
+  				<a href="displayPreviewForm.action?type=ORGANISATIONUNITGROUPSET&status=UPDATE" style="width:100%; display:block; text-align:center">
+  					<span id="updateOrganisationUnitGroupSetSpan">
+  						$updateOrganisationUnitGroupSets
+  					</span>
+  				</a>
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+	<tr>
+  		<td>$i18n.getString( "validation_rule" )</td>
+  		#if ( $newValidationRules > 0 )
+  			<td id="newValidationRuleTd" style="background-color:#CEEACC">
+  				<a href="displayPreviewForm.action?type=VALIDATIONRULE&status=NEW" style="width:100%; display:block; text-align:center">
+  					<span id="newValidationRuleSpan">
+  						$newValidationRules
+  					</span>
+  				</a>
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateValidationRules > 0 )
+  			<td id="updateValidationRuleTd" style="background-color:#D1D9E5">
+  				<a href="displayPreviewForm.action?type=VALIDATIONRULE&status=UPDATE" style="width:100%; display:block; text-align:center">
+  					<span id="updateValidationRuleSpan">
+  						$updateValidationRules
+  					</span>
+  				</a>
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+	<tr>
+        <td>$i18n.getString( "report_table" )</td>
+        #if ( $newReportTables > 0 )
+            <td id="newReportTableTd" style="background-color:#CEEACC">
+                <a href="displayPreviewForm.action?type=REPORTTABLE&status=NEW" style="width:100%; display:block; text-align:center">
+                    <span id="newReportTableSpan">
+                        $newReportTables
+                    </span>
+                </a>
+            </td>
+        #else
+            <td>$i18n.getString( "none" )</td>
+        #end
+        #if ( $updateReportTables > 0 )
+            <td id="updateReportTableTd" style="background-color:#D1D9E5">
+                <a href="displayPreviewForm.action?type=REPORTTABLE&status=UPDATE" style="width:100%; display:block; text-align:center">
+                    <span id="updateReportTableSpan">
+                        $updateReportTables
+                    </span>
+                </a>
+            </td>
+        #else
+            <td>$i18n.getString( "none" )</td>
+        #end
+        <td></td>
+    </tr>
+	<tr>
+  		<td>$i18n.getString( "datavalue" )</td>
+  		#if ( $newDataValues > 0 )
+  			<td id="newDataValueTd" style="background-color:#CEEACC">  				
+  				<span id="newDataValueSpan" style="width:100%; display:block; text-align:center">
+  					$newDataValues
+  				</span>  				
+  			</td>
+  		#else
+  			<td>$i18n.getString( "none" )</td>
+  		#end
+  		#if ( $updateDataValues > 0 )
+  			<td id="updateDataValueTd" style="background-color:#D1D9E5">
+  				<span id="updateDataValueSpan" style="width:100%; display:block; text-align:center">
+  					$updateDataValues
+  				</span>
+  			</td>
+		#else
+			<td>$i18n.getString( "none" )</td>
+		#end
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<input type="button" value="$i18n.getString( 'import_all' )" style="width:50%" onclick="window.location.href='importAllObjects.action'"><input 
+				type="button" value="$i18n.getString( 'cancel' )" style="width:50%" onclick="window.location.href='discardAllObjects.action'">
+		</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="4" style="height:10px"></td>
+	</tr>	
+	<tr>
+		<th colspan="4">$i18n.getString( "objects" )</th>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<select multiple id="objects" name="objects" style="width:100%; height:200px">
+				#foreach( $importObject in $importObjects )
+					<option value="$importObject.id">$importObject.object.name</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<input type="button" value="$i18n.getString( 'discard_all' )" style="width:33%" onclick="discardObjectsOfTypeAjax()"><input 
+				type="button" value="$i18n.getString( 'discard_selected' )" style="width:33%" onclick="discardObjectAjax()">#if ( $status == "NEW" )<input 
+				type="button" value="$i18n.getString( 'match_to_existing' )" style="width:33%" onclick="displayMatchForm()">#elseif ( $status == "UPDATE" )<input 
+				type="button" value="$i18n.getString( 'compare_to_existing' )" style="width:33%" onclick="displayCompareForm()">#end
+		</td>
+	</tr>
+	
+</table>
+
+</form>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="groupSetMember">
+	
+	<!-- TypeAlias -->
+	
+	<typeAlias alias="groupMemberAssociation" type="org.hisp.dhis.importexport.dhis14.object.Dhis14GroupMemberAssociation"/>
+
+	<!-- ResultMap -->
+	
+	<resultMap class="groupMemberAssociation" id="groupSetMemberAssociationResultMap">
+		<result property="groupId" column="OrgUnitGroupSetID"/>
+    <result property="memberId" column="OrgUnitGroupID"/>
+  </resultMap>
+  
+	<!-- Statement -->
+
+	<select id="getOrganisationUnitGroupSetMembers" resultMap="groupSetMemberAssociationResultMap">
+		SELECT * FROM OrgUnitGroupSetMember
+	</select>
+
+</sqlMap>

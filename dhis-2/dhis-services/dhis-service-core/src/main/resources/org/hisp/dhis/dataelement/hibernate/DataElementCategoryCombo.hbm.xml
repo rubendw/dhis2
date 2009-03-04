@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.dataelement.DataElementCategoryCombo" table="categorycombo">
+
+    <id name="id" column="categorycomboid">
+      <generator class="native"/>
+    </id>
+    
+    <property name="name">
+      <column name="name" not-null="true" unique="true" length="160"/>
+    </property>
+      
+    <set name="categories" table="categorycombos_categories" >  
+      <key column="categorycomboid"/>
+      <many-to-many class="org.hisp.dhis.dataelement.DataElementCategory"
+        column="categoryid" foreign-key="fk_categorycombo_categoryid"/> 
+    </set>
+
+    <set name="optionCombos" table="categorycombos_optioncombos" inverse="true" cascade="all">
+      <key column="categorycomboid"/>
+      <many-to-many class="org.hisp.dhis.dataelement.DataElementCategoryOptionCombo"
+        column="categoryoptioncomboid" unique="true"/>
+    </set>
+    
+    </class>
+</hibernate-mapping>

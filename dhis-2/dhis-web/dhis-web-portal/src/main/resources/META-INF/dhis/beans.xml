@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="org.hisp.dhis.wp.action.HelpAction"
+        class="org.hisp.dhis.wp.action.HelpAction" scope="prototype">
+    <property name="localeManager">
+      <ref bean="org.hisp.dhis.i18n.locale.LocaleManager"/>
+    </property>
+  </bean>
+	
+  <bean id="org.hisp.dhis.wp.action.GetModulesAction"
+    class="org.hisp.dhis.wp.action.GetModulesAction" scope="prototype">
+    <property name="moduleManager">
+      <ref bean="org.hisp.dhis.webportal.module.ModuleManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.wp.action.SendFeedbackAction"
+    class="org.hisp.dhis.wp.action.SendFeedbackAction" scope="prototype">
+    <property name="currentUserService"
+      ref="org.hisp.dhis.user.CurrentUserService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.wp.action.NoAction"
+    class="org.hisp.dhis.wp.action.NoAction" scope="prototype"/>
+
+</beans>

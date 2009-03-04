@@ -1,0 +1,91 @@
+<form id="translateForm" action="translate.action" method="post">
+
+<h3>$i18n.getString( "translation_translate" )</h3>
+
+<div>
+	<input type="hidden" id="id" name="id" value="$objectId">
+	<input type="hidden" id="className" name="className" value="$className">
+	<input type="hidden" id="returnUrl" name="returnUrl" value="$returnUrl">
+</div>
+<table>
+	<tr>
+		<th>$i18n.getString( "translation_details" )</th>
+		<th>$i18n.getString( "translation_locale" )</th>
+		<th>$i18n.getString( "translation_reference" )</th>
+	</tr>
+	<tr>
+	<td style="width:12em"></td>
+	<td style="width:20em">
+        <select id="loc" name="loc" onchange="updateTranslation()" style="min-width:20em">
+            <option value="heading">$i18n.getString( "translation_select_locale" )</option>
+			#foreach ($locale in $availableLocales )
+				<option value="$locale" #if( $currentLocale == $locale ) selected="selected" #end>$locale.displayName</option>
+			#end
+		</select>
+    </td>
+    <td style="width:20em">
+        <select id="referenceLoc" name="referenceLocal" onchange="updateReference()" style="min-width:20em">
+            <option value="heading">$i18n.getString( "translation_select_ref" )</option>
+			#foreach ($locale in $availableLocales )
+			    <option value="$locale" #if( $currentRefLocale == $locale ) selected="selected" #end>$locale.displayName</option>
+			#end
+		</select>
+    </td>
+    </tr>
+	#foreach ($propertyName in $propertyNames )
+	<tr>
+	    #set ($prop = $propertyNamesLabel.get( $propertyName ))
+		<td style="width:10em"><label for="$propertyName" style="width:20em">$i18n.getString( "translation_label_$prop" ) </label></td>
+		<td><input type="text" id="$propertyName" name="$propertyName" value="$encoder.htmlEncode( $translations.get( $propertyName ) )" style="width:20em"></td>
+		<td><span id="$propertyName Ref" name="$propertyName Ref" style="width:20em">$encoder.htmlEncode( $referenceTranslations.get( $propertyName ) )</span></td>
+	</tr>
+	#end
+	<tr>
+		<td></td>
+		<td><input type="submit" value="$i18n.getString( "translation_save")" style="width:10em">
+		    <input type="button" value="$i18n.getString( "translation_cancel")" onclick="javascript:location.href='$returnUrl'" style="width:10em">
+	    </td>
+		<td></td>
+	</tr>
+</table>
+</form>
+<h3>$i18n.getString( "translation_addlocale")</h3>
+<table>
+	<tr>
+		<th colspan="2">Details</th>
+	</tr>
+	<tr>
+		<td style="width:12em"><label for="language">$i18n.getString( "translation_languagecode" )</label></td>
+		<td><input type="text" id="language" name="language" size=2 style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="country">$i18n.getString( "translation_countrycode" ) </label></td>
+		<td><input type="text" id="country" name="country" size=2 style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="variant">$i18n.getString( "translation_variant" )</label></td>
+		<td><input type="text" id="variant" name="variant" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="button" value="$i18n.getString( "translation_add")" onclick="addLocale()" style="width:10em"></td>
+		<td></td>
+	</tr>
+</table>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+    var propNames = new Array()
+    #set( $count = 0 )
+    #foreach ($propertyName in $propertyNames )
+        propNames[$count] = "$propertyName";
+        #set( $count = $count + 1 )
+    #end
+
+    var locale_added = '$i18n.getString( "translation_locale_added" )'
+    var language_must_be_two_chars = '$i18n.getString( "translation_language_must_be_two_chars" )'
+    var country_must_be_two_chars = '$i18n.getString( "translation_country_must_be_two_chars" )'
+    var variant_must_be_specified = '$i18n.getString( "translation_variant_must_be_specified" )';
+    var locale_already_exists = '$i18n.getString( "translation_locale_already_exists" )';
+</script>

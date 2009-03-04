@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.aggregation.DataElementCategoryOptionComboName" table="categoryoptioncomboname">
+    <id name="id" column="id">
+      <generator class="native"/>
+    </id>
+    
+    <property name="categoryOptionComboId" column="categoryoptioncomboid"/>
+    <property name="categoryOptionComboName" column="categoryoptioncomboname"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,12 @@
+<features>
+#foreach($feature in $features )
+	<feature>
+		<id>$feature.id</id>
+		<featureCode>$feature.featureCode</featureCode>
+		<orgunitName>$encoder.xmlEncode( $feature.organisationUnit.name)</orgunitName>
+	</feature>
+#end
+<message>$encoder.xmlEncode( $message )</message>
+</features>
+
+

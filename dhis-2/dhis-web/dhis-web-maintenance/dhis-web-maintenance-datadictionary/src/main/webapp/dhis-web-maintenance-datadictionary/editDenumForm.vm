@@ -1,0 +1,83 @@
+
+<h2>$i18n.getString( $type )</h2>
+
+<div>
+	<input type="hidden" id="type" name="type" value="$type">
+</div>
+
+<table width="750">
+  <colgroup>
+  	<col width="250">
+	<col width="50">
+	<col width="450">
+  </colgroup>
+  <tr>
+  	<th colspan="2">$i18n.getString( "description" )</th>
+  	<th>$i18n.getString( "aggregation_operator" )</th>
+  </tr>
+  <tr>
+  	<td><input type="text" id="description" name="description" style="width:250px" value="$encoder.htmlEncode( $description )"></td>
+  	<td></td>
+  	<td><input type="radio" name="aggregationOperator" value="sum" onclick="filterDataElements( 'aggregationOperator', 'dataElementGroupId', 'filter' )"
+  			#if ( $aggregationOperator == 'sum' ) checked#end#if ( $formula.length() > 0 ) disabled#end>$i18n.getString( "sum" )<br>
+	  	<input type="radio" name="aggregationOperator" value="average" onclick="filterDataElements( 'aggregationOperator', 'dataElementGroupId', 'filter' )"
+	  		#if ( $aggregationOperator == 'average' ) checked#end#if ( $formula.length() > 0 ) disabled#end>$i18n.getString( "average" )
+	</td>
+  </tr>
+  <tr>
+  	<td colspan="3"></td>
+  </tr>
+  <tr>
+	<th colspan="2">$i18n.getString( "formula" )</th>
+	<th>$i18n.getString( "list_of_data_elements" )</th>
+  </tr>
+  <tr>
+  	<td valign="top">
+  	  <textarea id="formula" name="formula" cols="30" rows="12" style="width:250px; height:180px" wrap="virtual" onkeyup="validate( 'formula', 'aggregationOperator' )">$encoder.htmlEncode( $formula )</textarea><br>
+  	  <a href="#" onclick="insertText( 'formula', '(', 'aggregationOperator' )"><img src="images/left_parent.png" alt="$i18n.getString( "left_brackets" )"></a>
+	  <a href="#" onclick="insertText( 'formula', ')', 'aggregationOperator' )"><img src="images/right_parent.png" alt="$i18n.getString( "right_brackets" )"></a>
+	  <a href="#" onclick="insertText( 'formula', '*', 'aggregationOperator' )"><img src="images/multiply.png" alt="$i18n.getString( "multiply" )"></a>
+	  <a href="#" onclick="insertText( 'formula', '/', 'aggregationOperator' )"><img src="images/divide.png" alt="$i18n.getString( "divide" )"></a>
+	  <a href="#" onclick="insertText( 'formula', '+', 'aggregationOperator' )"><img src="images/plus.png" alt="$i18n.getString( "plus" )"></a>
+	  <a href="#" onclick="insertText( 'formula', '-', 'aggregationOperator' )"><img src="images/minus.png" alt="$i18n.getString( "minus" )"></a>
+	</td>
+	<td></td>
+  	<td valign="top">
+  	  <label>$encoder.htmlEncode( $i18n.getString( "filter_by_name" ) )</label><br>
+  	  <input type="text" id="filter" name="filter" style="width:450px" onkeyup="filterDataElements( 'aggregationOperator', 'dataElementGroupId', 'filter' )"><br>
+  	  
+  	  <select id="dataElementGroupId" name="dataElementGroupId" style="width:450px" onchange="filterDataElements( 'aggregationOperator', 'dataElementGroupId', 'filter' )">
+	  	<option value="$ALL">[ $i18n.getString( "filter_by_group_view_all" ) ]</option>
+	  	#foreach ( $group in $dataElementGroups )
+	  	  <option value="$group.id"
+	  	  #if ( $dataElementGroupId == $group.id )
+	  	    selected="selected"
+	      #end
+    	  >$encoder.htmlEncode( $group.name )</option>
+	  	#end
+	  </select><br>
+  		
+	  <select id="dataElementId" name="dataElementId" size="10" style="min-width:450px"		
+	    ondblclick="insertText( 'formula', this.options[ this.selectedIndex ].value, 'aggregationOperator' )">
+	    #foreach( $operand in $operands )
+	      <option value="[$operand.id]">$encoder.htmlEncode( $operand.operandName )</option>
+	    #end
+	  </select>
+	</td>
+  </tr>
+  <tr>
+  	<td><input type="button" value="$i18n.getString( 'save' )" style="width:125px" onclick="validateDenum()"><input type="button" value="$i18n.getString( 'cancel' )" style="width:125px" onclick="javascript:window.close()">
+	</td>
+  </tr>
+  <tr>
+  	<td colspan="3"></td>
+  </tr>
+  <tr>
+  	<th colspan="2">$i18n.getString( "description" )</th>
+  	<th></th>
+  </tr>
+  <tr>
+  	<td colspan="3"><span id="formulaText">$encoder.htmlEncode( $!textualFormula )</span></td>
+  </tr>
+</table>
+

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+ 
+  <bean id="org.hisp.dhis.validationrule.action.NoAction"
+    class="org.hisp.dhis.validationrule.action.NoAction">
+  </bean>
+
+  <!-- ValidationRule CRUD operations -->
+  
+  <bean id="org.hisp.dhis.validationrule.action.AddValidationRuleAction"
+    class="org.hisp.dhis.validationrule.action.AddValidationRuleAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+    <property name="expressionService">
+      <ref bean="org.hisp.dhis.expression.ExpressionService"/>
+    </property>   
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.GetValidationRuleAction" 
+    class="org.hisp.dhis.validationrule.action.GetValidationRuleAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+    <property name="expressionService">
+      <ref bean="org.hisp.dhis.expression.ExpressionService"/>
+    </property>    
+  </bean>
+
+  <bean id="org.hisp.dhis.validationrule.action.GetValidationRuleListAction"
+    class="org.hisp.dhis.validationrule.action.GetValidationRuleListAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.RemoveValidationRuleAction"
+    class="org.hisp.dhis.validationrule.action.RemoveValidationRuleAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+    <property name="expressionService">
+      <ref bean="org.hisp.dhis.expression.ExpressionService"/>
+    </property>   
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.UpdateValidationRuleAction"
+    class="org.hisp.dhis.validationrule.action.UpdateValidationRuleAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+    <property name="expressionService">
+      <ref bean="org.hisp.dhis.expression.ExpressionService"/>
+    </property>  
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.ValidateValidationRuleAction"
+    class="org.hisp.dhis.validationrule.action.ValidateValidationRuleAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+    <property name="expressionService">
+      <ref bean="org.hisp.dhis.expression.ExpressionService"/>
+    </property>    
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.SetupTreeAction"
+    class="org.hisp.dhis.validationrule.action.SetupTreeAction" scope="prototype">
+    <property name="selectionTreeManager">
+      <ref bean="org.hisp.dhis.oust.manager.SelectionTreeManager"/>
+    </property>
+    <property name="currentUserService">
+      <ref bean="org.hisp.dhis.user.CurrentUserService"/>
+    </property>
+    <property name="selectionManager">
+      <ref bean="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager"/>
+    </property>    
+  </bean>
+  
+  <!-- ValidationRuleGroup CRUD operations -->  
+  
+  <bean id="org.hisp.dhis.validationrule.action.validationrulegroup.AddValidationRuleGroupAction"
+    class="org.hisp.dhis.validationrule.action.validationrulegroup.AddValidationRuleGroupAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupAction" 
+    class="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupListAction"
+    class="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupListAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupMembersAction"
+    class="org.hisp.dhis.validationrule.action.validationrulegroup.GetValidationRuleGroupMembersAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.validationrulegroup.RemoveValidationRuleGroupAction"
+    class="org.hisp.dhis.validationrule.action.validationrulegroup.RemoveValidationRuleGroupAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.validationrulegroup.UpdateValidationRuleGroupAction"
+    class="org.hisp.dhis.validationrule.action.validationrulegroup.UpdateValidationRuleGroupAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.validationrulegroup.ValidateValidationRuleGroupAction"
+    class="org.hisp.dhis.validationrule.action.validationrulegroup.ValidateValidationRuleGroupAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>  
+  </bean>  
+  
+  <!-- ValidationRule Expression -->
+  
+  <bean id="org.hisp.dhis.validationrule.action.GetTextualExpressionAction"
+		class="org.hisp.dhis.validationrule.action.GetTextualExpressionAction">
+    <property name="expressionService">
+      <ref bean="org.hisp.dhis.expression.ExpressionService"/>
+    </property>
+	</bean>
+  
+	<bean id="org.hisp.dhis.validationrule.action.GetFilteredDataElementsAction"
+		class="org.hisp.dhis.validationrule.action.GetFilteredDataElementsAction" scope="prototype">
+	<property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+	<property name="dataElementCategoryOptionComboService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+    </property>
+	</bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.GetExpressionAction"
+    class="org.hisp.dhis.validationrule.action.GetExpressionAction" scope="prototype">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>    
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.ValidateExpressionAction"
+    class="org.hisp.dhis.validationrule.action.ValidateExpressionAction" scope="prototype">
+    <property name="expressionService">
+      <ref bean="org.hisp.dhis.expression.ExpressionService"/>
+    </property>
+  </bean>
+  
+  <!-- ValidationRule service operations -->
+  
+  <bean id="org.hisp.dhis.validationrule.action.ValidateRunValidationAction"
+    class="org.hisp.dhis.validationrule.action.ValidateRunValidationAction" scope="prototype">
+    <property name="selectionTreeManager">
+      <ref bean="org.hisp.dhis.oust.manager.SelectionTreeManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.RunValidationAction"
+    class="org.hisp.dhis.validationrule.action.RunValidationAction" scope="prototype">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+    <property name="selectionTreeManager">
+      <ref bean="org.hisp.dhis.oust.manager.SelectionTreeManager"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>           
+  </bean>
+  
+  <bean id="org.hisp.dhis.validationrule.action.GetValidationResultDetailsAction"
+    class="org.hisp.dhis.validationrule.action.GetValidationResultDetailsAction" scope="prototype">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+    <property name="periodService">
+      <ref bean="org.hisp.dhis.period.PeriodService"/>
+    </property>
+    <property name="dataValueService">
+      <ref bean="org.hisp.dhis.datavalue.DataValueService"/>
+    </property>
+    <property name="expressionService">
+      <ref bean="org.hisp.dhis.expression.ExpressionService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>  
+    <property name="dataElementCategoryOptionComboService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+    </property>  
+  </bean>  
+  
+  <bean id="org.hisp.dhis.validationrule.action.GenerateValidationResultPDFAction"
+    class="org.hisp.dhis.validationrule.action.GenerateValidationResultPDFAction"/>
+  
+  <bean id="org.hisp.dhis.validationrule.action.GenerateValidationResultWorkbookAction"
+    class="org.hisp.dhis.validationrule.action.GenerateValidationResultWorkbookAction"/>
+  
+</beans>

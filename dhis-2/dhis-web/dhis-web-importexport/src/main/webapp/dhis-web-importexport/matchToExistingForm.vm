@@ -1,0 +1,364 @@
+
+#macro ( getExtendedProperties )
+	
+    <!-- Identifying and Definitional attributes -->
+    
+    <tr>
+        <td>$i18n.getString( "mnemonic" )</td>
+        <td>$!importObject.object.extended.mnemonic</td>
+    </tr>   
+    <tr>
+        <td>$i18n.getString( "version" )</td>
+        <td>$!importObject.object.extended.version</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "context" )</td>
+        <td>$!importObject.object.extended.context</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "synonyms" )</td>
+        <td>$!importObject.object.extended.synonyms</td>
+    </tr>   
+    <tr>
+        <td>$i18n.getString( "hononyms" )</td>
+        <td>$!importObject.object.extended.hononyms</td>
+    </tr>   
+    <tr>
+        <td>$i18n.getString( "keywords" )</td>
+        <td>$!importObject.object.extended.keywords</td>
+    </tr>   
+    <tr>
+        <td>$i18n.getString( "status" )</td>
+        <td>$!importObject.object.extended.status</td>
+    </tr>   
+    <tr>
+        <td>$i18n.getString( "data_element_type" )</td>
+        <td>$!importObject.object.extended.dataElementType</td>
+    </tr>
+    
+    <!-- Relational and Representational attributes -->
+    
+    <tr>
+        <td>$i18n.getString( "data_type" )</td>
+        <td>$!importObject.object.extended.dataType</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "representational_form" )</td>
+        <td>$!importObject.object.extended.representationalForm</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "representational_layout" )</td>
+        <td>$!importObject.object.extended.representationalLayout</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "minimum_size" )</td>
+        <td>$!importObject.object.extended.minimumSize</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "maximum_size" )</td>
+        <td>$!importObject.object.extended.maximumSize</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "data_domain" )</td>
+        <td>$!importObject.object.extended.dataDomain</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "validation_rules" )</td>
+        <td>$!importObject.object.extended.validationRules</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "related_data_references" )</td>
+        <td>$!importObject.object.extended.relatedDataReferences</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "guide_for_use" )</td>
+        <td>$!importObject.object.extended.guideForUse</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "collection_methods" )</td>
+        <td>$!importObject.object.extended.collectionMethods</td>
+    </tr>
+    
+    <!-- Administrative attributes -->
+    
+    <tr>
+        <td>$i18n.getString( "responsible_authority" )</td>
+        <td>$!importObject.object.extended.responsibleAuthority</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "update_rules" )</td>
+        <td>$!importObject.object.extended.updateRules</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "access_authority" )</td>
+        <td>$!importObject.object.extended.accessAuthority</td>
+    </tr>   
+    <tr>
+        <td>$i18n.getString( "update_frequency" )</td>
+        <td>$!importObject.object.extended.updateFrequency</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "location" )</td>
+        <td>$!importObject.object.extended.location</td>
+    </tr>   
+    <tr>
+        <td>$i18n.getString( "reporting_methods" )</td>
+        <td>$!importObject.object.extended.reportingMethods</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "version_status" )</td>
+        <td>$!importObject.object.extended.versionStatus</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "previous_version_references" )</td>
+        <td>$!importObject.object.extended.previousVersionReferences</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "source_document" )</td>
+        <td>$!importObject.object.extended.sourceDocument</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "source_organisation" )</td>
+        <td>$!importObject.object.extended.sourceOrganisation</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "comment" )</td>
+        <td>$!importObject.object.extended.comment</td>
+    </tr>
+    
+#end
+
+<h3>$i18n.getString( 'match_to_existing' )</h3>
+
+<form id="previewForm" name="previewForm" method="post" action="">
+	
+<input type="hidden" id="objectType" name="objectType" value="$!objectType">
+<input type="hidden" id="objectId" name="objectId" value="$!importObject.id">
+	
+<table style="width:700px">
+
+	<!-- Import object -->
+	
+	<tr>
+		<th style="width:35%">$i18n.getString( "property" )</th>
+		<th style="width:65%">$i18n.getString( "details" )</th>
+	</tr>	
+	
+	<tr>
+		<td>$i18n.getString( "name" )</td>
+		<td>$!importObject.object.name</td>
+	</tr>	
+	
+	#if ( $objectType == "DATAELEMENT" )
+			
+	<tr>
+		<td>$i18n.getString( "alternative_name" )</td>
+		<td>$!importObject.object.alternativeName</td>
+	</tr>	
+	<tr>
+		<td>$i18n.getString( "short_name" )</td>
+		<td>$!importObject.object.shortName</td>
+	</tr>	
+	<tr>
+		<td>$i18n.getString( "code" )</td>
+		<td>$!importObject.object.code</td>
+	</tr>	
+	<tr>
+		<td>$i18n.getString( "description" )</td>
+		<td>$!importObject.object.description</td>
+	</tr>	
+	<tr>
+		<td>$i18n.getString( "active" )</td>
+		<td>$!importObject.object.active</td>
+	</tr>	
+	<tr>
+		<td>$i18n.getString( "type" )</td>
+		<td>$i18n.getString( $!importObject.object.type )</td>
+	</tr>
+	<tr>
+		<td>$i18n.getString( "aggregation_operator" )</td>
+		<td>$i18n.getString( $!importObject.object.aggregationOperator )</td>
+	</tr>
+	
+	#end
+	
+	#if ( $objectType == "DATAELEMENT" && $dataDictionaryMode == "extended" )
+	
+	#getExtendedProperties()
+	
+	#end
+	
+	#if ( $objectType == "INDICATORTYPE" )
+	
+	<tr>
+		<td>$i18n.getString( "factor" )</td>
+		<td>$!importObject.object.factor</td>
+	</tr>	
+	
+	#end
+	
+	#if ( $objectType == "INDICATOR" )
+	
+	<tr>
+		<td>$i18n.getString( "alternative_name" )</td>
+		<td>$!importObject.object.alternativeName</td>
+	</tr>	
+	<tr>
+		<td>$i18n.getString( "short_name" )</td>
+		<td>$!importObject.object.shortName</td>
+	</tr>	
+	<tr>
+		<td>$i18n.getString( "code" )</td>
+		<td>$!importObject.object.code</td>
+	</tr>	
+	<tr>
+		<td>$i18n.getString( "description" )</td>
+		<td>$!importObject.object.description</td>
+	</tr>
+	<tr>
+		<td>$i18n.getString( "annualized" )</td>
+		<td>$importObject.object.annualized</td>
+	</tr>
+	<tr>
+		<td>$i18n.getString( "numerator_description" )</td>
+		<td>$!importObject.object.numeratorDescription</td>
+	</tr>
+	<tr>
+		<td>$i18n.getString( "numerator_aggregation_operator" )</td>
+		<td>$i18n.getString( $!importObject.object.numeratorAggregationOperator )</td>
+	</tr>
+	<tr>
+		<td>$i18n.getString( "denominator_description" )</td>
+		<td>$!importObject.object.denominatorDescription</td>
+	</tr>	
+	<tr>
+		<td>$i18n.getString( "denominator_aggregation_operator" )</td>
+		<td>$i18n.getString( $!importObject.object.denominatorAggregationOperator )</td>
+	</tr>
+	
+	#end
+	
+    #if ( $objectType == "INDICATOR" && $dataDictionaryMode == "extended" )
+    
+    #getExtendedProperties()
+    
+    #end
+    
+	#if ( $objectType == "DATADICTIONARY" )
+		
+	<tr>
+		<td>$i18n.getString( "description" )</td>
+		<td>$!importObject.object.description</td>
+	</tr>
+    <tr>
+        <td>$i18n.getString( "region" )</td>
+        <td>$!importObject.object.region</td>
+    </tr>
+		
+	#end
+	
+	#if ( $objectType == "ORGANISATIONUNIT" )
+	
+	<tr>
+		<td>$i18n.getString( "short_name" )</td>
+		<td>$!importObject.object.shortName</td>
+	</tr>
+	<tr>
+		<td>$i18n.getString( "code" )</td>
+		<td>$!importObject.object.organisationUnitCode</td>
+	</tr>
+	<tr>
+		<td>$i18n.getString( "active" )</td>
+		<td>$!importObject.object.active</td>
+	</tr>
+	<tr>
+		<td>$i18n.getString( "comment" )</td>
+		<td>$!importObject.object.comment</td>
+	</tr>
+    <tr>
+        <td>$i18n.getString( "geo_code" )</td>
+        <td>$!importObject.object.geoCode</td>
+    </tr>
+	
+	#end
+	
+	#if ( $objectType == "VALIDATIONRULE" )
+		
+	<tr>
+		<td>$i18n.getString( "description" )</td>
+		<td>$!importObject.object.description</td>
+	</tr>
+	<tr>
+		<td>$i18n.getString( "type" )</td>
+		<td>$!importObject.object.type</td>
+	</tr>
+	<tr>
+		<td>$i18n.getString( "operator" )</td>
+		<td>$i18n.getString( $!importObject.object.operator )</td>
+	</tr>
+	
+	#end
+		
+    #if ( $objectType == "REPORTTABLE" )
+        
+    <tr>
+        <td>$i18n.getString( "table_name" )</td>
+        <td>$!importObject.object.tableName</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "do_indicators" )</td>
+        <td>$!importObject.object.doIndicators</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "do_periods" )</td>
+        <td>$!importObject.object.doPeriods</td>
+    </tr>
+    <tr>
+        <td>$i18n.getString( "do_units" )</td>
+        <td>$!importObject.object.doUnits</td>
+    </tr>
+    
+    #end
+        
+	<tr>
+		<td colspan="2" style="height:10px">
+	</tr>
+	
+	<!-- Existing objects -->
+	
+	<tr>
+		<th colspan="2">$i18n.getString( "existing_objects" )</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<input type="text" id="filterField" style="width:66%" onkeyup="filterExistingObjects()"><input
+				type="button" value="$i18n.getString( 'view_all' )" style="width:16%" onclick="viewAllExistingObjects()">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<select multiple id="existingObjects" name="existingObjects" style="width:100%; height:220px">
+				#foreach( $object in $objects )
+					<option value="$object.id">$object.name</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	
+	<!-- Actions -->
+	
+	<tr>
+		<td colspan="2">
+			<input type="button" value="$i18n.getString( 'match_to_existing' )" style="width:25%" onclick="matchObject()"><input
+				type="button" value="$i18n.getString( 'cancel' )" style="width:25%" onclick="cancelObject()">
+		</td>
+	</tr>
+	
+	
+</table>
+
+</form>
+
+<div style="display:none">
+	<select multiple id="filteredObjects"></select>
+</div>

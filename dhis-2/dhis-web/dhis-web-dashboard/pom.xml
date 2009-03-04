@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.hisp.dhis</groupId>
+    <artifactId>dhis-web</artifactId>
+    <version>2.0</version>
+  </parent>
+  
+  <artifactId>dhis-web-dashboard</artifactId>
+  <packaging>war</packaging>
+  <name>DHIS DashBoard</name>
+    
+  <build>
+    <finalName>dhis-web-dashboard</finalName> 
+  </build> 
+  
+  <dependencies>
+    
+    <!-- DHIS -->
+    
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-service-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-service-organisationunit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-service-target</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-web-commons</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-web-commons-resources</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-service-aggregationengine-default</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-support-external</artifactId>
+    </dependency>
+	      
+    <!-- Other -->
+	     
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jfreechart</artifactId>
+      <version>1.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jfreechart-experimental</artifactId>
+      <version>1.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>jfree</groupId>
+      <artifactId>jcommon</artifactId>
+      <version>1.0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>com.lowagie</groupId>
+      <artifactId>itext</artifactId>
+      <version>1.4.8</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.jexcelapi</groupId>
+      <artifactId>jxl</artifactId>
+      <version>2.6</version>
+    </dependency>    
+    <dependency>
+      <groupId>com.opensymphony</groupId>
+      <artifactId>webwork</artifactId>
+    </dependency>
+  </dependencies>
+  
+</project>

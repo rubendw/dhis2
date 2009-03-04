@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+	<!-- AOP transaction advisors -->
+	
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readOnlyTransactionInterceptor"/>
+    <property name="pattern" value=".*\.DataMartStore\.get.*"/>
+  </bean>	
+
+	<bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readWriteTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.DataMartStore\.add.*</value>
+        <value>.*\.DataMartStore\.delete.*</value>
+      </list>
+    </property>
+  </bean>
+	
+  <!--
+	<bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="statementInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.CrossTabService\.populate.*</value>
+      </list>
+    </property>
+  </bean>
+  -->
+  
+  <!-- DataMartExportStore -->
+  
+  <bean id="org.hisp.dhis.datamart.DataMartExportStore"
+    class="org.hisp.dhis.datamart.hibernate.HibernateDataMartExportStore">    
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <!-- DataMartExportService -->
+  
+  <bean id="org.hisp.dhis.datamart.DataMartExportService"
+    class="org.hisp.dhis.datamart.impl.DefaultDataMartExportService">
+    <property name="dataMartExportStore"
+      ref="org.hisp.dhis.datamart.DataMartExportStore"/>
+  </bean>
+  
+	<!-- DataMartStore -->
+	
+  <bean id="org.hisp.dhis.datamart.DataMartStore"
+    class="org.hisp.dhis.datamart.hibernate.HibernateDataMartStore">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    <property name="statementManager"
+      ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+    <property name="configurationProvider"
+      ref="org.hisp.dhis.aggregation.batch.configuration.JDBCConfigurationProvider"/>
+	</bean>
+	
+  <!-- DataMartService -->
+  
+  <bean id="internal-process-DataMart"
+    class="org.hisp.dhis.datamart.impl.DefaultDataMartService"
+    scope="prototype">
+    <property name="statementManager"
+      ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+    <property name="aggregationCache"
+      ref="org.hisp.dhis.datamart.aggregation.cache.AggregationCache"/>
+    <property name="dataMartStore"
+	  ref="org.hisp.dhis.datamart.DataMartStore"/>
+    <property name="crossTabService"
+      ref="org.hisp.dhis.datamart.crosstab.CrossTabService"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="indicatorService"
+      ref="org.hisp.dhis.indicator.IndicatorService"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+    <property name="categoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+    <property name="dataElementDataMart"
+      ref="org.hisp.dhis.datamart.dataelement.DataElementDataMart"/>
+    <property name="indicatorDataMart"
+      ref="org.hisp.dhis.datamart.indicator.IndicatorDataMart"/>
+    <property name="sumIntAggregator"
+      ref="org.hisp.dhis.datamart.aggregation.dataelement.SumIntAggregator"/>
+    <property name="averageIntAggregator"
+      ref="org.hisp.dhis.datamart.aggregation.dataelement.AverageIntAggregator"/>
+    <property name="sumBoolAggregator"
+      ref="org.hisp.dhis.datamart.aggregation.dataelement.SumBoolAggregator"/>
+    <property name="averageBoolAggregator"
+      ref="org.hisp.dhis.datamart.aggregation.dataelement.AverageBoolAggregator"/>
+  </bean>
+  
+  <!-- Crosstab -->
+  
+  <bean id="org.hisp.dhis.datamart.crosstab.jdbc.CrossTabStore"
+    class="org.hisp.dhis.datamart.crosstab.jdbc.JDBCCrossTabStore">
+    <property name="statementManager"
+			ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.datamart.crosstab.CrossTabService"
+    class="org.hisp.dhis.datamart.crosstab.DefaultCrossTabService">
+    <property name="batchHandlerFactory"
+			ref="org.hisp.dhis.aggregation.batch.factory.BatchHandlerFactory"/>
+    <property name="crossTabStore"
+      ref="org.hisp.dhis.datamart.crosstab.jdbc.CrossTabStore"/>
+    <property name="dataMartStore"
+			ref="org.hisp.dhis.datamart.DataMartStore"/>
+  </bean>
+  
+  <!-- AggregationCache -->
+  
+  <bean id="org.hisp.dhis.datamart.aggregation.cache.AggregationCache"
+    class="org.hisp.dhis.datamart.aggregation.cache.MemoryAggregationCache">
+    <property name="organisationUnitService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+  </bean>
+  
+  <!-- DataElementAggregator -->
+  
+  <bean id="org.hisp.dhis.datamart.aggregation.dataelement.SumIntAggregator"
+    class="org.hisp.dhis.datamart.aggregation.dataelement.SumIntAggregator">
+    <property name="dataMartStore"
+			ref="org.hisp.dhis.datamart.DataMartStore"/>
+    <property name="aggregationCache"
+      ref="org.hisp.dhis.datamart.aggregation.cache.AggregationCache"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.datamart.aggregation.dataelement.SumBoolAggregator"
+    class="org.hisp.dhis.datamart.aggregation.dataelement.SumBoolAggregator">
+    <property name="dataMartStore"
+			ref="org.hisp.dhis.datamart.DataMartStore"/>
+    <property name="aggregationCache"
+      ref="org.hisp.dhis.datamart.aggregation.cache.AggregationCache"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.datamart.aggregation.dataelement.AverageIntAggregator"
+    class="org.hisp.dhis.datamart.aggregation.dataelement.AverageIntAggregator">
+    <property name="dataMartStore"
+			ref="org.hisp.dhis.datamart.DataMartStore"/>
+    <property name="aggregationCache"
+      ref="org.hisp.dhis.datamart.aggregation.cache.AggregationCache"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.datamart.aggregation.dataelement.AverageBoolAggregator"
+    class="org.hisp.dhis.datamart.aggregation.dataelement.AverageBoolAggregator">
+    <property name="dataMartStore"
+			ref="org.hisp.dhis.datamart.DataMartStore"/>
+    <property name="aggregationCache"
+      ref="org.hisp.dhis.datamart.aggregation.cache.AggregationCache"/>
+  </bean>
+  
+  <!-- DataElementDataMart -->
+  
+  <bean id="org.hisp.dhis.datamart.dataelement.DataElementDataMart"
+    class="org.hisp.dhis.datamart.dataelement.DefaultDataElementDataMart">
+    <property name="organisationUnitService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+    <property name="batchHandlerFactory"
+			ref="org.hisp.dhis.aggregation.batch.factory.BatchHandlerFactory"/>
+    <property name="aggregationCache"
+      ref="org.hisp.dhis.datamart.aggregation.cache.AggregationCache"/>
+  </bean>
+  
+  <!-- IndicatorDataMart -->
+  
+  <bean id="org.hisp.dhis.datamart.indicator.IndicatorDataMart"
+    class="org.hisp.dhis.datamart.indicator.DefaultIndicatorDataMart">
+    <property name="indicatorService"
+      ref="org.hisp.dhis.indicator.IndicatorService"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+		<property name="organisationUnitService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    <property name="batchHandlerFactory"
+			ref="org.hisp.dhis.aggregation.batch.factory.BatchHandlerFactory"/>
+      <property name="sumIntAggregator"
+      ref="org.hisp.dhis.datamart.aggregation.dataelement.SumIntAggregator"/>
+    <property name="averageIntAggregator"
+      ref="org.hisp.dhis.datamart.aggregation.dataelement.AverageIntAggregator"/>
+  </bean>
+
+  <!-- ResourceTableService -->
+  
+  <bean id="org.hisp.dhis.datamart.resourcetable.ResourceTableService"
+    class="org.hisp.dhis.datamart.resourcetable.DefaultResourceTableService">    
+		<property name="dataMartStore"
+			ref="org.hisp.dhis.datamart.DataMartStore"/>
+    <property name="organisationUnitService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    <property name="organisationUnitGroupService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    <property name="categoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+		<property name="batchHandlerFactory"
+			ref="org.hisp.dhis.aggregation.batch.factory.BatchHandlerFactory"/>
+  </bean>
+  
+  <!-- AOP transaction definitions -->
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readOnlyTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.DataMartExportStore\.get.*</value>
+      </list>
+    </property>
+  </bean>
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readWriteTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.DataMartExportStore\.save.*</value>
+        <value>.*\.DataMartExportStore\.delete.*</value>
+      </list>
+    </property>
+  </bean> 
+  
+  <!-- Startup -->
+  
+  <bean id="org.hisp.dhis.datamart.startup.AggregationTableCreator"
+    class="org.hisp.dhis.datamart.startup.AggregationTableCreator">
+    <property name="runlevel" value="3"/>
+    <property name="statementManager"
+      ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+    <property name="configurationProvider"
+      ref="org.hisp.dhis.aggregation.batch.configuration.JDBCConfigurationProvider"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.datamart.startup.DataElementCategoryOptionComboStartupRoutine"
+    class="org.hisp.dhis.datamart.startup.DataElementCategoryOptionComboStartupRoutine">
+    <property name="categoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+    <property name="categoryComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryComboService"/> 
+    <property name="statementManager"
+      ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+    <property name="runlevel" value="3"/>
+  </bean>
+  
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject"
+      ref="org.hisp.dhis.system.startup.StartupRoutineExecutor"/>
+    <property name="targetMethod" value="addStartupRoutines"/>
+    <property name="arguments">
+      <list>
+        <ref local="org.hisp.dhis.datamart.startup.AggregationTableCreator"/>
+        <ref local="org.hisp.dhis.datamart.startup.DataElementCategoryOptionComboStartupRoutine"/>
+      </list>
+    </property>
+  </bean>
+  
+</beans>

@@ -1,0 +1,96 @@
+<table class="mainPageTable">
+  <tr> 	
+     <td style="vertical-align:top" align="left">
+	 <fieldset align="center" style="border:#0000FF thin solid; width:460px; height:450px;">
+			<legend><label>$i18n.getString( "map" )</label></legend>
+			 <embed id=map width="460" height="450" src="map/$mapFile" name="map" type="image/svg+xml" align="center"/>
+			</fieldset>	
+	 </td>
+	  <td style="vertical-align:top">
+	 <fieldset align="center" style="border:#0000FF thin solid; width:90%;height:450px;">
+			<legend><label>$i18n.getString( "file_map" )</label></legend>
+			<table style="width:100%">
+				 <tr>
+					   <th align="left"><input type="button" value="$i18n.getString( "upload_file" )" onClick="javascript:showHideAll('underdiv'); showCenter('uploadfile');"/></th>
+				  </tr>
+			</table>
+			<div style="width:100%; height:90%;overflow:auto;">
+			      <table id="list" style="width:100%">					
+					 <tr>
+						<th>$i18n.getString( "number" )</th>
+						<th>$i18n.getString( "file_name" )</th>
+						<th></th>
+					  </tr>
+					  	#set($i=1)
+						#set( $mark = false )
+						#foreach( $map in $listMap )	
+					
+						  <tr #if( $mark ) style="background-color:#dddddd" #end>
+							<td>$i</td>
+							<td><a href="javascript:preview('$map');">$map</a></td>
+							<td><a href="javascript:deleteFile('$map');"><img src="../images/delete.png" width="16" height="16" alt="$i18n.getString( 'remove' )"></a></td>
+						  </tr>
+					  #set($i=$i+1)
+					   #if( $mark )
+							#set( $mark = false )
+						  #else
+							#set( $mark = true )
+						  #end
+					  #end
+					</table>
+			</div>
+	  </fieldset>
+	  </td>
+  </tr>
+</table> 
+<form action="uploadFile.action" method="post" enctype="multipart/form-data">
+<div id="uploadfile" style="position:absolute;background-color:#FFFFFF;border:#0000FF thick solid;display:none;width:400px;height:70px;z-index:1000">
+	<table style="width:100%" cellpadding="1" cellspacing="1" border="0">
+    	<tr>
+        	<td align="right"><a href="javascript:showHideAll('uploadfile');showHideAll('underdiv');" style="text-decoration:none">[x]</a></td>
+        </tr>
+		  <tr>
+        	<td align="right">&nbsp;</td>
+        </tr>
+        <tr>
+        	<td align="center">
+            	$i18n.getString( 'file_path' ) : <input type="file" id="upload" name="upload" size="30"> <input type="submit" value="$i18n.getString( 'upload_file' )"/>
+            </td>
+        </tr>
+		 <tr>
+        	<td align="right">&nbsp;</td>
+        </tr>
+    </table>
+</div>
+</form>
+
+<div id="underdiv" style="position:fixed;background-color:#000000;width:1280px;height:1000px;top:0px;left:0px;opacity:0.5;display:none;"></div>
+
+
+<script type="text/javascript">
+function deleteFile(mapFile){
+	if(confirm("Do you want delete ?")){
+		window.location = "deleteFileMap.action?mapFile="+mapFile+"";
+	}
+}
+
+function uploadFile(){
+	var fileUpload =  document.getElementById('fileUpload').value;
+	window.location = "uploadFile.action?fileUpload="+fileUpload+"";
+}
+function preview(mapFile){
+	window.location = "getListFileMap.action?mapFile="+mapFile+"";
+}
+
+function showHideAll(id){
+	var status = document.getElementById(id).style.display;
+	//document.getElementById(id).style.height = "30px";
+	if(status=='none'){
+		document.getElementById(id).style.display = 'block';		
+	}else{
+		document.getElementById(id).style.display = 'none';		
+	}
+}
+</script>      
+
+

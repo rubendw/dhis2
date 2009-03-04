@@ -1,0 +1,407 @@
+
+<h3>$i18n.getString( "create_report_table" )</h3>
+
+<form id="tableForm" name="tableForm" method="post">
+
+<input type="hidden" id="tableId" name="tableId" value="$!reportTable.id">
+<input type="hidden" id="mode" name="mode" value="$!mode">
+
+<table>
+	
+	<colgroup>
+  		<col style="width:120px">
+  		<col style="width:300px">
+ 		<col style="width:120px">
+ 		<col style="width:60px">
+  	</colgroup>
+	
+	<tr>
+		<th colspan="2">$i18n.getString( "report_table" )</th>
+		<th colspan="2">$i18n.getString( "crosstab_dimensions" )</th>
+	</tr>
+	<tr>
+		<td><label for="tableName">$i18n.getString( "name" )</label></td>
+		<td><input type="text" id="tableName" name="tableName" style="width:270px" value="$!reportTable.name"></td>
+		<td><label for="doIndicators">$i18n.getString( $mode )</label></td>
+		<td><input type="checkbox" id="doIndicators" name="doIndicators" value="true"#if( $reportTable.doIndicators ) checked#end></td>
+	</tr>
+	<tr>
+		<td><label for="skipDataMart">$i18n.getString( "skip_data_mart" )</label></td>
+		<td><input type="checkbox" id="skipDataMart" name="skipDataMart" value="true"></td>
+		<td><label for="doOrganisationUnits">$i18n.getString( "organisation_units" )</label></td>
+		<td><input type="checkbox" id="doOrganisationUnits" name="doOrganisationUnits" value="true"#if( $reportTable.doUnits ) checked#end></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td><label for="doPeriods">$i18n.getString( "periods" )</label></td>
+		<td><input type="checkbox" id="doPeriods" name="doPeriods" value="true"#if( $reportTable.doPeriods ) checked#end></td>
+	</tr>
+	<tr>
+		<td colspan="4" style="height:15px"></td>
+	</tr>
+	
+</table>
+
+<table>
+		
+    <!-- DataElements -->
+    
+    #if ( $mode == "dataelements" )
+    
+    <tr>
+        <th>$i18n.getString( "available_dataelements" )</th>      
+    </tr>
+    <tr>
+        <td>
+            <select id="dataElementGroupId" name="dataElementGroupId" style="min-width:600px" onchange="getDataElements()">
+                <option value="$ALL">[ $i18n.getString( "select_dataelementgroup_all" ) ]</option>
+                #foreach ( $group in $dataElementGroups )
+                    <option value="$group.id">$group.name</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <select multiple size="6" id="availableDataElements" name="availableDataElements" style="min-width:600px" ondblclick="moveSelectedById( 'availableDataElements', 'selectedDataElements' )">             
+                #foreach ( $element in $dataElements )
+                    <option value="$element.id">$element.name</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="$i18n.getString( 'add_selected' )" title="$i18n.getString( 'add_selected' )" style="width:120px" onclick="moveSelectedById( 'availableDataElements', 'selectedDataElements' )"><input 
+                type="button" value="$i18n.getString( 'add_all' )" title="$i18n.getString( 'add_all' )" style="width:120px" onclick="moveAllById( 'availableDataElements', 'selectedDataElements' )"><input 
+                type="button" value="$i18n.getString( 'remove_selected' )" title="$i18n.getString( 'remove_selected' )" style="width:120px" onclick="moveSelectedById( 'selectedDataElements', 'availableDataElements' )"><input 
+                type="button" value="$i18n.getString( 'remove_all' )" title="$i18n.getString( 'remove_all' )" style="width:120px" onclick="moveAllById( 'selectedDataElements', 'availableDataElements' )">
+        </td>
+    </tr>
+    <tr>
+        <th>$i18n.getString( "selected_dataelements" )</th>
+    </tr>
+    <tr>
+        <td>
+            <select multiple size="6" id="selectedDataElements" name="selectedDataElements" style="min-width:600px" ondblclick="moveSelectedById( 'selectedDataElements', 'availableDataElements' )">
+                #foreach( $element in $selectedDataElements )
+                    <option value="$element.id">$element.name</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:15px"></td>
+    </tr>
+    
+    <!-- Indicators -->
+    
+    #elseif ( $mode == "indicators" )
+    
+    <tr>
+        <th>$i18n.getString( "available_indicators" )</th>      
+    </tr>
+    <tr>
+        <td>
+            <select id="indicatorGroupId" name="indicatorGroupId" style="min-width:600px" onchange="getIndicators()">
+                <option value="$ALL">[ $i18n.getString( "select_indicatorgroup_all" ) ]</option>
+                #foreach ( $group in $indicatorGroups )
+                    <option value="$group.id">$group.name</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <select multiple size="6" id="availableIndicators" name="availableIndicators" style="min-width:600px" ondblclick="moveSelectedById( 'availableIndicators', 'selectedIndicators' )">             
+                #foreach ( $indicator in $indicators )
+                    <option value="$indicator.id">$indicator.name</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="$i18n.getString( 'add_selected' )" title="$i18n.getString( 'add_selected' )" style="width:120px" onclick="moveSelectedById( 'availableIndicators', 'selectedIndicators' )"><input 
+                type="button" value="$i18n.getString( 'add_all' )" title="$i18n.getString( 'add_all' )" style="width:120px" onclick="moveAllById( 'availableIndicators', 'selectedIndicators' )"><input 
+                type="button" value="$i18n.getString( 'remove_selected' )" title="$i18n.getString( 'remove_selected' )" style="width:120px" onclick="moveSelectedById( 'selectedIndicators', 'availableIndicators' )"><input 
+                type="button" value="$i18n.getString( 'remove_all' )" title="$i18n.getString( 'remove_all' )" style="width:120px" onclick="moveAllById( 'selectedIndicators', 'availableIndicators' )">
+        </td>
+    </tr>
+    <tr>
+        <th>$i18n.getString( "selected_indicators" )</th>
+    </tr>
+    <tr>
+        <td>
+            <select multiple size="6" id="selectedIndicators" name="selectedIndicators" style="min-width:600px" ondblclick="moveSelectedById( 'selectedIndicators', 'availableIndicators' )">
+                #foreach( $indicator in $selectedIndicators )
+                    <option value="$indicator.id">$indicator.name</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:15px"></td>
+    </tr>
+    
+    #elseif ( $mode == "datasets" )
+    
+    <tr>
+        <th>$i18n.getString( "available_datasets" )</th>
+    </tr>
+    <tr>
+        <td>
+            <select multiple size="6" id="availableDataSets" name="availableDataSets" style="min-width:600px" ondblclick="moveSelectedById( 'availableDataSets', 'selectedDataSets' )">
+                #foreach ( $dataSet in $dataSets )
+                    <option value="$dataSet.id">$dataSet.name</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="$i18n.getString( 'add_selected' )" title="$i18n.getString( 'add_selected' )" style="width:120px" onclick="moveSelectedById( 'availableDataSets', 'selectedDataSets' )"><input 
+                type="button" value="$i18n.getString( 'add_all' )" title="$i18n.getString( 'add_all' )" style="width:120px" onclick="moveAllById( 'availableDataSets', 'selectedDataSets' )"><input 
+                type="button" value="$i18n.getString( 'remove_selected' )" title="$i18n.getString( 'remove_selected' )" style="width:120px" onclick="moveSelectedById( 'selectedDataSets', 'availableDataSets' )"><input 
+                type="button" value="$i18n.getString( 'remove_all' )" title="$i18n.getString( 'remove_all' )" style="width:120px" onclick="moveAllById( 'selectedDataSets', 'availableDataSets' )">
+        </td>
+    </tr>
+    <tr>
+        <th>$i18n.getString( "selected_datasets" )</th>
+    </tr>
+    <tr>
+        <td>
+            <select multiple size="6" id="selectedDataSets" name="selectedDataSets" style="min-width:600px" ondblclick="moveSelectedById( 'selectedDataSets', 'availableDataSets' )">               
+                #foreach ( $dataSet in $selectedDataSets )
+                    <option value="$dataSet.id">$dataSet.name</option>
+                #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:15px"></td>
+    </tr>
+    
+    #end
+    
+	<!-- OrganisationUnits -->
+	
+	<tr>
+		<th>$i18n.getString( "available_organisationunits" )</th>
+	</tr>
+	<tr>
+		<td>
+			<select id="organisationUnitLevel" name="organisationUnitLevel" style="min-width:600px" onchange="getOrganisationUnits()">
+				<option value="$ALL">[ $i18n.getString( "select_organisationunit_level_all" ) ]</option>
+				#foreach ( $level in $levels )
+					<option value="$level.level">$encoder.htmlEncode( $level.name )</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<select multiple size="6" id="availableOrganisationUnits" name="availableOrganisationUnits" style="min-width:600px" ondblclick="moveSelectedById( 'availableOrganisationUnits', 'selectedOrganisationUnits' )">
+				#foreach ( $unit in $organisationUnits )
+					<option value="$unit.id">$unit.name</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="button" value="$i18n.getString( 'add_selected' )" title="$i18n.getString( 'add_selected' )" style="width:120px" onclick="moveSelectedById( 'availableOrganisationUnits', 'selectedOrganisationUnits' )"><input 
+				type="button" value="$i18n.getString( 'add_all' )" title="$i18n.getString( 'add_all' )" style="width:120px" onclick="moveAllById( 'availableOrganisationUnits', 'selectedOrganisationUnits' )"><input 
+                type="button" value="$i18n.getString( 'add_children' )" title="$i18n.getString( 'add_children' )" style="width:120px" onclick="getOrganisationUnitChildren()"><input 
+				type="button" value="$i18n.getString( 'remove_selected' )" title="$i18n.getString( 'remove_selected' )" style="width:120px" onclick="moveSelectedById( 'selectedOrganisationUnits', 'availableOrganisationUnits' )"><input 
+				type="button" value="$i18n.getString( 'remove_all' )" title="$i18n.getString( 'remove_all' )" style="width:120px" onclick="moveAllById( 'selectedOrganisationUnits', 'availableOrganisationUnits' )">
+		</td>
+	</tr>
+	<tr>
+		<th>$i18n.getString( "selected_organisationunits" )</th>
+	</tr>
+	<tr>
+		<td>
+			<select multiple size="6" id="selectedOrganisationUnits" name="selectedOrganisationUnits" style="min-width:600px" ondblclick="moveSelectedById( 'selectedOrganisationUnits', 'availableOrganisationUnits' )">				
+				#foreach ( $unit in $selectedOrganisationUnits )
+					<option value="$unit.id">$unit.name</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td style="height:15px"></td>
+	</tr>
+	
+	<!-- Periods -->
+	
+	<tr>
+		<th>$i18n.getString( "available_periods" )</th>
+	</tr>	
+	<tr>
+		<td>
+			<select id="periodTypeId" name="periodTypeId" style="min-width:600px" onchange="getPeriods()">
+				<option value="null">[ $i18n.getString( "select_period_type_all" ) ]</option>
+				#foreach ( $type in $periodTypes )
+					<option value="$type.name">$type.name</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<select multiple size="6" id="availablePeriods" name="availablePeriods" style="min-width:600px" ondblclick="moveSelectedById( 'availablePeriods', 'selectedPeriods' )">
+				#foreach ( $period in $periods )
+					<option value="$period.id">$format.formatPeriod( $period )</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="button" value="$i18n.getString( 'add_selected' )" title="$i18n.getString( 'add_selected' )" style="width:120px" onclick="moveSelectedById( 'availablePeriods', 'selectedPeriods' )"><input 
+				type="button" value="$i18n.getString( 'add_all' )" title="$i18n.getString( 'add_all' )" style="width:120px" onclick="moveAllById( 'availablePeriods', 'selectedPeriods' )"><input 
+				type="button" value="$i18n.getString( 'remove_selected' )" title="$i18n.getString( 'remove_selected' )" style="width:120px" onclick="moveSelectedById( 'selectedPeriods', 'availablePeriods' )"><input 
+				type="button" value="$i18n.getString( 'remove_all' )" title="$i18n.getString( 'remove_all' )" style="width:120px" onclick="moveAllById( 'selectedPeriods', 'availablePeriods' )">
+		</td>
+	</tr>
+	<tr>
+		<th>$i18n.getString( "selected_periods" )</th>
+	</tr>
+	<tr>
+		<td>
+			<select multiple size="6" id="selectedPeriods" name="selectedPeriods" style="min-width:600px" ondblclick="moveSelectedById( 'selectedPeriods', 'availablePeriods' )">				
+				#foreach ( $period in $selectedPeriods )
+					<option value="$period.id">$format.formatPeriod( $period )</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td style="height:15px"></td>
+	</tr>
+	
+	<!-- Reporting month -->
+	
+	<tr>
+		<th>$i18n.getString( "reporting_month" )</th>
+	</tr>
+	<tr>
+		<td>
+			<select  id="reportingPeriod" name="reportingPeriod" style="min-width:600px">				
+				#foreach ( $key in $reportingPeriods.keySet() )
+					<option value="$key">$reportingPeriods.get( $key )</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td style="height:15px"></td>
+	</tr>
+
+</table>
+	
+	<!-- Relative Periods -->
+	
+<table>	
+
+	<tr>
+		<th>$i18n.getString( "relative_periods" )</th>
+	</tr>
+	<tr>
+		<td>
+		    <label for="reportingMonth">$i18n.getString( "reporting_month" )</label>
+			<input type="checkbox" id="reportingMonth" name="reportingMonth" value="true"#if( $reportTable.relatives.isReportingMonth() ) checked#end>&nbsp;
+			<label for="last3Months">$i18n.getString( "last_3_months" )</label>
+			<input type="checkbox" id="last3Months" name="last3Months" value="true""#if( $reportTable.relatives.isLast3Months() ) checked#end>&nbsp;
+			<label for="last6Months">$i18n.getString( "last_6_months" )</label>
+			<input type="checkbox" id="last6Months" name="last6Months" value="true"#if( $reportTable.relatives.isLast6Months() ) checked#end>&nbsp;
+			<label for="last9Months">$i18n.getString( "last_9_months" )</label>
+			<input type="checkbox" id="last9Months" name="last9Months" value="true"#if( $reportTable.relatives.isLast9Months() ) checked#end>&nbsp;
+			<label for="last12Months">$i18n.getString( "last_12_months" )</label>
+			<input type="checkbox" id="last12Months" name="last12Months" value="true"#if( $reportTable.relatives.isLast12Months() ) checked#end>
+		</td>
+	</tr>
+	<tr>
+		<td style="height:5px"></td>
+	</tr>
+	<tr>
+        <td>
+        	<label for="last3To6Months">$i18n.getString( "last_3_to_6_months" )</label>
+            <input type="checkbox" id="last3To6Months" name="last3To6Months" value="true"#if( $reportTable.relatives.isLast3To6Months() ) checked#end>&nbsp;
+            <label for="last6To9Months">$i18n.getString( "last_6_to_9_months" )</label>
+            <input type="checkbox" id="last6To9Months" name="last6To9Months" value="true""#if( $reportTable.relatives.isLast6To9Months() ) checked#end>&nbsp;
+            <label for="last9To12Months">$i18n.getString( "last_9_to_12_months" )</label>
+            <input type="checkbox" id="last9To12Months" name="last9To12Months" value="true"#if( $reportTable.relatives.isLast9To12Months() ) checked#end>&nbsp;
+            <label for="last12IndividualMonths">$i18n.getString( "last_12_individual_months" )</label>
+            <input type="checkbox" id="last12IndividualMonths" name="last12IndividualMonths" value="true"#if( $reportTable.relatives.isLast12IndividualMonths() ) checked#end>           
+        </td>
+    </tr>
+    <tr>
+        <td style="height:5px"></td>
+    </tr>
+    <tr>
+        <td>
+            <label for="soFarThisYear">$i18n.getString( "so_far_this_year" )</label>
+            <input type="checkbox" id="soFarThisYear" name="soFarThisYear" value="true"#if( $reportTable.relatives.isSoFarThisYear() ) checked#end>&nbsp;
+            <label for="soFarThisFinancialYear">$i18n.getString( "so_far_this_financial_year" )</label>
+            <input type="checkbox" id="soFarThisFinancialYear" name="soFarThisFinancialYear" value="true""#if( $reportTable.relatives.isSoFarThisFinancialYear() ) checked#end>&nbsp;
+            <label for="individualMonthsThisYear">$i18n.getString( "individual_months_this_year" )</label>
+            <input type="checkbox" id="individualMonthsThisYear" name="individualMonthsThisYear" value="true"#if( $reportTable.relatives.isIndividualMonthsThisYear() ) checked#end>&nbsp;
+            <label for="individualQuartersThisYear">$i18n.getString( "individual_quarters_this_year" )</label>
+            <input type="checkbox" id="individualQuartersThisYear" name="individualQuartersThisYear" value="true"#if( $reportTable.relatives.isIndividualQuartersThisYear() ) checked#end>           
+        </td>
+    </tr>
+    <tr>
+        <td style="height:15px"></td>
+    </tr>
+    
+</table>
+    
+    <!--Report Params -->
+    
+<table>
+    
+    <tr>
+        <th>$i18n.getString( "report_parameters" )</th>
+    </tr>
+    <tr>
+    	<td><label for="paramReportingMonth">$i18n.getString( "reporting_month" )</label>
+    	    <input type="checkbox" id="paramReportingMonth" name="paramReportingMonth" value="true"#if( $reportTable.reportParams.isParamReportingMonth() ) checked#end>&nbsp;
+    	    <label for="paramParentOrganisationUnit">$i18n.getString( "parent_organisation_unit" )</label>
+            <input type="checkbox" id="paramParentOrganisationUnit" name="paramParentOrganisationUnit" value="true"#if( $reportTable.reportParams.isParamParentOrganisationUnit() ) checked#end>&nbsp;
+            <label for="paramOrganisationUnit">$i18n.getString( "organisation_unit" )</label>
+            <input type="checkbox" id="paramOrganisationUnit" name="paramOrganisationUnit" value="true"#if( $reportTable.reportParams.isParamOrganisationUnit() ) checked#end>
+        </td>
+    </tr>
+    <tr>
+        <td style="height:15px"></td>
+    </tr>
+    
+	<!-- Submit -->
+	
+	<tr>		
+		<td>
+			<input type="button" value="$i18n.getString( 'create_and_save' )" onclick="createAndSaveTable()" style="width:120px"><input 
+				type="button" value="$i18n.getString( 'save' )" onclick="saveTable()" style="width:120px"><input 
+				type="button" value="$i18n.getString( 'back' )" onclick="javascript:window.location.href='displayManageTableForm.action'" style="width:120px">
+		</td>
+	</tr>
+	
+</table>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+    var i18n_done = '$encoder.jsEscape( $i18n.getString( "done" ), "'")';
+    var i18n_must_enter_name = '$encoder.jsEscape( $i18n.getString( "must_enter_name" ), "'")';
+    var i18n_cannot_crosstab_all_dimensions = '$encoder.jsEscape( $i18n.getString( "cannot_crosstab_all_dimensions" ), "'")';
+    var i18n_cannot_crosstab_no_dimensions = '$encoder.jsEscape( $i18n.getString( "cannot_crosstab_no_dimensions" ), "'")';
+    var i18n_must_select_at_least_one_dataelement = '$encoder.jsEscape( $i18n.getString( "must_select_at_least_one_dataelement" ), "'")';
+    var i18n_must_select_at_least_one_indicator = '$encoder.jsEscape( $i18n.getString( "must_select_at_least_one_indicator" ), "'")';
+    var i18n_must_select_at_least_one_unit = '$encoder.jsEscape( $i18n.getString( "must_select_at_least_one_unit" ), "'")';
+    var i18n_must_select_at_least_one_period = '$encoder.jsEscape( $i18n.getString( "must_select_at_least_one_period" ), "'")';
+</script>

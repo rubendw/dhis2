@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.user.UserAuthorityGroup" table="userrole">
+
+    <id name="id" column="userroleid">
+      <generator class="native"/>
+    </id>
+
+    <property name="name">
+      <column name="name" not-null="true" unique="true" length="160"/>
+    </property>
+    
+    <property name="description"/>
+
+    <set name="members" table="userrolemembers" inverse="true">
+      <key column="userroleid"/>
+      <many-to-many column="userid" class="org.hisp.dhis.user.UserCredentials"
+        foreign-key="fk_userid"/>
+    </set>
+    
+    <set name="authorities" table="userroleauthorities">
+      <key column="userroleid"/>
+      <element type="string" column="authority"/>
+    </set>
+    
+    <set name="dataSets" table="userroledataset">
+      <key column="userroleid"/>
+      <many-to-many column="datasetid" class="org.hisp.dhis.dataset.DataSet"
+        foreign-key="fk_datasetid"/>
+    </set>
+    
+    <set name="reports" table="userrolereports">
+      <key column="userroleid"/>
+      <many-to-many column="reportid" class="org.hisp.dhis.report.Report"
+        foreign-key="fk_reportid"/>
+    </set>
+
+  </class>
+</hibernate-mapping>

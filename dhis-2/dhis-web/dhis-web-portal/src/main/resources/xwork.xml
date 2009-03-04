@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN" "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+  <include file="dhis-web-commons.xml"/>
+
+  <package name="dhis-web-portal" extends="dhis-web-commons" namespace="/dhis-web-portal">
+		
+    <action name="mainMenu" class="org.hisp.dhis.wp.action.GetModulesAction">
+      <result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-portal/index.vm</param>
+      <param name="menu">/dhis-web-portal/menu.vm</param>
+    </action>
+
+    <action name="help" class="org.hisp.dhis.wp.action.HelpAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-portal/help.vm</param>
+      <param name="menu">/dhis-web-portal/menu.vm</param>
+    </action>
+    
+    <action name="displayFeedbackForm" class="org.hisp.dhis.wp.action.NoAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-portal/feedbackForm.vm</param>
+      <param name="menu">/dhis-web-portal/menu.vm</param>
+    </action>
+    
+    <action name="sendFeedback" class="org.hisp.dhis.wp.action.SendFeedbackAction">
+      <result name="success" type="redirect">mainMenu.action</result>
+    </action>
+    
+  </package>
+
+</xwork>

@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.hisp.dhis</groupId>
+    <artifactId>dhis</artifactId>
+    <version>2.0</version>
+  </parent>
+  
+  <artifactId>dhis-options</artifactId>
+  <packaging>jar</packaging>
+  <name>DHIS Options</name>
+  
+  <dependencies>
+    
+    <!-- DHIS -->
+    
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-support-hibernate</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-api</artifactId>
+    </dependency>	  
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-useradminandsecurity</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-support-test</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-service-user-hibernate</artifactId>
+    </dependency>
+    	  
+  </dependencies>
+</project>

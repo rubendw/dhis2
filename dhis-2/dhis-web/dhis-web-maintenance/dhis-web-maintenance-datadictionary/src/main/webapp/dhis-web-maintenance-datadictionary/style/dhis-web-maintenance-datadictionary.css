@@ -1,0 +1,39 @@
+.hidden {
+  display: none;
+}
+
+#dataElementSelectContainer h4 {
+  margin: 0;
+}
+
+.selectContainer {
+  float: left;
+}
+
+#availableContainer {
+  width: 30%;
+}
+
+#availableContainer * {
+  width: 100%;
+}
+
+.controlContainer {
+  margin-top: 4em;
+  float: left;
+  width: 3em;
+  text-align: center;
+}
+
+.controlContainer input {
+  display: block;
+  width: inherit;
+}
+
+#selectedContainer {
+  width: 65%;
+}
+
+.cleared {
+  clear: left;
+}

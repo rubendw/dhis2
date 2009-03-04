@@ -1,0 +1,38 @@
+
+#macro( parseNode $node )
+	#if( $node.hasChildren )
+		#if( $node.children )
+			#set( $toggle = '<img src="../images/minus.png" width="9" height="9" alt="[-]">' )
+		#else
+			#set( $toggle = '<img src="../images/plus.png" width="9" height="9" alt="[+]">' )
+		#end
+	#else
+		#set( $toggle = '<img src="../images/transparent.gif" width="9" height="9" alt="">' )
+	#end
+	#if( $node.selected )
+		#set( $selected = 'class="selected" ' )
+	#else
+		#set( $selected = '' )
+	#end
+	<li id="orgUnit${node.id}">
+		<span class="toggle" #if( $node.hasChildren ) onclick="subtree.toggle(${node.id})" #end>$toggle</span>
+		<a ${selected}href="javascript:void selection.select(${node.id})">$encoder.htmlEncode( $node.name )</a>
+		#if( $node.children )
+			<ul>
+			#foreach( $child in $node.children )
+				#parseNode( $child )
+			#end
+			</ul>
+		#end
+	</li>
+#end
+
+#if( $organisationUnitTree )
+	<div id="orgUnitTree">
+		<ul>
+			#foreach( $root in $organisationUnitTree )
+				#parseNode( $root )
+			#end
+		</ul>
+	</div>
+#end

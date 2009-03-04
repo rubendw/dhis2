@@ -1,0 +1,11 @@
+
+## You don't have to use this template directly if you don't want to
+
+<div id="selectionTree"></div>
+
+<script type="text/javascript">
+	
+	selectionTreeSelection.setMultipleSelectionAllowed( true );
+	selectionTree.buildSelectionTree();
+	
+</script>

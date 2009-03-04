@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="organisationUnit">
+	
+	<!-- TypeAlias -->
+	
+	<typeAlias alias="organisationUnit" type="org.hisp.dhis.organisationunit.OrganisationUnit"/>	
+	<typeAlias alias="dateTypeHandler" type="org.hisp.dhis.importexport.dhis14.file.typehandler.DateTypeHandler"/>
+	<typeAlias alias="booleanTypeHandler" type="org.hisp.dhis.importexport.dhis14.file.typehandler.BooleanTypeHandler"/>
+  
+	<!-- ResultMap -->
+	
+	<resultMap class="organisationUnit" id="organisationUnitResultMap">
+		<result property="id" column="OrgUnitID"/>
+		<result property="name" column="OrgUnitName"/>
+		<result property="shortName" column="OrgUnitShort"/>
+		<result property="organisationUnitCode" column="OrgUnitCode"/>
+    <result property="openingDate" column="ValidFrom" typeHandler="dateTypeHandler"/>
+    <result property="active" column="Active" typeHandler="booleanTypeHandler"/>
+		<result property="comment" column="Comment"/>
+	</resultMap>
+	
+	<!-- Statement -->
+	
+	<select id="getOrganisationUnit" resultMap="organisationUnitResultMap">
+		SELECT * FROM OrgUnit WHERE OrgUnitID = #value#
+	</select>
+	
+	<select id="getOrganisationUnits" resultMap="organisationUnitResultMap">
+		SELECT * FROM OrgUnit
+	</select>
+	
+	<select id="getOrganisationUnitName" parameterClass="java.lang.Integer" resultClass="java.lang.String">
+		SELECT OrgUnitName FROM OrgUnit WHERE OrgUnitId = #value#
+	</select>
+
+</sqlMap>

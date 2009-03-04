@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.indicator.Indicator" table="indicator">
+    <id name="id" column="indicatorid">
+      <generator class="native"/>
+    </id>
+    
+		<property name="uuid">
+			<column name="uuid" length="40"/>
+		</property>
+		
+    <property name="name">
+      <column name="name" not-null="true" unique="true" length="160"/>
+    </property>
+		
+		<property name="alternativeName">
+			<column name="alternativename" not-null="false" unique="true" length="160"/>
+		</property>
+		
+		<property name="shortName">
+			<column name="shortname" not-null="true" unique="true" length="25"/>
+		</property>
+		
+		<property name="code">
+			<column name="code" not-null="false" unique="true" length="25"/>
+		</property>
+		
+    <property name="description" type="text"/>
+    
+    <property name="annualized" column="annualized"/>
+
+		<many-to-one name="indicatorType" class="org.hisp.dhis.indicator.IndicatorType"
+		  column="indicatortypeid" foreign-key="fk_indicator_indicatortypeid"/>
+
+    <property name="numerator" column="numerator" type="text"/>
+	  	
+		<property name="numeratorDescription" column="numeratordescription" type="text"/>
+		
+		<property name="numeratorAggregationOperator" column="numeratoraggregationtype" length="16"/>
+		
+		<property name="denominator" column="denominator" type="text"/>
+		
+		<property name="denominatorDescription" column="denominatordescription" type="text"/>
+		
+		<property name="denominatorAggregationOperator" column="denominatoraggregationtype" length="16"/>
+
+    <many-to-one name="extended" class="org.hisp.dhis.datadictionary.ExtendedDataElement" 
+      column="extendeddataelementid" unique="true" cascade="all" foreign-key="fk_indicator_extendeddataelementid"/>
+
+  </class>
+</hibernate-mapping>

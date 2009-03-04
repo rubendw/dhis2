@@ -1,0 +1,168 @@
+[org.hisp.dhis.populator.object.DataElementObjectPopulator]
+# id = name; description; active; type; aggregationOperator
+$de1 = DataElement1; DE1; Description for DataElement1; true; int; sum
+$de2 = DataElement2; DE2; Description for DataElement2; true; int; average
+$de3 = DataElement3; DE3; Description for DataElement3; true; int; sum
+$de4 = DataElement4; DE4; Description for DataElement4; true; int; average
+$de5 = DataElement5; DE5; Description for DataElement5; true; int; sum
+$de6 = DataElement6; DE6; Description for DataElement6; true; int; average
+$de7 = DataElement7; DE7; Description for DataElement7; true; bool; sum
+$de8 = DataElement8; DE8; Description for DataElement8; true; bool; average
+$de9 = DataElement9; DE9; Description for DataElement9; true; string; sum
+$de10 = DataElement10; DE10; Description for DataElement10; false; string; average
+
+[org.hisp.dhis.populator.object.DataElementGroupObjectPopulator]
+# id = name; flag
+$deg1 = DataElementGroup1;
+$deg2 = DataElementGroup2;
+$deg3 = DataElementGroup3;
+
+[org.hisp.dhis.populator.member.DataElementGroupMemberPopulator]
+# groupId = elementId; elementId; ...
+$deg1 = $de1
+$deg2 = $de2; $de3; $de4
+$deg3 = $de5; $de6; $de7; $de8; $de9
+
+[org.hisp.dhis.populator.object.OrganisationUnitObjectPopulator]
+# id = name; shortName; unitCode; openingDate; closingDate; active; comment
+# id = name; parentId; shortName; unitCode; openingDate; closingDate; active; comment
+$ou1 = OrganisationUnit1; OrgUnit1; OU1; 2005-01-01 00:01; null; true; Comment for OrganisationUnit1
+$ou2 = OrganisationUnit2; $ou1; OrgUnit2; OU2; 2005-01-01 00:01; null; true; Comment for OrganisationUnit2
+$ou3 = OrganisationUnit3; $ou1; OrgUnit3; OU3; 2005-01-01 00:01; null; true; Comment for OrganisationUnit3
+$ou4 = OrganisationUnit4; $ou1; OrgUnit4; OU4; 2005-01-01 00:01; null; true; Comment for OrganisationUnit4
+$ou5 = OrganisationUnit5; $ou2; OrgUnit5; OU5; 2005-01-01 00:01; null; true; Comment for OrganisationUnit5
+$ou6 = OrganisationUnit6; $ou2; OrgUnit6; OU6; 2005-01-01 00:01; null; true; Comment for OrganisationUnit6
+$ou7 = OrganisationUnit7; $ou3; OrgUnit7; OU7; 2005-01-01 00:01; null; true; Comment for OrganisationUnit7
+$ou8 = OrganisationUnit8; $ou3; OrgUnit8; OU8; 2005-01-01 00:01; null; true; Comment for OrganisationUnit8
+$ou9 = OrganisationUnit9; $ou4; OrgUnit9; OU9; 2005-01-01 00:01; null; true; Comment for OrganisationUnit9
+$ou10 = OrganisationUnit10; $ou4; OrgUnit10; OU10; 2005-01-01 00:01; null; true; Comment for OrganisationUnit10
+$ou11 = OrganisationUnit11; $ou5; OrgUnit11; OU11; 2005-01-01 00:01; null; true; Comment for OrganisationUnit11
+$ou12 = OrganisationUnit12; $ou5; OrgUnit12; OU12; 2005-01-01 00:01; null; true; Comment for OrganisationUnit12
+$ou13 = OrganisationUnit13; $ou6; OrgUnit13; OU13; 2005-01-01 00:01; null; true; Comment for OrganisationUnit13
+$ou14 = OrganisationUnit14; $ou6; OrgUnit14; OU14; 2005-01-01 00:01; null; true; Comment for OrganisationUnit14
+$ou15 = OrganisationUnit15; $ou7; OrgUnit15; OU15; 2005-01-01 00:01; null; true; Comment for OrganisationUnit15
+$ou16 = OrganisationUnit16; $ou7; OrgUnit16; OU16; 2005-01-01 00:01; null; true; Comment for OrganisationUnit16
+$ou17 = OrganisationUnit17; $ou8; OrgUnit17; OU17; 2005-01-01 00:01; null; true; Comment for OrganisationUnit17
+$ou18 = OrganisationUnit18; $ou8; OrgUnit18; OU18; 2005-01-01 00:01; null; true; Comment for OrganisationUnit18
+$ou19 = OrganisationUnit19; $ou9; OrgUnit19; OU19; 2005-01-01 00:01; null; true; Comment for OrganisationUnit19
+$ou20 = OrganisationUnit20; $ou9; OrgUnit20; OU20; 2005-01-01 00:01; null; true; Comment for OrganisationUnit20
+$ou21 = OrganisationUnit21; $ou10; OrgUnit21; OU21; 2005-01-01 00:01; null; true; Comment for OrganisationUnit21
+$ou22 = OrganisationUnit22; $ou10; OrgUnit22; OU22; 2005-01-01 00:01; null; true; Comment for OrganisationUnit22
+
+[org.hisp.dhis.populator.methodinvocation.AddHierarchyMethodInvocationPopulator]
+organisationStore.addOrganisationUnitHierarchy()
+
+[org.hisp.dhis.populator.object.OrganisationUnitGroupObjectPopulator]
+# id = name
+$oug1 = Organisation Level 1
+$oug2 = Organisation Level 2
+$oug3 = Organisation Level 3
+
+[org.hisp.dhis.populator.member.OrganisationUnitGroupMemberPopulator]
+# groupId = unitUd; unitId; ...
+$oug1 = $ou1
+$oug2 = $ou2; $ou3; $ou4
+$oug3 = $ou5; $ou6; $ou7; $ou8; $ou9; $ou10
+
+[org.hisp.dhis.populator.object.PeriodObjectPopulator]
+# id = periodTypeName; startDate; endDate
+$p1 = Monthly; 2005-01-01 00:01; 2005-01-31 00:01
+$p2 = Monthly; 2005-02-01 00:01; 2005-02-28 00:01
+$p3 = Monthly; 2005-03-01 00:01; 2005-03-31 00:01
+$p4 = Monthly; 2005-04-01 00:01; 2005-04-30 00:01
+$p5 = Monthly; 2005-05-01 00:01; 2005-05-31 00:01
+$p6 = Monthly; 2005-06-01 00:01; 2005-06-30 00:01
+$p7 = Monthly; 2005-07-01 00:01; 2005-07-31 00:01
+$p8 = Monthly; 2005-08-01 00:01; 2005-08-31 00:01
+$p9 = Monthly; 2005-09-01 00:01; 2005-09-30 00:01
+$p10 = Monthly; 2005-10-01 00:01; 2005-10-31 00:01
+$p11 = Monthly; 2005-11-01 00:01; 2005-11-30 00:01
+$p12 = Monthly; 2005-12-01 00:01; 2005-12-31 00:01
+$p13 = Quarterly; 2005-01-01 00:01; 2005-03-31 00:01
+$p14 = Quarterly; 2005-04-01 00:01; 2005-06-30 00:01
+$p15 = Quarterly; 2005-07-01 00:01; 2005-09-30 00:01
+$p16 = Quarterly; 2005-10-01 00:01; 2005-12-31 00:01
+$p17 = Yearly; 2005-01-01 00:01; 2005-12-31 00:01
+
+[org.hisp.dhis.populator.object.DataValueObjectPopulator]
+# id = dataElementId; periodId; source; value; storedBy; timestamp; comment
+$rdv1 = $de1; $p1; $ou1; 101; admin; 2005-01-01 00:01; Comment for routine DataValue 1
+$rdv2 = $de2; $p1; $ou1; 102; admin; 2005-01-01 00:01; Comment for routine DataValue 2
+$rdv3 = $de3; $p1; $ou1; 103; admin; 2005-01-01 00:01; Comment for routine DataValue 3
+$rdv4 = $de4; $p1; $ou1; 104; admin; 2005-01-01 00:01; Comment for routine DataValue 4
+$rdv5 = $de5; $p1; $ou1; 105; admin; 2005-01-01 00:01; Comment for routine DataValue 5
+$rdv6 = $de6; $p1; $ou1; 106; admin; 2005-01-01 00:01; Comment for routine DataValue 6
+$rdv7 = $de7; $p1; $ou1; 107; admin; 2005-01-01 00:01; Comment for routine DataValue 7
+$rdv8 = $de8; $p1; $ou1; 108; admin; 2005-01-01 00:01; Comment for routine DataValue 8
+$rdv9 = $de9; $p1; $ou1; 109; admin; 2005-01-01 00:01; Comment for routine DataValue 9
+$rdv10 = $de10; $p1; $ou1; 110; admin; 2005-01-01 00:01; Comment for routine DataValue 10
+$rdv11 = $de1; $p2; $ou1; 111; admin; 2005-01-01 00:01; Comment for routine DataValue 11
+$rdv12 = $de2; $p2; $ou1; 112; admin; 2005-01-01 00:01; Comment for routine DataValue 12
+$rdv13 = $de3; $p2; $ou1; 113; admin; 2005-01-01 00:01; Comment for routine DataValue 13
+$rdv14 = $de4; $p2; $ou1; 114; admin; 2005-01-01 00:01; Comment for routine DataValue 14
+$rdv15 = $de5; $p2; $ou1; 115; admin; 2005-01-01 00:01; Comment for routine DataValue 15
+$rdv16 = $de6; $p2; $ou1; 116; admin; 2005-01-01 00:01; Comment for routine DataValue 16
+$rdv17 = $de7; $p2; $ou1; 117; admin; 2005-01-01 00:01; Comment for routine DataValue 17
+$rdv18 = $de8; $p2; $ou1; 118; admin; 2005-01-01 00:01; Comment for routine DataValue 18
+$rdv19 = $de9; $p2; $ou1; 119; admin; 2005-01-01 00:01; Comment for routine DataValue 19
+$rdv20 = $de10; $p2; $ou1; 120; admin; 2005-01-01 00:01; Comment for routine DataValue 20
+$rdv21 = $de1; $p2; $ou2; 121; admin; 2005-02-01 00:01; Comment for routine DataValue 21
+$rdv22 = $de2; $p2; $ou2; 122; admin; 2005-02-01 00:01; Comment for routine DataValue 22
+$rdv23 = $de3; $p2; $ou2; 123; admin; 2005-02-01 00:01; Comment for routine DataValue 23
+$rdv24 = $de4; $p2; $ou2; 124; admin; 2005-02-01 00:01; Comment for routine DataValue 24
+$rdv25 = $de5; $p2; $ou3; 125; admin; 2005-02-01 00:01; Comment for routine DataValue 25
+$rdv26 = $de6; $p2; $ou3; 126; admin; 2005-02-01 00:01; Comment for routine DataValue 26
+$rdv27 = $de7; $p2; $ou3; 127; admin; 2005-02-01 00:01; Comment for routine DataValue 27
+$rdv28 = $de8; $p2; $ou3; 128; admin; 2005-02-01 00:01; Comment for routine DataValue 28
+$rdv29 = $de9; $p2; $ou3; 129; admin; 2005-02-01 00:01; Comment for routine DataValue 29
+$rdv30 = $de10; $p2; $ou3; 130; admin; 2005-02-01 00:01; Comment for routine DataValue 30
+
+[org.hisp.dhis.populator.object.DataSetObjectPopulator]
+# id = name; periodTypeName
+$ds1 = DataSet1; Quarterly
+$ds2 = DataSet2; Quarterly
+$ds3 = DataSet3; Quarterly
+$ds4 = DataSet4; Quarterly
+
+[org.hisp.dhis.populator.member.DataSetAssociationsPopulator]
+# dataSetId = orgUnitId; orgUnitId; ...
+$ds1 = $ou11; $ou12; $ou13; $ou14; $ou15; $ou16; $ou17; $ou18; $ou19; $ou20; $ou21; $ou22
+$ds2 = $ou11; $ou12; $ou13; $ou14; $ou15; $ou16; $ou17; $ou18; $ou19; $ou20; $ou21; $ou22
+$ds3 = $ou5; $ou6; $ou7; $ou8; $ou9; $ou10
+$ds4 = $ou5; $ou6; $ou7; $ou8; $ou9; $ou10
+
+[org.hisp.dhis.populator.member.DataSetElementMemberPopulator]
+# dataSetId = dataElementId; dataElementId; ...
+$ds1 = $de1; $de2; $de3; $de4
+$ds2 = $de5; $de6
+$ds3 = $de7; $de8
+$ds4 = $de9; $de10
+
+[org.hisp.dhis.populator.object.OrganisationUnitGroupSetObjectPopulator]
+# id = name; description; compulsory; exclusive
+$ougs1 = Organisation Unit Group Set 1; Description for Organisation Unit Group Set 1; false; true
+
+[org.hisp.dhis.populator.member.OrganisationUnitGroupSetMemberPopulator]
+# groupSetId = groupId; groupId; ...
+$ougs1 = $oug1; $oug2
+
+[org.hisp.dhis.populator.object.IndicatorTypeObjectPopulator]
+# id = name; factor
+$int1 = percent; 100
+
+[org.hisp.dhis.populator.object.IndicatorObjectPopulator]
+# id = name; alternativeName; shortName; code; description; indicatorType; numerator; numeratorDescription; numeratorAggregationOperator;
+#      denominator; denominatorDescription; denominatorAggregationOperator
+$in1 = Indicator1; in1; i1; in-1; someindicator; $int1; [$de1]+[$de3]; numerator-desc1; sum; [$de2]; denominator-desc1; average
+$in2 = Indicator2; in2; i2; in-2; otherindicator; $int1; [$de2]+[$de4]; numerator-desc2; average; [$de2]; denominator-desc2; average
+$in3 = Indicator3; in3; i3; in-3; lastindicator; $int1; [$de2]-[$de4]; numerator-desc3; average; [$de2]; denominator-desc3; average
+
+[org.hisp.dhis.populator.object.IndicatorGroupObjectPopulator]
+# id = name;
+$ing1 = IndicatorGroup1
+$ing2 = IndicatorGroup2
+
+[org.hisp.dhis.populator.member.IndicatorGroupMemberPopulator]
+# groupId = indicatorId; indicatorId; ...
+$ing1 = $in1; $in2
+$ing2 = $in3

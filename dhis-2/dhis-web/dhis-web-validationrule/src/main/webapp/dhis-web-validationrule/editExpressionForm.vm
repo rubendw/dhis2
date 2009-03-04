@@ -1,0 +1,83 @@
+
+<h2>$i18n.getString( $side ) $i18n.getString( "side_expression" )</h2>
+
+<form id="expressionForm" name="expressionForm" method="post">
+
+<div>
+	<input type="hidden" id="side" name="side" value="$side">
+</div>
+
+<table width="750">
+  <colgroup>
+  	<col width="250">
+	<col width="50">
+	<col width="450">
+  </colgroup>
+  <tr>
+  	<th colspan="2">$encoder.htmlEncode( $i18n.getString( "description" ) )</th>
+  	<td></td>
+  </tr>
+  <tr>
+	<td colspan="2"><input type="text" id="description"  name="description" value="$!encoder.htmlEncode( $description )" style="width:250px"></td>
+	<td></td>
+  </tr>
+  <tr>
+  	<td colspan="3" height="15"></td>
+  </tr>
+  <tr>
+	<th colspan="2">$encoder.htmlEncode( $i18n.getString( "expression" ) )</th>
+	<th>$i18n.getString( "available_data_elements" )</th>
+  </tr>  
+  <tr>
+	<td valign="top"><textarea id="expression" name="expression" style="width:250px; height:180px" onkeyup="updateTextualExpression( 'expression' )">$!encoder.htmlEncode( $!expression )</textarea><br>
+  	  <a href="#" onclick="insertText( 'expression', '(' )"><img src="images/left_parent.png" alt="$i18n.getString( "left_brackets" )"></a>
+	  <a href="#" onclick="insertText( 'expression', ')' )"><img src="images/right_parent.png" alt="$i18n.getString( "right_brackets" )"></a>
+	  <a href="#" onclick="insertText( 'expression', '*' )"><img src="images/multiply.png" alt="$i18n.getString( "multiply" )"></a>
+	  <a href="#" onclick="insertText( 'expression', '/' )"><img src="images/divide.png" alt="$i18n.getString( "divide" )"></a>
+	  <a href="#" onclick="insertText( 'expression', '+' )"><img src="images/plus.png" alt="$i18n.getString( "plus" )"></a>
+	  <a href="#" onclick="insertText( 'expression', '-' )"><img src="images/minus.png" alt="$i18n.getString( "minus" )"></a>
+	</td>
+	<td>
+	  <input type="button" value="&lt;" onclick="insertText( 'expression', dataElementId.options[ dataElementId.selectedIndex ].value )">
+	</td>
+  	<td valign="top">
+  	  <label>$encoder.htmlEncode( $i18n.getString( "filter_by_name" ) )</label><br>  	  
+  	  <input type="text" id="filter" name="filter" style="width:450px" onkeyup="filterDataElements( 'dataElementGroupId', 'filter' )"><br>
+  	  
+  	  <select id="dataElementGroupId" name="dataElementGroupId" style="min-width:450px" onchange="filterDataElements( 'dataElementGroupId', 'filter' )">
+	  	<option value="$ALL">[ $i18n.getString( "filter_by_group_view_all" ) ]</option>
+	  	#foreach ( $group in $dataElementGroups )
+	  	  <option value="$group.id" #if ( $dataElementGroupId == $group.id ) selected="selected"#end>$encoder.htmlEncode( $group.name )</option>
+	  	#end
+	  </select><br>
+  		
+	  <select id="dataElementId" name="dataElementId" size="10" style="min-width:450px" 
+	  	onmouseover="this.title = this.options[this.selectedIndex].text;"
+		ondblclick="insertText( 'expression', this.options[ this.selectedIndex ].value )">
+	    #foreach( $operand in $operands )
+	      <option value="[$operand.id]">$encoder.htmlEncode( $operand.operandName )</option>
+	    #end
+	  </select>
+	  
+	</td>
+  </tr>
+  <tr>
+  	<td colspan="2">
+	  <input type="button" value="$i18n.getString( 'update' )" style="width:125px" onclick="validateExpression()"><input 
+	  	type="button" value="$i18n.getString( 'cancel' )" style="width:125px" onclick="javascript:window.close()">
+	</td>
+	<td></td>
+  </tr>
+  <tr>
+  	<td colspan="3" height="15"></td>
+  </tr>
+  <tr>
+  	<th colspan="2">$i18n.getString( "textual_expression_description" )</th>
+  	<th></th>
+  </tr>
+  <tr>
+  	<td colspan="3"><span id="textualExpression">$!encoder.htmlEncode( $textualExpression )</span></td>
+  </tr>
+</table>
+
+</form>

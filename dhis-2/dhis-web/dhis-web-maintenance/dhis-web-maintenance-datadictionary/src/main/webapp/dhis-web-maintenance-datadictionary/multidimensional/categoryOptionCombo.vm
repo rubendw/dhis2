@@ -1,0 +1,65 @@
+<h3>$i18n.getString( "data_element_category_option_combo_management" )</h3>
+
+<table class="mainPageTable">	
+	<tr>
+		<td style="vertical-align:top">
+			<table id="list" style="width:100%">
+				<col> ## Name
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<tr>			
+					<td></td>					
+					<td colspan="5" style="text-align:right"><input type="button" value="$i18n.getString( "add_new" )" onclick="window.location.href='showAddDataElementCategoryOptionComboForm.action'"></td>
+					##<td colspan="5" style="text-align:right"><input type="button" value="$i18n.getString( "add_new" )" onclick="showSelectFormWindow()"></td>
+				</tr>
+				<tr>
+					<th>$i18n.getString( "existing_list" )</th>
+					<th colspan="5">$i18n.getString( "operations" )</th>
+				</tr>
+
+				<tbody>
+					#set( $mark = false )
+					#foreach( $dataElementCategoryOptionCombo in $dataElementCategoryOptionCombos )
+						
+						#set( $catOptions = $categoryOptions.get( $dataElementCategoryOptionCombo.id ) )
+						
+						<tr #if( $mark ) style="background-color:#dddddd" #end>					
+							<td style="text-align:left">						
+								$encoder.htmlEncode( '(' )	
+								#foreach( $categoryOption in $catOptions )
+									$encoder.htmlEncode( $categoryOption.name )
+									$encoder.htmlEncode( ',' )
+								#end
+								$encoder.htmlEncode( ')' )
+							</td>
+							<td style="text-align:center">
+								<a href="showUpdateDataElementCategoryOptionComboForm.action?dataElementCategoryOptionCombo=$dataElementCategoryOptionCombo.id" title="$i18n.getString( "edit" )"><img src="../images/edit.png" alt="$i18n.getString( "edit" )"></a>
+                			</td>
+							<td style="text-align:center">
+								<a href="$i18n.getString( "translation_translate" )" title="$i18n.getString( "translation_translate" )" onclick="this.href='javascript:location.href= \'../dhis-web-commons/i18n.action?className=DataSet&amp;objectId=$dataSet.id&amp;returnUrl=\' + location.href'"><img src="../images/i18n.png" alt="$i18n.getString( "translation_translate" )"></a>
+                			</td>
+							<td style="text-align:center">
+								<a href="javascript:removeDataElementCategoryOptionCombo( '$dataElementCategoryOptionCombo.id', '$encoder.jsEncode( $dataElementCategoryOptionCombo.id )' )" title="$i18n.getString( "remove" )"><img src="../images/delete.png" alt="$i18n.getString( "remove" )"></a>
+                			</td>
+							<td style="text-align:center">
+								<a href="javascript:showDetails( $dataElementCategoryOptionCombo.id )" title="$i18n.getString( "show_details" )"><img src="../images/information.png" alt="$i18n.getString( "show_details" )"></a>
+                			</td>
+            			</tr>
+						#if( $mark )
+							#set( $mark = false )
+						#else
+							#set( $mark = true )
+						#end
+					#end
+    			</tbody>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<script type="text/javascript">
+
+	var i18n_confirm_delete = '$encoder.jsEscape( $i18n.getString( "confirm_delete" ) , "'" )';
+</script>

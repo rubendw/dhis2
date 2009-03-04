@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+  <!-- Defining Section associations -->
+  
+  <bean id="org.hisp.dhis.dataset.action.section.AddSectionAction"
+   	class="org.hisp.dhis.dataset.action.section.AddSectionAction" scope="prototype">       
+	  <property name="sectionService">
+	    <ref bean="org.hisp.dhis.dataset.SectionService"/>
+	  </property>     
+	  <property name="dataSetService">
+	    <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+	  </property>    
+	  <property name="dataElementService">
+	    <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+	  </property>    
+   </bean> 
+   
+  <bean id="org.hisp.dhis.dataset.action.section.ValidateSectionAction"
+    class="org.hisp.dhis.dataset.action.section.ValidateSectionAction" scope="prototype">    
+    <property name="sectionService">
+      <ref bean="org.hisp.dhis.dataset.SectionService"/>
+    </property>
+  </bean>  
+  
+  <bean id="org.hisp.dhis.dataset.action.section.SortOrderSection"
+    class="org.hisp.dhis.dataset.action.section.SortOrderSection" scope="prototype">       
+    <property name="sectionService">
+      <ref bean="org.hisp.dhis.dataset.SectionService"/>
+    </property> 
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.section.EditSectionAction"
+    class="org.hisp.dhis.dataset.action.section.EditSectionAction" scope="prototype">
+    <property name="sectionService">
+      <ref bean="org.hisp.dhis.dataset.SectionService"/>
+    </property>
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>     
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.section.UpdateSectionAction"
+    class="org.hisp.dhis.dataset.action.section.UpdateSectionAction" scope="prototype">
+    <property name="sectionService">
+      <ref bean="org.hisp.dhis.dataset.SectionService"/>
+     </property>
+     <property name="dataElementServcie">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+   	 </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.section.RemoveSectionAction"
+    class="org.hisp.dhis.dataset.action.section.RemoveSectionAction" scope="prototype">
+    <property name="sectionService">
+      <ref bean="org.hisp.dhis.dataset.SectionService"/>
+     </property>    
+  </bean> 
+  
+  <bean id="org.hisp.dhis.dataset.action.section.SectionListAction"
+    class="org.hisp.dhis.dataset.action.section.SectionListAction" scope="prototype">
+    <property name="sectionService">
+      <ref bean="org.hisp.dhis.dataset.SectionService"/>
+     </property>
+     <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+   	 </property>
+  </bean> 
+  
+  <!-- Defining DataSet associations -->
+  
+  <bean id="org.hisp.dhis.dataset.action.SetupAssociationsTreeAction"
+    class="org.hisp.dhis.dataset.action.SetupAssociationsTreeAction"
+    scope="prototype">
+    <property name="selectionTreeManager">
+      <ref bean="org.hisp.dhis.oust.manager.SelectionTreeManager"/>
+    </property>
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.DefineDataSetAssociationsAction"
+    class="org.hisp.dhis.dataset.action.DefineDataSetAssociationsAction"
+    scope="prototype">
+    <property name="selectionTreeManager">
+      <ref bean="org.hisp.dhis.oust.manager.SelectionTreeManager"/>
+    </property>
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.SelectLevelAction"
+    class="org.hisp.dhis.dataset.action.SelectLevelAction" scope="prototype">
+    <property name="selectionTreeManager">
+      <ref bean="org.hisp.dhis.oust.manager.SelectionTreeManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.UnselectLevelAction"
+    class="org.hisp.dhis.dataset.action.UnselectLevelAction" scope="prototype">
+    <property name="selectionTreeManager">
+      <ref bean="org.hisp.dhis.oust.manager.SelectionTreeManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.UnselectAllAction"
+    class="org.hisp.dhis.dataset.action.UnselectAllAction" scope="prototype">
+    <property name="selectionTreeManager">
+      <ref bean="org.hisp.dhis.oust.manager.SelectionTreeManager"/>
+    </property>
+  </bean>
+  
+  <!-- Validation -->
+    
+  <bean id="org.hisp.dhis.dataset.action.ValidateDataSetAction"
+    class="org.hisp.dhis.dataset.action.ValidateDataSetAction" scope="prototype">
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <!-- Overview -->
+  
+  <bean id="org.hisp.dhis.dataset.action.DataSetListAction"
+    class="org.hisp.dhis.dataset.action.DataSetListAction" scope="prototype">
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.PeriodTypeListAction"
+    class="org.hisp.dhis.dataset.action.PeriodTypeListAction" scope="prototype">
+    <property name="periodService">
+      <ref bean="org.hisp.dhis.period.PeriodService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.DataElementListAction"
+    class="org.hisp.dhis.dataset.action.DataElementListAction" scope="prototype">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.DataElementListFilteredByGroup"
+    class="org.hisp.dhis.dataset.action.DataElementListFilteredByGroup"
+    scope="prototype">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.DataElementGroupListAction"
+    class="org.hisp.dhis.dataset.action.DataElementGroupListAction"
+    scope="prototype">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.AddDataSetAction"
+    class="org.hisp.dhis.dataset.action.AddDataSetAction" scope="prototype">
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="periodService">
+      <ref bean="org.hisp.dhis.period.PeriodService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.UpdateDataSetAction"
+    class="org.hisp.dhis.dataset.action.UpdateDataSetAction" scope="prototype">
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+    <property name="periodService">
+      <ref bean="org.hisp.dhis.period.PeriodService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.GetDataSetAction"
+    class="org.hisp.dhis.dataset.action.GetDataSetAction" scope="prototype">
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+    <property name="dataEntryFormService">
+      <ref bean="org.hisp.dhis.dataset.DataEntryFormService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.DelDataSetAction"
+    class="org.hisp.dhis.dataset.action.DelDataSetAction" scope="prototype">
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.GetNumberOfLevelsAction"
+    class="org.hisp.dhis.dataset.action.GetNumberOfLevelsAction">
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+  </bean>
+  
+  <!-- DataEntryForm -->
+  
+  <bean id="org.hisp.dhis.dataset.action.dataentryform.ViewDataEntryFormAction"
+    class="org.hisp.dhis.dataset.action.dataentryform.ViewDataEntryFormAction"
+    scope="prototype">
+    <property name="dataEntryFormService">
+      <ref bean="org.hisp.dhis.dataset.DataEntryFormService"/>
+    </property>
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="dataElementCategoryOptionComboService">
+      <ref
+        bean="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.dataentryform.SaveDataEntryFormAction"
+    class="org.hisp.dhis.dataset.action.dataentryform.SaveDataEntryFormAction"
+    scope="prototype">
+    <property name="dataEntryFormService">
+      <ref bean="org.hisp.dhis.dataset.DataEntryFormService"/>
+    </property>
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <bean
+    id="org.hisp.dhis.dataset.action.dataentryform.ValidateDataEntryFormAction"
+    class="org.hisp.dhis.dataset.action.dataentryform.ValidateDataEntryFormAction"
+    scope="prototype">
+    <property name="dataEntryFormService">
+      <ref bean="org.hisp.dhis.dataset.DataEntryFormService"/>
+    </property>
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.dataentryform.DelDataEntryFormAction"
+    class="org.hisp.dhis.dataset.action.dataentryform.DelDataEntryFormAction"
+    scope="prototype">
+    <property name="dataEntryFormService">
+      <ref bean="org.hisp.dhis.dataset.DataEntryFormService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.dataentryform.SelectDataElementAction"
+    class="org.hisp.dhis.dataset.action.dataentryform.SelectDataElementAction"
+    scope="prototype">
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.dataentryform.GetSelectedDataElementsAction"
+    class="org.hisp.dhis.dataset.action.dataentryform.GetSelectedDataElementsAction"
+    scope="prototype">
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataset.action.dataentryform.GetOptionCombosAction"
+    class="org.hisp.dhis.dataset.action.dataentryform.GetOptionCombosAction"
+    scope="prototype">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="dataElementCategoryOptionComboService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+    </property>
+  </bean>
+  
+</beans>

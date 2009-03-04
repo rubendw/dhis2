@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table>
+	<id>$table.id</id>
+	<name>$encoder.xmlEncode( $table.name )</name>
+	<tableName>$encoder.xmlEncode( $table.tableName )</tableName>
+	<indicators>$table.indicators.size()</indicators>
+	<periods>$table.periods.size()</periods>
+	<units>$table.units.size()</units>
+	<doIndicators>$table.doIndicators</doIndicators>
+	<doPeriods>$table.doPeriods</doPeriods>
+	<doUnits>$table.doUnits</doUnits>
+</table>

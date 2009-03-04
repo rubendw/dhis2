@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="period">
+	
+	<!-- TypeAlias -->
+	
+	<typeAlias alias="period" type="org.hisp.dhis.period.Period"/>
+	<typeAlias alias="dateTypeHandler" type="org.hisp.dhis.importexport.dhis14.file.typehandler.DateTypeHandler"/>
+	<typeAlias alias="periodTypeTypeHandler" type="org.hisp.dhis.importexport.dhis14.file.typehandler.PeriodTypeTypeHandler"/>
+	
+	<!-- ResultMap -->
+	
+	<resultMap class="period" id="periodResultMap">
+		<result property="id" column="DataPeriodID"/>
+		<result property="periodType" column="DataPeriodTypeID" typeHandler="periodTypeTypeHandler"/>
+		<result property="startDate" column="ValidFrom" typeHandler="dateTypeHandler"/>
+		<result property="endDate" column="ValidTo" typeHandler="dateTypeHandler"/>
+	</resultMap>
+	
+	<!-- Statement -->
+	
+	<select id="getPeriod" parameterClass="java.lang.Integer" resultMap="periodResultMap">
+		SELECT * FROM DataPeriod WHERE DataPeriodID = #value#
+	</select>
+	
+	<select id="getPeriods" resultMap="periodResultMap">
+		SELECT * FROM DataPeriod
+	</select>
+	
+	<select id="getPeriodTypeName" parameterClass="java.lang.Integer" resultClass="java.lang.String">
+		SELECT DataPeriodTypeName FROM DataPeriodType WHERE DataPeriodTypeID = #value#
+	</select>
+		
+</sqlMap>

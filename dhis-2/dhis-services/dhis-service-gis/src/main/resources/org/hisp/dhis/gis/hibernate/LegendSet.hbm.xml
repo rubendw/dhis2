@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.hisp.dhis.gis.LegendSet" table="legendset">
+		<id name="id" column="legendsetid">
+			<generator class="native" />
+		</id>
+		
+		<property name="name" not-null="true"/>		
+		
+		<list name="legends">
+			<key column="legendsetid"></key>
+			<list-index column="legendindex" base="0"/>
+			<one-to-many class="org.hisp.dhis.gis.Legend"/>
+		</list>
+		
+		<set name="indicators" table="legendsetindicators">
+			<key column="legendsetid"></key>
+			<many-to-many class="org.hisp.dhis.indicator.Indicator" column="indicatorid"/>
+		</set>
+		
+		<!-- many-to-one name="indicator" class="org.hisp.dhis.indicator.Indicator" column="indicatorid" unique="true"/-->
+		
+	</class>
+</hibernate-mapping>

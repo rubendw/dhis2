@@ -1,0 +1,7 @@
+<dataSet>
+  <id>$dataSet.id</id>
+  <name>$encoder.xmlEncode( $dataSet.name )</name>
+  <frequency>$i18n.getString( $dataSet.periodType.name )</frequency>
+  <dataElementCount>$dataSetDataElements.size()</dataElementCount>
+  <dataentryform>#if(!$dataEntryForm)  #else $encoder.xmlEncode( $dataEntryForm.name )#end</dataentryform>
+</dataSet>

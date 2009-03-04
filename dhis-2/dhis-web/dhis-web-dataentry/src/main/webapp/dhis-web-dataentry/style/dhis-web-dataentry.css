@@ -1,0 +1,54 @@
+
+#currentSelection 
+{
+  position: fixed;
+  top: 95px;
+  right: 5px;
+  color: black;
+  padding: 5px;
+  background-color: #D5FFC5;
+  border: 1px solid black;
+  font-size: 14px;
+  width: 58%; 
+  text-align: right;
+}
+
+#selectForm 
+{
+  padding-top: 32px;
+}
+
+#actions 
+{
+  float: right;
+  width: 170px;
+}
+
+#actions button[type=button] 
+{
+  width: 100%;
+}
+
+@media print {
+  #mainHeader, #topMenu, #leftBar, #currentSelection, #actions, input[type=button] 
+  {
+    display: none;
+  }
+  
+  input, select 
+  {
+    border: 0;
+    background-color: inherit;
+  }
+  
+  a 
+  {
+    text-decoration: none;
+    color: black;
+  }
+  
+  #typeCol, #minCol, #maxCol, #commentCol  
+  {
+    visibility: collapse;
+  } 
+}

@@ -1,0 +1,76 @@
+
+<h3>$i18n.getString( "edit_validation_rule_group" )</h3>
+
+<form id="updateValidationRuleGroupForm" action="updateValidationRuleGroup.action" method="post" onsubmit="return validateUpdateValidationRuleGroup()">
+
+<div>
+    <input type="hidden" id="id" name="id" value="$validationRuleGroup.id">
+</div>
+
+<table>
+    <tr>
+        <th colspan="2">$i18n.getString( "details" )</th>
+    </tr>
+    <tr>
+        <td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" id="name" name="name" value="$encoder.htmlEncode( $validationRuleGroup.name )" style="width:20em"></td>
+    </tr>
+    <tr>
+        <td><label for="description">$i18n.getString( "description" )</label></td>
+        <td><input type="text" id="description" name="description" value="$encoder.htmlEncode( $validationRuleGroup.name )" style="width:20em"></td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <th>$i18n.getString( "group_members" )</th><td></td><th>$i18n.getString( "available_validation_rules" )</th>
+    </tr>
+    <tr>
+        <td><input type="text" id="groupMembersFilter" onkeyup="filterGroupMembers()" style="width:25em"></td>
+        <td style="text-align:center">&lt; $i18n.getString( "filters" ) &gt;</td>
+        <td><input type="text" id="availableValidationRulesFilter" onkeyup="filterAvailableValidationRules()" style="width:25em"></td>
+    </tr>
+    <tr>
+        <td>
+            <select id="groupMembers" name="groupMembers" size="2" multiple="multiple" style="min-width:25em; height:25em" ondblclick="removeGroupMembers()">
+            </select>
+        </td>
+        <td style="text-align:center">
+            <input type="button" value="&lt;" title="$i18n.getString('move_selected')" onclick="addGroupMembers()"><br><br>
+            <input type="button" value="&gt;" title="$i18n.getString('remove_selected')" onclick="removeGroupMembers()">
+        </td>
+        <td>
+            <select id="availableValidationRules" size="2" multiple="multiple" style="min-width:25em; height:25em" ondblclick="addGroupMembers()">
+            </select>
+        </td>
+    </tr>
+</table>
+
+<p><input type="submit" value="$i18n.getString( "save" )" style="width:10em"><input type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='showValidationRuleGroupForm.action'" style="width:10em"></p>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+    var groupMembers = new Object();
+#foreach( $validationRule in $groupMembers )
+    groupMembers['$validationRule.id'] = '$encoder.jsEscape( $validationRule.name, "'" )';
+#end
+
+    var availableValidationRules = new Object();
+#foreach( $validationRule in $availableValidationRules )
+    availableValidationRules['$validationRule.id'] = '$encoder.jsEscape( $validationRule.name, "'" )';
+#end
+
+    initLists();
+
+    var nameField = document.getElementById( 'name' );
+    nameField.select();
+    nameField.focus();
+
+</script>

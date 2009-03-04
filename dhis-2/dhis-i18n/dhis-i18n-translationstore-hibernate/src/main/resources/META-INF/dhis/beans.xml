@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="org.hisp.dhis.i18n.TranslationStore"
+        class="org.hisp.dhis.i18n.hibernate.HibernateTranslationStore"
+        lazy-init="true">
+    <property name="sessionManager">
+      <ref bean="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    </property>
+  </bean>
+
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readOnlyTransactionInterceptor"/>
+    <property name="pattern" value=".*\.TranslationStore\.get.*"/>
+  </bean>
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readWriteTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\.TranslationStore\.add.*</value>
+        <value>.*\.TranslationStore\.update.*</value>
+        <value>.*\.TranslationStore\.delete.*</value>
+      </list>
+    </property>
+  </bean>
+</beans>

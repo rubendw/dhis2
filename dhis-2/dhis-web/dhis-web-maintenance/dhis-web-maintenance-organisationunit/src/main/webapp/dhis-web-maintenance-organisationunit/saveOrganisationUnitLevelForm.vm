@@ -1,0 +1,24 @@
+
+<h3>$i18n.getString( "organisation_unit_level_management" )</h3>
+
+<form method="post" action="saveOrganisationUnitLevels.action">
+
+<table>
+	<tr>
+		<th>$i18n.getString( "level" )</th>
+		<th>$i18n.getString( "name" )</th>
+	</tr>
+	#foreach ( $level in $levels )
+    <tr>
+        <td style="text-align: center">$level.level</td>
+        <td><input type="text" id="level${level.level}" name="level${level.level}" style="width:20em" value="$!level.name"></td>
+    </tr>
+    #end
+    <tr>
+    	<td></td>
+    	<td><input type="submit" value="$i18n.getString( 'save' )" style="width:10em"><input 
+    	   type="button" value="$i18n.getString( 'cancel' )" onclick="javascript:window.location.href='index.action'" style="width:10em"></td>
+    </tr>
+</table>
+
+</form>

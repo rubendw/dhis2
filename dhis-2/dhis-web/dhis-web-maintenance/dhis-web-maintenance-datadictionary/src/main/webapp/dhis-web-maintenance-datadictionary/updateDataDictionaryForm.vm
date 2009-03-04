@@ -1,0 +1,123 @@
+
+<h3>$i18n.getString( "edit_data_dictionary" )</h3>
+
+<form id="updateDataDictionaryForm" action="updateDataDictionary.action" method="post" onsubmit="return validateUpdateDataDictionary()">
+
+<div>
+	<input type="hidden" id="id" name="id" value="$dataDictionary.id">
+</div>
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "details" )</th>
+	</tr>
+	<tr>
+		<td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="name" name="name" value="$encoder.htmlEncode( $dataDictionary.name )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="description">$i18n.getString( "description" )</label></td>
+		<td><textarea id="description" name="description" style="width:20em; height:8em">$!encoder.htmlEncode( $dataDictionary.description )</textarea></td>
+	</tr>
+	<tr>
+		<td><label for="region">$i18n.getString( "region" )</label></td>
+		<td><input type="text" id="region" name="region" value="$!encoder.htmlEncode( $dataDictionary.region )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td colspan="2" height="15px"></td>
+	</tr>
+</table>
+
+<table>
+	<tr>
+		<th>$i18n.getString( "available_data_elements" )</th>
+		<td></td>
+		<th>$i18n.getString( "selected_data_elements" )</th>
+	</tr>
+	<tr>		
+		<td><input type="text" id="availableDataElementsFilter" onkeyup="filterAvailableDataElements()" style="width:100%"></td>
+		<td style="text-align:center">$i18n.getString( "filters" )</td>
+		<td><input type="text" id="selectedDataElementsFilter" onkeyup="filterSelectedDataElements()" style="width:100%"></td>		
+	</tr>
+	<tr>
+		<td>
+			<select id="availableDataElements" name="availableDataElements" size="2" multiple="multiple" style="min-width:25em; height:20em" ondblclick="addDataElements()">
+			</select>
+		</td>
+		<td style="text-align:center">
+			<input type="button" value="&gt;" onclick="addDataElements()"><br><br>
+			<input type="button" value="&lt;" onclick="removeDataElements()">
+		</td>
+		<td>
+			<select id="selectedDataElements" name="selectedDataElements" size="2" multiple="multiple" style="min-width:25em; height:20em" ondblclick="removeDataElements()">				
+			</select>
+		</td>		
+	</tr>
+	<tr>
+		<td colspan="2" height="15px"></td>
+	</tr>
+
+	<tr>		
+		<th>$i18n.getString( "available_indicators" )</th>
+		<td></td>
+		<th>$i18n.getString( "selected_indicators" )</th>
+	</tr>
+	<tr>		
+		<td><input type="text" id="availableIndicatorsFilter" onkeyup="filterAvailableIndicators()" style="width:100%"></td>
+		<td style="text-align:center">$i18n.getString( "filters" )</td>		
+		<td><input type="text" id="selectedIndicatorsFilter" onkeyup="filterSelectedIndicators()" style="width:100%"></td>
+	</tr>
+	<tr>	
+		<td>
+			<select id="availableIndicators" name="availableIndicators" size="2" multiple="multiple" style="width:100%; height:20em" ondblclick="addIndicators()">
+			</select>
+		</td>	
+		<td style="text-align:center">
+			<input type="button" value="&gt;" onclick="addIndicators()"><br><br>
+			<input type="button" value="&lt;" onclick="removeIndicators()">
+		</td>		
+		<td>
+			<select id="selectedIndicators" name="selectedIndicators" size="2" multiple="multiple" style="width:100%; height:20em" ondblclick="removeIndicators()">				
+			</select>
+		</td>
+	</tr>
+</table>
+
+<p class="cleared">
+	<input type="submit" value="$i18n.getString( "save" )" style="width:10em"><input 
+		type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='dataDictionary.action'" style="width:10em">
+</p>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+	var selectedDataElements = new Object();
+#foreach( $dataElement in $selectedDataElements )
+	selectedDataElements['$dataElement.id'] = '$encoder.jsEscape( $dataElement.name, "'" )';
+#end
+
+	var availableDataElements = new Object();
+#foreach( $dataElement in $availableDataElements )
+	availableDataElements['$dataElement.id'] = '$encoder.jsEscape( $dataElement.name, "'" )';
+#end
+
+	var selectedIndicators = new Object();
+#foreach( $indicator in $selectedIndicators )
+	selectedIndicators['$indicator.id'] = '$encoder.jsEscape( $indicator.name, "'" )';
+#end
+
+	var availableIndicators = new Object();
+#foreach( $indicator in $availableIndicators )
+	availableIndicators['$indicator.id'] = '$encoder.jsEscape( $indicator.name, "'" )';
+#end
+
+	initLists();
+
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+
+</script>

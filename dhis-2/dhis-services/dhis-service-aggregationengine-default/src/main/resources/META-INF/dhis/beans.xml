@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+	<!-- Interceptor -->
+	
+	<bean id="statementInterceptor"
+		class="org.hisp.dhis.aggregation.batch.statement.StatementInterceptor">
+	  <property name="statementManager"
+			ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+	</bean>
+	
+	<!-- JDBCConfigurationProvider -->
+	
+	<bean id="org.hisp.dhis.aggregation.batch.configuration.JDBCConfigurationProvider"
+		class="org.hisp.dhis.aggregation.batch.configuration.DefaultJDBCConfigurationProvider">
+		<property name="configurationProvider"
+			ref="org.hisp.dhis.hibernate.HibernateConfigurationProvider"/>	
+	</bean>
+	
+	<!-- StatementManager -->
+	
+	<bean id="org.hisp.dhis.aggregation.batch.statement.StatementManager"
+		class="org.hisp.dhis.aggregation.batch.statement.JDBCStatementManager">
+		<property name="configurationProvider"
+			ref="org.hisp.dhis.aggregation.batch.configuration.JDBCConfigurationProvider"/>
+	</bean>
+  
+	<!-- BatchHandlerFactory -->
+	
+	<bean id="org.hisp.dhis.aggregation.batch.factory.BatchHandlerFactory"
+		class="org.hisp.dhis.aggregation.batch.factory.DefaultBatchHandlerFactory">
+		<property name="configurationProvider"
+			ref="org.hisp.dhis.aggregation.batch.configuration.JDBCConfigurationProvider"/>
+	</bean>
+	
+	<!-- AggregationStore -->
+	
+	<bean id="org.hisp.dhis.aggregation.AggregationStore"
+		class="org.hisp.dhis.aggregation.hibernate.HibernateAggregationStore">
+		<property name="statementManager"
+			ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+	</bean>
+	
+	<!-- AggregationService -->
+	
+  <bean id="org.hisp.dhis.aggregation.AggregationService"
+    class="org.hisp.dhis.aggregation.impl.DefaultAggregationService">
+    <property name="sumIntDataElementAggregation"
+      ref="org.hisp.dhis.aggregation.impl.dataelement.SumIntDataElementAggregation"/>
+    <property name="sumBoolDataElementAggregation"
+      ref="org.hisp.dhis.aggregation.impl.dataelement.SumBoolDataElementAggregation"/>
+    <property name="averageIntDataElementAggregation"
+      ref="org.hisp.dhis.aggregation.impl.dataelement.AverageIntDataElementAggregation"/>
+    <property name="averageBoolDataElementAggregation"
+      ref="org.hisp.dhis.aggregation.impl.dataelement.AverageBoolDataElementAggregation"/>
+		<property name="indicatorAggregation"
+			ref="org.hisp.dhis.aggregation.impl.indicator.IndicatorAggregation"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.aggregation.impl.cache.AggregationCache"
+    class="org.hisp.dhis.aggregation.impl.cache.MemoryAggregationCache">
+    <property name="organisationUnitStore"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitStore"/>
+		<property name="periodService"
+			ref="org.hisp.dhis.period.PeriodService"/>
+		<property name="aggregationService"
+			ref="org.hisp.dhis.aggregation.AggregationService"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.aggregation.impl.dataelement.SumIntDataElementAggregation"
+    class="org.hisp.dhis.aggregation.impl.dataelement.SumIntDataElementAggregation">
+    <property name="aggregationStore"
+      ref="org.hisp.dhis.aggregation.AggregationStore"/>
+    <property name="aggregationCache"
+      ref="org.hisp.dhis.aggregation.impl.cache.AggregationCache"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.aggregation.impl.dataelement.SumBoolDataElementAggregation"
+    class="org.hisp.dhis.aggregation.impl.dataelement.SumBoolDataElementAggregation">
+    <property name="aggregationStore"
+      ref="org.hisp.dhis.aggregation.AggregationStore"/>
+    <property name="aggregationCache"
+      ref="org.hisp.dhis.aggregation.impl.cache.AggregationCache"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.aggregation.impl.dataelement.AverageIntDataElementAggregation"
+    class="org.hisp.dhis.aggregation.impl.dataelement.AverageIntDataElementAggregation">
+    <property name="aggregationStore">
+      <ref bean="org.hisp.dhis.aggregation.AggregationStore"/>
+    </property>
+    <property name="aggregationCache">
+      <ref bean="org.hisp.dhis.aggregation.impl.cache.AggregationCache"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.aggregation.impl.dataelement.AverageBoolDataElementAggregation"
+    class="org.hisp.dhis.aggregation.impl.dataelement.AverageBoolDataElementAggregation">
+    <property name="aggregationStore"
+      ref="org.hisp.dhis.aggregation.AggregationStore"/>
+    <property name="aggregationCache"
+      ref="org.hisp.dhis.aggregation.impl.cache.AggregationCache"/>
+  </bean>
+	
+	<bean id="org.hisp.dhis.aggregation.impl.indicator.IndicatorAggregation"
+		class="org.hisp.dhis.aggregation.impl.indicator.IndicatorAggregation">
+		<property name="dataElementService"
+			ref="org.hisp.dhis.dataelement.DataElementService"/>
+		<property name="dataElementCategoryOptionComboService"
+			ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+		<property name="aggregationCache"
+      ref="org.hisp.dhis.aggregation.impl.cache.AggregationCache"/>    
+	</bean>
+  
+</beans>

@@ -1,0 +1,42 @@
+
+<h3>$i18n.getString( "welcome_to" ) DHIS 2</h3>
+
+<table style="width:480px">
+
+<col width="250">
+<col width="240">
+	
+<tr>
+    <td style="vertical-align:top">    	
+        <h4>$i18n.getString( "maintenance_modules" )</h4>
+
+		#foreach( $module in $maintenanceModules )
+			#set( $i18nName = false )
+		    #set( $i18nName = $i18n.getString( $module.name ) )
+		    #if( $auth.hasAccess( $module.name, "index" ))
+		      <span class="moduleButton">
+		      	<a class="moduleButtonLink" href="$module.defaultAction">#if( $i18nName ) $i18nName #else $module.name #end</a>
+		      </span>
+		    #end
+		#end
+		
+	    <div class="moduleButton">
+	      <a class="moduleButtonLink" href="help.action">$i18n.getString( "help" )</a>
+	    </div>
+	</td>
+	<td style="vertical-align:top">		
+		<h4>$i18n.getString( "service_modules" )</h4>
+		
+		#foreach( $module in $serviceModules )
+			#set( $i18nName = false )
+		    #set( $i18nName = $i18n.getString( $module.name ) )
+		    #if( $auth.hasAccess( $module.name, "index" ))
+		      <span class="moduleButton">
+		      	<a class="moduleButtonLink" href="$module.defaultAction">#if( $i18nName ) $i18nName #else $module.name #end</a>
+		      </span>
+		    #end
+		#end
+	</td>
+</tr>
+
+</table>

@@ -1,0 +1,80 @@
+  /* Forms */
+.form {
+  margin: 0;
+  padding: 0;
+}
+
+.form ul {
+  list-style: none;
+  margin: 0; /*IE uses margin*/
+}
+
+.form .column1 li {
+  margin-right: 20px;
+}
+
+.column1 {
+  border: 0;
+  float: left;
+}
+
+#column1Legend,#column2Legend {
+  display: none;
+}
+
+.column2 {
+  border: 0;
+}
+
+.leftside,.rightside {
+  clear: left;
+  float: left;
+  width: 580px;
+}
+
+.leftside li,.rightside li {
+  clear: left;
+}
+
+#operatordiv {
+  float: left;
+  clear: left;
+  margin: 10px 0 10px 0;
+}
+
+.form * {
+  margin-bottom: 2px;
+}
+
+#registersubmit {
+  float: left;
+  clear: left;
+  margin-top: 5px;
+}
+
+.form label {
+  width: 8em;
+  float: left;
+}
+
+.form INPUT [type="text"] {
+  width: 20em;
+}
+
+.formheader {
+  background-color: #DDDDDD;
+  font-weight: bold;
+  text-align: left;
+  padding: 0 0.5em;
+  width: 580px;
+}
+
+span#message {
+  display: none;
+  padding: 1em;
+  margin: 1em;
+  background-color: #ffffbf;
+  border: 1px solid #cccc00;
+  width: 500px;
+  clear: both;
+}

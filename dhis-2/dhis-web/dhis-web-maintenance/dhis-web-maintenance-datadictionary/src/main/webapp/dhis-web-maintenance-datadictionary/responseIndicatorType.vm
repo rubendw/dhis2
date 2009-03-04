@@ -1,0 +1,5 @@
+<indicatorType>
+	<id>$indicatorType.id</id>
+	<name>$encoder.xmlEncode( $indicatorType.name )</name>
+	<factor>$indicatorType.factor</factor>
+</indicatorType>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="dataElement">
+	
+	<!-- TypeAlias -->
+	
+	<typeAlias alias="dataElement" type="org.hisp.dhis.dataelement.DataElement"/>	
+	<typeAlias alias="aggregationOperatorTypeHandler" type="org.hisp.dhis.importexport.dhis14.file.typehandler.AggregationOperatorTypeHandler"/>	
+	<typeAlias alias="dataElementTypeTypeHandler" type="org.hisp.dhis.importexport.dhis14.file.typehandler.DataElementTypeTypeHandler"/>
+	
+	<!-- ResultMap -->
+	
+	<resultMap class="dataElement" id="dataElementResultMap">
+		<result property="id" column="DataElementID"/>
+		<result property="name" column="DataElementName"/>
+		<result property="alternativeName" column="DataElementNameAlt1"/>
+		<result property="shortName" column="DataElementShort"/>
+		<result property="code" column="DataElementCode"/>
+		<result property="description" column="DataElementDescription"/>
+		<result property="type" column="DataTypeID" typeHandler="dataElementTypeTypeHandler"/>
+		<result property="aggregationOperator" column="AggregateOperator" typeHandler="aggregationOperatorTypeHandler"/>
+	</resultMap>
+	
+	<!-- Statement -->
+	
+	<select id="getDataElement" resultMap="dataElementResultMap">
+		SELECT * FROM DataElement WHERE DataElementID = #value#
+	</select>
+	
+	<select id="getDataElements" resultMap="dataElementResultMap">
+		SELECT * FROM DataElement
+	</select>	
+	
+	<select id="getDataElementName" parameterClass="java.lang.Integer" resultClass="java.lang.String">
+		SELECT DataElementName FROM DataElement WHERE DataElementID = #value#
+	</select>
+	
+</sqlMap>

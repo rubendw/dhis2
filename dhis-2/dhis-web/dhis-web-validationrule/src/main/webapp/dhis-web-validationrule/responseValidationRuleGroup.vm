@@ -1,0 +1,6 @@
+<validationRuleGroup>
+    <id>$validationRuleGroup.id</id>
+    <name>$encoder.xmlEncode( $validationRuleGroup.name )</name>
+    <description>$encoder.xmlEncode( $validationRuleGroup.description )</description>
+    <memberCount>$memberCount</memberCount>
+</validationRuleGroup>

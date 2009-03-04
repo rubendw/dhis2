@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="org.hisp.dhis.populator.PopulatorEngine"
+    class="org.hisp.dhis.populator.DefaultPopulatorEngine">
+    <property name="dataFile">
+      <value>populator.dat</value>
+    </property>
+    <property name="transactionManager">
+      <ref bean="org.hisp.dhis.transaction.TransactionManager"/>
+    </property>
+    <property name="sessionManager">
+      <ref bean="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    </property>
+    <property name="startTransaction" value="false"/>
+    <property name="runlevel" value="10"/>
+  </bean>
+
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject"
+      ref="org.hisp.dhis.system.startup.StartupRoutineExecutor"/>
+    <property name="targetMethod" value="addStartupRoutine"/>
+    <property name="arguments">
+      <list>
+        <ref local="org.hisp.dhis.populator.PopulatorEngine"/>
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.populator.object.DataElementObjectPopulator"
+        class="org.hisp.dhis.populator.object.DataElementObjectPopulator">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.object.DataElementGroupObjectPopulator"
+        class="org.hisp.dhis.populator.object.DataElementGroupObjectPopulator">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.member.DataElementGroupMemberPopulator"
+        class="org.hisp.dhis.populator.member.DataElementGroupMemberPopulator">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="dataElementObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.DataElementObjectPopulator"/>
+    </property>
+    <property name="dataElementGroupObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.DataElementGroupObjectPopulator"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.object.OrganisationUnitObjectPopulator"
+        class="org.hisp.dhis.populator.object.OrganisationUnitObjectPopulator">
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.object.OrganisationUnitGroupObjectPopulator"
+        class="org.hisp.dhis.populator.object.OrganisationUnitGroupObjectPopulator">
+    <property name="organisationUnitGroupService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.member.OrganisationUnitGroupMemberPopulator"
+        class="org.hisp.dhis.populator.member.OrganisationUnitGroupMemberPopulator">
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+    <property name="organisationUnitGroupService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    </property>
+    <property name="organisationUnitObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.OrganisationUnitObjectPopulator"/>
+    </property>
+    <property name="organisationUnitGroupObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.OrganisationUnitGroupObjectPopulator"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.object.PeriodObjectPopulator"
+        class="org.hisp.dhis.populator.object.PeriodObjectPopulator">
+    <property name="periodService">
+      <ref bean="org.hisp.dhis.period.PeriodService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.object.DataValueObjectPopulator"
+        class="org.hisp.dhis.populator.object.DataValueObjectPopulator">
+    <property name="dataValueService">
+      <ref bean="org.hisp.dhis.datavalue.DataValueService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="periodService">
+      <ref bean="org.hisp.dhis.period.PeriodService"/>
+    </property>
+    <property name="sourceStore">
+      <ref bean="org.hisp.dhis.source.SourceStore"/>
+    </property>
+    <property name="dataElementObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.DataElementObjectPopulator"/>
+    </property>
+    <property name="periodObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.PeriodObjectPopulator"/>
+    </property>
+    <property name="organisationUnitObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.OrganisationUnitObjectPopulator"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.object.DataSetObjectPopulator"
+        class="org.hisp.dhis.populator.object.DataSetObjectPopulator">
+    <property name="dataSetStore">
+      <ref bean="org.hisp.dhis.dataset.DataSetStore"/>
+    </property>
+    <property name="periodService">
+      <ref bean="org.hisp.dhis.period.PeriodService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.member.DataSetElementMemberPopulator"
+        class="org.hisp.dhis.populator.member.DataSetElementMemberPopulator">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="dataElementObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.DataElementObjectPopulator"/>
+    </property>
+    <property name="dataSetObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.DataSetObjectPopulator"/>
+    </property>
+    <property name="dataSetStore">
+      <ref bean="org.hisp.dhis.dataset.DataSetStore"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.methodinvocation.AddHierarchyMethodInvocationPopulator"
+        class="org.hisp.dhis.populator.methodinvocation.AddHierarchyMethodInvocationPopulator">
+    <property name="organisationUnitStore">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitStore"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.object.OrganisationUnitGroupSetObjectPopulator"
+        class="org.hisp.dhis.populator.object.OrganisationUnitGroupSetObjectPopulator">
+    <property name="organisationUnitGroupService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.member.OrganisationUnitGroupSetMemberPopulator"
+        class="org.hisp.dhis.populator.member.OrganisationUnitGroupSetMemberPopulator">
+    <property name="organisationUnitGroupService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    </property>
+    <property name="groupSetPopulator">
+      <ref bean="org.hisp.dhis.populator.object.OrganisationUnitGroupSetObjectPopulator"/>
+    </property>
+    <property name="groupPopulator">
+      <ref bean="org.hisp.dhis.populator.object.OrganisationUnitGroupObjectPopulator"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.member.DataSetAssociationsPopulator"
+        class="org.hisp.dhis.populator.member.DataSetAssociationsPopulator">
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+    <property name="organisationUnitObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.OrganisationUnitObjectPopulator"/>
+    </property>
+    <property name="dataSetObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.DataSetObjectPopulator"/>
+    </property>
+    <property name="dataSetStore">
+      <ref bean="org.hisp.dhis.dataset.DataSetStore"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.object.IndicatorTypeObjectPopulator"
+        class="org.hisp.dhis.populator.object.IndicatorTypeObjectPopulator">
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.object.IndicatorObjectPopulator"
+        class="org.hisp.dhis.populator.object.IndicatorObjectPopulator">
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+    <property name="indicatorTypeObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.IndicatorTypeObjectPopulator"/>
+    </property>
+    <property name="dataElementObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.DataElementObjectPopulator"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.object.IndicatorGroupObjectPopulator"
+        class="org.hisp.dhis.populator.object.IndicatorGroupObjectPopulator">
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.populator.member.IndicatorGroupMemberPopulator"
+        class="org.hisp.dhis.populator.member.IndicatorGroupMemberPopulator">
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+    <property name="indicatorObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.IndicatorObjectPopulator"/>
+    </property>
+    <property name="indicatorGroupObjectPopulator">
+      <ref bean="org.hisp.dhis.populator.object.IndicatorGroupObjectPopulator"/>
+    </property>
+  </bean>
+</beans>

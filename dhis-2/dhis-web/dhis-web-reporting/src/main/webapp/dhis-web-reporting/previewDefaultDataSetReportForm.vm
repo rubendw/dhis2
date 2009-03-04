@@ -1,0 +1,5 @@
+
+<input type="button" value="$i18n.getString("done")" style="width:100px" onclick="location.href='returnToViewDataSetReport.action'">
+<br>
+
+$content

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="org.hisp.dhis.options.sortorder.SortOrderManager"
+		class="org.hisp.dhis.options.sortorder.DefaultSortOrderManager">
+		<property name="userSettingService"
+      ref="org.hisp.dhis.user.UserSettingService"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.options.displayproperty.DisplayPropertyManager"
+		class="org.hisp.dhis.options.displayproperty.DefaultDisplayPropertyManager">
+		<property name="userSettingService"
+      ref="org.hisp.dhis.user.UserSettingService"/>
+	</bean>
+  
+  <bean id="org.hisp.dhis.options.datadictionary.DataDictionaryModeManager"
+    class="org.hisp.dhis.options.datadictionary.DefaultDataDictionaryModeManager">
+    <property name="userSettingService"
+      ref="org.hisp.dhis.user.UserSettingService"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.options.SystemSettingStore"
+    class="org.hisp.dhis.options.setting.HibernateSystemSettingStore"> 
+    <property name="sessionManager" 
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.options.SystemSettingManager"
+    class="org.hisp.dhis.options.setting.DefaultSystemSettingManager"> 
+    <property name="systemSettingStore" 
+      ref="org.hisp.dhis.options.SystemSettingStore"/>
+    <property name="flags">
+      <map>
+        <entry>
+          <key><value>botswana</value></key>
+          <value>botswana.png</value>
+        </entry>
+        <entry>
+          <key><value>ethiopia</value></key>
+          <value>ethiopia.png</value>
+        </entry>
+        <entry>
+          <key><value>india</value></key>
+          <value>india.png</value>
+        </entry>
+        <entry>
+          <key><value>irc</value></key>
+          <value>irc.png</value>
+        </entry>
+        <entry>
+          <key><value>malawi</value></key>
+          <value>malawi.png</value>
+        </entry>
+        <entry>
+          <key><value>mali</value></key>
+          <value>mali.png</value>
+        </entry>
+        <entry>
+          <key><value>mozambique</value></key>
+          <value>mozambique.png</value>
+        </entry>
+        <entry>
+          <key><value>nigeria</value></key>
+          <value>nigeria.png</value>
+        </entry>
+        <entry>
+          <key><value>norway</value></key>
+          <value>norway.png</value>
+        </entry>
+        <entry>
+          <key><value>sierra_leone</value></key>
+          <value>sierra_leone.png</value>
+        </entry>
+        <entry>
+          <key><value>sierra_leone_coat_of_arms</value></key>
+          <value>sierra_leone_coat_of_arms.png</value>
+        </entry>
+        <entry>
+          <key><value>south_africa</value></key>
+          <value>south_africa.png</value>
+        </entry>
+        <entry>
+          <key><value>tajikistan</value></key>
+          <value>tajikistan.png</value>
+        </entry>
+        <entry>
+          <key><value>tanzania</value></key>
+          <value>tanzania.png</value>
+        </entry>
+        <entry>
+          <key><value>vietnam</value></key>
+          <value>vietnam.png</value>
+        </entry>
+        <entry>
+          <key><value>zambia</value></key>
+          <value>zambia.png</value>
+        </entry>
+        <entry>
+          <key><value>zanzibar</value></key>
+          <value>zanzibar.png</value>
+        </entry>   
+        <entry>
+          <key><value>who</value></key>
+          <value>who.png</value>
+        </entry>        
+      </map>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.options.style.StyleManager"
+    class="org.hisp.dhis.options.style.DefaultStyleManager">
+    <property name="userSettingService"
+      ref="org.hisp.dhis.user.UserSettingService"/>
+    <property name="styles">
+      <map>        
+        <entry>
+          <key><value>green</value></key>
+          <value>green/green.css</value>
+        </entry>
+        <entry>
+          <key><value>blue</value></key>
+          <value>blue/blue.css</value>
+        </entry>
+        <entry>
+          <key><value>red</value></key>
+          <value>red/red.css</value>
+        </entry>
+        <entry>
+          <key><value>vietnam</value></key>
+          <value>vietnam/vietnam.css</value>
+        </entry>
+        <entry>
+          <key><value>vista</value></key>
+          <value>vista/vista.css</value>
+        </entry>
+        <entry>
+          <key><value>macos</value></key>
+          <value>macos/macos.css</value>
+        </entry>
+      </map>
+    </property>
+  </bean>
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readOnlyTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\SystemSettingStore\.get.*</value>
+      </list>
+    </property>
+  </bean>
+
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readWriteTransactionInterceptor"/>
+    <property name="patterns">
+      <list>
+        <value>.*\SystemSettingStore\.add.*</value>
+        <value>.*\SystemSettingStore\.update.*</value>
+        <value>.*\SystemSettingStore\.del.*</value>
+      </list>
+    </property>
+  </bean>
+  
+</beans>

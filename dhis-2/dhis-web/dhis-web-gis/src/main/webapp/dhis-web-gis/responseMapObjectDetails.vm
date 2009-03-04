@@ -1,0 +1,7 @@
+<organisationUnit>	
+
+	<name>$encoder.xmlEncode( $organisationUnit.name )</name>
+	<shortName>$encoder.xmlEncode( $!organisationUnit.shortName )</shortName>
+	<comment>$!encoder.xmlEncode( $organisationUnit.comment )</comment>
+
+</organisationUnit>

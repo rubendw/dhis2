@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSetCompletenessResults>
+#foreach ( $result in $results )
+    <dataSetCompletenessResult>
+        <name>$encoder.xmlEncode( $result.name )</name>
+        <sources>$result.sources</sources>
+        <registrations>$result.registrations</registrations>
+        <percentage>$result.getPercentage()</percentage>
+        <registrationsOnTime>$result.registrationsOnTime</registrationsOnTime>
+        <percentageOnTime>$result.getPercentageOnTime()</percentageOnTime>
+    </dataSetCompletenessResult>
+#end
+</dataSetCompletenessResults>

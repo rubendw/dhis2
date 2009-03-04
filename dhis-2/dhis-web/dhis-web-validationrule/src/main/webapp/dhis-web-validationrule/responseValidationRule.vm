@@ -1,0 +1,8 @@
+<validationRule>
+  <name>$encoder.xmlEncode( $validationRule.name )</name>
+  <description>$!encoder.xmlEncode( $validationRule.description )</description>
+  <type>$encoder.xmlEncode( $validationRule.type )</type>
+  <operator>$encoder.xmlEncode( $validationRule.operator )</operator>
+  <leftSideDescription>$encoder.xmlEncode( $validationRule.leftSide.description )</leftSideDescription>
+  <rightSideDescription>$encoder.xmlEncode( $validationRule.rightSide.description )</rightSideDescription>  
+</validationRule>

@@ -1,0 +1,8 @@
+<periods>
+	#foreach( $period in $periods )		
+		<period>
+			<id>$period.id</id>
+			<name>$format.formatPeriod( $period )</name>
+		</period>
+	#end
+</periods>

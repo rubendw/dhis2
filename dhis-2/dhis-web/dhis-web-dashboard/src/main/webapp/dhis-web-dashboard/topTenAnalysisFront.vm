@@ -1,0 +1,92 @@
+
+
+<html>
+	<head>
+		<title>Top 10 Diseases Analysis Form</title>		
+		<script>
+			// Global Variables
+		    
+		    var ouName=""; 
+            var dsName="";
+            var sDateIndex=0;
+            var eDateIndex=0;			
+            var sDate="";
+            var eDate="";
+																											
+			// OrganisationUnit ids and its Names
+			var orgUnits = new HashTable();
+			#foreach($orgUnit in $organisationUnits)
+				var orgUnitId = ""+$orgUnit.getId();
+			    orgUnits.put(orgUnitId,"$orgUnit.getName()");
+			#end			                       
+        </script>
+	</head>
+	<body>
+		<h1>Top 10 Diseases Analysis Form</h1>
+	    <hr />	
+	    <form id="ChartGenerationForm" name="ChartGenerationForm" action="generateTopTenChartData.action" method="post" onsubmit="return formValidationsForTTA()" target="chartWindow1">	
+			<table align="center" style=" border-collapse: collapse; margin-top: 0;" cellpadding="0" cellspacing="0" width="730" border=0>
+		    	<colgroup>
+                	<col width="325">
+  		            <col width="80">
+ 		            <col width="325">
+  	            </colgroup>
+                
+                <tr>
+    				<td class="NormalB">
+                   		$i18n.getString( "ds_dataset_list" ) : <br>
+                        <select multiple size="5" id="availableDataSets" name="availableDataSets" style="width:325px; height:120px" onchange="getOptionCombos()">
+	                        #if ( $dataSetList && ( $dataSetList.size() > 0 ) )
+    	   				        #foreach ( $dataSet in $dataSetList )
+							        <option value='$dataSet.getId()' title='$dataSet.getName()'>$dataSet.getName()</option>
+    		                    #end
+                            #end
+			            </select>
+				    </td>
+    			    <td class="NormalB" align="center">&nbsp;</td>
+    			    <td class="NormalB">
+    			    	Option Combo List: <br />
+    				    <select multiple id="availableOptionCombos" name="availableOptionCombos" style="width:325px; height:120px" >
+                        </select>
+                        <div id="message" name="message">&nbsp;</div>
+                    </td>
+  			   	</tr>
+                <tr>
+    				<td class="NormalB">&nbsp;</td>   
+                    <td class="NormalB">&nbsp;</td>
+                    <td class="NormalB">&nbsp;</td>
+                </tr>
+             	<tr>
+                	<td class="NormalB">
+                    	$i18n.getString( "ga_from" )<br>
+        				<select id="sDateLB" name="sDateLB">												
+							#foreach($period in $monthlyPeriods)
+  								<option value="$period.id">$simpleDateFormat.format($period.startDate)</option>
+							#end
+			  			</select>			  				
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td align="right" class="NormalB">
+                    	Selected OrgUnit:<br>    			                    	
+                        <input type="text" name="ouNameTB" id="ouNameTB">
+                    </td>
+		     	</tr>                    			                   			        
+                <tr class="NormalB">
+              		<td>   
+                    	$i18n.getString( "ga_to" )<br>
+						<select id="eDateLB" name="eDateLB">
+							#foreach($period in $monthlyPeriods)
+  								<option value="$period.id">$simpleDateFormat.format($period.endDate)</option>
+							#end			  							
+			  			</select>                                			    	
+					</td>
+			        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td align="right">
+              			<input type="submit" name="ViewReport" value="View Report" style="width: 120; height: 25; font-family:Arial; font-weight:bold; color:#000000">
+					</td>
+           		</tr>                            
+            </table>
+            <input type="hidden" name="ouIDTB" id="ouIDTB">							
+        </form>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	
+	<settings
+		cacheModelsEnabled="true"
+		enhancementEnabled="false"
+		lazyLoadingEnabled="false"
+		maxRequests="32"
+		maxSessions="10"
+		maxTransactions="5"
+		useStatementNamespaces="false"
+	/>
+	
+	<transactionManager type="JDBC" >
+		<dataSource type="SIMPLE">
+			<property name="JDBC.Driver" value="sun.jdbc.odbc.JdbcOdbcDriver"/>
+			<property name="JDBC.ConnectionURL" value="${ibatis.connection.url}"/>
+			<property name="JDBC.Username" value="${ibatis.connection.username}"/>
+			<property name="JDBC.Password" value="${ibatis.connection.password}"/>
+		</dataSource>
+	</transactionManager>
+	
+	<sqlMap resource="sqlmap/dataElement.sqlmap.xml"/>
+  <sqlMap resource="sqlmap/dataElementGroup.sqlmap.xml"/>
+  <sqlMap resource="sqlmap/dataElementGroupMember.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/indicator.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/indicatorType.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/indicatorGroup.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/indicatorGroupMember.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/organisationUnit.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/organisationUnitGroup.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/organisationUnitGroupMember.sqlmap.xml"/>
+  <sqlMap resource="sqlmap/organisationUnitRelationship.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/groupSet.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/groupSetMember.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/period.sqlmap.xml"/>
+  <sqlMap resource="sqlmap/onChangePeriod.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/dataSet.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/dataSetMember.sqlmap.xml"/>
+	<sqlMap resource="sqlmap/routineDataValue.sqlmap.xml"/>
+  <sqlMap resource="sqlmap/semiPermanentDataValue.sqlmap.xml"/>
+
+</sqlMapConfig>

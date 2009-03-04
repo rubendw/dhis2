@@ -1,0 +1,209 @@
+<body onLoad="javascript:setAction('polygon');">
+<div id="divunder" style="position:fixed;background-color:#000000;width:1280px;height:1000px;top:0px;left:0px;opacity:0.5;display:none;"></div>
+<form name="map">
+
+<table>
+	<tr>
+	<input id="mapFileName" type="hidden" value="$mapFile.mapFile"/>
+		<td align="center">		
+			<fieldset align="center" style="border:#0000FF thin solid; width:460px; height:450px;" id=f>
+			<legend align="right"><a style="text-decoration:none" style="CURSOR: hand" href="javascript:zoomIn();" title="Zoom In">[ + ]</a>
+		<a style="text-decoration:none" style="CURSOR: hand" href="javascript:zoomOut();" title="Zoom Out">[ - ]</a>
+		<a style="text-decoration:none" style="CURSOR: hand" href="javascript:retoreZoom();" title="Retore">[ ~ ]</a>
+		<input id="image" type='button' disabled="true" onclick="javascript:exportRaster();" title="Export map to image" value="Export Image" style="background:none;border:none;color:#0000FF;"/>
+		<input id="excel" type='button' disabled="true" onclick="javascript:exportExcel();" title="Export map to excel" value="Export Excel"  style="background:none;border:none;color:#0000FF;"/>
+		</legend>
+			 <embed id=map width="460" height="450" src="map/$mapFile.mapFile" name="map" type="image/svg+xml" align="center"/>
+			</fieldset>			
+		</td>
+		<td style="vertical-align:top;">
+			<fieldset align="center" style="border:#0000FF thin solid; width:350px;display:none" id="legend">			
+			
+			</fieldset>
+			<br>
+			<a href="javascript:showHideAll('layer')" style="text-decoration:none">+ $i18n.getString( "layer" )</a>
+			<fieldset style="border:#0000FF thin solid;width: 350px;display:none;" id="layer">				
+				<table width="100%">
+					<th><label>$i18n.getString( "show_layer" )</label></th>
+					<th><label>$i18n.getString( "active_layer" )</label></th>
+					<tr>
+						<td><input id="polygon_check" type="checkbox" name="district" onClick="showlayer(this,'polygon')" checked="checked"/><label>$i18n.getString( "district" )</label></td>
+						<td><input id="polygon_radio" type="radio" name="active" checked="checked" onClick="activelayer('polygon')" value="polygon"/><label>$i18n.getString( "district" )</label></td>
+					</tr>
+					<tr>
+						<td><input id="label_check" type="checkbox" name="road" onClick="showlayer(this,'label')" checked="checked"/><label>$i18n.getString( "Label" )</label></td>
+						<td><input id="label_radio" type="radio" name="active" onClick="activelayer('label')" value="label"/><label>$i18n.getString( "Label" )</label></td>
+					</tr>
+					
+				</table>
+			
+		</fieldset>
+</form>	
+<form name="selectForm" id="selectForm" action="index.action" method="post">
+
+</form>	
+<input type="hidden" name="getIndicatorFrom" id="getIndicatorFromId" value = "$getIndicatorFrom" />	
+<table>
+	<tr>
+		<td>
+		<fieldset style="background-color:#FFFFCC; border:#FFCC00 thin solid;width: 350px;display:block;">			
+				<table width="100%">		
+				<tr>
+						<td width="100px"><label>$i18n.getString( "organisation_unit" )</label></td>
+						<td><input  type="text" readonly="readonly" #if( $organisationUnit ) value="$encoder.htmlEncode( $organisationUnit.name )" #else value="[$i18n.getString( "select" )]" #end style="width:200px"><input id="orgUnit" type="hidden" type="text" readonly="readonly" value="$organisationUnit.id"/></td>
+					</tr>			
+					<tr>
+						<td><label>$i18n.getString( "indicator_group" )</label></td>
+						<td colspan=2>
+								<select id="indicatorGroupId" name="indicatorGroupId" style="max-width:200px;min-width:200px" onChange="javascript:getIndicatorByIndicatorGroup(this.value);" onclick="javascript:getIndicatorByIndicatorGroup(this.value);" #if(!$organisationUnit) disabled="disabled" #end>
+									<option value="null">[$i18n.getString( "ALL" )]</option>
+									#foreach( $indicatorGroup in $indicatorGroups)
+										<option value="$indicatorGroup.id" #if( $indicatorGroupId && $indicatorGroup.id == $indicatorGroupId ) selected="selected" #end>$encoder.htmlEncode( $indicatorGroup.name )</option>
+									#end
+								</select>
+						</td>
+					
+					</tr>
+					<tr>
+						<td><label>$i18n.getString( "indicator" )</label></td>
+						<td colspan=2>
+								<select id="indicatorIdS" name="indicatorIdS" style="max-width:200px;min-width:200px" #if(!$organisationUnit) disabled="disabled" #end>									
+									#foreach( $indicator in $indicators)
+										<option value="$indicator.id" #if( $indicatorId && $indicator.id == $indicatorId ) selected="selected" #end>$encoder.htmlEncode( $indicator.name )</option>
+									#end
+								</select>
+						</td>
+					
+					</tr>
+			#if($getIndicatorFrom=='aggregation_service')		
+					<tr>
+						<td width="100px"><label for="startDate">$i18n.getString( "start_date" )</label></td>
+						<td>
+							<input type='input' id="startDateS" name="startDateS" style="min-width:200px" #if ($startDate)  value="$startDate" #end #if(!$organisationUnit) disabled="disabled" #end>
+						</td>
+						<td>
+							<img src="../images/calendar_icon.gif" width="16" height="16" id="getStartDateS" style="cursor: pointer;" title="$i18n.getString("date_selector")" onmouseover="this.style.background='orange';" onmouseout="this.style.background=''" alt="$i18n.getString( "start_date" )">
+						</td>
+					</tr>
+					<script type="text/javascript">
+						Calendar.setup({
+							inputField     :    "startDateS",      // id of the input field
+							ifFormat       :    "$i18n.getString("format.date.label")",       // format of the input field
+							button         :    "getStartDateS"   // trigger for the calendar (button ID)
+							});
+					</script>
+					
+					<tr>
+						<td><label for="endDate">$i18n.getString( "end_date" )</label></td>
+						<td>
+							<input type='input' id="endDateS" name="endDateS" style="min-width:200px"  #if ($endDate) value="$endDate" #end #if(!$organisationUnit) disabled="disabled" #end>
+						</td>
+						<td>
+							<img src="../images/calendar_icon.gif" width="16" height="16" id="getEndDateS" style="cursor: pointer;" title="$i18n.getString("date_selector")" onmouseover="this.style.background='orange';" onmouseout="this.style.background=''" alt="$i18n.getString( "start_date" )">
+						</td>
+					</tr>
+					<script type="text/javascript">
+						Calendar.setup({
+							inputField     :    "endDateS",      // id of the input field
+							ifFormat       :    "$i18n.getString("format.date.label")",       // format of the input field
+							button         :    "getEndDateS"   // trigger for the calendar (button ID)
+							});
+					</script>
+				#else
+					<tr>
+						<td><label>$i18n.getString( "period_type" )</label></td>
+						<td colspan=2>
+								<select id="periodTypeId" name="periodType" style="max-width:200px;min-width:200px" onChange="javascript:getPeriodByPeriodType(this.value);" onclick="javascript:getPeriodByPeriodType(this.value);" #if(!$organisationUnit) disabled="disabled" #end>
+									<option value="ALL">[$i18n.getString( "ALL" )]</option>
+									#foreach( $pt in $periodTypes)
+									<option value="$pt.name" #if( $periodType && $periodType.name == $pt.name ) selected="selected" #end>$encoder.htmlEncode( $pt.name )</option>
+									#end
+								</select>
+						</td>
+					
+					</tr>
+					<tr>
+						<td><label>$i18n.getString( "period" )</label></td>
+						<td colspan=2>
+								<select id="selectedPeriod" name="period" style="max-width:200px;min-width:200px" #if(!$organisationUnit) disabled="disabled" #end>									
+									#foreach( $pe in $periods)
+										<option value="$pe.id" #if( $period && $period.id == $pe.id ) selected="selected" #end >
+										$format.formatPeriod( $pe )</option>
+									#end
+								</select>
+						</td>
+					
+					</tr>
+				#end
+					<tr>
+						<td><label for="value_begin">$i18n.getString( "value_begin" )</label></td>
+						<td colspan=2>
+							<input type='input' id="beginValue" name="beginValue" style="min-width:200px" #if(!$organisationUnit) disabled="disabled" #end>
+						</td>						
+					</tr>
+					
+					<tr>
+						<td><label for="value_end">$i18n.getString( "value_end" )</label></td>
+						<td colspan=2>
+							<input type='input' id="endValue" name="endValue" style="min-width:200px" #if(!$organisationUnit) disabled="disabled" #end>
+						</td>						
+					</tr>
+					<tr><td colspan="3"><hr></td></tr>
+					
+					
+					#if($getIndicatorFrom=='aggregation_service')
+					
+					<tr>
+						<td></td>
+						<td>
+							<input type='button' value="$i18n.getString( 'search' )" onClick="javascript:searchIndicators();" #if(!$organisationUnit) disabled="disabled" #end/>
+						</td>
+						<td>
+					</tr>
+					#else
+					<tr>
+						<td></td>
+						<td>
+							<input type='button' value="$i18n.getString( 'search' )" onClick="javascript:searchIndicators();" #if(!$organisationUnit) disabled="disabled" #end/>
+						</td>
+						<td></td>
+					</tr>
+					#end
+				</table>
+			</fieldset>
+		</td>
+	</tr>
+	
+	
+</table>
+		
+	<!--/form-->	
+		</td>
+	</tr>
+</table>
+<div id="alert" style="position:absolute;background-color:#FFFFFF;border:thin #0000FF solid;height:100px;width:200px;display:none;z-index:1;">
+<table width="100%" height="100%" border="0">
+  <tr align="center">
+    <td><img src="images/ajax-loader.gif"/></td>
+  </tr>
+</table>
+
+</div>
+</body>
+<script type="text/javascript">
+
+
+function showHide(divid){
+	
+	if(document.getElementById(divid).style.display=='none'){
+		document.getElementById(divid).style.display = 'block';
+	}else{
+		document.getElementById(divid).style.display = 'none';
+	}
+	
+	
+	
+}
+</script>      
+
+

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+  <bean id="org.hisp.dhis.webwork.interceptor.WebWorkTransactionInterceptor"
+    class="org.hisp.dhis.webwork.interceptor.WebWorkTransactionInterceptor">
+    <property name="transactionManager">
+      <ref bean="org.hisp.dhis.transaction.TransactionManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.webwork.interceptor.WebWorkExceptionInterceptor"
+    class="org.hisp.dhis.webwork.interceptor.WebWorkExceptionInterceptor">
+    <property name="showStackTrace">
+      <value>true</value>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.webwork.interceptor.WebWorkI18nInterceptor"
+    class="org.hisp.dhis.webwork.interceptor.WebWorkI18nInterceptor">
+    <property name="i18nManager">
+      <ref bean="org.hisp.dhis.i18n.I18nManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.webwork.configuration.WebWorkConfigurationInitializer"
+    class="org.hisp.dhis.webwork.configuration.WebWorkConfigurationInitializer"
+    init-method="init"/>
+  
+  <bean id="org.hisp.dhis.webwork.interceptor.WebWorkSortOrderInterceptor"
+    class="org.hisp.dhis.webwork.interceptor.WebWorkSortOrderInterceptor">
+    <property name="sortOrderManager">
+      <ref bean="org.hisp.dhis.options.sortorder.SortOrderManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.webwork.interceptor.WebWorkDisplayPropertyInterceptor"
+    class="org.hisp.dhis.webwork.interceptor.WebWorkDisplayPropertyInterceptor">
+    <property name="displayPropertyManager">
+      <ref bean="org.hisp.dhis.options.displayproperty.DisplayPropertyManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.webwork.interceptor.WebWorkDataDictionaryModeInterceptor"
+    class="org.hisp.dhis.webwork.interceptor.WebWorkDataDictionaryModeInterceptor">
+    <property name="dataDictionaryModeManager">
+      <ref bean="org.hisp.dhis.options.datadictionary.DataDictionaryModeManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.webwork.interceptor.WebWorkSystemSettingInterceptor"
+    class="org.hisp.dhis.webwork.interceptor.WebWorkSystemSettingInterceptor">
+    <property name="systemSettingManager">
+      <ref bean="org.hisp.dhis.options.SystemSettingManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.webwork.interceptor.WebWorkStyleInterceptor"
+    class="org.hisp.dhis.webwork.interceptor.WebWorkStyleInterceptor">
+    <property name="styleManager">
+      <ref bean="org.hisp.dhis.options.style.StyleManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.servlet.filter.OpenSessionInViewFilter"
+    class="org.hisp.dhis.servlet.filter.OpenSessionInViewFilter">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+</beans>

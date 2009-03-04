@@ -1,0 +1,19 @@
+<features>
+	#foreach( $feature in $features )		
+		<feature>
+			<orgCode>$feature.feature.featureCode</orgCode>
+			<color>$feature.color</color>
+			<value>$feature.aggregatedDataValue</value>
+		</feature>
+	#end
+	<legends>
+	#foreach( $legend in $legendSet.legends )
+		<legend>
+			<min>$legend.min</min>
+			<max>$legend.max</max>
+			<color>$legend.color</color>
+		</legend>
+	#end
+	</legends>
+	
+</features>

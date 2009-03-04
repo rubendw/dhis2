@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+  "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+	<include file="dhis-web-commons.xml" />
+
+	<package name="dhis-web-gis" extends="dhis-web-commons"
+		namespace="/dhis-web-gis">
+
+		<action name="index"
+			class="org.hisp.dhis.gis.action.EmptyAction">
+			<result name="success" type="redirect">select.action</result>
+			<result name="configuration" type="redirect">changeConfiguration.action?action=1</result>
+				
+		</action>
+
+		<action name="select" class="org.hisp.dhis.gis.action.SelectAction">
+			<interceptor-ref name="organisationUnitTreeStack" />
+			<result name="configuration" type="redirect">changeConfiguration.action?action=1</result>
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/map.vm</param>
+			<param name="menu">/dhis-web-gis/orgunitMenu.vm</param>
+			<param name="javascripts">../dhis-web-commons/ouwt/ouwt.js,../dhis-web-commons/calendar/calendar.js,../dhis-web-commons/calendar/calendar-lang.js,../dhis-web-commons/calendar/calendar-setup.js,javascript/general.js,javascript/map.js</param>
+		</action>
+		
+		
+		<action name="changeConfiguration"
+			class="org.hisp.dhis.gis.action.management.ChangeGISConfigurationAction">		
+			<result name="success" type="redirect">select.action</result>	
+			<result name="input" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/changeConfiguration.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">../dhis-web-commons/ouwt/ouwt.js,../dhis-web-commons/calendar/calendar.js,../dhis-web-commons/calendar/calendar-lang.js,../dhis-web-commons/calendar/calendar-setup.js,javascript/general.js,javascript/map.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>
+		</action>
+
+
+		<action name="assignUnit"
+			class="org.hisp.dhis.gis.action.management.AssignMapAction">
+			<interceptor-ref name="organisationUnitTreeStack" />
+			<result name="configuration" type="redirect">changeConfiguration.action?action=1</result>
+			<result name="success" type="velocity">
+				responseAssignUnitSuccess.vm
+			</result>
+			<result name="input" type="velocity">/popup.vm</result>
+			<param name="page">/dhis-web-gis/assignUnit.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">../dhis-web-commons/ouwt/ouwt.js,javascript/general.js,javascript/map.js,javascript/selectunit.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>
+		</action>
+
+		<action name="assignUnitSaveAction"
+			class="org.hisp.dhis.gis.action.management.AssignUnitSaveAction">
+			<interceptor-ref name="organisationUnitTreeStack" />
+			<result name="success" type="velocity">responseAssignUnitSuccess.vm</result>
+			<result name="input" type="velocity">responseAssignUnitInput.vm</result>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>
+		</action>
+
+		<action name="selectOrgUnit"
+			class="org.hisp.dhis.gis.action.management.SelectOrganisationUnitAction">
+			<interceptor-ref name="organisationUnitTreeStack" />
+			<result name="success" type="velocity">/popup.vm</result>
+			<param name="page">/dhis-web-gis/assignUnit.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">../dhis-web-commons/ouwt/ouwt.js,javascript/general.js,javascript/map.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>
+		</action>
+		<!-- Map management -->
+
+		<action name="selectMapAndUnit"
+			class="org.hisp.dhis.gis.action.management.SelectMapAndUnitAction">
+			<interceptor-ref name="organisationUnitTreeStack" />
+			<result name="configuration" type="redirect">changeConfiguration.action?action=1</result>
+			<result name="input" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/selectMapAndUnit.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">../dhis-web-commons/ouwt/ouwt.js,javascript/general.js,javascript/map.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>
+		</action>
+
+		<action name="validateAssignMap"
+			class="org.hisp.dhis.gis.action.management.ValidateAssignMapAction">
+			<result name="success" type="velocity">
+				responseAssignUnitSuccess.vm
+			</result>
+			<result name="input" type="velocity">
+				responseAssignUnitInput.vm
+			</result>
+		</action>
+
+		<action name="selectOrgUnitAjax"
+			class="org.hisp.dhis.gis.action.management.SelectOrgunitAjaxAction">
+			<result name="success" type="velocity">
+				responseSelectOrgunit.vm
+			</result>
+		</action>
+
+		<action name="deleteFeature"
+			class="org.hisp.dhis.gis.action.management.DeleteFeatureAction">
+			<result name="success" type="velocity">	responseSuccess.vm	</result>			
+		</action>
+
+		<action name="deleteAllFeature"
+			class="org.hisp.dhis.gis.action.management.DeleteAllFeatureAction">
+			<result name="success" type="velocity">
+				responseSuccess.vm
+			</result>
+		</action>
+		<action name="showAllFeature"
+			class="org.hisp.dhis.gis.action.management.ShowAllFeatureAssignedAction">
+			<result name="success" type="velocity">
+				responseShowAllSuccess.vm
+			</result>
+		</action>
+
+		<action name="addMapFile"
+			class="org.hisp.dhis.gis.action.management.AddMapFileAction">
+			<result name="success" type="velocity">
+				responseSuccess.vm
+			</result>
+			<result name="input" type="velocity">
+				responseInput.vm
+			</result>
+		</action>
+
+		<action name="previewMap"
+			class="org.hisp.dhis.gis.action.management.PreviewMapAction">
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/assignRoot.vm</param>
+			<param name="menu">/dhis-web-gis/orgunitMenu.vm</param>
+			<param name="javascripts">../dhis-web-commons/ouwt/ouwt.js,../dhis-web-commons/calendar/calendar.js,../dhis-web-commons/calendar/calendar-lang.js,../dhis-web-commons/calendar/calendar-setup.js,javascript/general.js,javascript/map.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>
+		</action>
+
+
+		<action name="assignRoot"
+			class="org.hisp.dhis.gis.action.management.AssignRootAction">
+			<interceptor-ref name="organisationUnitTreeStack" />
+			<result name="configuration" type="redirect">changeConfiguration.action?action=1</result>
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/assignRoot.vm</param>
+			<param name="menu">/dhis-web-gis/orgunitMenu.vm</param>
+			<param name="javascripts">../dhis-web-commons/ouwt/ouwt.js,../dhis-web-commons/calendar/calendar.js,../dhis-web-commons/calendar/calendar-lang.js,../dhis-web-commons/calendar/calendar-setup.js,javascript/general.js,javascript/map.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>
+		</action>	
+		
+
+		<action name="uploadFile"
+			class="org.hisp.dhis.gis.action.management.UploadSVGFileAction">
+			<result name="success" type="chain">getListFileMap</result>		
+			<result name="error" type="velocity">error.vm</result>			
+			<interceptor-ref name="fileUploadStack"/>						
+		</action>
+
+		<action name="deleteFileMap"
+			class="org.hisp.dhis.gis.action.management.DeleteFileMapAction">
+			<result name="success" type="redirect">getListFileMap.action</result>
+			<result name="none" type="redirect">selectMap.action</result>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>				
+		</action>
+
+		<action name="getListFileMap"
+			class="org.hisp.dhis.gis.action.management.GetListMapFileAction">
+			<result name="configuration" type="redirect">changeConfiguration.action?action=1</result>
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/listMap.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">javascript/map.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>	
+		</action>
+		
+
+		<!-- Fill map -->
+
+
+		<action name="fillMapByIndicator"
+			class="org.hisp.dhis.gis.action.dataanlysis.FillMapByIndicatorAction">
+			<result name="success" type="velocity">	responseFillMap.vm	</result>
+		</action>
+		
+		<action name="fillMapByIndicatorGetFromAgg"
+			class="org.hisp.dhis.gis.action.dataanlysis.AnlysisIndicatorAction">
+			<result name="success" type="velocity">	responseFillMap.vm	</result>
+		</action>
+
+		<action name="getIndicatorByGroup"
+			class="org.hisp.dhis.gis.action.dataanlysis.GetIndicatorByGroupAction">
+			<result name="success" type="velocity">	responseIndicators.vm</result>
+		</action>
+		
+		<action name="getPeriods"
+			class="org.hisp.dhis.gis.action.dataanlysis.GetPeriodByPeriodTypeAction">
+			<result name="success" type="velocity">	responsePeriods.vm</result>
+		</action>
+		
+		
+
+
+		<!-- Legend -->
+
+		<action name="listLegends"
+			class="org.hisp.dhis.gis.action.legend.ListLegendAction">
+			<result name="configuration" type="redirect">changeConfiguration.action?action=1</result>
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/listLegend.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">javascript/legends.js,javascript/picker.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>	
+		</action>
+
+		<action name="addLegend"
+			class="org.hisp.dhis.gis.action.legend.AddLegendAction">
+			<result name="success" type="redirect">listLegends.action</result>
+			<result name="input" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/addLegend.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">javascript/legends.js,javascript/picker.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>	
+		</action>
+
+		<action name="validateLegend"
+			class="org.hisp.dhis.gis.action.legend.ValidateLegendAction">
+			<result name="success" type="velocity">	responseSuccess.vm	</result>
+			<result name="input" type="velocity">responseInput.vm</result>
+		</action>
+
+		<action name="deleteLegend"	class="org.hisp.dhis.gis.action.legend.DeleteLegendAction">
+			<result name="success" type="redirect">	listLegends.action </result>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>	
+		</action>
+
+		<action name="updateLegend"
+			class="org.hisp.dhis.gis.action.legend.UpdateLegendAction">
+			<result name="none" type="redirect">listLegends.action</result>
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/editLegend.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">javascript/legends.js,javascript/picker.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>	
+		</action>
+
+		<action name="editLegend"
+			class="org.hisp.dhis.gis.action.legend.EditLegendAction">
+			<result name="input" type="redirect">updateLegend.action</result>
+			<result name="success" type="redirect">listLegends.action</result>
+		</action>
+
+		
+		<!-- Legend Set -->
+
+		<action name="listLegendSets"		
+			class="org.hisp.dhis.gis.action.legend.ListLegendSetAction">
+			<result name="configuration" type="redirect">changeConfiguration.action?action=1</result>
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/listLegendSet.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">javascript/legends.js,javascript/picker.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>	
+		</action>
+
+		<action name="addLegendSet"
+			class="org.hisp.dhis.gis.action.legend.AddLegendSetAction">
+			<result name="success" type="redirect">
+				listLegendSets.action
+			</result>
+			<result name="input" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/addLegendSet.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">javascript/legends.js,javascript/picker.js</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>	
+		</action>
+
+		<action name="validateLegendSet"
+			class="org.hisp.dhis.gis.action.legend.ValidateLegendSetAction">
+			<result name="success" type="velocity">	responseSuccess.vm	</result>
+			<result name="input" type="velocity">responseInput.vm	</result>
+		</action>
+
+		<action name="deleteLegendSet"
+			class="org.hisp.dhis.gis.action.legend.DeleteLegendSetAction">
+			<result name="success" type="redirect">	listLegendSets.action</result>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>	
+		</action>
+
+		<action name="updateLegendSet"
+			class="org.hisp.dhis.gis.action.legend.UpdateLegendSetAction">
+			<result name="none" type="redirect">listLegendSets.action</result>
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-gis/editLegendSet.vm</param>
+			<param name="menu">/dhis-web-gis/menu.vm</param>
+			<param name="javascripts">
+				javascript/legends.js,javascript/picker.js
+			</param>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>	
+		</action>
+
+		<action name="editLegendSet"
+			class="org.hisp.dhis.gis.action.legend.EditLegendSetAction">
+			<result name="input" type="redirect">updateLegendSet.action</result>
+			<result name="success" type="redirect">	listLegendSets.action</result>
+			<param name="requiredAuthorities">F_GIS_CONFIGURATION_UPDATE</param>	
+		</action>
+
+		<action name="getIndicatorByIndicatorGroup"
+		class="org.hisp.dhis.gis.action.legend.GetIndicatorByGroup">
+			<result name="success" type="velocity">
+				responseIndicators.vm
+			</result>
+		</action>
+
+
+		<!-- Export Image -->
+
+
+		<action name="exportImage"
+			class="org.hisp.dhis.gis.action.export.ExportImageAction">			
+			
+			<!-- result name="success" type="velocity">download.vm</result-->
+			<result name="success" type="stream">
+				<param name="contentType">
+					image/jpeg
+				</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">
+					filename="${outputImage}"
+				</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		
+		<action name="exportToImage"
+			class="org.hisp.dhis.gis.action.export.ExportToImageAction">	
+			
+			<!-- result name="success" type="velocity">download.vm</result-->
+			<result name="success" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">filename="${outputImage}"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+
+		<action name="exportExcel"
+			class="org.hisp.dhis.gis.action.export.ExportExcelAction">
+			<!-- result name="success" type="velocity">download.vm</result-->
+			<result name="success" type="stream">
+				<param name="contentType">
+					application/vnd.ms-excel
+				</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">
+					filename="${outputXLS}"
+				</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+
+	</package>
+</xwork>

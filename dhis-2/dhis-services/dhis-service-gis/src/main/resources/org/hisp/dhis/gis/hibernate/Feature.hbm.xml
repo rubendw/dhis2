@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="org.hisp.dhis.gis.Feature" table="feature">
+		<id name="id" column="featureid">
+			<generator class="native" />
+		</id>
+    
+		<many-to-one name="organisationUnit" class="org.hisp.dhis.organisationunit.OrganisationUnit" 
+        column="organisationunitid" not-null="true" foreign-key="fk_feature_organisationunitid"/>
+		
+		<property name="featureCode" column="featurecode"/>
+		
+   		<property name="svg" column="svg"/>
+    
+		<property name="comment" column="comment"/>
+    
+	</class>
+</hibernate-mapping>

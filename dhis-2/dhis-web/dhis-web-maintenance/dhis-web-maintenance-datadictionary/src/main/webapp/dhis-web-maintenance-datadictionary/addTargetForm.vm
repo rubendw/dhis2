@@ -1,0 +1,89 @@
+
+<h3>$i18n.getString( "create_new_target" )</h3>
+
+<form id="addTargetForm" action="addTarget.action" method="post" onsubmit="return validateAddTarget()">
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "details" )</th>
+	</tr>
+	<tr>
+		<td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="name" name="name" onchange="nameChanged()" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="shortName">$i18n.getString( "short_name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="shortName" name="shortName" maxlength="20" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="value">$i18n.getString( "value" )<em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="value" name="value" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="description">$i18n.getString( "description" )</label></td>
+		<td><input type="text" id="description" name="description" style="width:20em"></td>
+	</tr>
+	
+	<tr>
+		<td><label for="periodTypeId">$i18n.getString( "period_type" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td>
+			<select id="periodTypeId" name="periodTypeId" style="min-width:20em"
+				onchange="javascript:getPeriods( this.options[this.selectedIndex].value )">
+				<option value="">[$i18n.getString( "select" )]</option>
+			#foreach( $periodType in $periodTypes )
+				<option value="$periodType.name"
+				#if ( $periodType == $periodTypeId )
+					selected
+				#end
+				>$encoder.htmlEncode( $periodType.name )</option>
+			#end
+			</select>
+		</td>
+	</tr>
+	
+	<tr id="periodList">
+		<td><label for="periodId">$i18n.getString( "period" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td>
+			<select id="periodId" name="periodId" style="min-width:20em">
+				<option value="">[$i18n.getString( "select" )]</option>
+			#foreach( $period in $periods )
+				<option value="$period.id">$encoder.htmlEncode( $period.name )</option>
+			#end
+			</select>
+		</td>
+	</tr>
+
+	<tr>
+		<td><label for="indicatorId">$i18n.getString( "indicator" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td>
+			<select id="indicatorId" name="indicatorId" style="min-width:20em">
+				<option value="">[$i18n.getString( "select" )]</option>
+			#foreach( $indicator in $indicators )
+				<option value="$indicator.id">$encoder.htmlEncode( $indicator.name )</option>
+			#end
+			</select>
+		</td>
+	</tr>
+	<input type="hidden" orgUnit=$orgUnit.id/>
+	<tr>
+		<td></td>
+		<td><input type="submit" value="$i18n.getString( "add" )" style="width:10em"><input type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='target.action'" style="width:10em"></td>
+	</tr>
+</table>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+	var previousName = '';
+	
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+
+	selection.setListenerFunction( function() {} );
+	selection.setMultipleSelectionAllowed( true );
+
+</script>

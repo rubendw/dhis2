@@ -1,0 +1,23 @@
+
+<h3>$i18n.getString( "system_settings" )</h3>
+
+<form id="systemSettingForm" method="post" action="setSystemSettings.action">
+
+<h4>$i18n.getString( "application_title" )</h4>
+
+<p><input type="text" name="applicationTitle" style="width:30em" value="$!applicationTitle"></p>
+
+<h4>$i18n.getString( "flag" )</h4>
+
+<p>
+<select name="flag" style="width:30em">
+	<option value="NO_FLAG">$i18n.getString( "no_flag" )</option>
+	#foreach ( $f in $flags.entrySet() )
+		<option value="$f.value" #if( $f.value == $flag )selected="selected"#end>$i18n.getString( $f.key )</option>
+    #end
+</select>
+</p>
+
+<p><input type="submit" value="$i18n.getString( "save" )" style="width:10em"></p>
+
+</form>

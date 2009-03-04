@@ -1,0 +1,115 @@
+
+<h3>$i18n.getString( "add_dataset" )</h3>
+
+<form id="addDataSetForm" name="addDataSetForm" action="addDataSet.action" method="post" onsubmit="submitForm(); return validateAddDataSet()">
+  <table id="detailsList">
+    <col> ## Labels
+    <col> ## Input
+    <thead>
+      <tr>
+        <th colspan="2">$i18n.getString( "dataset_details" )</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><label>$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" id="name" name="name" style="width:20em"></td>
+      </tr>
+      <tr>
+        <td><label>$i18n.getString( "short_name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" id="shortName" name="shortName" maxlength="20" style="width:20em"></td>
+      </tr>
+      <tr>
+        <td><label>$i18n.getString( "frequency" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td>
+          <select id="frequencySelect" name="frequencySelect" style="min-width:20em">
+            #foreach ( $periodType in $periodTypes )
+              <option value="$periodType.name">$i18n.getString( $periodType.name )</option>
+            #end
+          </select>
+        </td>
+      </tr>	  
+      <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <table id="dataElementSelectionArea">
+    <col> ## Available DataElements
+    <col> ## Filter
+    <col> ## Selected DataElements
+    <thead>
+      <tr>
+        <th>$i18n.getString( "available_data_elements" )</th>
+		<th>$i18n.getString( "filter" )</th>
+        <th>$i18n.getString( "selected_data_elements" )</th>
+      </tr>
+    </thead>
+    <tbody>
+    	
+      <tr>        
+        <td>
+          <select id="dataElementGroupSelect" name="dataElementGroupSelect" style="min-width:25em"
+            onchange="javascript:filterByDataElementGroup( this.options[this.selectedIndex].value )">
+            <option value="ALL" selected="selected">$i18n.getString( "all" )</option>
+            #foreach ( $dataElementGroup in $dataElementGroups )
+              <option value="$dataElementGroup.id">$encoder.htmlEncode( $dataElementGroup.name )</option>
+            #end
+          </select>
+        </td>
+        <td>$i18n.getString( "group" )</td>
+        <td></td>        
+      </tr>
+      
+      <tr>
+      	<td><input type="text" id="availableDataElementsFilter" onkeyup="filterAvailableDataElements()" style="min-width:25em"></td>
+      	<td>$i18n.getString( "name" )</td>
+      	<td><input type="text" id="dataSetMembersFilter" onkeyup="filterDataSetMembers()" style="min-width:25em"></td>
+      </tr>
+      
+      <tr>
+        <td>
+          <!-- List of all available DataElements -->
+          <select size="15" id="availableList" name="availableList" multiple="multiple" style="min-width:25em;height:20em" ondblclick="addDataSetMembers()">            
+          </select>
+        </td>
+        <td>
+        	<input type="button" value="&gt;" title="$i18n.getString( 'move_selected' )" onclick="addDataSetMembers()">
+        	<br>
+            <input type="button" value="&lt;" title="$i18n.getString( 'remove_selected' )" onclick="removeDataSetMembers()">          
+        </td>
+        <td>
+          <!-- List of all selected DataElements -->
+          <select id="selectedList" name="selectedList" multiple="multiple" style="min-width:25em;height:20em" ondblclick="removeDataSetMembers()">
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="3">
+          <input type="submit" value="$i18n.getString( "save" )" style="width:13em"><input type="button"
+            onclick="window.location.href='index.action'" value="$i18n.getString( "cancel" )" style="width:12em">
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+	var dataSetMembers = new Object();
+
+	var availableDataElements = new Object();	
+#foreach ( $availableDataElement in $dataElements )
+	availableDataElements['$availableDataElement.id'] = '$encoder.jsEscape( $availableDataElement.name, "'" )';
+#end
+
+	initLists();
+
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+
+</script>

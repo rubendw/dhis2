@@ -1,0 +1,166 @@
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+    "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+  <include file="dhis-web-commons.xml"/>
+
+  <package name="dhis-web-importexport" extends="dhis-web-commons" namespace="/dhis-web-importexport">
+
+		<action name="index" class="org.hisp.dhis.importexport.action.NoAction">
+			<result name="success" type="redirect">setImportFormat.action?importFormat=DXF</result>
+		</action>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<!-- Import                                                        -->
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <action name="setImportFormat" class="org.hisp.dhis.importexport.action.imp.SetImportTypeAction">
+      <result name="success" type="redirect">displayImportForm.action</result>
+    </action>
+    
+		<action name="displayImportForm" class="org.hisp.dhis.importexport.action.imp.GetImportOptionsAction">
+      <result name="dhis14" type="redirect">displayConfigDhis14Form.action</result>
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-importexport/importForm.vm</param>
+			<param name="menu">/dhis-web-importexport/mainMenu.vm</param>
+      <param name="javascripts">javascript/import.js,javascript/process.js,../dhis-web-commons/calendar/calendar.js,../dhis-web-commons/calendar/calendar-lang.js,../dhis-web-commons/calendar/calendar-setup.js</param>
+		</action>
+		
+		<action name="import" class="org.hisp.dhis.importexport.action.imp.ImportAction">
+			<result name="success" type="chain">displayImportForm</result>
+			<interceptor-ref name="fileUploadStack"/>
+		</action>
+    
+    <action name="getImportStatus" class="org.hisp.dhis.importexport.action.imp.GetImportStatusAction">
+      <result name="success" type="velocity">/dhis-web-importexport/responseImportStatus.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<!-- Object Ajax                                                   -->
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+		<action name="discardObjectAjax" class="org.hisp.dhis.importexport.action.object.DiscardObjectAction">
+			<result name="success" type="velocity">/dhis-web-importexport/responseSuccess.vm</result>
+			<result name="error" type="velocity">/dhis-web-importexport/responseError.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+		</action>
+	
+		<action name="discardObjectsOfTypeAjax" class="org.hisp.dhis.importexport.action.object.DiscardObjectsOfTypeAction">
+			<result name="success" type="velocity">/dhis-web-importexport/responseSuccess.vm</result>
+			<result name="error" type="velocity">/dhis-web-importexport/responseError.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+		</action>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<!-- Preview                                                       -->
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+		<action name="displayPreviewForm" class="org.hisp.dhis.importexport.action.imp.GetPreviewOptionsAction">
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-importexport/previewForm.vm</param>
+			<param name="menu">/dhis-web-importexport/mainMenu.vm</param>
+      <param name="javascripts">../dhis-web-commons/lists/lists.js,javascript/import.js</param>
+			<param name="stylesheets">style/dhis-web-importexport.css</param>
+		</action>
+		
+		<action name="displayMatchForm" class="org.hisp.dhis.importexport.action.imp.GetMatchOptionsAction">
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-importexport/matchToExistingForm.vm</param>
+			<param name="menu">/dhis-web-importexport/mainMenu.vm</param>
+      <param name="javascripts">../dhis-web-commons/lists/lists.js,javascript/import.js</param>
+      <param name="stylesheets">style/dhis-web-importexport.css</param>
+		</action>
+		
+		<action name="displayCompareForm" class="org.hisp.dhis.importexport.action.imp.GetCompareOptionsAction">
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-importexport/compareToExistingForm.vm</param>
+			<param name="menu">/dhis-web-importexport/mainMenu.vm</param>
+      <param name="javascripts">../dhis-web-commons/lists/lists.js,javascript/import.js</param>
+			<param name="stylesheets">style/dhis-web-importexport.css</param>
+		</action>		
+		
+		<action name="importAllObjects" class="org.hisp.dhis.importexport.action.object.ImportAllObjectsAction">
+			<result name="success" type="redirect">displayImportForm.action</result>
+		</action>
+		
+		<action name="discardAllObjects" class="org.hisp.dhis.importexport.action.object.DiscardAllObjectsAction">
+			<result name="success" type="redirect">displayImportForm.action</result>
+		</action>
+		
+		<action name="matchObject" class="org.hisp.dhis.importexport.action.object.MatchObjectAction">
+			<result name="success" type="chain">displayPreviewForm</result>
+		</action>
+		
+		<action name="discardObject" class="org.hisp.dhis.importexport.action.object.DiscardObjectAction">
+			<result name="success" type="chain">displayPreviewForm</result>
+		</action>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<!-- Export                                                        -->
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+		<action name="displayMetaDataExportForm" class="org.hisp.dhis.importexport.action.exp.GetExportOptionsAction">
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-importexport/exportMetaDataForm.vm</param>
+			<param name="menu">/dhis-web-importexport/mainMenu.vm</param>
+      <param name="javascripts">javascript/export.js</param>
+		</action>
+		
+		<action name="displayDataValueExportForm" class="org.hisp.dhis.importexport.action.exp.GetExportOptionsAction">
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-importexport/exportDataValueForm.vm</param>
+			<param name="menu">/dhis-web-importexport/mainMenu.vm</param>
+      <param name="javascripts">../dhis-web-commons/lists/lists.js,../dhis-web-commons/oust/oust.js,../dhis-web-commons/calendar/calendar.js,../dhis-web-commons/calendar/calendar-lang.js,../dhis-web-commons/calendar/calendar-setup.js,javascript/export.js</param>
+		</action>
+		
+		<action name="exportMetaData" class="org.hisp.dhis.importexport.action.exp.MetaDataExportAction">
+			<result name="success" type="stream">
+				<param name="contentType">application/zip</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">filename="${fileName}"</param>
+				<param name="bufferSize">10240</param>
+			</result>
+		</action>
+		
+		<action name="exportDataValue" class="org.hisp.dhis.importexport.action.exp.DataValueExportAction">
+			<result name="success" type="stream">
+				<param name="contentType">application/zip</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">filename="${fileName}"</param>
+				<param name="bufferSize">10240</param>				
+			</result>
+		</action>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<!-- IXF Configuration                                             -->
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+		<action name="displayConfigIXFForm" class="org.hisp.dhis.importexport.action.ixf.GetIXFConfigurationAction">
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-importexport/configIXFForm.vm</param>
+			<param name="menu">/dhis-web-importexport/mainMenu.vm</param>
+      <param name="javascripts">javascript/config.js,../dhis-web-commons/lists/lists.js</param>
+		</action>
+		
+		<action name="configIXF" class="org.hisp.dhis.importexport.action.ixf.SetIXFConfigurationAction">
+			<result name="success" type="redirect">displayMetaDataExportForm.action?exportFormat=IXF</result>
+		</action>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<!-- Dhis 1.4 Configuration                                        -->
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <action name="displayConfigDhis14Form" class="org.hisp.dhis.importexport.action.dhis14.GetDhis14ConfigurationAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <result name="none" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-importexport/configDhis14Form.vm</param>
+      <param name="menu">/dhis-web-importexport/mainMenu.vm</param>
+      <param name="javascripts">javascript/config.js</param>
+    </action>
+    
+    <action name="configDhis14" class="org.hisp.dhis.importexport.action.dhis14.SetDhis14ConfigurationAction">
+      <result name="success" type="redirect">setImportFormat.action?importFormat=DHIS14FILE</result>
+    </action>
+    
+  </package>
+</xwork>

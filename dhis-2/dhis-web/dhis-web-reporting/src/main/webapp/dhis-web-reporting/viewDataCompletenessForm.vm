@@ -1,0 +1,59 @@
+
+<h3>$i18n.getString( "data_completeness" )</h3>
+
+<table>
+    <col width="320">
+    <col width="5">
+    <col width="320">    
+    <tr>
+	   <td>
+		    <div id="selectionTree" style="width:310px; height:180px"></div>
+		            
+		    <script type="text/javascript">
+		        selectionTreeSelection.setMultipleSelectionAllowed( false );
+		        selectionTree.buildSelectionTree();
+		    </script>
+        </td>
+        <td></td>
+        <td valign="bottom">
+        	<input type="button" value="$i18n.getString( 'generate_pdf' )" style="width:150px"
+                onclick="window.location.href='getDataCompletenessPDF.action'"><input 
+                type="button" value="$i18n.getString( 'generate_workbook' )" style="width:150px"
+                onclick="window.location.href='getDataCompletenessWorkbook.action'"><br><br>
+            
+        	<select id="dataSetId" name="dataSetId" style="width:310px" onchange="displayCompleteness()">
+			<option value="ALL">[ $i18n.getString( "select_dataset_all" ) ]</option>
+			#foreach( $dataSet in $dataSets )
+				<option value="$dataSet.id">$dataSet.name</option>
+			#end
+			</select><br><br>
+            
+			<select id="periodTypeId" name="periodTypeId" style="width:310px" onchange="getPeriods()">
+				<option value="ALL">[ $i18n.getString( "select_period_type_all" ) ]</option>
+				#foreach( $type in $periodTypes )
+					<option value="$type.name">$type.name</option>
+				#end
+			</select><br><br>
+			
+            <select id="periodId" name="periodId" style="width:310px" disabled="disabled" onchange="displayCompleteness()">
+            </select>
+        </td>
+    </tr>
+    <tr>
+    	<td colspan="3" height="20px"></td>
+    </tr>
+</table>
+
+<table id="resultTable" name="resultTable" style="width:95%"></table>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+	var i18n_processing = '$encoder.jsEscape( $i18n.getString( "processing" ) , "'")';
+    var i18n_dataset = '$encoder.jsEscape( $i18n.getString( "dataset" ) , "'")';
+    var i18n_organisation_unit = '$encoder.jsEscape( $i18n.getString( "organisation_unit" ) , "'")';
+    var i18n_actual = '$encoder.jsEscape( $i18n.getString( "actual" ) , "'")';
+    var i18n_target = '$encoder.jsEscape( $i18n.getString( "target" ) , "'")';
+    var i18n_percent = '$encoder.jsEscape( $i18n.getString( "percent" ) , "'")';
+    var i18n_on_time = '$encoder.jsEscape( $i18n.getString( "on_time" ) , "'")';
+</script>

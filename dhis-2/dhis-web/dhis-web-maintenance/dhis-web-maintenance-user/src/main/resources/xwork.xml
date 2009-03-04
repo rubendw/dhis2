@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+  "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+  <include file="dhis-web-commons.xml"/>
+  
+  <package name="dhis-web-maintenance-user" extends="dhis-web-commons"
+    namespace="/dhis-web-maintenance-user">
+    
+    <!-- User -->
+    
+    <action name="index" class="org.hisp.dhis.user.action.NoAction">
+      <result name="success" type="redirect">alluser.action</result>
+    </action>
+
+    <action name="changePassword" class="org.hisp.dhis.user.action.ChangePasswordAction">
+      <result name="input" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-user/changePassword.vm</param>  
+      <param name="menu">/dhis-web-maintenance-user/orgunitMenu.vm</param>
+      <result name="success" type="redirect">changePassword.action</result>      
+    </action>
+    
+     <action name="user" class="org.hisp.dhis.user.action.GetOrgunitUserListAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-user/user.vm</param>  
+      <param name="menu">/dhis-web-maintenance-user/orgunitMenu.vm</param>
+      <param name="javascripts">../dhis-web-commons/ouwt/ouwt.js,javascript/user.js,javascript/filterTable.js</param>
+      <interceptor-ref name="organisationUnitTreeStack"/>
+    </action>
+    
+    <action name="alluser" class="org.hisp.dhis.user.action.GetUserListAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-user/allUser.vm</param>
+      <param name="menu">/dhis-web-maintenance-user/menu.vm</param>
+      <param name="javascripts">javascript/user.js,javascript/filterTable.js</param>
+      <interceptor-ref name="organisationUnitTreeStack"/>
+    </action>
+    
+    <action name="getUser" class="org.hisp.dhis.user.action.GetUserAction">
+      <result name="success" type="velocity">/dhis-web-maintenance-user/responseUser.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="removeUser" class="org.hisp.dhis.user.action.RemoveUserAction">
+      <result name="success" type="redirect">alluser.action</result>
+      <result name="logout" type="redirect">/dhis-web-commons-security/logout.action</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_USER_DELETE</param>
+    </action>
+    
+    <action name="showAddUserForm" class="org.hisp.dhis.user.action.SetupTreeAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-user/addUserForm.vm</param>
+      <param name="javascripts">../dhis-web-commons/oust/oust.js,javascript/user.js,javascript/dataElementsList.js</param>
+      <interceptor-ref name="organisationUnitTreeStack"/>
+      <param name="requiredAuthorities">F_USER_ADD</param>
+    </action>
+    
+    <action name="addUser" class="org.hisp.dhis.user.action.AddUserAction">
+      <result name="success" type="redirect">alluser.action</result>
+      <result name="error" type="redirect">showAddUserForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_USER_ADD</param>
+    </action>
+    
+    <action name="showUpdateUserForm" class="org.hisp.dhis.user.action.SetupTreeAction">
+      <result name="success" type="chain">showUpdateUserFormChain</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_USER_UPDATE</param>
+    </action>
+    
+    <action name="showUpdateUserFormChain" class="org.hisp.dhis.user.action.GetUserAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-user/updateUserForm.vm</param>
+      <param name="javascripts">../dhis-web-commons/oust/oust.js,javascript/user.js,javascript/dataElementsList.js</param>
+      <interceptor-ref name="organisationUnitTreeStack"/>
+      <param name="requiredAuthorities">F_USER_UPDATE</param>
+    </action>
+    
+    <action name="updateUser" class="org.hisp.dhis.user.action.UpdateUserAction">
+      <result name="success" type="redirect">alluser.action</result>
+      <result name="error" type="redirect">showUpdateUserForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_USER_UPDATE</param>
+    </action>
+    
+    <action name="validateUser" class="org.hisp.dhis.user.action.ValidateUserAction">
+      <result name="success" type="velocity">/dhis-web-maintenance-user/responseSuccess.vm</result>
+      <result name="error" type="velocity">/dhis-web-maintenance-user/responseError.vm</result>
+      <result name="input" type="velocity">/dhis-web-maintenance-user/responseInput.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <!-- Role -->
+      
+    <action name="allRole" class="org.hisp.dhis.user.action.GetRoleListAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-user/allRole.vm</param>
+      <param name="menu">/dhis-web-maintenance-user/menu.vm</param>
+      <param name="javascripts">javascript/role.js,javascript/filterTable.js</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="getRole" class="org.hisp.dhis.user.action.GetRoleAction">
+      <result name="success" type="velocity">/dhis-web-maintenance-user/responseUser.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="removeRole" class="org.hisp.dhis.user.action.RemoveRoleAction">
+      <result name="success" type="redirect">allRole.action</result>
+      <result name="logout" type="redirect">/</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_USERROLE_DELETE</param>
+    </action>
+    
+    <action name="showAddRoleForm" class="org.hisp.dhis.user.action.SetupRoleAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-user/addRoleForm.vm</param>
+      <param name="javascripts">../dhis-web-commons/lists/lists.js,../dhis-web-commons/oust/oust.js,javascript/role.js</param>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_USERROLE_ADD</param>
+    </action>
+    
+    <action name="addRole" class="org.hisp.dhis.user.action.AddRoleAction">
+      <result name="success" type="redirect">allRole.action</result>
+      <result name="error" type="redirect">showAddRoleForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_USERROLE_ADD</param>
+    </action>
+    
+   <action name="showUpdateRoleForm" class="org.hisp.dhis.user.action.GetRoleAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-user/updateRoleForm.vm</param>
+      <param name="javascripts">../dhis-web-commons/lists/lists.js,../dhis-web-commons/oust/oust.js,javascript/role.js</param>
+      <interceptor-ref name="transactionStack"/>
+     <param name="requiredAuthorities">F_USERROLE_UPDATE</param>
+    </action>
+    
+    <action name="updateRole" class="org.hisp.dhis.user.action.UpdateRoleAction">
+      <result name="success" type="redirect">allRole.action</result>
+      <result name="error" type="redirect">showUpdateRoleForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="requiredAuthorities">F_USERROLE_UPDATE</param>
+    </action>
+    
+    <action name="validateRole" class="org.hisp.dhis.user.action.ValidateRoleAction">
+      <result name="success" type="velocity">/dhis-web-maintenance-user/responseSuccess.vm</result>
+      <result name="error" type="velocity">/dhis-web-maintenance-user/responseError.vm</result>
+      <result name="input" type="velocity">/dhis-web-maintenance-user/responseInput.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+  </package>
+</xwork>

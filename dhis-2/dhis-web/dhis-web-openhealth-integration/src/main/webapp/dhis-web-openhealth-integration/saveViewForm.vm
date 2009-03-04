@@ -1,0 +1,25 @@
+
+<h3>$i18n.getString( "add_view" )</h3>
+
+<form action="saveOlapURL.action" method="post">
+
+<input type="hidden" name="id" value="$!url.id">
+
+<table>
+	<tr>
+		<td>$i18n.getString( "name" )</td>
+		<td><input type="text" name="name" value="$!url.name" style="width:400px"></td>
+	</tr>	
+	<tr>
+		<td>$i18n.getString( "url" )</td>
+		<td><textarea name="url" style="width:400px; height:120px;">$!url.url</textarea></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="submit" value="$i18n.getString( 'add' )" style="width:50%"><input 
+			type="button" value="$i18n.getString( 'cancel' )" style="width:50%" 
+			onclick="window.location.href='getAllOlapURLs.action'"></td>
+	</tr>
+</table>
+
+</form>

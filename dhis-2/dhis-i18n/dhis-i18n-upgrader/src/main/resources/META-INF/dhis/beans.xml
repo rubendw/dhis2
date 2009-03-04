@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="org.hisp.dhis.i18n.I18nUpgrader" class="org.hisp.dhis.i18n.I18nUpgrader">
+    <property name="i18nService">
+      <ref bean="org.hisp.dhis.i18n.I18nService"/>
+    </property>
+    <property name="translationStore">
+      <ref bean="org.hisp.dhis.i18n.TranslationStore"/>
+    </property>
+    <property name="sessionManager">
+      <ref bean="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+    <property name="organisationUnitGroupService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    </property>
+    <property name="dataSetStore">
+      <ref bean="org.hisp.dhis.dataset.DataSetStore"/>
+    </property>
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+    <property name="dataDictionaryService">
+      <ref bean="org.hisp.dhis.datadictionary.DataDictionaryService"/>
+    </property>    
+    <property name="dataElementCategoryComboService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementCategoryComboService"/>
+    </property>    
+    <property name="dataElementCategoryService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementCategoryService"/>
+    </property>
+    <property name="dataElementCategoryOptionService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementCategoryOptionService"/>
+    </property>    
+    <property name="localeManager">
+      <ref bean="org.hisp.dhis.i18n.locale.LocaleManagerDb"/>
+    </property>
+    <!--property name="alternativeNameLocale" value="hi_IN"/-->
+    <property name="startTransaction">
+      <value>false</value>
+    </property>
+    <property name="runlevel">
+      <value>10</value>
+    </property>
+  </bean>
+  
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject"
+      ref="org.hisp.dhis.system.startup.StartupRoutineExecutor"/>
+    <property name="targetMethod" value="addStartupRoutine"/>
+    <property name="arguments">
+      <list>
+        <ref local="org.hisp.dhis.i18n.I18nUpgrader"/>
+      </list>
+    </property>
+  </bean>
+  
+</beans>

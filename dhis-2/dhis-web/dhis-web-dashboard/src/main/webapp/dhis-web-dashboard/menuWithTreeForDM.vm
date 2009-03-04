@@ -1,0 +1,75 @@
+#parse( "/dhis-web-dashboard/menu.vm" )
+
+#parse( "/dhis-web-commons/ouwt/orgunittree.vm" )
+
+<!-- The script that registeres selctions in the orgunit tree -->
+<script type="text/javascript">
+
+function orgUnitHasBeenSelected( orgUnitIds )
+{    
+	if(document.getElementById( 'ougSetCB' ).checked)
+	{
+	    return;
+	}
+    //document.ChartGenerationForm.ouIDTB.value = orgUnitIds;
+    var orgUnitid = ""+orgUnitIds;
+    var orgUnitName = orgUnits.get(orgUnitid);
+    if(orgUnitName == null) return;
+        
+    
+    var orgUnitName = orgUnits.get(orgUnitid);
+    //document.ChartGenerationForm.ouNameTB.value = orgUnitName;
+
+    var index = 0;		
+	var i=0;
+    		
+    index = document.ChartGenerationForm.orgUnitListCB.options.length;                			
+    for(i=0;i<index;i++)
+    {
+        document.ChartGenerationForm.orgUnitListCB.options[0] = null;	
+    }
+    document.ChartGenerationForm.orgUnitListCB.options[0] = new Option(orgUnitName,orgUnitIds,false,false);
+
+
+
+    var orgUnitLevel = orgUnitLevels.get(orgUnitid);
+
+	if(orgUnitLevel == 1)
+	{
+		document.ChartGenerationForm.selectedGroup.value = null;
+		document.ChartGenerationForm.selectedGroup.disabled = false;
+	}
+
+	else if(orgUnitLevel > 1)
+	{
+		document.ChartGenerationForm.selectedGroup.value = null;
+		document.ChartGenerationForm.selectedGroup.disabled = true;
+	}
+
+	else
+	{
+		document.ChartGenerationForm.selectedGroup.value = null;
+		document.ChartGenerationForm.selectedGroup.disabled = false;		
+	}
+	
+	var children = orgUnitChildren.get(orgUnitid)
+	
+	if(children == 0)
+	{
+		document.ChartGenerationForm.selectedGroup.value = null;
+		document.ChartGenerationForm.ShowReport.disabled = true;			
+		alert("Please select an organisation unit with children");
+	}
+	
+	else
+	{
+		document.ChartGenerationForm.selectedGroup.value = null;
+		document.ChartGenerationForm.ShowReport.disabled = false;				
+	}
+
+}
+
+selection.setListenerFunction( orgUnitHasBeenSelected );
+
+</script>
+

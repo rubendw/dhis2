@@ -1,0 +1,41 @@
+<h1>$encoder.htmlEncode( $i18n.getString( "validation_result" ) )</h1>
+
+#if( $results.size() == 0)
+	<h3>$encoder.htmlEncode( $i18n.getString( "successful_validation" ) )</h3>
+#else
+	<p>$encoder.htmlEncode( $i18n.getString( "unsuccessful_validation" ) )</p>
+	<table width="100%">
+		<thead>
+			<tr>
+				<th>$encoder.htmlEncode( $i18n.getString( "validation_rule" ) )</th>				
+				<th>$encoder.htmlEncode( $i18n.getString( "expression" ) )</th>
+				<th>$encoder.htmlEncode( $i18n.getString( "left_description" ) )</th>
+    			<th>$encoder.htmlEncode( $i18n.getString( "value" ) )</th>
+    			<th>$encoder.htmlEncode( $i18n.getString( "operator" ) )</th>
+    			<th>$encoder.htmlEncode( $i18n.getString( "value" ) )</th>
+				<th>$encoder.htmlEncode( $i18n.getString( "right_description" ) )</th>
+			</tr>
+		</thead>
+		
+		<tbody>		
+		#foreach( $result in $results )
+			#set ( $id = $result.validationRule.id )
+			#set ( $leftside = $leftsideMap.get( $id ) )
+			#set ( $rightside = $rightsideMap.get( $id ) )
+			#set ( $leftFormula = $leftsideFormulaMap.get( $id ) )
+			#set ( $rightFormula = $rightsideFormulaMap.get( $id ) )
+			<tr>
+				<td>$encoder.htmlEncode( $result.validationRule.name )</td>
+				<td>$leftFormula $result.validationRule.operator $rightFormula</td>
+				<td>$!encoder.htmlEncode( $leftside.description )</td>
+    			<td>$result.leftsideValue</td>
+    			<td>$encoder.htmlEncode( $i18n.getString( $result.validationRule.operator ) )</td>
+    			<td>$result.rightsideValue</td>
+				<td>$!encoder.htmlEncode( $rightside.description )</td>
+			</tr>
+		#end
+		</tbody>
+	</table>			
+#end
+
+<p><input type="button" value="$encoder.htmlEncode( $i18n.getString( "close" ) )" style="width:10em" onclick="window.close()"></p>

@@ -1,0 +1,77 @@
+
+<h3>$encoder.htmlEncode( $i18n.getString( "validation_violations" ) )</h3>
+
+<table>
+	<colgroup>
+	    <col width="150">
+	    <col width="150">
+        <col width="150">
+        <col width="150">
+	    <col>
+	</colgroup>
+	<tr>
+		<td>$i18n.getString( "start_date" ):</td>
+		<td>$startDate</td>
+		<td><input type="button" value="$i18n.getString( 'generate_pdf' )" style="width:100%" 
+				onclick="window.location.href='generateValidationResultPDF.action'">
+		</td>
+		<td>
+			<input type="button" value="$i18n.getString( 'done' )" style="width:100%" 
+                onclick="window.location.href='showRunValidationForm.action'">
+		</td>
+    </tr>
+	<tr>
+		<td>$i18n.getString( "end_date" ):</td>
+		<td>$endDate</td>
+		<td><input type="button" value="$i18n.getString( 'generate_workbook' )" style="width:100%"
+                onclick="window.location.href='generateValidationResultWorkbook.action'">
+		</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="4" height="15"></td>
+	</tr>
+</table>
+
+#if ( $validationResults.size() == 0 )
+	
+	<span id="info">$i18n.getString( "validation_passed_successfully" )</span>
+	
+#else
+
+<table class="mainPageTable" style="width:100%">
+	<tr>
+		<th>$i18n.getString( "organisation_unit" )</th>
+		<th>$i18n.getString( "period" )</th>
+		<th>$i18n.getString( "left_side_description" )</th>
+		<th>$i18n.getString( "value" )</th>
+		<th>$i18n.getString( "operator" )</th>
+		<th>$i18n.getString( "value" )</th>
+		<th>$i18n.getString( "right_side_description" )</th>
+		<th>$i18n.getString( "details" )</th>
+	</tr>
+	#set( $mark = false )
+	#foreach( $result in $validationResults )	
+    <tr#if( $mark ) style="background-color:#dddddd"#end>
+        <td>$!result.source.name</td>
+        <td>$!format.formatPeriod( $result.period )</td>
+        <td>$!result.validationRule.leftSide.description</td>
+        <td>$!result.leftsideValue</td>
+        <td style="text-align:center">$i18n.getString( $!result.validationRule.operator )</td>
+        <td>$!result.rightsideValue</td>
+        <td>$!result.validationRule.rightSide.description</td>
+        <td style="text-align:center">
+        	<a href="#" onclick="viewValidationResultDetails( $result.validationRule.id, $result.source.id, $result.period.id )" title="$i18n.getString( 'show_details' )">
+        	   <img src="../images/information.png" alt="$i18n.getString( 'show_details' )">
+        	</a>
+        </td>
+    </tr>
+        #if( $mark )
+            #set( $mark = false )
+        #else
+            #set( $mark = true )
+        #end
+	#end	    
+</table>
+
+#end

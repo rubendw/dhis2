@@ -1,0 +1,18 @@
+
+<h2>$i18n.getString( "report" )</h2>
+<ul>
+	<li><a href="displayViewReportFormVerifyConfiguration.action">$i18n.getString( "standard_report" )</a></li>
+	<li><a href="dataSetReport.action">$i18n.getString( "dataset_report" )</a></li>
+	<li><a href="displayConfigureReportForm.action">$i18n.getString( "report_configuration" )</a></li>
+</ul>
+
+<h2>$i18n.getString( "report_table" )</h2>
+<ul>
+	<li><a href="displayManageTableForm.action">$i18n.getString( "report_table" )</a></li>
+</ul>
+
+<h2>$i18n.getString( "data_completeness" )</h2>
+<ul>
+    <li><a href="displayViewDataCompletenessForm.action">$i18n.getString( "data_completeness" )</a></li>
+    <li><a href="displayConfigureDataCompletenessForm.action">$i18n.getString( "data_completeness_configuration" )</a></li>
+</ul>

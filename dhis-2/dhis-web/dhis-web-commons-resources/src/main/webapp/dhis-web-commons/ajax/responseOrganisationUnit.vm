@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organisationUnits>
+#foreach ( $unit in $organisationUnits )
+	<organisationUnit>
+		<id>$unit.id</id>
+		<name>$encoder.xmlEncode( $unit.name )</name>
+	</organisationUnit>
+#end
+</organisationUnits>

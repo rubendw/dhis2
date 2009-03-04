@@ -1,0 +1,58 @@
+
+<h3>$i18n.getString( "validation_result_details" )</h3>
+
+<table>
+	<col style="width:10em">
+    <col style="width:20em">
+    <tr>
+    	<th>$i18n.getString( "validation_rule_" )</th>
+    	<th></th>
+    </tr>
+    <tr>
+    	<td>$i18n.getString( "name" )</th>
+    	<td>$!validationRule.name</td>
+    </tr>
+    <tr>
+    	<td>$i18n.getString( "description" )</td>
+    	<td>$!validationRule.description</td>
+    </tr>
+</table>
+
+<h3>$i18n.getString( "left_side" )</h3>
+
+<table>
+	<col style="width:25em">
+	<col style="width:5em">
+	<tr>
+		<th>$i18n.getString( "data_element" )</th>
+		<th>$i18n.getString( "value" )</th>
+	</tr>
+	#foreach ( $dataElementName in $leftSideMap.keySet() )
+	<tr>
+		<td>$dataElementName</td>
+		<td style="text-align:center">$leftSideMap.get( $dataElementName )</td>
+	</tr>
+	#end
+</table>
+
+<h3>$i18n.getString( "right_side" )</h3>
+
+<table>
+	<col style="width:25em">
+	<col style="width:5em">
+	<tr>
+		<th>$i18n.getString( "data_element" )</th>
+		<th>$i18n.getString( "value" )</th>
+	</tr>
+	#foreach ( $dataElementName in $rightSideMap.keySet() )
+	<tr>
+		<td>$dataElementName</td>
+		<td style="text-align:center">$rightSideMap.get( $dataElementName )</td>
+	</tr>
+	#end
+</table>
+
+<br>
+
+<p><input type="button" value="$i18n.getString( 'close' )" 
+        onclick="javascript:window.close()" style="width:100px"></p>

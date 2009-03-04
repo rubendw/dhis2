@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="routineDataValue">
+	
+	<!-- TypeAlias -->
+
+  <typeAlias alias="routineDataValue" type="org.hisp.dhis.importexport.dhis14.object.Dhis14RoutineDataValue"/>
+	
+	<!-- ResultMap -->
+	
+	<resultMap class="routineDataValue" id="routineDataValueResultMap">
+		<result property="dataElementId" column="DataElementID"/>
+    <result property="periodId" column="DataPeriodID"/>
+		<result property="organisationUnitId" column="OrgUnitID"/>
+		<result property="value" column="EntryNumber" nullValue="0"/>
+		<result property="storedBy" column="lastUserID"/>
+		<result property="comment" column="Comment"/>
+  </resultMap>
+	
+	<!-- Statement -->
+	
+	<select id="getRoutineDataValues" resultMap="routineDataValueResultMap">
+		SELECT * FROM RoutineData
+	</select>
+  
+  <select id="getRoutineDataValuesLastUpdated" parameterClass="java.util.Date" resultMap="routineDataValueResultMap">
+    SELECT * FROM RoutineData WHERE LastUpdated > #value#
+  </select>
+  
+</sqlMap>

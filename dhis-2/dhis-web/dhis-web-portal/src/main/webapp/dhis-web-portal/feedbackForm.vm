@@ -1,0 +1,16 @@
+
+<h3>$i18n.getString( "send_feedback" )</h3>
+
+<form action="sendFeedback.action" method="post">
+
+<h4>$i18n.getString( "message" )</h4>
+
+<p><textarea name="message" style="width:500px; height:140px"></textarea></p>
+
+<h4>$i18n.getString( "error_message" )</h4>
+
+<p><textarea name="stackTrace" style="width:500px; height:150px"></textarea></p>
+
+<p><input type="submit" value="$i18n.getString( 'send' )" style="width:140px"></p>
+
+</form>

@@ -1,0 +1,14 @@
+<legend>
+	<name>$encoder.xmlEncode( $legend.name )</name>
+	<color>$legend.color</color>
+	<min>$legend.min</min>
+	<max>$legend.max</max>
+	#foreach( $indicator in $legend.indicators )		
+		<indicators>
+			<indicator>
+				<name>$encoder.xmlEncode( $indicator.name )</name>
+				<type>$encoder.xmlEncode( $indicator.indicatorType.name )</type>			
+			</indicator>
+		</indicators>
+	#end
+</legend>

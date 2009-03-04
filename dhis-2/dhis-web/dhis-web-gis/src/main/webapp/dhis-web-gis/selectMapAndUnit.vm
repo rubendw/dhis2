@@ -1,0 +1,29 @@
+<body onLoad="javascript:changeAction('polygon');selectedFeature('$!feature.featureCode');">
+<script language="javascript">
+function popupAssignUnit(){	
+	window.open("assignUnit.action","","menubar=no,width=750,height=700,resizable=no,scrollbars=yes");
+}
+</script>
+<table width="100%">
+	<tr>
+		<td style="vertical-align:top;">		
+			#parse( "/dhis-web-commons/ouwt/orgunittree.vm" )
+		</td>
+		<td style="vertical-align:top;">
+		<form name="selectForm" id="selectForm" action="selectMapAndUnit.action" method="post"> 
+			 <fieldset align="center" style="border:#0000FF thin solid; width:460px; height:450px;">
+			<legend><label>$i18n.getString( "map" )</label></legend>
+			 <embed id=map width="460" height="450" src="map/$mapFile.mapFile" name="map" type="image/svg+xml" align="center"/>
+			</fieldset>	
+		</form>
+		</td>
+		<td style="vertical-align:top;">		
+			<input type="button" #if (!$!organisationUnit) disabled #end value="Assign Unit and Map" onclick="javascript:popupAssignUnit();"/>
+		</td>
+	</tr>
+</table>
+
+
+</body>
+
+

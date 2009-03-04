@@ -1,0 +1,5 @@
+<organisationUnitGroup>
+	<id>$organisationUnitGroup.id</id>
+	<name>$encoder.xmlEncode( $organisationUnitGroup.name )</name>
+	<memberCount>$memberCount</memberCount>
+</organisationUnitGroup>

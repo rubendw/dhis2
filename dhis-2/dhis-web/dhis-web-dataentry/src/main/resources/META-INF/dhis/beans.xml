@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+  <bean id="org.hisp.dhis.de.action.EmptyAction"
+    class="org.hisp.dhis.de.action.EmptyAction"/>
+  
+  <bean id="org.hisp.dhis.de.comments.StandardCommentsManager"
+    class="org.hisp.dhis.de.comments.DefaultStandardCommentsManager">
+    <property name="standardCommentsFile">
+      <value>standard_comments.xml</value>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.history.HistoryRetriever"
+    class="org.hisp.dhis.de.history.DefaultHistoryRetriever">
+    <property name="minMaxDataElementStore"
+      ref="org.hisp.dhis.minmax.MinMaxDataElementStore"/>
+    <property name="dataValueService"
+      ref="org.hisp.dhis.datavalue.DataValueService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.state.SelectedStateManager"
+    class="org.hisp.dhis.de.state.DefaultSelectedStateManager">
+    <property name="dataSetService" 
+      ref="org.hisp.dhis.dataset.DataSetService"/>
+    <property name="selectionManager"
+      ref="org.hisp.dhis.ouwt.manager.OrganisationUnitSelectionManager"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.de.state.StatefulDataValueSaver"
+    class="org.hisp.dhis.de.state.DefaultStatefulDataValueSaver">
+    <property name="selectedStateManager" 
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="dataElementService" 
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="dataValueService"
+      ref="org.hisp.dhis.datavalue.DataValueService"/>
+    <property name="currentUserService"
+      ref="org.hisp.dhis.user.CurrentUserService"/>
+	<property name="dataElementCategoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>  
+  </bean>
+  
+  <!-- Actions -->
+  
+  <bean id="org.hisp.dhis.de.action.SelectAction"
+    class="org.hisp.dhis.de.action.SelectAction" 
+    scope="prototype">
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="dataSetService"
+      ref="org.hisp.dhis.dataset.DataSetService"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="dataEntryFormService"
+      ref="org.hisp.dhis.dataset.DataEntryFormService"/>     
+    <property name="sectionService"
+      ref="org.hisp.dhis.dataset.SectionService"/>
+    <property name="registrationService"
+      ref="org.hisp.dhis.dataset.CompleteDataSetRegistrationService"/>
+	<property name="userStore"
+      ref="org.hisp.dhis.user.UserStore"/>
+	<property name="currentUserService"
+      ref="org.hisp.dhis.user.CurrentUserService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.NextPeriodsAction"
+    class="org.hisp.dhis.de.action.NextPeriodsAction">
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.PreviousPeriodsAction"
+    class="org.hisp.dhis.de.action.PreviousPeriodsAction">
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.FormAction"
+    class="org.hisp.dhis.de.action.FormAction" 
+    scope="prototype">
+    <property name="dataElementOrderManager"
+      ref="org.hisp.dhis.order.manager.DataElementOrderManager"/>
+    <property name="dataValueService"
+      ref="org.hisp.dhis.datavalue.DataValueService"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="dataEntryFormService"
+      ref="org.hisp.dhis.dataset.DataEntryFormService"/>    
+    <property name="standardCommentsManager"
+      ref="org.hisp.dhis.de.comments.StandardCommentsManager"/>
+    <property name="minMaxDataElementStore"
+      ref="org.hisp.dhis.minmax.MinMaxDataElementStore"/>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>    
+	<property name="dataElementCategoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>  
+  </bean>
+	
+  <bean id="org.hisp.dhis.de.action.multidimensional.FormAction"
+    class="org.hisp.dhis.de.action.multidimensional.FormAction" 
+    scope="prototype">
+    <property name="dataElementOrderManager"
+      ref="org.hisp.dhis.order.manager.DataElementOrderManager"/>
+    <property name="dataValueService"
+      ref="org.hisp.dhis.datavalue.DataValueService"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>        
+    <property name="standardCommentsManager"
+      ref="org.hisp.dhis.de.comments.StandardCommentsManager"/>
+    <property name="minMaxDataElementStore"
+      ref="org.hisp.dhis.minmax.MinMaxDataElementStore"/>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="dataElementCategoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+    <property name="dataEntryFormService"
+      ref="org.hisp.dhis.dataset.DataEntryFormService"/>  
+    <property name="dataElementDimensionRowOrderService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementDimensionRowOrderService"/>
+    </property>  
+    <property name="dataElementDimensionColumnOrderService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementDimensionColumnOrderService"/>
+    </property>        
+  </bean>
+  
+   <bean id="org.hisp.dhis.de.action.SectionFormAction"
+    class="org.hisp.dhis.de.action.SectionFormAction" 
+     scope="prototype">    
+    <property name="dataValueService"
+      ref="org.hisp.dhis.datavalue.DataValueService"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="standardCommentsManager"
+      ref="org.hisp.dhis.de.comments.StandardCommentsManager"/>
+    <property name="minMaxDataElementStore"
+      ref="org.hisp.dhis.minmax.MinMaxDataElementStore"/>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+     <property name="sectionService"
+      ref="org.hisp.dhis.dataset.SectionService"/>    
+  </bean>	
+  
+  <bean id="org.hisp.dhis.de.action.SaveValueAction"
+    class="org.hisp.dhis.de.action.SaveValueAction" 
+    scope="prototype">
+    <property name="currentUserService"
+      ref="org.hisp.dhis.user.CurrentUserService"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="dataValueService"
+      ref="org.hisp.dhis.datavalue.DataValueService"/>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>    
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.multidimensional.SaveValueAction"
+    class="org.hisp.dhis.de.action.multidimensional.SaveValueAction" 
+    scope="prototype">
+    <property name="currentUserService"
+      ref="org.hisp.dhis.user.CurrentUserService"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="dataValueService"
+      ref="org.hisp.dhis.datavalue.DataValueService"/>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="dataElementCategoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>        
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.SaveCommentAction"
+    class="org.hisp.dhis.de.action.SaveCommentAction" 
+    scope="prototype">
+    <property name="currentUserService"
+      ref="org.hisp.dhis.user.CurrentUserService"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="dataValueService"
+      ref="org.hisp.dhis.datavalue.DataValueService"/>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.SaveMinMaxLimitsAction"
+    class="org.hisp.dhis.de.action.SaveMinMaxLimitsAction" 
+    scope="prototype">
+    <property name="minMaxDataElementStore">
+      <ref bean="org.hisp.dhis.minmax.MinMaxDataElementStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.RemoveMinMaxLimitsAction"
+    class="org.hisp.dhis.de.action.RemoveMinMaxLimitsAction" 
+    scope="prototype">
+    <property name="minMaxDataElementStore"
+      ref="org.hisp.dhis.minmax.MinMaxDataElementStore"/>
+    <property name="organisationUnitService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.CalculateCDEsAction"
+    class="org.hisp.dhis.de.action.CalculateCDEsAction"
+    scope="prototype">
+    <property name="expressionService"
+      ref="org.hisp.dhis.expression.ExpressionService"/>
+    <property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="statefulDataValueSaver"
+      ref="org.hisp.dhis.de.state.StatefulDataValueSaver"/>
+	<property name="dataElementCategoryComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryComboService"/>      
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.order.GetDataElementOrderAction"
+    class="org.hisp.dhis.de.action.order.GetDataElementOrderAction"
+    scope="prototype">
+    <property name="dataElementOrderManager">
+      <ref bean="org.hisp.dhis.order.manager.DataElementOrderManager"/>
+    </property>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.order.MoveDataElementUpAction"
+    class="org.hisp.dhis.de.action.order.MoveDataElementUpAction"
+    scope="prototype">
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="dataElementOrderManager">
+      <ref bean="org.hisp.dhis.order.manager.DataElementOrderManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.order.MoveDataElementDownAction"
+    class="org.hisp.dhis.de.action.order.MoveDataElementDownAction"
+    scope="prototype">
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="dataElementOrderManager">
+      <ref bean="org.hisp.dhis.order.manager.DataElementOrderManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.order.ResetDataElementOrderAction"
+    class="org.hisp.dhis.de.action.order.ResetDataElementOrderAction"
+    scope="prototype">
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="dataElementOrderManager">
+      <ref bean="org.hisp.dhis.order.manager.DataElementOrderManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.order.OrderDataElementsByEntryAction"
+    class="org.hisp.dhis.de.action.order.OrderDataElementsByEntryAction"
+    scope="prototype">
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="dataElementOrderManager">
+      <ref bean="org.hisp.dhis.order.manager.DataElementOrderManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.order.OrderDataElementsByNameAction"
+    class="org.hisp.dhis.de.action.order.OrderDataElementsByNameAction"
+    scope="prototype">
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="dataElementOrderManager">
+      <ref bean="org.hisp.dhis.order.manager.DataElementOrderManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.order.OrderDataElementsByCodeAction"
+    class="org.hisp.dhis.de.action.order.OrderDataElementsByCodeAction"
+    scope="prototype">
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+    <property name="dataElementOrderManager">
+      <ref bean="org.hisp.dhis.order.manager.DataElementOrderManager"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.HistoryAction"
+    class="org.hisp.dhis.de.action.HistoryAction" 
+    scope="prototype">
+    <property name="historyRetriever">
+      <ref local="org.hisp.dhis.de.history.HistoryRetriever"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+	<property name="dataElementCategoryComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryComboService"/>
+	<property name="dataElementCategoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>  
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.MinMaxGeneratingAction"
+   class="org.hisp.dhis.de.action.MinMaxGeneratingAction" 
+    scope="prototype">
+    <property name="historyRetriever">
+      <ref local="org.hisp.dhis.de.history.HistoryRetriever"/>
+    </property>
+    <property name="dataElementOrderManager">
+      <ref bean="org.hisp.dhis.order.manager.DataElementOrderManager"/>
+    </property>
+    <property name="minMaxDataElementStore">
+      <ref bean="org.hisp.dhis.minmax.MinMaxDataElementStore"/>
+    </property>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.RegisterCompleteDataSetAction"
+    class="org.hisp.dhis.de.action.RegisterCompleteDataSetAction" 
+    scope="prototype">
+    <property name="registrationService"
+      ref="org.hisp.dhis.dataset.CompleteDataSetRegistrationService"/>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.de.action.UndoCompleteDataSetAction"
+    class="org.hisp.dhis.de.action.UndoCompleteDataSetAction" 
+    scope="prototype">
+    <property name="registrationService"
+      ref="org.hisp.dhis.dataset.CompleteDataSetRegistrationService"/>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+  </bean>
+  
+  <!-- Validate -->
+  
+  <bean id="org.hisp.dhis.de.action.ValidationAction"
+    class="org.hisp.dhis.de.action.ValidationAction">
+    <property name="validationRuleService">
+      <ref bean="org.hisp.dhis.validation.ValidationRuleService"/>
+    </property>
+    <property name="expressionService">
+      <ref bean="org.hisp.dhis.expression.ExpressionService"/>
+    </property>
+    <property name="selectedStateManager"
+      ref="org.hisp.dhis.de.state.SelectedStateManager"/>
+  </bean>
+</beans>

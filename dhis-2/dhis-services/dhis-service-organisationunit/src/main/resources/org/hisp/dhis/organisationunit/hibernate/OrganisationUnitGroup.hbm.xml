@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.organisationunit.OrganisationUnitGroup" table="orgunitgroup">
+    <id name="id" column="orgunitgroupid">
+      <generator class="native"/>
+    </id>
+
+		<property name="uuid">
+			<column name="uuid" length="40"/>
+		</property>
+
+    <property name="name">
+      <column name="name" not-null="true" unique="true" length="160"/>
+    </property>
+    
+    <set name="members" table="orgunitgroupmembers">
+      <key column="orgunitgroupid"/>
+      <many-to-many class="org.hisp.dhis.organisationunit.OrganisationUnit" 
+          column="organisationunitid" foreign-key="fk_orgunitgroup_organisationunitid"/>
+    </set>
+    
+  </class>
+</hibernate-mapping>

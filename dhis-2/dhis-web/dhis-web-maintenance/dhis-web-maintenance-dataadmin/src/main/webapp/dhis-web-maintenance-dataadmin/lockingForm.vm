@@ -1,0 +1,72 @@
+
+<h3>$i18n.getString( "data_locking" )</h3>
+
+<form id="lockingForm" name="lockingForm" action="lockDataSets.action" method="post">
+
+<table>
+	<tr>
+		<th>$i18n.getString( "period_type" )</th>
+	</tr>
+	<tr>
+		<td>
+			<select id="periodTypeId" name="periodTypeId" style="min-width:325px" onchange="getPeriods()">
+				<option value="null">[ $i18n.getString( "select_period_type_all" ) ]</option>
+				#foreach ( $type in $periodTypes )
+					<option value="$type.name"#if( $currentPeriodTypeId == $type.name ) selected="selected"#end>$type.name</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td height="5px"></td>
+	</tr>
+	<tr>
+		<td>
+			<select id="periodId" name="periodId" style="min-width:325px" onchange="getDataSets()" disabled="true">
+				<option value="null">[ $i18n.getString( "select_period_all" ) ]</option>				
+			</select>
+		</td>
+	</tr>
+    <tr>
+        <td height="5px"></td>
+    </tr>
+	<tr>
+		<th>$i18n.getString( "unlocked_datasets" )</th>
+		<td></td>
+		<th>$i18n.getString( "locked_datasets" )</th>
+	</tr>
+	<tr>		
+		<td>
+			<select id="unlockedDataSets" name="unlockedDataSets" multiple="multiple" style="min-width:325px;height:20em" ondblclick="moveSelectedById( 'unlockedDataSets', 'lockedDataSets' )" disabled="true">
+				#foreach( $dataSet in $unlockedDataSets )
+					<option value="$dataSet.id">$dataSet.name</option>
+				#end
+			</select>
+		</td>
+		<td align="center">
+			<input type="button" value="&gt;" title="$i18n.getString( 'move_selected' )" style="width:40px" onclick="moveSelectedById( 'unlockedDataSets', 'lockedDataSets' )"><br>
+			<input type="button" value="&lt;" title="$i18n.getString( 'move_all' )" style="width:40px" onclick="moveSelectedById( 'lockedDataSets', 'unlockedDataSets' )"><br>		
+			<input type="button" value="&gt;&gt;" title="$i18n.getString( 'remove_selected' )" style="width:40px" onclick="moveAllById( 'unlockedDataSets', 'lockedDataSets' )"><br>
+			<input type="button" value="&lt;&lt;" title="$i18n.getString( 'remove_all' )" style="width:40px" onclick="moveAllById( 'lockedDataSets', 'unlockedDataSets' )">
+		</td>
+		<td>
+			<select id="lockedDataSets" name="lockedDataSets" multiple="multiple" style="min-width:325px;height:20em" ondblclick="moveSelectedById( 'lockedDataSets', 'unlockedDataSets' )" disabled="true">
+				#foreach( $dataSet in $lockedDataSets )
+					<option value="$dataSet.id">$dataSet.name</option>
+				#end
+			</select>
+		</td>
+	</tr>	
+	<tr>
+		<td colspan="3" style="height:10px"></td>
+	</tr>
+	<tr>
+		<td>
+			<input type="button" value="$i18n.getString( 'save' )" style="width:15em" onclick="updateDataSets()">
+		</td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
+
+</form>

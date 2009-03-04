@@ -1,0 +1,48 @@
+/**
+ * @author Anna Dahl (annada)
+ * @version $Id$
+ */
+
+/* 	
+	NOTE: These style rules are copied directly from
+	/dhis-web-maintenance-dataset/src/main/webapp/dhis-web-maintenance-dataset/
+	javascript/FCKeditor/editor/css/fck_editorarea.css
+	Any changes made to the rules in this file need to be made in 
+	fck_editorarea.css as well.
+
+*/
+
+h1.dhis-cde_form_h1, h2.dhis-cde_form_h2, h3.dhis-cde_form_h3,
+h4.dhis-cde_form_h4 {
+	margin: 0 0 5px 0;
+	padding: 0;
+}
+
+h1.dhis-cde_form_h1 {
+	font: normal normal bold 22px arial,sans-serif;
+	}
+
+h2.dhis-cde_form_h2 {
+	font: normal normal bold 18px arial,sans-serif;
+	}
+	
+h3.dhis-cde_form_h3 {
+	font: normal normal bold 16px arial,sans-serif;
+	}
+
+h4.dhis-cde_form_h4 {
+	font: normal normal bold 14px arial,sans-serif;
+	}
+
+span.dhis-cde_form_stlabel {
+	font: normal normal bold 12px arial,sans-serif;
+	}
+
+span.dhis-cde_form_smlabel {
+	font: normal normal bold 10px arial, sans-serif;
+	}
+
+span.dhis-cde_form_anno {
+	font: italic normal normal 10px arial,sans-serif;
+	color: #666;
+	}

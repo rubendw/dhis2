@@ -1,0 +1,10 @@
+<organisationUnit>
+	<id>$organisationUnit.id</id>
+	<name>$encoder.xmlEncode( $organisationUnit.name )</name>
+	<shortName>$encoder.xmlEncode( $organisationUnit.shortName )</shortName>
+	<organisationUnitCode>$!encoder.xmlEncode( $organisationUnit.organisationUnitCode )</organisationUnitCode>
+	<openingDate>$format.formatDate( $organisationUnit.openingDate )</openingDate>
+	<closedDate>$!format.formatDate( $organisationUnit.closedDate )</closedDate>
+	<active>$organisationUnit.active</active>
+	<comment>$!encoder.xmlEncode( $organisationUnit.comment )</comment>
+</organisationUnit>

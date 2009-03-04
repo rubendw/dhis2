@@ -1,0 +1,82 @@
+
+<h3>$i18n.getString( "edit_section" )</h3>
+
+<form id="editDataSetForm" name="editDataSetForm" action="updateSection.action" method="post" onsubmit="submitForm();">
+  <div style="display:inline">
+  <input type="hidden" id="dataSetId" name="dataSetId" value="$dataSet.id">
+  <input type="hidden" id="sectionId" name="sectionId" value="$sectionId">
+  </div>
+  
+  <table id="detailsList">
+    <col> ## Labels
+    <col> ## Input
+    <thead>
+      <tr>
+        <th colspan="2">$i18n.getString( "section_details" )</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><label>$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" id="sectionName" name="sectionName" style="width:20em" value= "$section.name" disabled="disabled"></td>
+      </tr>
+      <tr>
+        <td><label>$i18n.getString( "label" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" id="sectionLabel" name="sectionLabel" style="width:20em" value="$section.label" ></td>
+      </tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <table id="dataElementSelectionArea">
+    <col> ## Selected DataElements
+    <col> ## Actions
+    <col> ## Available DataElements
+    <thead>
+      <tr>                
+        <th>$i18n.getString( "available_data_elements" )</th>
+		<th></th>
+		<th>$i18n.getString( "selected_data_elements" )</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td>
+          <!-- List of all available DataElements -->
+          <select size="15" id="availableList" name="dataElementOfDataSet" multiple="multiple" style="min-width:20em;height:20em" ondblclick="move( 'availableList' )">
+            <!-- Show all available DataElements -->
+            #foreach ( $availableDataElement in $dataElementOfDataSet )
+              <option value="$availableDataElement.id"> $availableDataElement.name</option>
+            #end
+          </select>
+        </td>
+        <td valign="top">
+          <input type="button" value=">" title="$i18n.getString('move_selected')" onclick="move( 'availableList' )">
+          <br>
+          <input type="button" value="<" title="$i18n.getString('remove_selected')" onclick="move( 'selectedList' )">
+        </td>
+		<td>
+          <select id="selectedList" name="selectedList" multiple="multiple" style="min-width:20em;height:20em" ondblclick="move( 'selectedList' )">
+            #foreach ( $dataElement in $selectedList )
+              <option value="$dataElement.id">$dataElement.name</option>
+            #end
+          </select>
+        </td>        
+      </tr>
+
+      <tr>
+        <td colspan="3">
+          <p><span id="message"></span></p>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="3">
+          <input type="submit" value="$i18n.getString( "save" )"><input type="button" 
+            onclick="window.location.href='index.action'" value="$i18n.getString( "cancel" )">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

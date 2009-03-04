@@ -1,0 +1,149 @@
+
+<h3>$i18n.getString( "edit_data_element" )</h3>
+
+<form id="updateDataElementForm" action="updateDataElement.action" method="post" onsubmit="return validateUpdateDataElement()">
+
+<div>
+	<input type="hidden" id="id" name="id" value="$dataElement.id">
+</div>
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "details" )</th>
+	</tr>
+	<tr>
+		<td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="name" name="name" value="$encoder.htmlEncode( $dataElement.name )" onchange="nameChanged()" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="shortName">$i18n.getString( "short_name" )</label></td>
+		<td><input type="text" id="shortName" name="shortName" value="$encoder.htmlEncode( $dataElement.shortName )" maxlength="20" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="alternativeName">$i18n.getString( "alternative_name" )</label></td>
+		<td><input type="text" id="alternativeName" name="alternativeName" value="$!encoder.htmlEncode( $dataElement.alternativeName )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="code">$i18n.getString( "code" )</label></td>
+		<td><input type="text" id="code" name="code" value="$!encoder.htmlEncode( $dataElement.code )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="description">$i18n.getString( "description" )</label></td>
+		<td><textarea id="description" name="description" style="width:20em; height:8em">$!encoder.htmlEncode( $dataElement.description )</textarea></td>
+	</tr>
+	<tr>
+		<td><label for="active">$i18n.getString( "active" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td>
+			<select id="active" name="active" style="min-width:20em">
+				<option value="true" #if( $dataElement.active ) selected="selected" #end>$i18n.getString( "yes" )</option>
+				<option value="false" #if( !$dataElement.active ) selected="selected" #end>$i18n.getString( "no" )</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="type">$i18n.getString( "type" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td>
+			<select id="type" name="type" style="min-width:20em">
+				<option value="int" #if( $dataElement.type == 'int' ) selected="selected" #end>$i18n.getString( "number" )</option>
+				<option value="string" #if( $dataElement.type == 'string' ) selected="selected" #end>$i18n.getString( "text" )</option>
+				<option value="bool" #if( $dataElement.type == 'bool' ) selected="selected" #end>$i18n.getString( "yes_no" )</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><label for="aggregationOperator">$i18n.getString( "aggregation_operator" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td>
+			<select id="aggregationOperator" name="aggregationOperator" style="min-width:20em">
+				<option value="sum" #if( $dataElement.aggregationOperator == 'sum' ) selected="selected" #end>$i18n.getString( "sum" )</option>
+				<option value="average" #if( $dataElement.aggregationOperator == 'average' ) selected="selected" #end>$i18n.getString( "average" )</option>
+			</select>
+		</td>
+	</tr>
+	<tr #if( $calculatedDataElement ) style="display:none" #end >	
+		<td><label for="selectedCategoryComboId">$i18n.getString( "category_combo" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td>
+			<select id="selectedCategoryComboId" name="selectedCategoryComboId" style="min-width:20em" >				
+				<option value="null">[$i18n.getString( "select" )]</option>
+			#foreach( $dataElementCategoryCombo in $dataElementCategoryCombos )
+				<option value="$dataElementCategoryCombo.id" #if( $dataElement.categoryCombo.id == $dataElementCategoryCombo.id ) selected="selected" #end>$encoder.htmlEncode( $dataElementCategoryCombo.name )</option>
+			#end
+			</select>
+		</td>	
+	</tr>
+	#if ( $calculatedDataElement )
+	<tr>
+		<td><label for="saved">$i18n.getString( "calculated" )</label></td>
+ 		<td><input type="checkbox" id="calculated" name="calculated" checked="checked" disabled="disabled"></td>
+	</tr>
+</table>
+
+<table>
+	<tr>
+		<td style="height:5px" colspan="3"></td>
+	</tr>
+	<tr>
+		<td><label for="saved">$i18n.getString('saved')</label></td>
+		<td><input type="checkbox" id="saved" name="saved" value="true" #if( $calculatedDataElement.saved ) checked="checked" #end></td>
+		<td></td>
+	</tr>
+    <tr>
+    	<td><b>$i18n.getString( "available_dataelements" )<b></td>
+    	<td></td>
+    	<td><b>$i18n.getString( "selected_dataelements" )</b></td>
+    </tr>
+	<tr>
+		<td>
+			<select id="dataElementGroupId" name="dataElementGroupId" onchange="getDataElements( this.options[this.selectedIndex].value, 'int', true )" style="width:30em">
+				<option value="[select]" selected="selected">[ $i18n.getString( "select_dataelementgroup" ) ]</option>
+				<option value="$ALL">[ $i18n.getString( "all_dataelements" ) ]</option>
+				#foreach ( $group in $dataElementGroups )
+					<option value="$group.id">$group.name</option>
+				#end
+			</select><br>
+			<select id="availableDataElements" size="5" multiple="multiple" style="width:30em">
+				#foreach( $dataElement in $dataElements )
+				<option value="$dataElement.id" title="$dataElement.name">$dataElement.name</option>
+				#end
+			</select>
+		</td>
+		<td>
+			<br>
+			<input id="selectOneButton" type="button" value="&gt;" title="$i18n.getString('move_selected')" onclick="addCDEDataElements(true)" style="width:4em"><br>
+			<input id="selectAllButton" type="button" value="&gt;&gt;" title="$i18n.getString('move_all')" onclick="addCDEDataElements(false)" style="width:4em"><br>
+        	<input id="deselectAllButton" type="button" value="&lt;&lt;" title="$i18n.getString('remove_all')" onclick="removeCDEDataElements()" style="width:4em">
+		</td>
+		<td valign="top">
+			<table id="selectedDataElements">
+				<tr>
+					<th style="width:16em">$i18n.getString( "data_element" )</th>
+					<th style="width:7em">$i18n.getString( "factor" )</th>
+					<th style="width:7em">$i18n.getString( "remove" )</th>		
+				</tr>
+				#foreach ( $operand in $operands )
+				<tr>
+					<td>$operand.operandName<input type="hidden" name="dataElementIds" value="$operand.id"></td>
+					<td><input type="text" name="factors" value="$factorMap.get($operand.id)"></td>
+					<td><button type="button" title="$i18n.getString('remove_all')"><img src="../images/delete.png" alt="$i18n.getString('delete_icon')"></button></td>
+				</tr>
+				#end
+			</table>
+		</td>
+	</tr>
+	#end
+</table>
+
+<p><input type="submit" value="$i18n.getString( "save" )" style="width:10em"><input type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='dataElement.action'" style="width:10em"></p>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+	var previousName = '$encoder.jsEscape( $dataElement.name, "'" )';
+	
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+
+</script>

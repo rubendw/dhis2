@@ -1,0 +1,31 @@
+
+<html>
+	    <head>   
+        	<title>Tabular Analysis Result</title>
+        <link type="text/css" rel="stylesheet" media="screen" href="css/StylesForTags.css">	
+	    </head>
+	    <body >
+		        <center>
+            			<font face="arial" size="3"><b>Tabular Analysis For Period $startPeriod.startDate To $endPeriod.endDate</b></font>            
+        		</center>
+        		<br /><br />
+        		<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-style: dotted" bordercolor="#111111" width="100%">
+            <tr>
+                <td class="TableHeadingCellStyles" style="border-style: dotted; border-width: 1">Service Name</td>
+            	    #foreach($orgUnit in $selectedOrgUnitList)
+            	        <td class="TableHeadingCellStyles" align="center" style="border-style: dotted; border-width: 1">$orgUnit.name</td>				     
+                	#end
+                	<td class="TableHeadingCellStyles" style="border-style: dotted; border-width: 1">Total</td>
+            </tr>
+            #foreach($dataValueKeys in $dataValueResult.keySet())                    
+                #set($dataValues = $dataValueResult.get($dataValueKeys))
+                <tr>
+                    <td class="TableHeadingCellStyles" style="border-style: dotted; border-width: 1">$dataValueKeys.name</td>               		 
+               		     #foreach($dataValue in $dataValues)
+               		         <td class="TableDataCellStyles" align="center" style="border-style: dotted; border-width: 1">$dataValue</td>               		             
+               		     #end
+                </tr>    
+            #end	
+        </table>
+    </body>
+</html>    

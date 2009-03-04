@@ -1,0 +1,36 @@
+<form action="changeConfiguration.action?action=2" method="post">
+<h3>$i18n.getString( 'configuration' ) &nbsp;  $i18n.getString( 'gis_directory' )</h3>
+<table>
+	<tr>
+		<td><label>$i18n.getString( "gis_directory" )</label></td>
+		<td><input type="text" name="directory" size="60" value="$!directory" onchange="javscript:formatPath(this);"/></td>		
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td><label>$i18n.getString( "getindicatorfrom" )</label></td>
+		<td>
+			<select id="getIndicatorFrom" name="getIndicatorFrom" style="max-width:325x;min-width:325px">
+				#foreach( $valueChose in $getIndicatorFroms)
+					<option value="$valueChose" #if( $getIndicatorFrom && $valueChose == $getIndicatorFrom ) selected="selected" #end>$i18n.getString( "$valueChose" )</option>
+				#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="submit" value="$i18n.getString( 'update' )"/></td>
+	</tr>
+	
+</table>
+</form>
+<script>
+	function formatPath(text){
+		var value = text.value;		
+		text.value = value.replace(/\\/g,"/");		
+	}
+</script>

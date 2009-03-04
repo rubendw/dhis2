@@ -1,0 +1,39 @@
+
+<html>
+<head>
+<title>Graphical Analyser Home Page</title>
+
+<script>
+    var selAnalysis = "regularAnalysis";
+    function analysisRadioChangeFunction(evt)
+    {
+        selAnalysis = evt.target.value;
+        if(selAnalysis == "regularAnalysis") iframeForAnalysis.location.href = "graphicalAnalyser.action";
+        else if(selAnalysis == "yearlyAnalysis") alert("Yearly Analysis");
+        else iframeForAnalysis.location.href = "surveyAnalyser.action";
+    } // analysisRadioChangeFunction end
+   
+</script>
+</head>
+<body>
+    <table align="center" style=" border-collapse: collapse; margin-top: 0;" cellpadding="0" cellspacing="0" width="80%" border=0>
+        <tr>
+            <td class="NormalB">        
+                Analysis : 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" id="analysisRadio" name="analysisRadio" value="regularAnalysis" onclick="analysisRadioChangeFunction(event)" checked> Regular
+                &nbsp;&nbsp;&nbsp;
+                <input type="radio" id="analysisRadio" name="analysisRadio" value="yearlyAnalysis" onclick="analysisRadioChangeFunction(event)"> Yearly
+                &nbsp;&nbsp;&nbsp;
+                <input type="radio" id="analysisRadio" name="analysisRadio" value="surveyAnalysis" onclick="analysisRadioChangeFunction(event)"> Survey
+                <hr /> 
+            </td>
+        </tr>
+        <tr>
+            <td class="NormalB">
+                <iframe name="iframeForAnalysis" id="iframeForAnalysis" src="graphicalAnalyser.action" width="950px" height="600px" scrolling=auto frameborder="0"></iframe>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>        

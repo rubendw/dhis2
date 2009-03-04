@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.user.User" table="userinfo">
+
+    <id name="id" column="userinfoid">
+      <generator class="native"/>
+    </id>
+
+    <property name="surname">
+      <column name="surname" not-null="true" length="160"/>
+    </property>
+    
+    <property name="firstName">
+      <column name="firstname" not-null="true" length="160"/>
+    </property>
+     
+    <property name="email">
+      <column name="email" length="160"/>
+    </property>
+	
+	  <set name="organisationUnits" table="usermembership">
+      <key column="userinfoid"/>
+      <many-to-many class="org.hisp.dhis.organisationunit.OrganisationUnit" 
+        column="organisationunitid" foreign-key="fk_userinfo_organisationunitid"/>
+    </set>
+		  
+  </class>
+</hibernate-mapping>

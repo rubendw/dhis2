@@ -1,0 +1,97 @@
+
+<h3>$i18n.getString( "dataset_report" )</h3>
+
+<form id="reportForm" name="reportForm" action="" method="post">	
+
+<table>
+
+  ##<colgroup>
+  	##<col width="170">
+ 	##<col width="230">
+ 	##<col width="30">
+  ##</colgroup>  
+  
+  <tr>
+  	<td><label for="dataSetId">$i18n.getString( "dataset" )</label></td>
+  	<td>
+  	  <select id="dataSetId" name="dataSetId" style="min-width:230px">
+    	<option value="">[ $i18n.getString( "select_dataset" ) ]</option>>
+		#foreach ( $dataSet in $dataSets )
+	  	  <option value="$dataSet.id"
+	  	  #if ( $dataSetId == $dataSet.id ) selected="selected"#end
+	  	  >$encoder.htmlEncode( $dataSet.name )</option>
+    	#end
+  	  </select>
+	</td>
+	<td></td>
+  </tr>
+	
+  <tr>
+  	<td><label for="startDate">$i18n.getString( "start_date" ) ($i18n.getString( "format.date.label" ))</label></td>
+  	<td>
+		<input type="text" id="startDate" name="startDate" value="$!startDate" style="width:230px">
+		<img src="../images/calendar_icon.gif" width="16" height="16" id="getStartDate" cursor: pointer;" title="$i18n.getString( "date_selector" )" onmouseover="this.style.background='orange';" onmouseout="this.style.background=''">
+	</td>	
+	<td></td>
+  </tr>
+  
+  <tr>
+  	<td><label for="endDate">$i18n.getString( "end_date" ) ($i18n.getString( "format.date.label" ))</label></td>
+  	<td>
+		<input type="text" id="endDate" name="endDate" value="$!endDate" style="width:230px">
+		<img src="../images/calendar_icon.gif" width="16" height="16" id="getEndDate" cursor: pointer;" title="$i18n.getString( "date_selector" )" onmouseover="this.style.background='orange';" onmouseout="this.style.background=''">
+	</td>	
+	<td></td>
+  </tr>  
+
+  <tr></tr>
+  
+  </table>
+  
+  <table>
+  <tr>	
+	<td>$i18n.getString( "reporting_organisation_unit" )</td>
+  </tr>
+  <tr>	
+	<td>
+        <div id="selectionTree" style="width:40em;height:30em;overflow:auto;border:1px solid #cccccc"></div>
+
+        <script type="text/javascript">
+
+          selectionTreeSelection.setMultipleSelectionAllowed( false );
+          selectionTree.buildSelectionTree();
+
+        </script>
+      </td>
+	<td></td>
+  </tr>
+ 
+	
+  <script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "startDate",      // id of the input field
+        ifFormat       :    "$i18n.getString("format.date.label")",       // format of the input field
+        button         :    "getStartDate"   // trigger for the calendar (button ID)
+    });
+	
+	Calendar.setup({
+        inputField     :    "endDate",      // id of the input field
+        ifFormat       :    "$i18n.getString("format.date.label")",       // format of the input field
+        button         :    "getEndDate"   // trigger for the calendar (button ID)
+    });
+  </script>
+  
+  <tr>  
+	<td><input type="button" value="$i18n.getString( "preview" )" style="width:115px" onclick="previewDataSetReport()"><input type="button" value="$i18n.getString( "generate" )" style="width:115px" onclick="generateDataSetReport()"></td>
+	<td></td>		
+  </tr>
+  
+  <tr>
+  	<td colspan="3" height="40"></td>
+  </tr>
+
+ </table>
+ 
+</form>
+
+<span id="message"#if ( $message ) style="display:block"#end>$!message</span>

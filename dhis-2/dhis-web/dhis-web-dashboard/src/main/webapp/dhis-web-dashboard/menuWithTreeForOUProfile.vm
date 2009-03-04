@@ -1,0 +1,30 @@
+#parse( "/dhis-web-dashboard/menu.vm" )
+
+#parse( "/dhis-web-commons/ouwt/orgunittree.vm" )
+
+<!-- The script that registeres selctions in the orgunit tree -->
+<script type="text/javascript">
+
+function orgUnitHasBeenSelected( orgUnitIds )
+{    
+
+    var orgUnitid = ""+orgUnitIds;
+    var orgUnitName = orgUnits.get(orgUnitid);
+    var orgUnitLevel = orgUnitLevels.get(orgUnitid);
+    if(orgUnitName == null || orgUnitLevel == null) return;  
+    
+    if(document.generateForm.reportLB.options[document.generateForm.reportLB.selectedIndex].value == "scprofile") 
+				        if(orgUnitLevel != maxLevel) return;
+    
+    		var index = document.generateForm.orgUnitListCB.options.length;
+    		var i=0;
+    		for(i=0;i<index;i++)
+    		{
+        			if(orgUnitIds == document.generateForm.orgUnitListCB.options[i].value) return; 
+    		}
+    		document.generateForm.orgUnitListCB.options[index] = new Option(orgUnitName,orgUnitIds,false,false);
+}
+
+selection.setListenerFunction( orgUnitHasBeenSelected );
+
+</script>

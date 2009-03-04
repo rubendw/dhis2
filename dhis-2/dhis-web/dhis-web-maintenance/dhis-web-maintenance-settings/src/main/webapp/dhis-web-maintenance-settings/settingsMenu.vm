@@ -1,0 +1,5 @@
+<h2>$i18n.getString( "settings" )</h2>
+<ul>
+	<li><a href="userSettings.action">$i18n.getString( "user_settings" )</a></li>
+	<li><a href="getSystemSettings.action">$i18n.getString( "system_settings" )</a></li>
+</ul>

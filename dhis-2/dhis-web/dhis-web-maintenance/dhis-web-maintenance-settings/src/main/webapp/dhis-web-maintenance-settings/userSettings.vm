@@ -1,0 +1,100 @@
+
+#if( $availableLocales )
+
+<script type="text/javascript">
+
+function languageChanged( list )
+{
+	var locale = list.options[list.selectedIndex].value;
+
+	window.location.href = "setCurrentLocale.action?currentLocale=" + locale;
+}
+
+function languageChangedDb( list )
+{
+	var locale = list.options[list.selectedIndex].value;
+
+	window.location.href = "setCurrentLocaleDb.action?currentLocaleDb=" + locale;
+}
+
+function sortOrderChanged( list )
+{
+	var sortOrder = list.options[list.selectedIndex].value;
+	
+	window.location.href = "setCurrentSortOrder.action?currentSortOrder=" + sortOrder;
+}
+
+function displayPropertyChanged( list )
+{
+	var property = list.options[list.selectedIndex].value;
+	
+	window.location.href = "setCurrentDisplayProperty.action?currentDisplayProperty=" + property;
+}
+
+function dataDictionaryModeChanged( list )
+{
+	var mode = list.options[list.selectedIndex].value;
+	
+	window.location.href = "setCurrentDataDictionaryMode.action?currentDataDictionaryMode=" + mode;
+}
+
+function styleChanged( list )
+{
+	var style = list.options[list.selectedIndex].value;
+	
+	window.location.href = "setCurrentStyle.action?currentStyle=" + style;
+}
+
+</script>
+
+<h3>$i18n.getString("user_settings")</h3>
+
+<h4>$i18n.getString( "language" )</h4>
+
+<select onchange="languageChanged( this );" style="min-width:250px">
+#foreach( $locale in $availableLocales )
+	<option value="$locale.toString()" #if( $locale == $currentLocale )selected="selected"#end>$locale.getDisplayName()</option>
+#end
+</select>
+
+<h4>$i18n.getString( "db_language" )</h4>
+
+<select id="localeSelectDb" onchange="languageChangedDb( this );" style="min-width:250px">
+#foreach( $locale in $availableLocalesDb )
+	<option value="$locale.toString()" #if( $locale == $currentLocaleDb )selected="selected"#end>$locale.getDisplayName()</option>
+#end
+</select>
+
+<h4>$i18n.getString( "sort_order" )</h4>
+
+<select onchange="sortOrderChanged( this );" style="min-width:250px">
+#foreach( $sortOrder in $sortOrders )
+	<option value="$sortOrder" #if( $sortOrder == $currentSortOrder )selected="selected"#end>$i18n.getString( $sortOrder )</option>
+#end
+</select>
+
+<h4>$i18n.getString( "display_property" )</h4>
+
+<select onchange="displayPropertyChanged( this );" style="min-width:250px">
+#foreach( $property in $displayProperties )
+	<option value="$property" #if( $property == $currentDisplayProperty )selected="selected"#end>$i18n.getString( $property )</option>
+#end
+</select>
+
+<h4>$i18n.getString( "data_dictionary_mode" )</h4>
+
+<select onchange="dataDictionaryModeChanged( this );" style="min-width:250px">
+#foreach( $mode in $dataDictionaryModes )
+	<option value="$mode" #if( $mode == $currentDataDictionaryMode )selected="selected"#end>$i18n.getString( $mode )</option>
+#end
+</select>
+
+<h4>$i18n.getString( "style" )</h4>
+
+<select onchange="styleChanged( this );" style="min-width:250px">
+#foreach( $style in $styles.entrySet() )
+	<option value="$style.value" #if( $style.value == $currentStyle )selected="selected"#end>$i18n.getString( $style.key )</option>
+#end
+</select>
+
+#end

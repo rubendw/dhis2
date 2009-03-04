@@ -1,0 +1,11 @@
+
+<script type="text/javascript">
+    getExportStatus();
+</script>
+
+<h3>$i18n.getString( "export_to_datamart" )</h3>
+
+<p><input type="button" value='$i18n.getString( "cancel" )' onclick="cancelExport()" style="width:100px"><input
+          type="button" value='$i18n.getString( "back" )' onclick="javascript:window.location.href='getDataMartExports.action'" style="width:100px"></p>
+
+<span id="message"></span>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.minmax.MinMaxDataElement" table="minmaxdataelement">
+    <id name="id" column="minmaxdataelementid">
+      <generator class="native"/>
+    </id>
+
+    <many-to-one name="source" class="org.hisp.dhis.source.Source"
+        column="sourceid" foreign-key="fk_minmaxdataelement_sourceid"/>
+    <many-to-one name="dataElement" class="org.hisp.dhis.dataelement.DataElement"
+        column="dataelementid" foreign-key="fk_minmaxdataelement_dataelementid"/>
+
+    <property name="min" column="minvalue"/>
+    <property name="max" column="maxvalue"/>
+    <property name="generated"/>
+  </class>
+</hibernate-mapping>

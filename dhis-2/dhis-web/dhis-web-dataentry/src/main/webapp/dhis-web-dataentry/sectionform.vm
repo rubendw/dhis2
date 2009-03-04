@@ -1,0 +1,56 @@
+#parse( "/dhis-web-dataentry/select.vm" )
+
+<table class="mainPageTable">
+
+#set($i=1)
+#foreach( $section in $sections)
+	<tr>
+		<td><a href="javascript:openCloseSection($section.id);" style="text-decoration:none">$i - $encoder.htmlEncode($section.label)</a></td>	
+	</tr>
+	<tr>
+		<td>		
+			<div id="$section.id" style="border:thin solid; margin:0;display:none">
+				#parse( "/dhis-web-dataentry/dataElement.vm" )
+			</div>
+		</td>
+	</tr>
+	#set($i=$i+1)
+#end
+</table>
+
+<script type="text/javascript">
+	
+	function openCloseSection(sectionId){
+		var divSection = document.getElementById(sectionId);		
+		if(divSection.style.display=='none'){
+			divSection.style.display = ('block');
+		}else{
+			divSection.style.display = ('none');
+		}
+		
+		
+		
+	}
+
+
+	var i18n_value_of_data_element_less = '$encoder.jsEscape( $i18n.getString( "value_of_data_element_less" ) , "'")';
+	var i18n_value_of_data_element_greater = '$encoder.jsEscape( $i18n.getString( "value_of_data_element_greater" ) , "'")';
+	var i18n_value_must_integer = '$encoder.jsEscape( $i18n.getString( "value_must_integer" ) , "'")';
+	var i18n_saving_value_failed_status_code = '$encoder.jsEscape( $i18n.getString( "saving_value_failed_status_code" ) , "'")';
+	var i18n_saving_comment_failed_status_code = '$encoder.jsEscape( $i18n.getString( "saving_comment_failed_status_code" ) , "'")';
+	var i18n_saving_minmax_failed_error_code = '$encoder.jsEscape( $i18n.getString( "saving_minmax_failed_error_code" ) , "'")';
+	var calculatedDataElementMap = {
+	#set( $count = 1 )
+	#foreach( $cde in $calculatedDataElementMap.keySet() )
+	  #set( $innerCount = 1 )
+	  #set( $factorMap = $calculatedDataElementMap.get($cde) )
+	  $cde.id : {
+	  #foreach ( $de in $factorMap.keySet() )
+        $de.id : $factorMap.get($de) #if ( $innerCount < $factorMap.size() ),#end
+        #set( $innerCount = $innerCount + 1 )
+	  #end
+      } #if ( $count < $calculatedDataElementMap.size() ),#end
+      #set( $count = $count + 1 )
+	#end
+    }
+</script>

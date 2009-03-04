@@ -1,0 +1,38 @@
+
+<h3>$i18n.getString( "edit_indicator_type" )</h3>
+
+<form id="updateIndicatorTypeForm" action="updateIndicatorType.action" method="post" onsubmit="return validateUpdateIndicatorType()">
+
+<div>
+	<input type="hidden" id="id" name="id" value="$indicatorType.id">
+</div>
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "details" )</th>
+	</tr>
+	<tr>
+		<td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="name" name="name" value="$encoder.htmlEncode( $indicatorType.name )" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="factor">$i18n.getString( "factor" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="factor" name="factor" value="$indicatorType.factor" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="submit" value="$i18n.getString( "save" )" style="width:10em"><input type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='indicatorType.action'" style="width:10em"></td>
+	</tr>
+</table>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+
+</script>

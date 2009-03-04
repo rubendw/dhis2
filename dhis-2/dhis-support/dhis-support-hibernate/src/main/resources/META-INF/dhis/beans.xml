@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+  <bean id="org.hisp.dhis.hibernate.HibernateConfigurationProvider"
+    class="org.hisp.dhis.hibernate.DefaultHibernateConfigurationProvider"
+    init-method="initialise">
+    <property name="locationManager"
+      ref="org.hisp.dhis.external.location.LocationManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.hibernate.HibernateSessionFactoryManager"
+    class="org.hisp.dhis.hibernate.DefaultHibernateSessionFactoryManager"
+    destroy-method="close">
+    <property name="configurationProvider"
+      ref="org.hisp.dhis.hibernate.HibernateConfigurationProvider"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.hibernate.HibernateSessionManager"
+    class="org.hisp.dhis.hibernate.DefaultHibernateSessionManager">
+    <property name="hibernateSessionFactoryManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionFactoryManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.transaction.TransactionManager"
+    class="org.hisp.dhis.transaction.HibernateTransactionManager">
+    <property name="sessionManager"
+      ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+    <property name="closeSessionOnCommit" value="false"/>
+  </bean>
+  
+</beans>

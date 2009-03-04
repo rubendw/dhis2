@@ -1,0 +1,3 @@
+<h3>$i18n.getString("dhis-web-maintenance-datadictionary")</h3>
+
+<p>$i18n.getString("data_dictionary_intro")</p>

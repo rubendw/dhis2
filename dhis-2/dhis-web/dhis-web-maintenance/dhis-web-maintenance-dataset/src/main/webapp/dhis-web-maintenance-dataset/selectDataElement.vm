@@ -1,0 +1,771 @@
+
+<html> 
+<head> 
+<title>$i18n.getString( "selectdataelement" )</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<script>
+/**
+ * <p>Implements a sortable hashtable which accepts non-<code>null</code> String
+ * keys and non-<code>null</code> values.</p>
+ *
+ * <p>This object is primarily intended to address the shortcomings of using an
+ * Object as a hashtable, by managing the names of the properties which are
+ * stored in an Object.</p>
+ *
+ * <p>HashTable does not define a hashing function, as Object's built-in
+ * hashing is used for storing and retrieving items.</p>
+ *
+ * <p>Initial values are taken from any Objects passed into the constructor:
+ * if another HashTable is given as an argument, its contents will be taken.</p>
+ *
+ * @constructor
+ */
+var HashTable = function()
+{
+   /**
+    * Storage object - values are stored as properties whose names are hashtable
+    * keys.
+    *
+    * @type Object
+    * @private
+    */
+    this._store = {};
+
+   /**
+    * A list of hashtable keys.
+    *
+    * @type Array
+    * @private
+    */
+    this._keys = [];
+
+    for (var i = 0; i < arguments.length; i++)
+    {
+        this._putFromObject(arguments[i]);
+    }
+};
+
+/**
+ * Puts all properties from a given HashTable or Object into the hashtable.
+ *
+ * @param {Object} source an object whose values will be put into the hashtable.
+ * @private
+ */
+HashTable.prototype._putFromObject = function(source)
+{
+    if (source.constructor == HashTable)
+    {
+        source.forEach(function(k, v)
+        {
+            this.put(k, v);
+        }, this);
+    }
+    else
+    {
+        for (property in source)
+        {
+            if (source.hasOwnProperty(property))
+            {
+                this.put(property, source[property]);
+            }
+        }
+    }
+};
+
+/**
+ * Clears the hashtable.
+ */
+HashTable.prototype.clear = function()
+{
+    this._store = {};
+    this._keys = [];
+};
+
+/**
+ * An iterator which calls the given function, passing key, value, item index and a
+ * reference to this Hashtable for each item in the hashtable.
+ *
+ * @param {Function} callback the function to be called for each item.
+ * @param {Object} context an optional context object for the calls to block.
+ *
+ * @see "Enumerating Javascript Objects", http://dean.edwards.name/weblog/2006/07/enum/
+ */
+HashTable.prototype.forEach = function(callback, context)
+{
+    for (var i = 0, l = this._keys.length; i < l; i++)
+    {
+        callback.call(context, this._keys[i], this._store[this._keys[i]], i, this);
+    }
+};
+
+/**
+ * Retrieves the item with the given key.
+ *
+ * @param {String} key the key for the item to be retrieved.
+ * @return the item stored in this HashTable with the given key if one exists,
+ *         <code>null</code> otherwise.
+ */
+HashTable.prototype.get = function(key)
+{
+    var result = null;
+    if (typeof(this._store[key]) != "undefined")
+    {
+        result = this._store[key];
+    }
+    return result;
+};
+
+/**
+ * Determines if the hashtable contains the given key.
+ *
+ * @param {String} key the key to be searched for.
+ * @return <code>true</code> if this HashTable contains the given key,
+ *         <code>false</code> otherwise.
+ * @type Boolean
+ */
+HashTable.prototype.hasKey = function(key)
+{
+    var result = false;
+    this.forEach(function(k)
+    {
+        if (key == k)
+        {
+            result = true;
+            return true;
+        }
+    });
+    return result;
+};
+
+/**
+ * Determines if the hashtable contains the given value.
+ *
+ * @param {Object} value the value to be searched for.
+ * @return <code>true</code> if this HashTable contains the given value,
+ *         <code>false</code> otherwise.
+ * @type Boolean
+ */
+HashTable.prototype.hasValue = function(value)
+{
+    var result = false;
+    this.forEach(function(k, v)
+    {
+        if (value == v)
+        {
+            result = true;
+            return true;
+        }
+    });
+    return result;
+};
+
+/**
+ * Creates Object representations of the items in the hashtable.
+ *
+ * @return the items in the hashtable, represented as Objects with "key"
+ *         and "value" properties.
+ * @type Array
+ */
+HashTable.prototype.items = function()
+{
+    var items = [];
+    this.forEach(function(k, v)
+    {
+        items.push({"key": k, "value": v});
+    });
+    return items;
+};
+
+/**
+ * Retrieves the hashtable's keys.
+ *
+ * @return the hashtable's keys.
+ * @type Array
+ */
+HashTable.prototype.keys = function()
+{
+    var keys = [];
+    this.forEach(function(key)
+    {
+        keys.push(key);
+    });
+    return keys;
+};
+
+/**
+ * Puts an item into the hashtable.
+ *
+ * @param {String} key the key under which the item should be stored.
+ * @param {Object} value the item to be stored.
+ */
+HashTable.prototype.put = function(key, value)
+{
+    if (key == undefined || key == null || typeof(key) != "string"
+        || value == undefined || value == null)
+    {
+        return;
+    }
+
+    if (typeof(this._store[key]) == "undefined")
+    {
+        this._keys.push(key);
+    }
+
+    this._store[key] = value;
+};
+
+/**
+ * Removes an item from the hashtable and returns it.
+ *
+ * @param {String} key the key for the item to be removed.
+ * @return the item which was removed, or <code>null</code> if the item did not
+ *         exist.
+ */
+HashTable.prototype.remove = function(key)
+{
+    var result = null;
+    for (var i = 0, l = this._keys.length; i < l; i++)
+    {
+        if (key == this._keys[i])
+        {
+            result = this._store[key];
+            delete(this._store[key]);
+            this._keys.splice(i, 1);
+            break;
+        }
+    }
+    return result;
+};
+
+/**
+ * Determines the number of entries in the hashtable.
+ *
+ * @return the number of entries in this HashTable.
+ * @type Number
+ */
+HashTable.prototype.size = function()
+{
+    return this._keys.length;
+};
+
+/**
+ * Sorts the keys of the hashtable.
+ *
+ * @param {Function} comparator an optional function which will be used to sort
+ *                              the keys - if not provided, they will be sorted
+ *                              lexographically (in dictionary order).
+ */
+HashTable.prototype.sort = function(comparator)
+{
+    if (typeof(comparator) == "function")
+    {
+        this._keys.sort(comparator);
+    }
+    else
+    {
+        this._keys.sort();
+    }
+};
+
+/**
+ * Creates a String representation of the hashtable.
+ *
+ * @return a String representation of this {@link HashTable}.
+ * @type String
+ */
+HashTable.prototype.toString = function()
+{
+    var result = "{";
+    this.forEach(function(key, value, index)
+    {
+        if (index != 0)
+        {
+            result += ", ";
+        }
+        result += key + ": " + value;
+    });
+    result += "}";
+    return result;
+};
+
+/**
+ * Updates the hashtable with the values contained in a given {@link HashTable}
+ * or Object.
+ *
+ * @param {Object} source an object whose values will be put into the hashtable.
+ */
+HashTable.prototype.update = function(source)
+{
+    this._putFromObject(source);
+};
+
+/**
+ * Retrieves the hashtable's values.
+ *
+ * @return the hashtable's values.
+ * @type Array
+ */
+HashTable.prototype.values = function()
+{
+    var values = [];
+    this.forEach(function(key, value)
+    {
+        values.push(value);
+    });
+    return values;
+};
+</script>
+
+<script>
+
+// -----------------------------------------------------------------------------
+// Author:   Torgeir Lorange Ostby, torgeilo@gmail.com
+// Version:  $Id: request.js 2644 2007-01-03 13:24:56Z torgeilo $
+// -----------------------------------------------------------------------------
+
+/*
+ * Usage:
+ *
+ * function processResponse( response ) { ... }       		// Text or XML
+ * function requestFailed( httpStatusCode ) { ... }
+ *
+ * var request = new Request();
+ * request.setResponseTypeXML( 'rootElement' );       		// Optional
+ * request.sendAsPost( 'value=1&value=2' );					// Optional
+ * request.setCallbackSuccess( processResponse );     		// Optional
+ * request.setCallbackError( requestFailed );         		// Optional
+ * request.send( 'url.action?value=1' );
+ */
+
+function Request()
+{
+    var request;
+    var responseType = 'TEXT';
+    var requestMethod = 'GET';
+    var requestParameters = null;
+    var rootElementName;
+    var callbackSuccess;
+    var callbackError;
+
+    this.setResponseTypeXML = function( rootElementName_ )
+    {
+        responseType = 'XML';
+        rootElementName = rootElementName_;
+    };
+    
+    this.sendAsPost = function( requestParameters_ )
+	{
+		requestMethod = 'POST';
+		requestParameters = requestParameters_;
+	};
+
+    this.setCallbackSuccess = function( callbackSuccess_ )
+    {
+        callbackSuccess = callbackSuccess_;
+    };
+    
+    this.setCallbackError = function( callbackError_ )
+    {
+        callbackError = callbackError_;
+    };
+
+    this.send = function( url )
+    {
+        request = newXMLHttpRequest();
+
+        if ( !request )
+        {
+            window.alert( "Your browser doesn't support XMLHttpRequest" );
+            return;
+        }
+
+		request.onreadystatechange = responseReceived;
+        request.open( requestMethod, url, true );
+        request.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );		 
+        request.send( requestParameters );
+    };
+	
+    function newXMLHttpRequest()
+    {
+        if ( window.XMLHttpRequest )
+        {
+            try
+            {
+                return new XMLHttpRequest();
+            }
+            catch ( e )
+            {
+                return false;
+            }
+        }
+        else if ( window.ActiveXObject )
+        {
+            try
+            {
+                return new ActiveXObject( 'Msxml2.XMLHTTP' );
+            }
+            catch ( e )
+            {
+                try
+                {
+                    return new ActiveXObject( 'Microsoft.XMLHTTP' );
+                }
+                catch ( ee )
+                {
+                    return false;
+                }
+            }
+        }
+        
+        return false;
+    }
+
+    function responseReceived()
+    {
+        if ( request.readyState == 4 )
+        {
+        	switch( request.status )
+        	{
+        	case 200:
+                if ( callbackSuccess )
+                {
+                    if ( responseType == 'TEXT' )
+                    {
+                        callbackSuccess( request.responseText );
+                    }
+                    else
+                    {
+                        var xml = textToXML( request.responseText, rootElementName );
+
+                        callbackSuccess( xml );
+                    }
+                }
+                break;
+            case 204:
+            	if ( callbackSuccess )
+            	{
+            	    callbackSuccess( null );
+            	}
+            	break;
+            case 500:
+                var message = 'Operation failed - internal server error';
+                
+                var serverMessage = request.responseText;
+
+                if ( serverMessage )
+                {
+                    var maxLength = 512;
+                    
+                    if ( serverMessage.length > maxLength )
+                    {
+                        serverMessage = serverMessage.substring( 0, maxLength - 3 ) + '...';
+                    }
+                    
+                    if ( serverMessage.length > 0 )
+                    {
+                        message += '\n\n' + serverMessage;
+                    }
+                }
+
+                message += '\n\nThe error details are logged';
+
+                window.alert( message );
+
+                break;
+            default:
+                if ( callbackError )
+                {
+                    callbackError( request.status );
+                }
+            }
+        }
+    }
+
+    function textToXML( text, rootElementName )
+    {
+        var docImpl = document.implementation;
+        var parser, dom;
+
+        // For standards compliant browsers
+        if ( docImpl && docImpl.createLSParser )
+        {
+            parser = docImpl.createLSParser( docImpl.MODE_SYNCHRONOUS, null );
+            var input = docImpl.createLSInput();
+            input.stringData = text;
+            return parser.parse( input ).documentElement;
+        }
+
+        // For IE
+        else if ( window.ActiveXObject )
+        {
+            dom = new ActiveXObject( 'Microsoft.XMLDOM' );
+            dom.async = "false";
+            dom.loadXML( text );
+            return dom.getElementsByTagName( rootElementName )[0];
+        }
+
+        // For Mozilla
+        else if ( window.DOMParser )
+        {
+            parser = new DOMParser();
+            dom = parser.parseFromString( text, 'application\/xml' );
+            return dom.documentElement;
+        }
+
+        // No parsing abilities
+        return null;
+    }
+}
+
+</script>
+<script>
+// -----------------------------------------------------------------------------
+// Find Selected DataElement Count in the DataEntryForm
+// -----------------------------------------------------------------------------
+function findDataElementCount()
+{
+  var request = new Request();
+  request.setResponseTypeXML( 'dataSet' );
+  request.setCallbackSuccess( findDataElementCountCompleted );
+
+  // Clear the list
+  var dataElementList = document.getElementById( 'dataElementSelector' );
+  dataElementList.options.length = 0;
+
+  var requestString = 'getSelectedDataElements.action';
+  
+  var params = 'dataSetId=' + document.getElementById( 'dataSetIdField' ).value;
+        
+  params += '&designCode=' + htmlCode;
+  
+  request.sendAsPost( params );
+  request.send( requestString );
+
+  return false;
+}
+
+function findDataElementCountCompleted( dataSetElement )
+{
+  var dataElements = dataSetElement.getElementsByTagName( 'dataElements' )[0];
+  var dataElementList = dataElements.getElementsByTagName( 'dataElement' );
+
+  var dataElementSelector = document.getElementById( 'dataElementSelector' );
+  
+  for ( var i = 0; i < dataElementList.length; i++ )
+  {
+    var dataElement = dataElementList[i];
+    var name = dataElement.firstChild.nodeValue;
+    var id = dataElement.getAttribute( 'id' );	
+		
+	var option = new Option( name, id );
+	    
+    dataElementSelector.add( option, null );
+  }
+  
+  var messageContainer = document.getElementById('message');
+  if( dataElementList.length <=0 )
+  {
+  	messageContainer.innerHTML = "$i18n.getString( "no_more_elements_to_select" )";  	
+  	window.parent.SetOkButton( false ) ;
+  }
+  else
+  {
+  	messageContainer.innerHTML = " ";  	
+  	window.parent.SetOkButton( true ) ;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Get OptionCombos of a selected DataElement
+// -----------------------------------------------------------------------------
+function getOptionCombos()
+{
+  var request = new Request();
+  request.setResponseTypeXML( 'optionCombo' );
+  request.setCallbackSuccess( getOptionCombosCompleted );
+  
+  var dataElementSelector = document.getElementById( 'dataElementSelector' );
+  var dataElementId = dataElementSelector.options[dataElementSelector.selectedIndex].value;
+  
+  // Clear the OptionCombo list
+  var optionComboList = document.getElementById( 'optionComboSelector' );
+  optionComboList.options.length = 0;
+
+  var requestString = 'getOptionCombos.action';
+  
+  var params = 'dataElementId=' + dataElementId;  
+          
+  request.sendAsPost( params );
+  request.send( requestString );
+
+  return false;
+}
+
+function getOptionCombosCompleted( optionComboElement )
+{
+  var categoryOptions = optionComboElement.getElementsByTagName( 'categoryOptions' )[0];
+  var optionsList = optionComboElement.getElementsByTagName( 'categoryOption' );
+
+  var optionComboSelector = document.getElementById( 'optionComboSelector' );
+  
+  for ( var i = 0; i < optionsList.length; i++ )
+  {
+    var categoryOption = optionsList[i];
+    var name = categoryOption.firstChild.nodeValue;
+    var id = categoryOption.getAttribute( 'id' );	
+		
+	var option = new Option( name, id );
+	    
+    optionComboSelector.add( option, null );
+  }
+  
+  var messageContainer = document.getElementById('message');
+  if( (optionsList.length ==1 &&  optionsList[0]=="NULL") || (optionsList.length ==0) )
+  {
+  	messageContainer.innerHTML = "$i18n.getString( "no_more_categories_to_select" )";  	
+  	//window.parent.SetOkButton( false ) ;
+  }
+  else
+  {
+  	messageContainer.innerHTML = " ";  	
+  	window.parent.SetOkButton( true ) ;
+  }
+}
+
+</script>
+
+<script type="text/javascript"> 
+	var oEditor = window.parent.InnerDialogLoaded(); 
+	var FCK = oEditor.FCK;
+	var FCKConfig = oEditor.FCKConfig; 
+	var FCKSelectElement = oEditor.FCKSelectElement; 
+	
+	var htmlCode = "";
+	
+	// DataElement - ids, names, shortnames, types
+	var dataElementNames = new HashTable();
+	var dataElementShortNames = new HashTable();
+	var dataElementTypes = new HashTable();
+	
+	#foreach($dataElement in $dataElements)
+		var dataElementId = ""+$dataElement.id;
+		dataElementNames.put(dataElementId,"$dataElement.name");
+		dataElementShortNames.put(dataElementId,"$dataElement.shortName");
+		dataElementTypes.put(dataElementId,"$dataElement.type")
+	#end			            
+	 
+	/*
+	window.onload = function()
+	{ 
+		htmlCode = FCK.GetXHTML( FCKConfig.FormatSource );
+		findDataElementCount();
+		
+		//window.parent.SetOkButton( true ) ; // Show the "Ok" button. 
+	} 
+	*/
+	function onloadFunction()
+	{ 
+		htmlCode = FCK.GetXHTML( FCKConfig.FormatSource );
+		findDataElementCount();
+		
+		//window.parent.SetOkButton( true ); // Show the "Ok" button.	
+	} 
+
+	
+	function Ok() 
+	{ 
+	  	var dataElementSelector = document.getElementById( 'dataElementSelector' );
+	  	var optionComboSelector = document.getElementById( 'optionComboSelector' );  	  	
+	    var selectedOptionComboIds = new Array();
+	    var selectedOptionComboNames = new Array();
+	    var count = 0;
+	      	
+        if( (dataElementSelector.selectedIndex < 0) || (optionComboSelector.selectedIndex < 0) ) 
+        {
+        	alert("Please select all options (DataElement / OptionCombo)");
+        	return false;
+        }
+	  	
+	  	
+  		var dataElementId = dataElementSelector.options[dataElementSelector.selectedIndex].value;
+  		
+  		
+  		//var optionComboId = optionComboSelector.options[optionComboSelector.selectedIndex].value;
+  		//var optionComboName = optionComboSelector.options[optionComboSelector.selectedIndex].text;
+						
+		var dataElementName = dataElementNames.get(dataElementId);
+        var dataElementShortName = dataElementShortNames.get(dataElementId);
+        var dataElementType = dataElementTypes.get(dataElementId);
+        
+        for(k=0;k<optionComboSelector.options.length;k++)
+    	{
+    		if(optionComboSelector.options[k].selected)
+    		{
+    			selectedOptionComboIds[count] = optionComboSelector.options[k].value;
+    			selectedOptionComboNames[count] = optionComboSelector.options[k].text;
+    			count++;
+    		}
+        } // for loop end
+        
+        var viewBy = document.getElementById( 'viewBySelector' );
+        var viewByValue = viewBy.options[viewBy.selectedIndex].value;
+        
+        
+        
+        if(viewByValue == "deid")
+        	dispName = "[ "+dataElementId;
+        else if(viewByValue == "deshortname")
+        	dispName = "[ "+dataElementShortName;
+        else
+           	dispName = "[ "+dataElementName;
+           	
+        //var titleValue = "-- "+dataElementId + ". "+ dataElementName+" "+optionComboId+". "+optionComboName+" ("+dataElementType+") --";   	
+		//var dataEntryId = "value[" + dataElementId + "].value:value[" + optionComboId + "].value";
+		
+		FCKSelectElement.Add( dataElementId, dataElementName, dataElementType, dispName, viewByValue, selectedOptionComboIds, selectedOptionComboNames);
+		  
+		//return true ; 
+	}		
+</script>
+<style type="text/css">
+h4 {
+	font-family: arial, sans-serif;
+	font-size: 12px;
+	margin: 15px 0 5px 0;
+	}
+</style>
+</head>
+<body onload="onloadFunction()">
+	<table border="0" cellpadding="0" cellspacing="5" style="border-collapse: collapse" width="100%">
+		<tr>
+			<td>
+				<h4>$i18n.getString( "selectdataelement" )</h4>
+				<select name="dataElementSelector" id="dataElementSelector" onchange="getOptionCombos()" style="height: 150" multiple>
+				</select>
+				<div id="message" name="message">&nbsp;</div>
+			</td>
+			<td>
+				<h4>$i18n.getString( "select_optioncombo" )</h4>
+				<select name="optionComboSelector" id="optionComboSelector" style="height: 150" multiple>
+				</select>
+			</td>
+		</tr>						
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+				<h4>$i18n.getString( "view_as" )</h4>
+				<select name="viewBySelector" id="viewBySelector">		
+					<option value="deid">$i18n.getString( "id" )</option>
+					<option value="dename">$i18n.getString( "name" )</option>
+					<option value="deshortname" selected>$i18n.getString( "short_name" )</option> 	
+				</select>
+			</td>
+			<td>&nbsp;</td>
+		</tr>									
+		<input type="hidden" name="dataSetIdField" id="dataSetIdField" value="$dataSet.id" />
+</body>
+</html>

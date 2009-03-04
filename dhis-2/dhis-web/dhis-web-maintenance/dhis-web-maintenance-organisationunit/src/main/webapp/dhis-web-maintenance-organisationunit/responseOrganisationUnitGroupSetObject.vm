@@ -1,0 +1,8 @@
+<organisationUnitGroupSet>
+	<id>$organisationUnitGroupSet.id</id>
+	<name>$encoder.xmlEncode( $organisationUnitGroupSet.name )</name>
+	<description>$encoder.xmlEncode( $organisationUnitGroupSet.description )</description>
+	<compulsory>$organisationUnitGroupSet.compulsory</compulsory>
+	<exclusive>$organisationUnitGroupSet.exclusive</exclusive>
+	<memberCount>$memberCount</memberCount>
+</organisationUnitGroupSet>

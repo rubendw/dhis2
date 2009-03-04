@@ -1,0 +1,70 @@
+
+
+
+<html>
+<head>
+<title>Chart Result Screen</title>
+<link type="text/css" rel="stylesheet" href="css/StylesForTags.css">
+<script>
+  var indexForChart = 0;
+  var chartNamesToView = new Array();
+  chartNamesToView[0] = new Array("Nothing");
+  chartNamesToView[1] = new Array("Vertical3DBarChart","Horizontal3DBarChart","LineChart","LineAndBarChart","DualAxisChart","AreaChart","PieChart3D");	
+  chartNamesToView[2] = new Array("Vertical3DBarChart","Horizontal3DBarChart","LineChart","LineAndBarChart","DualAxisChart","AreaChart");  							  						
+  	
+  function nextCharttoView()
+   {         
+     indexForChart++;
+     var chartType = 0;
+     var tempICount = $selectedServiceList.size();
+     if(tempICount==0)  chartType=0;
+     else if(tempICount==1) chartType=1;
+     else chartType=2;
+   
+     if(indexForChart >= chartNamesToView[chartType].length) indexForChart=0;
+     iframeForChart.location.href = "generateChart.action?currentChart="+chartNamesToView[chartType][indexForChart];
+   }
+   
+   function prevCharttoView()
+   {      
+     indexForChart--;
+     var chartType = 0;
+     var tempICount = $selectedServiceList.size();
+     if(tempICount==0)  chartType=0;
+     else if(tempICount==1) chartType=1;
+     else chartType=2;
+   
+     if(indexForChart < 0) indexForChart=chartNamesToView[chartType].length-1;
+     iframeForChart.location.href = "generateChart.action?currentChart="+chartNamesToView[chartType][indexForChart];     
+   }   
+   
+</script>
+</head>
+<body >
+    <div align="right">               
+		<input type="button" name="prevChartButton" id="prevChartButton" style="width: 40; height: 35; background-image: url('images/moveLeft.gif'); background-repeat: no-repeat; background-position: center; " onClick="prevCharttoView()" title="Previous">
+		<input type="button" name="nextChartButton" id="nextChartButton" style="width: 40; height: 35; background-image: url('images/moveRight.gif'); background-repeat: no-repeat; background-position: center;" onClick="nextCharttoView()" title="Next">		         
+    </div> 
+    <br><br>
+    <div align="center" class="TableHeadingCellStyles"><b>$reportTitle</b></div>
+    
+    <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-style: dotted" bordercolor="#111111" width="100%">
+        <tr>
+            <td class="TableHeadingCellStyles" style="border-style: dotted; border-width: 1"><b>Disease Name</b></td>
+       	    <td class="TableHeadingCellStyles" align="center" style="border-style: dotted; border-width: 1"><b>Value</b></td>				     
+        </tr>
+       	#set($count1 = 0)                         	
+        #foreach($data in $dataList)                    
+            <tr>
+                <td class="TableHeadingCellStyles" style="border-style: dotted; border-width: 1">$diseaseList.get($count1)</td>
+   		     	<td class="TableDataCellStyles" align="center" style="border-style: dotted; border-width: 1">$data</td>               		             
+               	#set($count1 = $count1 + 1)
+            </tr>    
+        #end	
+    </table>    
+   	<br>
+   	<div align="center">
+   		<iframe name="iframeForChart" id="iframeForChart" src="generateChart.action?currentChart=Vertical3DBarChart" width="850px" height="550px" scrolling=auto frameborder="0"></iframe>
+   	</div>       	   
+ </body>
+ </html>   

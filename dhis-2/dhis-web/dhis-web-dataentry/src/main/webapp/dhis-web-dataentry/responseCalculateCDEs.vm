@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataValues>
+#foreach ( $dataElementId in $cdeValueMap.keySet() )
+  <dataValue dataElementId="$dataElementId">$cdeValueMap.get($dataElementId)</dataValue>
+#end
+</dataValues>

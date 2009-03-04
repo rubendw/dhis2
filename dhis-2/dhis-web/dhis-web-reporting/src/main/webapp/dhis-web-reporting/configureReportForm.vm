@@ -1,0 +1,32 @@
+
+<h3>$i18n.getString( 'report_configuration' )</h3>
+
+<form action="setReportConfiguration.action" method="post">
+
+<table>
+    <tr>
+        <th colspan="2">$i18n.getString( "details" )</th>
+    </tr>
+    <tr>
+        <td><label for="home">$i18n.getString( "home" )</label></td>
+        <td><input type="text" id="home" name="home" style="width:30em" onchange="homeChanged()" value="$!reportConfiguration.home"></td>
+    </tr>
+    <tr>
+        <td><label for="directory">$i18n.getString( "directory" )</label></td>
+        <td><input type="text" id="directory" name="directory" style="width:30em" value="$!reportConfiguration.directory"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="$i18n.getString( 'save' )" style="width:15em"><input
+                   type="button" value="$i18n.getString( 'cancel' )" style="width:15em" 
+                   onclick="window.location.href='displayViewReportForm.action'"></td>
+    </tr>
+</table>
+
+</form>
+
+<span id="info">$i18n.getString( "home_explanation" ). $i18n.getString( "directory_explanation" ).</span>
+
+#if ( $message )
+    <span id="message" style="display:block">$!message</span>
+#end

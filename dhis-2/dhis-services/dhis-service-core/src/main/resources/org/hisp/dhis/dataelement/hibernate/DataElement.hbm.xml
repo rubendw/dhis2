@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.dataelement.DataElement" table="dataelement">
+    
+    <id name="id" column="dataelementid">
+      <generator class="native"/>
+    </id>
+    
+    <property name="uuid">
+      <column name="uuid" length="40"/>
+    </property>
+		
+    <property name="name">
+      <column name="name" not-null="true" unique="true" length="160"/>
+    </property>
+
+    <property name="alternativeName">
+      <column name="alternativename" not-null="false" unique="true" length="160"/>
+    </property>
+    
+    <property name="shortName">
+      <column name="shortname" not-null="true" unique="true" length="25"/>
+    </property>
+
+    <property name="code">
+      <column name="code" not-null="false" unique="true" length="100"/>
+    </property>
+    
+    <property name="description" type="text"/>
+
+    <property name="active"/>
+
+    <property name="type" column="valuetype" length="16" not-null="true"/>
+		
+    <property name="aggregationOperator" not-null="true" column="aggregationtype" length="16"/>
+
+    <set name="children" inverse="true" cascade="save-update">
+      <key column="parentid"/>
+      <one-to-many class="org.hisp.dhis.dataelement.DataElement"/>
+    </set>
+
+    <many-to-one name="parent" class="org.hisp.dhis.dataelement.DataElement" 
+      column="parentid" foreign-key="fk_dataelement_parentid"/>
+    
+    <many-to-one name="extended" class="org.hisp.dhis.datadictionary.ExtendedDataElement"
+      column="extendeddataelementid" unique="true" cascade="all" foreign-key="fk_dataelement_extendeddataelementid"/>	  
+	  	  
+    <many-to-one name="categoryCombo" class="org.hisp.dhis.dataelement.DataElementCategoryCombo" 
+      column="categorycomboid" foreign-key="fk_dataelement_categorycomboid"/>
+      
+  </class>
+</hibernate-mapping>

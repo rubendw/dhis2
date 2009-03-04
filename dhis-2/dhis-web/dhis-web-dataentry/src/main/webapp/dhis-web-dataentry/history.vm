@@ -1,0 +1,69 @@
+#set( $width = 40 * $dataElementHistory.historyLength )
+#set( $lastIndex = $dataElementHistory.historyLength - 1 )
+#set( $average = $dataElementHistory.historyPoints.get( $lastIndex ).average )
+
+#if( $dataElementHistory.minLimit )
+	#set( $minLimit = $dataElementHistory.minLimit )
+#else
+	#set( $minLimit = $encoder.htmlEncode( $i18n.getString( "not_set" ) ) )
+#end
+
+#if( $dataElementHistory.maxLimit )
+	#set( $maxLimit = $dataElementHistory.maxLimit )
+#else
+	#set( $maxLimit = $encoder.htmlEncode( $i18n.getString( "not_set" ) ) )
+#end
+
+#if( $isHistoryValid )
+	<h2>$encoder.htmlEncode( $i18n.getString( "dataelement_history" ) )</h2>
+	<h4>$encoder.htmlEncode( $dataElementHistory.dataElement.shortName )</h4>
+#else
+	<h2>$encoder.htmlEncode( $i18n.getString( "dataelement_history" ) )</h2>
+	<h4>$encoder.htmlEncode( $i18n.getString( "history_not_valid" ) )</h4>	
+#end	
+
+<table>
+	<tr>
+		<td style="background-color:#ff0000">&nbsp;</td>
+		<td>$encoder.htmlEncode( $i18n.getString( "max_limit" ) ) </td>
+		<td><input type="text" id="maxLimit" style="width:10em" value="$maxLimit"
+			#if( $auth.hasAccess( "dhis-web-dataentry", "saveMinMaxLimits" ) && $auth.hasAccess( "dhis-web-dataentry", "removeMinMaxLimits" ))
+				onchange="saveMaxLimit( $dataElementHistory.organisationUnit.id, $dataElementHistory.dataElement.id )"
+			#else disabled="disabled" #end onfocus="this.select()"></td>
+	</tr>
+	<tr>
+		<td style="background-color:#008000">&nbsp;</td>
+		<td>$encoder.htmlEncode( $i18n.getString( "min_limit" ) ) </td>
+		<td><input type="text" id="minLimit" style="width:10em" value="$minLimit"
+			#if( $auth.hasAccess( "dhis-web-dataentry", "saveMinMaxLimits" ) && $auth.hasAccess( "dhis-web-dataentry", "removeMinMaxLimits" ))
+			   onchange="saveMinLimit( $dataElementHistory.organisationUnit.id, $dataElementHistory.dataElement.id )"
+			#else disabled="disabled" #end onfocus="this.select()"></td>
+	</tr>
+	<tr>
+		<td style="background-color:#0080ff">&nbsp;</td>
+		<td>$encoder.htmlEncode( $i18n.getString( "average" ) ) </td>
+		<td><script type="text/javascript">document.write( ${average}.toFixed(1) );</script></td>
+	</tr>
+</table>
+
+<div id="canvas" style="position:relative;width:${width}px;height:300px;border:1px solid black;background-color:#dddddd;margin-top:1em"></div>
+
+<p><input type="button" value="$encoder.htmlEncode( $i18n.getString( "close" ) )" onclick="window.opener.location.reload();window.close()"></p>
+
+<script type="text/javascript">
+
+var historyLength = $dataElementHistory.historyLength;
+var maxValue = $dataElementHistory.maxValue;
+var minLimit = #if( $dataElementHistory.minLimit ) $dataElementHistory.minLimit #else Number.NaN #end;
+var maxLimit = #if( $dataElementHistory.maxLimit ) $dataElementHistory.maxLimit #else Number.NaN #end;
+
+var historyPoints = new Array( $dataElementHistory.historyLength );
+#set( $i = 0 )
+#foreach( $historyPoint in $dataElementHistory.historyPoints )
+   historyPoints[$i] = [#if( $historyPoint.period ) '$format.formatPeriod( $historyPoint.period )' #else '-' #end, #if( $historyPoint.value ) $historyPoint.value #else Number.NaN #end, $historyPoint.average];
+   #set( $i = $i + 1 )
+#end
+
+createChart();
+
+</script>

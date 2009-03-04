@@ -1,0 +1,33 @@
+<h3>$i18n.getString( "data_element_order" )</h3>
+
+<p>
+	<input type="button" value="$i18n.getString( "close" )" onclick="closeWindow()">
+    <input type="button" value="$i18n.getString( "order_by_entry" )" onclick="window.location.href='orderDataElementsByEntry.action'">
+    <input type="button" value="$i18n.getString( "order_by_name" )" onclick="window.location.href='orderDataElementsByName.action'">
+    <input type="button" value="$i18n.getString( "order_by_code" )" onclick="window.location.href='orderDataElementsByCode.action'">
+    <input type="button" value="$i18n.getString( "reset_order_inherit" )" onclick="window.location.href='resetDataElementOrder.action'">
+</p>
+
+<table>
+	<tr>
+		<th>$i18n.getString( "name" )</th>
+		<th>$i18n.getString( "code" )</th>
+		<th>$i18n.getString( "move" )</th>
+	</tr>
+	#set( $mark = 0 )
+	#foreach( $dataElement in $dataElements )
+		#if( $mark == 1 )
+			#set( $mark = 0 )
+		#else
+			#set( $mark = 1 )
+		#end
+	<tr #if( $mark == 0 ) style="background-color:#dddddd" #end>
+		<td>$encoder.htmlEncode( $dataElement.name )</td>
+		<td>$!encoder.htmlEncode( $dataElement.code )</td>
+		<td>
+			<a href="moveDataElementUp.action?dataElementId=$dataElement.id"><img src="../images/move_up.png" alt="$i18n.getString( "move_up" )"></a>
+			<a href="moveDataElementDown.action?dataElementId=$dataElement.id"><img src="../images/move_down.png" alt="$i18n.getString( "move_down" )"></a>
+		</td>
+	</tr>
+	#end
+</table>

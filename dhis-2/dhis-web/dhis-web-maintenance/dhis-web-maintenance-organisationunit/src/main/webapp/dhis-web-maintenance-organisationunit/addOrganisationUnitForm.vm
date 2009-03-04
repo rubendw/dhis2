@@ -1,0 +1,56 @@
+
+<h3>$i18n.getString( "create_new_org_unit" )</h3>
+
+<form id="addOrganisationUnitForm" action="addOrganisationUnit.action" method="post" onsubmit="return validateAddOrganisationUnit()">
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "details" )</th>
+	</tr>
+	<tr>
+		<td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="name" name="name" onchange="nameChanged()" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="shortName">$i18n.getString( "short_name" )</label></td>
+		<td><input type="text" id="shortName" name="shortName" maxlength="20" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="organisationUnitCode">$i18n.getString( "org_unit_code" )</label></td>
+		<td><input type="text" id="organisationUnitCode" name="organisationUnitCode" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="openingDate">$i18n.getString( "opening_date" ) ($i18n.getString( "format.date.label" )) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="openingDate" name="openingDate" value="$format.formatDate( $defaultDate )" style="width:20em"></td>
+		<td><img src="../images/calendar_icon.gif" width="16" height="16" id="getOpeningDate" style="cursor: pointer;" title="$i18n.getString("date_selector")" onmouseover="this.style.background='orange';" onmouseout="this.style.background=''" alt="$i18n.getString( "opening_date" )"></td>
+	</tr>
+	<script type="text/javascript">
+        Calendar.setup({
+            inputField     :    "openingDate",      // id of the input field
+            ifFormat       :    "$i18n.getString("format.date.label")",       // format of the input field
+            button         :    "getOpeningDate"   // trigger for the calendar (button ID)
+        });
+  	</script>
+	<tr>
+		<td><label for="comment">$i18n.getString( "comment" )</label></td>
+		<td><textarea id="comment" name="comment" style="width:20em; height:5em" rows="5" cols="20"></textarea></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="submit" value="$i18n.getString( "add" )" style="width:10em"><input type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='organisationUnit.action'" style="width:10em"></td>
+	</tr>
+</table>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+	var previousName = '';
+
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+	var adding_the_org_unit_failed = '$encoder.jsEscape( $i18n.getString( "adding_the_org_unit_failed" ) , "'" )';
+</script>

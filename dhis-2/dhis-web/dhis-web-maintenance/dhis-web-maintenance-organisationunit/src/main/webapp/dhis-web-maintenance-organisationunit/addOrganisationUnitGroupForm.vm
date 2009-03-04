@@ -1,0 +1,35 @@
+
+<h3>$i18n.getString( "crease_new_org_unit_group" )</h3>
+
+<form id="addOrganisationUnitGroupForm" action="addOrganisationUnitGroup.action" method="post" onsubmit="return validateAddOrganisationUnitGroup()">
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "details" )</th><th>$i18n.getString( "members_of_the_group" )</th>
+	</tr>
+	<tr>
+		<td style="vertical-align:top"><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td style="vertical-align:top"><input type="text" id="name" name="name" style="width:20em"></td>
+		<td style="vertical-align:top"><div id="selectionTree" style="width:30em;height:375px;overflow:auto;border:1px solid #cccccc"></div></td>
+	</tr>
+	<tr>
+		<td colspan="3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="3" style="text-align:center"><input type="submit" value="$i18n.getString( "add" )" style="width:10em"><input type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='organisationUnitGroup.action'" style="width:10em"></td>
+	</tr>
+</table>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+	selectionTreeSelection.setMultipleSelectionAllowed( true );
+	selectionTree.buildSelectionTree();
+
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+	var adding_the_org_unit_group_failed = '$encoder.jsEscape( $i18n.getString( "adding_the_org_unit_group_failed" ) , "'" )';
+</script>

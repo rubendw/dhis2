@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="groupSet">
+	
+	<!-- TypeAlias -->
+
+	<typeAlias alias="organisationUnitGroupSet" type="org.hisp.dhis.organisationunit.OrganisationUnitGroupSet"/>
+	<typeAlias alias="booleanTypeHandler" type="org.hisp.dhis.importexport.dhis14.file.typehandler.BooleanTypeHandler"/>
+		
+	<!-- ResultMap -->
+	
+	<resultMap class="organisationUnitGroupSet" id="groupSetResultMap">
+		<result property="id" column="OrgUnitGroupSetID"/>
+		<result property="name" column="OrgUnitGroupSetName"/>
+		<result property="description" column="OrgUnitGroupSetDescription"/>
+		<result property="compulsory" column="OrgUnitGroupSetCompulsory" typeHandler="booleanTypeHandler"/>
+		<result property="exclusive" column="OrgUnitGroupSetExclusive" typeHandler="booleanTypeHandler"/>
+	</resultMap>
+	
+	<!-- Statement -->
+		
+	<select id="getOrganisationUnitGroupSets" resultMap="groupSetResultMap">
+		SELECT * FROM OrgUnitGroupSet
+	</select>
+
+</sqlMap>

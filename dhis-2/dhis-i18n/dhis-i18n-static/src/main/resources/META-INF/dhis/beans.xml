@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="org.hisp.dhis.i18n.locale.LocaleManager"
+    class="org.hisp.dhis.i18n.locale.UserSettingLocaleManager">
+    <property name="userSettingService">
+      <ref bean="org.hisp.dhis.user.UserSettingService"/>
+    </property>
+    <property name="userSettingKey">
+      <value>currentLocale</value>
+    </property>
+    <property name="defaultLocale">
+      <value>en_GB</value>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.i18n.resourcebundle.ResourceBundleManager"
+    class="org.hisp.dhis.i18n.resourcebundle.DefaultResourceBundleManager">
+    <property name="globalResourceBundleName">
+      <value>i18n_global</value>
+    </property>
+    <property name="specificResourceBundleName">
+      <value>i18n_module</value>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.i18n.I18nManager"
+    class="org.hisp.dhis.i18n.DefaultI18nManager">
+    <property name="resourceBundleManager">
+      <ref bean="org.hisp.dhis.i18n.resourcebundle.ResourceBundleManager"/>
+    </property>
+    <property name="localeManager">
+      <ref local="org.hisp.dhis.i18n.locale.LocaleManager"/>
+    </property>
+  </bean>
+  
+</beans>

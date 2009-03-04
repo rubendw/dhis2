@@ -1,0 +1,147 @@
+
+<html>
+	    <head>
+		        <title>Graphical Analyser</title>
+        
+        <script>												           
+            // OrganisationUnit ids and its Names
+			            var orgUnits = new HashTable();
+			            #foreach($orgUnit in $orgUnitList)
+			                var orgUnitId = ""+$orgUnit.getId();
+			                orgUnits.put(orgUnitId,"$orgUnit.getShortName()");
+			            #end			 
+			            
+			            function remOUFunction()
+		 	           {		 		
+		                		var index = document.generateForm.orgUnitListCB.options.length;
+    			            var i=0;
+    			            for(i=index-1;i>=0;i--)
+    			            {
+    			            	    if(document.generateForm.orgUnitListCB.options[i].selected) 
+    					                    document.generateForm.orgUnitListCB.options[i] = null;	
+    			            }    					 		
+		 	           }
+		 	           
+		 	           function formValidations()
+		 	           {
+                				var selDEListText  = document.generateForm.selectedDataElements.options[0].text;
+                				var selDEListIndex = document.generateForm.selectedDataElements.options.length;				
+                				var ouListIndex  = document.generateForm.orgUnitListCB.options.length;
+				                var sDateIndex    = document.generateForm.sDateLB.selectedIndex;
+                var 				eDateIndex    = document.generateForm.eDateLB.selectedIndex;			
+                var 				sDate = document.generateForm.sDateLB.options[sDateIndex].text;
+                var 				eDate = document.generateForm.eDateLB.options[eDateIndex].text;
+				
+                				if(selDEListText == null || selDEListText == "") {alert("Please Select DataElement(s)");return false;}
+                				else if(ouListIndex <= 0) {alert("Please Select Orgunit(s)");return false;}
+                				else if(sDateIndex < 0) {alert("Please Select Starting Period");return false;}
+                				else if(eDateIndex < 0) {alert("Please Select Ending Period");return false;}
+                				else if(sDate > eDate) {alert("Starting Date is Greater");return false;}
+																			
+                				var k=0;
+                				for(k=0;k<selDEListIndex;k++)
+           	     	{    	       		
+    	                		document.generateForm.selectedDataElements.options[k].selected = true;    	     
+             	   } // for loop end             	
+             	   for(k=0;k<ouListIndex;k++)
+    	     	       {    	       		
+    	       		         document.generateForm.orgUnitListCB.options[k].selected = true;    	     
+             	   } // for loop end
+             	
+             	   				var sWidth = 850;
+                				var sHeight = 650;
+                				var LeftPosition=(screen.width)?(screen.width-sWidth)/2:100;
+                				var TopPosition=(screen.height)?(screen.height-sHeight)/2:100;
+
+                				window.open('','chartWindow1','width=' + sWidth + ', height=' + sHeight + ', ' + 'left=' + LeftPosition + ', top=' + TopPosition + ', ' + 'location=no, menubar=no, ' +  'status=no, toolbar=no, scrollbars=yes, resizable=yes');
+         	             	
+                				return true;
+		             	} // formValidations Function End	           			            
+        </script>
+	    </head>
+	    <body>
+	        <h1>$i18n.getString( "ta_tabular_analyser" )</h1>
+	        <hr />
+	        <br>
+
+        	<form id="generateForm" name="generateForm" action="tabularAnalysisResult.action" method="post" onsubmit="return formValidations()" target="chartWindow1">	
+            		<table align="center" style=" border-collapse: collapse; margin-top: 0;" cellpadding="0" cellspacing="0" width="730" border=0>
+                <colgroup>
+                    		<col width="325">
+  		                  <col width="80">
+ 		                   <col width="325">
+  	              </colgroup>
+                			<tr>
+    			                <td class="NormalB">$i18n.getString( "ga_filter_by_degroup" ) <br>
+                    				    <select id="dataElementGroupId" name="dataElementGroupId" style="width:325px" onchange="getDataElements()">
+                            <option value="$ALL">[ Select DataElementGroup / All ]</option>				
+                            				#foreach ( $group in $dataElementGroups )
+            					                    <option value="$group.id" title="$group.name">$group.name</option>
+        				                    #end
+     		                   	</select>
+                    </td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">&nbsp;</td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+  			              <tr>
+    			                <td class="NormalB">$i18n.getString( "ga_available_delist" ) <br>
+                        				<select multiple size="5" id="availableDataElements" name="availableDataElements" style="width:325px; height:150px" ondblclick="moveSelectedById( 'availableDataElements', 'selectedDataElements' )">
+				                            #foreach ( $element in $dataElements )
+                                				<option value="$element.id" title="$element.name">$element.name</option>
+    				                        #end
+			                        </select>
+				                    </td>
+    			                <td class="NormalB" align="center">
+    			 								                   <input type="button" value="&gt;" style="width:40px" onclick="moveSelectedById( 'availableDataElements', 'selectedDataElements' )"><br>
+                        			<input type="button" value="&lt;" style="width:40px" onclick="moveSelectedById( 'selectedDataElements', 'availableDataElements' )"><br>
+                        			<input type="button" value="&gt;&gt;" style="width:40px" onclick="moveAllById( 'availableDataElements', 'selectedDataElements' )"><br>
+                        			<input type="button" value="&lt;&lt;" style="width:40px" onclick="moveAllById( 'selectedDataElements', 'availableDataElements' )">		
+                    			</td>
+    			                <td class="NormalB">
+    			                    $i18n.getString( "ga_selected_delist" ) <br>
+    				                    <select multiple id="selectedDataElements" name="selectedDataElements" style="width:325px; height:150px" ondblclick="moveSelectedById( 'selectedDataElements', 'availableDataElements' )">
+                        				</select>
+                    			</td>
+  			              </tr>
+  			              <tr>
+    			                <td class="NormalB">&nbsp;<br><br></td>   
+                    			<td class="NormalB">&nbsp;<br><br></td>
+                    			<td class="NormalB">&nbsp;<br><br></td>
+                			</tr>
+  			              <tr>
+    		                	<td class="NormalB">$i18n.getString( "ga_orgunit" ) <br>
+                        					<select name="orgUnitListCB" id="orgUnitListCB" multiple style="width: 325px;height: 150px">
+                        					</select>
+                    				</td>
+                    			<td class="NormalB" align="center">
+                    			    <input type="button" name="remOUButton" id="remOUButton" value=" > " onclick="remOUFunction()" />
+                    			</td>
+                    			<td class="NormalB" align= "center">
+                        				$i18n.getString( "ga_from" ) <br>
+                        				<select id="sDateLB" name="sDateLB">
+                        				#foreach($period in $monthlyPeriods)
+                            <option value="$period.id">$simpleDateFormat.format($period.startDate)</option>
+                        #end
+                        				</select>			  									
+                        							<br><br>												
+                        							$i18n.getString( "ga_to" ) <br>
+                        							<select id="eDateLB" name="eDateLB">
+                        												#foreach($period in $monthlyPeriods)
+                            <option value="$period.id">$simpleDateFormat.format($period.endDate)</option>
+                        #end			
+                        				</select>
+			  				                      <br><br><br><br>
+			                        				<input name="AddValidation" id="AddValidation" value="$i18n.getString( 'ta_viewreport' )" type="submit" style="width: 120; height: 25; font-family:Arial; font-weight:bold; color:#000000">
+                        							<input type="hidden" name="ouNameTB" id="ouNameTB">
+                        							<input type="hidden" name="ouIDTB" id="ouIDTB">			  				
+                   				 </td>
+                			</tr>
+		            </table>
+	        </form>	
+	    </body>
+</html>

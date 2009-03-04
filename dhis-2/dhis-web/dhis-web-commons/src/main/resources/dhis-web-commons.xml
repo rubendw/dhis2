@@ -1,0 +1,271 @@
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+  "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+  <include file="dhis-support-webwork.xml"/>
+  
+  <!-- DHIS Web Commons -->
+  
+  <package name="dhis-web-commons" extends="dhis-support-webwork" namespace="/dhis-web-commons">
+
+    <interceptors>
+      <interceptor name="portalParamsInterceptor"
+        class="org.hisp.dhis.webportal.interceptor.WebWorkPortalParamsInterceptor"/>
+      <interceptor name="portalModuleInterceptor"
+        class="org.hisp.dhis.webportal.interceptor.WebWorkPortalModuleInterceptor"/>
+      <interceptor name="portalMenuInterceptor"
+        class="org.hisp.dhis.webportal.interceptor.WebWorkPortalMenuInterceptor"/>
+      <interceptor name="organisationUnitTreeInterceptor"
+        class="org.hisp.dhis.ouwt.interceptor.OrganisationUnitTreeInterceptor"/>
+      <interceptor name="portalUserInterceptor"
+        class="org.hisp.dhis.webportal.interceptor.WebWorkPortalUserInterceptor"/>
+      <interceptor name="securityInterceptor"
+        class="org.hisp.dhis.security.intercept.WebWorkSecurityInterceptor"/>
+      <interceptor name="execAndWait"
+        class="org.hisp.dhis.hibernate.interceptor.OpenSessionExecuteAndWaitInterceptor"/>
+      
+      <interceptor-stack name="commonInterceptors">
+        <interceptor-ref name="static-params"/>
+        <interceptor-ref name="params"/>
+        <interceptor-ref name="chain"/>
+        <interceptor-ref name="i18nInterceptor"/>
+        <!--
+        The securityInterceptor is put after the i18nInterceptor so that the
+        access denied error pages can use internationalisation.
+        -->
+        <interceptor-ref name="securityInterceptor"/>
+        <interceptor-ref name="sortOrderInterceptor"/>
+        <interceptor-ref name="displayPropertyInterceptor"/>
+        <interceptor-ref name="dataDictionaryModeInterceptor"/>
+        <interceptor-ref name="systemSettingInterceptor"/>
+        <interceptor-ref name="styleInterceptor"/>
+        <interceptor-ref name="portalParamsInterceptor"/>
+        <interceptor-ref name="portalMenuInterceptor"/>
+        <interceptor-ref name="portalUserInterceptor"/>
+      </interceptor-stack>
+      
+      <interceptor-stack name="exceptionStack">
+        <interceptor-ref name="exceptionInterceptor"/>
+        <interceptor-ref name="commonInterceptors"/>
+      </interceptor-stack>
+      
+      <interceptor-stack name="transactionStack">
+        <interceptor-ref name="exceptionStack"/>
+        <interceptor-ref name="transactionInterceptor"/>
+      </interceptor-stack>
+      
+      <interceptor-stack name="fileUploadStack">
+        <interceptor-ref name="exceptionInterceptor"/>
+        <interceptor-ref name="fileUpload">
+          <!-- Might also be defined in the form -->
+          <param name="allowedTypes">text/xml,application/zip,text/plain,application/x-zip-compressed,application/x-zip,application/octet-stream,application/x-compress,application/x-compressed,application/x-download,multipart/x-zip,text/pdf,application/pdf,image/svg+xml</param>
+        </interceptor-ref>
+        <interceptor-ref name="commonInterceptors"/>
+      </interceptor-stack>
+      
+      <interceptor-stack name="organisationUnitTreeStack">
+        <interceptor-ref name="transactionStack"/>
+        <interceptor-ref name="organisationUnitTreeInterceptor"/>
+      </interceptor-stack>
+    </interceptors>
+    
+    <default-interceptor-ref name="exceptionStack"/>
+    
+    <global-results>
+      <result name="exceptionDefault" type="velocity">/exception.vm</result>
+      <result name="accessDenied" type="velocity">/accessDenied.vm</result>
+      <result name="plainTextError" type="plainTextErrorResult">
+        <param name="parse">true</param>
+        <param name="message">${exception.class.name}: ${exception.message}</param>
+      </result>
+    </global-results>
+    
+  </package>
+  
+  <!-- Organisation Unit Selection Tree -->
+  
+  <package name="dhis-web-commons-oust" extends="dhis-web-commons" namespace="/dhis-web-commons/oust">
+    
+    <action name="expandSubtree" class="org.hisp.dhis.oust.action.ExpandSubtreeAction">
+      <result name="success" type="velocity">/dhis-web-commons/ouwt/responseExpand.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="getExpandedTree" class="org.hisp.dhis.oust.action.GetExpandedTreeAction">
+      <result name="success" type="velocity"> /dhis-web-commons/ouwt/responseTree.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="setorgunit" class="org.hisp.dhis.oust.action.SetSelectedOrganisationUnitAction">
+      <result name="success" type="velocity"> /dhis-web-commons/ouwt/responseSelect.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="addorgunit" class="org.hisp.dhis.oust.action.AddSelectedOrganisationUnitAction">
+      <result name="success" type="velocity"> /dhis-web-commons/ouwt/responseSelect.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="removeorgunit"
+      class="org.hisp.dhis.oust.action.RemoveSelectedOrganisationUnitAction">
+      <result name="success" type="velocity"> /dhis-web-commons/ouwt/responseSelect.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+  </package>
+  
+  <!-- Organisation Unit Web Tree -->
+  
+  <package name="dhis-web-commons-ouwt" extends="dhis-web-commons" namespace="/dhis-web-commons/ouwt">
+    
+    <action name="expandSubtree" class="org.hisp.dhis.ouwt.action.ExpandSubtreeAction">
+      <result name="success" type="velocity"> /dhis-web-commons/ouwt/responseExpand.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="collapseSubtree" class="org.hisp.dhis.ouwt.action.CollapseSubtreeAction">
+      <result name="success" type="velocity"> /dhis-web-commons/ouwt/responseCollapse.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="getExpandedTree" class="org.hisp.dhis.ouwt.action.GetExpandedTreeAction">
+      <result name="success" type="velocity"> /dhis-web-commons/ouwt/responseTree.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="setorgunit" class="org.hisp.dhis.ouwt.action.SetSelectedOrganisationUnitAction">
+      <result name="success" type="velocity"> /dhis-web-commons/ouwt/responseSelect.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="addorgunit" class="org.hisp.dhis.ouwt.action.AddSelectedOrganisationUnitAction">
+      <result name="success" type="velocity"> /dhis-web-commons/ouwt/responseSelect.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="removeorgunit"
+      class="org.hisp.dhis.ouwt.action.RemoveSelectedOrganisationUnitAction">
+      <result name="success" type="velocity"> /dhis-web-commons/ouwt/responseSelect.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+  </package>
+  
+  <!-- Menu -->
+  
+  <package name="dhis-web-commons-menu" extends="dhis-web-commons" namespace="/dhis-web-commons/menu">
+    
+    <action name="setMenuVisible" class="org.hisp.dhis.webportal.menu.action.SetMenuVisibleAction">
+      <result name="success" type="httpheader">
+        <param name="status">204</param>
+      </result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="setMenuHidden" class="org.hisp.dhis.webportal.menu.action.SetMenuHiddenAction">
+      <result name="success" type="httpheader">
+        <param name="status">204</param>
+      </result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+
+  </package>
+  
+  <!-- Security -->
+  
+  <package name="dhis-web-commons-security" extends="dhis-web-commons" namespace="/dhis-web-commons-security">
+    
+    <action name="loggedIn" class="org.hisp.dhis.security.action.LoggedInAction">
+      <result name="success" type="redirect">/</result>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+  </package>
+
+  <!-- i18n -->
+
+  <package name="dhis-web-commons-i18n" extends="dhis-web-commons" namespace="/dhis-web-commons">
+
+    <action name="i18n" class="org.hisp.dhis.i18n.action.I18nAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-commons/i18n/translate.vm</param>
+      <param name="javascripts">../dhis-web-commons/i18n/i18n.js,../dhis-web-commons/lists/lists.js</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+
+    <action name="translate" class="org.hisp.dhis.i18n.action.TranslateAction">
+      <result name="success" type="velocity">/dhis-web-commons/i18n/goback.vm</result>
+    </action>
+
+		<action name="getTranslations" class="org.hisp.dhis.i18n.action.GetTranslationsAction">
+			<result name="success" type="velocity">/dhis-web-commons/i18n/responseTranslations.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+		</action>
+    
+  </package>
+  
+  <!-- Common actions -->
+  
+  <package name="dhis-web-commons-ajax" extends="dhis-web-commons" namespace="/dhis-web-commons-ajax">
+    
+		<action name="getDataElements" class="org.hisp.dhis.commons.action.GetDataElementsAction">
+			<result name="success" type="velocity">/dhis-web-commons/ajax/responseDataElement.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+		</action>
+		
+		<action name="getDataSets" class="org.hisp.dhis.commons.action.GetDataSetsAction">
+			<result name="success" type="velocity">/dhis-web-commons/ajax/responseDataSet.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+		</action>
+		
+		<action name="getIndicators" class="org.hisp.dhis.commons.action.GetIndicatorsAction">
+			<result name="success" type="velocity">/dhis-web-commons/ajax/responseIndicator.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+		</action>
+		
+		<action name="getOrganisationUnitChildren" class="org.hisp.dhis.commons.action.GetOrganisationUnitChildrenAction">
+			<result name="success" type="velocity">/dhis-web-commons/ajax/responseOrganisationUnit.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+		</action>
+		
+		<action name="getOrganisationUnits" class="org.hisp.dhis.commons.action.GetOrganisationUnitsAction">
+			<result name="success" type="velocity">/dhis-web-commons/ajax/responseOrganisationUnit.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+		</action>
+		
+		<action name="getPeriods" class="org.hisp.dhis.commons.action.GetPeriodsAction">
+			<result name="success" type="velocity">/dhis-web-commons/ajax/responsePeriod.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+		</action>
+		
+  </package>
+  
+  <!-- About -->
+  
+  <package name="dhis-web-commons-about" extends="dhis-web-commons" namespace="/dhis-web-commons-about">
+    
+    <action name="about" class="org.hisp.dhis.about.action.AboutAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-commons/about/about.vm</param>
+    </action>    
+  
+  </package>
+  
+</xwork>

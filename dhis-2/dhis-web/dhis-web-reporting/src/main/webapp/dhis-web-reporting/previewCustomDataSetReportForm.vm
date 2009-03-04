@@ -1,0 +1,21 @@
+
+<table>
+	<tr>
+		<td><h3>$i18n.getString('reporting_unit'): </h3></td>			
+		<td><h3>$reportingUnit</h3></td>
+		<td><input type="button" value="$i18n.getString( 'back' )" style="width:100px" 
+				onclick="javascript:window.location.href='showDataSetReportForm.action'">
+			<input type="button" value="$i18n.getString( 'print' )" style="width:100px" 
+				onclick="javascript:window.print()"></td>
+	</tr>
+	<tr>
+		<td><h3>$i18n.getString('reporting_period'): </h3></td>			
+		<td><h3>$reportingPeriod</h3></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="3" style="height:15px"></td>
+	</tr>
+</table>
+
+$customDataEntryFormCode

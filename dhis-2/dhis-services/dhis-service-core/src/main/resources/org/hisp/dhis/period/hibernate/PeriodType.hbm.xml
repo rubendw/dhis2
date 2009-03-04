@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.period.PeriodType" table="periodtype">
+    <id name="id" column="periodtypeid">
+      <generator class="native"/>
+    </id>
+    
+    <discriminator column="name" type="string" length="15" not-null="true"/>
+    
+    <subclass name="org.hisp.dhis.period.DailyPeriodType"
+      discriminator-value="Daily"/>
+    <subclass name="org.hisp.dhis.period.WeeklyPeriodType"
+      discriminator-value="Weekly"/>
+    <subclass name="org.hisp.dhis.period.MonthlyPeriodType"
+      discriminator-value="Monthly"/>
+    <subclass name="org.hisp.dhis.period.QuarterlyPeriodType"
+      discriminator-value="Quarterly"/>
+    <subclass name="org.hisp.dhis.period.SixMonthlyPeriodType"
+      discriminator-value="SixMonthly"/>
+    <subclass name="org.hisp.dhis.period.YearlyPeriodType"
+      discriminator-value="Yearly"/>
+    <subclass name="org.hisp.dhis.period.TwoYearlyPeriodType"
+      discriminator-value="TwoYearly"/>
+    <subclass name="org.hisp.dhis.period.OnChangePeriodType"
+      discriminator-value="OnChange"/>
+    <subclass name="org.hisp.dhis.period.SurveyPeriodType"
+      discriminator-value="Survey"/>
+    <subclass name="org.hisp.dhis.period.RelativePeriodType"
+      discriminator-value="Relative"/>
+  </class>
+</hibernate-mapping>

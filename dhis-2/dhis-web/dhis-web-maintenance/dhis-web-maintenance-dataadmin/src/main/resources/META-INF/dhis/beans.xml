@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+  <!-- Locking -->
+  
+  <bean id="org.hisp.dhis.dataadmin.action.datalocking.GetDataSetsAction"
+    class="org.hisp.dhis.dataadmin.action.datalocking.GetDataSetsAction"
+    scope="prototype">
+    <property name="dataSetService"
+      ref="org.hisp.dhis.dataset.DataSetService"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dataadmin.action.datalocking.LockDataSetsAction"
+    class="org.hisp.dhis.dataadmin.action.datalocking.LockDataSetsAction"
+    scope="prototype">
+    <property name="dataSetService"
+      ref="org.hisp.dhis.dataset.DataSetService"/>
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.dataadmin.action.datalocking.GetPeriodTypesAction"
+    class="org.hisp.dhis.dataadmin.action.datalocking.GetPeriodTypesAction"
+    scope="prototype">
+    <property name="periodService"
+      ref="org.hisp.dhis.period.PeriodService"/>
+  </bean>
+  
+  <!-- Maintenance -->
+  
+  <bean id="org.hisp.dhis.dataadmin.action.maintenance.PerformMaintenanceAction"
+    class="org.hisp.dhis.dataadmin.action.maintenance.PerformMaintenanceAction"
+    scope="prototype">
+    <property name="organisationUnitService"
+      ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    <property name="resourceTableService"
+      ref="org.hisp.dhis.datamart.resourcetable.ResourceTableService"/>
+    <property name="completenessStore"
+      ref="org.hisp.dhis.completeness.DataSetCompletenessStore"/>
+    <property name="dataMartStore"
+      ref="org.hisp.dhis.datamart.DataMartStore"/>
+  </bean>
+	
+  <!-- Resource table -->
+  
+  <bean id="org.hisp.dhis.dataadmin.action.resourcetable.GenerateResourceTableAction"
+    class="org.hisp.dhis.dataadmin.action.resourcetable.GenerateResourceTableAction"
+    scope="prototype">    
+    <property name="resourceTableService"
+      ref="org.hisp.dhis.datamart.resourcetable.ResourceTableService"/>
+  </bean>
+  
+</beans>

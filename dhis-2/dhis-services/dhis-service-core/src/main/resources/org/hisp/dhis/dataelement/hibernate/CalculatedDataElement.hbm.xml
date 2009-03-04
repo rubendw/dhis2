@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+  <joined-subclass name="org.hisp.dhis.dataelement.CalculatedDataElement"
+    extends="org.hisp.dhis.dataelement.DataElement" table="calculateddataelement">
+    
+    <key column="calculateddataelementid"/>
+    
+    <property name="saved"/>
+    
+    <many-to-one name="expression" class="org.hisp.dhis.expression.Expression" 
+      cascade="all" column="expressionid" foreign-key="fk_expression_expressionid"/>
+        
+  </joined-subclass>
+
+</hibernate-mapping>

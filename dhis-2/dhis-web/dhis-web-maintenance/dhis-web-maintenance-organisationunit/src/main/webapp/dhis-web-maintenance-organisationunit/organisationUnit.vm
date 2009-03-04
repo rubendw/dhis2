@@ -1,0 +1,69 @@
+
+<h3>$i18n.getString( "org_unit_management" )</h3>
+
+<table class="mainPageTable">
+	<tr>
+		<td style="vertical-align:top">
+
+			<table style="width:100%">
+				<col>
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<tr>
+					<td></td>
+					<td colspan="4" style="text-align:right"><input type="button" value="$i18n.getString( "add_new" )" onclick="window.location.href='showAddOrganisationUnitForm.action'"></td>
+				</tr>
+				<tr>
+					<th>$i18n.getString( "name" )</th>
+					<th colspan="4">$i18n.getString( "operations" )</th>
+				</tr>
+				#set( $mark = false )
+				#foreach( $organisationUnit in $organisationUnits )
+				<tr #if( $mark ) style="background-color:#dddddd" #end>
+					<td>$encoder.htmlEncode( $organisationUnit.name )</td>
+					<td style="text-align:center"><a href="showUpdateOrganisationUnitForm.action?id=$organisationUnit.id" title="$i18n.getString( "edit" )"><img src="../images/edit.png" alt="$i18n.getString( "edit" )"></a></td>
+					<td style="text-align:center"><a href="$i18n.getString( "translation_translate" )" title="$i18n.getString( "translation_translate" )" onclick="this.href='javascript:location.href= \'../dhis-web-commons/i18n.action?className=OrganisationUnit&amp;objectId=$organisationUnit.id&amp;returnUrl=\' + location.href'"><img src="../images/i18n.png" alt="$i18n.getString( "translation_translate" )"></a></td>
+					<td style="text-align:center">#if( $organisationUnit.children.size() == 0 )<a href="javascript:removeOrganisationUnit( $organisationUnit.id, '$encoder.jsEncode( $organisationUnit.name )' )" title="$i18n.getString( "remove" )"><img src="../images/delete.png" alt="$i18n.getString( "remove" )"></a>#end</td>
+					<td style="text-align:center"><a href="javascript:showOrganisationUnitDetails( $organisationUnit.id )" title="$i18n.getString( "show_details" )"><img src="../images/information.png" alt="$i18n.getString( "show_details" )"></a></td>
+				</tr>
+					#if( $mark )
+						#set( $mark = false )
+					#else
+						#set( $mark = true )
+					#end
+				#end
+				#if ( $organisationUnits.size() == 0 )
+				<tr>
+					<td colspan="4">$i18n.getString( "this_org_unit_has_no_children" )</td>
+				</tr>
+				#end
+			</table>
+
+		</td>
+		<td style="width:20em; padding-left:2em; vertical-align:top">
+
+			<div id="detailsArea" style="display:none">
+				<div style="float:right">
+					<a href="javascript:hideDetails()" title="$i18n.getString( "hide_details" )"><img src="../images/close.png" alt="$i18n.getString( "hide_details" )"></a>
+				</div>				
+				<p><label>$i18n.getString( "name" ):</label><br><span id="nameField"></span></p>
+				<p><label>$i18n.getString( "short_name" ):</label><br><span id="shortNameField"></span></p>
+				<p><label>$i18n.getString( "org_unit_code" ):</label><br><span id="organisationUnitCodeField"></span></p>
+				<p><label>$i18n.getString( "opening_date" ):</label><br><span id="openingDateField"></span></p>
+				<p><label>$i18n.getString( "closed_date" ):</label><br><span id="closedDateField"></span></p>
+				<p><label>$i18n.getString( "registers_date" ):</label><br><span id="activeField"></span></p>
+				<p><label>$i18n.getString( "comment" ):</label><br><span id="commentField"></span></p>
+			</div>
+
+		</td>
+	</tr>
+</table>
+
+<script type="text/javascript">
+	var none = '$encoder.jsEscape( $i18n.getString( "none" ) , "'" )';
+	var yes = '$encoder.jsEscape( $i18n.getString( "yes" ) , "'" )';
+	var no = '$encoder.jsEscape( $i18n.getString( "no" ) , "'" )';
+	var confirm_to_delete_org_unit = '$encoder.jsEscape( $i18n.getString( "confirm_to_delete_org_unit" ) , "'" )';
+</script>

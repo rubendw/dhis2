@@ -1,0 +1,8 @@
+<feature type="$type">
+#if($type=='success')
+	<id>$feature.id</id>
+	<featureCode>$feature.featureCode</featureCode>
+	<orgunitName>$encoder.xmlEncode( $feature.organisationUnit.name)</orgunitName>
+#end
+</feature>
+

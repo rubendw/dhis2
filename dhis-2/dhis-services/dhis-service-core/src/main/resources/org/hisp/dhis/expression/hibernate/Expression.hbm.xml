@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.expression.Expression" table="expression">
+    <id name="id" column="expressionid">
+      <generator class="native"/>
+    </id>
+    
+    <property name="description"/>
+    
+    <property name="expression"/>
+    
+    <set name="dataElementsInExpression" table="expressiondataelement">
+      <key column="expressionid"/>
+      <many-to-many class="org.hisp.dhis.dataelement.DataElement" 
+          column="dataelementid" foreign-key="fk_expression_dataelementid"/>
+    </set>
+  </class>
+</hibernate-mapping>

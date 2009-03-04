@@ -1,0 +1,4 @@
+
+<h3>$i18n.getString( "dashboard" )</h3>
+
+<p>$i18n.getString( "dashboard_intro" )</p>

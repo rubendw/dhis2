@@ -1,0 +1,10 @@
+
+<h2>$i18n.getString( "organisation_unit" )</h2>
+
+<ul>
+	<li><a href="organisationUnit.action">$i18n.getString( "org_unit" )</a></li>
+	<li><a href="organisationUnitGroup.action">$i18n.getString( "org_unit_group" )</a></li>
+	<li><a href="organisationUnitGroupSet.action">$i18n.getString( "org_unit_group_set" )</a></li>
+    <li><a href="organisationUnitLevel.action">$i18n.getString( "org_unit_level" )</a></li>
+	<li><a href="hierarchyOperations.action">$i18n.getString( "hierarchy_operations_menu" )</a></li>
+</ul>

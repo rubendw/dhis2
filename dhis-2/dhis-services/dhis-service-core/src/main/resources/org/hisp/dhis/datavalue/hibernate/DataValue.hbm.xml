@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.datavalue.DataValue" table="datavalue">
+    <composite-id>
+      <key-many-to-one name="dataElement" class="org.hisp.dhis.dataelement.DataElement"
+          column="dataelementid" foreign-key="fk_datavalue_dataelementid"/>
+      <key-many-to-one name="period" class="org.hisp.dhis.period.Period" 
+          column="periodid" foreign-key="fk_datavalue_periodid"/>
+      <!--
+        The source relationship is made not lazy so that Hibernate won't put a
+        proxy on the reference which cannot be casted to the desired subclass.
+      -->
+      <key-many-to-one name="source" class="org.hisp.dhis.source.Source" lazy="false"
+          column="sourceid" foreign-key="fk_datavalue_sourceid"/>
+	    <key-many-to-one name="optionCombo" class="org.hisp.dhis.dataelement.DataElementCategoryOptionCombo" 
+          column="categoryoptioncomboid" foreign-key="fk_datavalue_categoryoptioncomboid"/>
+		
+    </composite-id>
+    <property name="value"/>
+    <property name="storedBy" column="storedby" length="31"/>
+    <property name="timestamp" column="lastupdated" type="date"/>
+    <property name="comment" length="360"/>
+  </class>
+</hibernate-mapping>

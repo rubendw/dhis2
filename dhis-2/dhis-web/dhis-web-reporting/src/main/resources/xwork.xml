@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN" "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+	<include file="dhis-web-commons.xml"/>
+	
+	<package name="dhis-web-reporting" extends="dhis-web-commons" namespace="/dhis-web-reporting">
+    
+  <action name="index" class="org.hisp.dhis.commons.action.NoAction">
+		<result name="success" type="redirect">displayViewReportFormVerifyConfiguration.action</result>
+	</action>
+    
+    <!-- Report -->
+    
+    <action name="displayAddReportForm" class="org.hisp.dhis.reporting.reportviewer.action.GetReportOptionsAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-reporting/addReportForm.vm</param>
+      <param name="menu">/dhis-web-reporting/menu.vm</param>
+      <param name="javascripts">../dhis-web-commons/util/commons.js,../dhis-web-commons/lists/lists.js,javascript/report.js</param>
+      <param name="requiredAuthorities">F_REPORT_ADD</param> 	  
+    </action>
+    
+    <action name="addReport" class="org.hisp.dhis.reporting.reportviewer.action.AddReportAction">
+      <result name="success" type="redirect">displayViewReportForm.action</result>
+      <result name="error" type="chain">displayAddReportForm</result>	  
+      <interceptor-ref name="fileUploadStack"/>
+      <param name="requiredAuthorities">F_REPORT_ADD</param>
+    </action>
+    
+    <action name="removeReport" class="org.hisp.dhis.reporting.reportviewer.action.RemoveReportAction">
+      <result name="success" type="redirect">displayViewReportForm.action</result>
+	    <param name="requiredAuthorities">F_REPORT_DELETE</param>
+    </action>
+    
+    <action name="createReportTable" class="org.hisp.dhis.reporting.tablecreator.action.ReCreateTableAction">
+      <result name="success" type="redirect">displayViewReportForm.action</result>	 
+      <param name="requiredAuthorities">F_REPORT_ADD</param> 
+    </action>
+    
+    <action name="displayViewReportFormVerifyConfiguration" class="org.hisp.dhis.reporting.reportviewer.action.GetReportConfigurationAction">
+      <result name="success" type="redirect">displayViewReportForm.action</result>
+      <result name="none" type="redirect">displayConfigureReportForm.action</result>
+    </action>
+    
+    <action name="displayViewReportForm" class="org.hisp.dhis.reporting.reportviewer.action.GetAllReportsAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-reporting/viewReportForm.vm</param>
+      <param name="menu">/dhis-web-reporting/menu.vm</param>
+      <param name="javascripts">../dhis-web-commons/util/commons.js,javascript/report.js</param>	  
+    </action>
+    
+    <action name="displayConfigureReportForm" class="org.hisp.dhis.reporting.reportviewer.action.GetReportConfigurationAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <result name="none" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-reporting/configureReportForm.vm</param>
+      <param name="menu">/dhis-web-reporting/menu.vm</param>
+      <param name="javascripts">javascript/reportConfiguration.js</param>
+      <param name="requiredAuthorities">F_REPORT_ADD</param>
+    </action>
+    
+    <action name="setReportConfiguration" class="org.hisp.dhis.reporting.reportviewer.action.SetReportConfigurationAction">
+      <result name="success" type="redirect">displayViewReportForm.action</result>
+      <param name="requiredAuthorities">F_REPORT_ADD</param>
+    </action>
+    
+    <!-- ReportTable -->
+    
+    <action name="displayManageTableForm" class="org.hisp.dhis.reporting.tablecreator.action.GetAllTablesAction">      
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-reporting/manageTableForm.vm</param>
+      <param name="menu">/dhis-web-reporting/menu.vm</param>
+      <param name="javascripts">../dhis-web-commons/util/commons.js,javascript/table.js</param>
+	  <param name="requiredAuthorities">F_REPORT_ADD</param> 
+    </action>
+    
+    <action name="removeTable" class="org.hisp.dhis.reporting.tablecreator.action.RemoveTableAction">
+      <result name="success" type="redirect">displayManageTableForm.action</result>
+	    <param name="requiredAuthorities">F_REPORTTABLE_DELETE</param>
+    </action>
+    
+    <action name="createTable" class="org.hisp.dhis.reporting.tablecreator.action.CreateTableAction">
+      <result name="success" type="redirect">getReportParams.action?mode=status</result>
+	    <param name="requiredAuthorities">F_REPORTTABLE_ADD</param>
+    </action>
+    
+    <action name="reCreateTable" class="org.hisp.dhis.reporting.tablecreator.action.ReCreateTableAction">
+      <result name="success" type="velocity">/dhis-web-reporting/responseSuccess.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+      <param name="requiredAuthorities">F_REPORTTABLE_ADD</param>
+    </action>
+    
+    <action name="getReportParams" class="org.hisp.dhis.reporting.tablecreator.action.GetReportParamsAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-reporting/inputReportParamsForm.vm</param>
+      <param name="menu">/dhis-web-reporting/menu.vm</param>
+      <param name="javascripts">../dhis-web-commons/util/commons.js,../dhis-web-commons/lists/lists.js,javascript/report.js,javascript/table.js,javascript/reportParams.js</param>
+      <param name="requiredAuthorities">F_REPORT_VIEW</param>
+    </action>
+    
+    <action name="displayAddTableForm" class="org.hisp.dhis.reporting.tablecreator.action.GetTableOptionsAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-reporting/addTableForm.vm</param>
+      <param name="menu">/dhis-web-reporting/menu.vm</param>
+      <param name="javascripts">../dhis-web-commons/util/commons.js,../dhis-web-commons/lists/lists.js,javascript/table.js,javascript/lists.js</param>
+      <param name="requiredAuthorities">F_REPORTTABLE_ADD</param>
+    </action>
+    
+    <action name="getTable" class="org.hisp.dhis.reporting.tablecreator.action.GetTableAction">
+      <result name="success" type="velocity">/dhis-web-reporting/responseTable.vm</result>
+      <interceptor-ref name="transactionStack"/>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="getStatus" class="org.hisp.dhis.reporting.tablecreator.action.GetStatusAction">
+      <result name="success" type="velocity">/dhis-web-reporting/responseStatus.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <action name="validateTable" class="org.hisp.dhis.reporting.tablecreator.action.ValidateTableAction">
+      <result name="success" type="velocity">/dhis-web-reporting/responseSuccess.vm</result>
+      <result name="input" type="velocity">/dhis-web-reporting/responseInput.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <!-- Data Completeness -->
+    
+    <action name="displayViewDataCompletenessForm" class="org.hisp.dhis.reporting.completeness.action.GetDataCompletenessOptionsAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-reporting/viewDataCompletenessForm.vm</param>
+      <param name="menu">/dhis-web-reporting/menu.vm</param>
+      <param name="javascripts">../dhis-web-commons/util/commons.js,../dhis-web-commons/lists/lists.js,../dhis-web-commons/oust/oust.js,javascript/dataCompleteness.js</param>
+    </action>
+    
+    <action name="getDataCompleteness" class="org.hisp.dhis.reporting.completeness.action.GetDataCompletenessAction">
+      <result name="success" type="velocity">responseDataCompleteness.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="getDataCompletenessPDF" class="org.hisp.dhis.reporting.completeness.action.GetDataCompletenessPDFAction">
+      <result name="success" type="stream">
+        <param name="contentType">text/pdf</param>
+        <param name="inputName">inputStream</param>
+        <param name="contentDisposition">filename="DataCompletenessReport.pdf"</param>
+        <param name="bufferSize">10240</param>        
+      </result>
+      <result name="none" type="redirect">displayViewDataCompletenessForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="getDataCompletenessWorkbook" class="org.hisp.dhis.reporting.completeness.action.GetDataCompletenessWorkbookAction">
+      <result name="success" type="stream">
+        <param name="contentType">text/pdf</param>
+        <param name="inputName">inputStream</param>
+        <param name="contentDisposition">filename="DataCompletenessReport.xls"</param>
+        <param name="bufferSize">10240</param>        
+      </result>
+      <result name="none" type="redirect">displayViewDataCompletenessForm.action</result>
+      <interceptor-ref name="transactionStack"/>
+    </action>
+    
+    <action name="displayConfigureDataCompletenessForm" class="org.hisp.dhis.reporting.completeness.action.GetDataCompletenessConfigurationAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-reporting/configureDataCompletenessForm.vm</param>
+      <param name="menu">/dhis-web-reporting/menu.vm</param>
+    </action>
+    
+    <action name="setDataCompletenessConfiguration" class="org.hisp.dhis.reporting.completeness.action.SetDataCompletenessConfigurationAction">
+      <result name="success" type="redirect">displayViewDataCompletenessForm.action</result>
+    </action>
+    
+    <!-- Custom DataSet Report -->
+    
+    <action name="dataSetReport" class="org.hisp.dhis.commons.action.NoAction">
+      <result name="success" type="redirect">showDataSetReportForm.action</result>
+    </action>
+    
+    <action name="showDataSetReportForm" class="org.hisp.dhis.reporting.dataset.action.GetAllDataSetsAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-reporting/dataSetReportForm.vm</param>
+      <param name="menu">/dhis-web-reporting/menu.vm</param>      
+      <param name="javascripts">../dhis-web-commons/oust/oust.js,javascript/dataSetScript.js,../dhis-web-commons/calendar/calendar.js,../dhis-web-commons/calendar/calendar-lang.js,../dhis-web-commons/calendar/calendar-setup.js</param>      
+      <!--<interceptor-ref name="transactionStack"/>-->
+      <interceptor-ref name="organisationUnitTreeStack"/>       
+    </action>  
+    
+    <action name="getDataSetReportTypeForPDF" class="org.hisp.dhis.reporting.dataset.action.GetDataSetReportTypeAction">
+      <result name="customreport" type="chain">generateCustomDataSetReport</result>      
+      <result name="defaultreport" type="chain">generateDefaultDataSetReport</result>      
+      <result name="error" type="chain">showDataSetReportForm</result>
+      <interceptor-ref name="organisationUnitTreeStack"/>        
+    </action>
+    
+    <action name="generateCustomDataSetReport" class="org.hisp.dhis.reporting.dataset.action.GenerateCustomDataSetReportAction">
+      <result name="success" type="velocity">/popup.vm</result>
+      <result name="error" type="chain">showDataSetReportForm</result>
+      <param name="page">/dhis-web-reporting/previewCustomDataSetReportForm.vm</param>
+      <param name="javascripts">javascript/dataSetScript.js</param>      
+      <interceptor-ref name="organisationUnitTreeStack"/>
+    </action>   
+  
+    <action name="generateDefaultDataSetReport" class="org.hisp.dhis.reporting.dataset.action.GenerateDefaultDataSetReportAction">
+      <result name="success" type="stream">
+        <param name="contentType">application/pdf</param>
+        <param name="inputName">inputStream</param>
+        <param name="contentDisposition">filename="${fileName}"</param>
+        <param name="bufferSize">1024</param>
+      </result>
+      <param name="preview">false</param>  
+      <result name="error" type="chain">showDataSetReportForm</result>
+      <interceptor-ref name="organisationUnitTreeStack"/>
+    </action>
+    
+    <action name="getDataSetReportTypeForPreview" class="org.hisp.dhis.reporting.dataset.action.GetDataSetReportTypeAction">
+      <result name="customreport" type="chain">previewCustomDataSetReport</result>      
+      <result name="defaultreport" type="chain">previewDefaultDataSetReport</result>      
+      <result name="error" type="chain">showDataSetReportForm</result>   
+      <interceptor-ref name="organisationUnitTreeStack"/>  
+    </action>
+   
+    <action name="previewCustomDataSetReport" class="org.hisp.dhis.reporting.dataset.action.GenerateCustomDataSetReportAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <result name="error" type="chain">showQuickReportForm</result>
+      <param name="page">/dhis-web-reporting/previewCustomDataSetReportForm.vm</param>
+      <param name="javascripts">javascript/dataSetScript.js</param>  
+      <interceptor-ref name="organisationUnitTreeStack"/>   
+    </action>  
+    
+    <action name="previewDefaultDataSetReport" class="org.hisp.dhis.reporting.dataset.action.GenerateDefaultDataSetReportAction">
+      <result name="success" type="chain">previewDefaultDataSetHtmlReport</result>    
+      <result name="error" type="chain">showDataSetReportForm</result>
+      <param name="preview">true</param>
+      <interceptor-ref name="organisationUnitTreeStack"/>   
+    </action>
+    
+    <action name="previewDefaultDataSetHtmlReport" class="org.hisp.dhis.reporting.dataset.action.PreviewReportAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-reporting/previewDefaultDataSetReportForm.vm</param>   
+      <param name="javascripts">javascript/dataSetScript.js</param>
+      <interceptor-ref name="organisationUnitTreeStack"/>
+    </action>
+  
+    <action name="returnToViewDataSetReport" class="org.hisp.dhis.reporting.dataset.action.GetViewFormStateAction">
+      <result name="success" type="chain">showDataSetReportForm</result>
+      <interceptor-ref name="organisationUnitTreeStack"/>
+    </action>    
+    
+	</package>
+</xwork>

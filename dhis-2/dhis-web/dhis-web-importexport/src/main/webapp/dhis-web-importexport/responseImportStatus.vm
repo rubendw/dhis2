@@ -1,0 +1,6 @@
+<response>
+	<actionType>$encoder.xmlEncode( $actionType )</actionType>
+	<percentageCompleted>$encoder.xmlEncode( $percentageCompleted )</percentageCompleted>
+	<statusMessage>$encoder.xmlEncode( $statusMessage )</statusMessage>
+	<fileMessage>$encoder.xmlEncode( $fileMessage )</fileMessage>>
+</response>

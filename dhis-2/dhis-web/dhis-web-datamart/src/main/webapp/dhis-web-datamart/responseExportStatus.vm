@@ -1,0 +1,1 @@
+$percentageCompleted % $i18n.getString( "completed" ): $statusMessage

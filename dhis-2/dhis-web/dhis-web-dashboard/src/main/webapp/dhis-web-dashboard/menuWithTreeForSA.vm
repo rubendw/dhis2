@@ -1,0 +1,43 @@
+#parse( "/dhis-web-dashboard/menu.vm" )
+
+#parse( "/dhis-web-commons/ouwt/orgunittree.vm" )
+
+<!-- The script that registeres selctions in the orgunit tree -->
+<script type="text/javascript">
+
+function orgUnitHasBeenSelected( orgUnitIds )
+{    
+    var orgUnitid = ""+orgUnitIds;
+    var orgUnitName = orgUnits.get(orgUnitid);
+    if(orgUnitName == null) return;
+    
+    		var facilityIndex =  document.ChartGenerationForm.facilityLB.selectedIndex;
+    var index = 0;		
+    		var i=0;
+    		
+    if(document.ChartGenerationForm.facilityLB.options[facilityIndex].value == "children")
+    {
+        index = document.ChartGenerationForm.orgUnitListCB.options.length;                			
+        for(i=0;i<index;i++)
+    			    {
+    				        document.ChartGenerationForm.orgUnitListCB.options[0] = null;	
+    			    }
+    			    document.ChartGenerationForm.orgUnitListCB.options[0] = new Option(orgUnitName,orgUnitIds,false,false);
+    }
+    else
+    {
+        index = document.ChartGenerationForm.orgUnitListCB.options.length;		
+    	    	for(i=0;i<index;i++)
+    	    	{
+        			    if(orgUnitIds == document.ChartGenerationForm.orgUnitListCB.options[i].value) return; 
+    	    	}
+    		    document.ChartGenerationForm.orgUnitListCB.options[index] = new Option(orgUnitName,orgUnitIds,false,false);
+    		}    
+}
+
+selection.setListenerFunction( orgUnitHasBeenSelected );
+
+</script>
+
+
+

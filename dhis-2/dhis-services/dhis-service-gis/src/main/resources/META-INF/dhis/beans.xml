@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+  <bean id="org.hisp.dhis.gis.FeatureStore"
+    class="org.hisp.dhis.gis.hibernate.HibernateFeatureStore">
+    <property name="sessionManager"
+   	  ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.gis.GISConfigurationStore"
+    class="org.hisp.dhis.gis.hibernate.HibernateGISConfigurationStore">
+    <property name="sessionManager"
+   	  ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>  
+  
+  <bean id="org.hisp.dhis.gis.LegendStore"
+    class="org.hisp.dhis.gis.hibernate.HibernateLegendStore">
+    <property name="sessionManager"
+   	  ref="org.hisp.dhis.hibernate.HibernateSessionManager"/>
+  </bean>  
+ 
+  <bean id="org.hisp.dhis.gis.FeatureService"
+    class="org.hisp.dhis.gis.DefaultFeatureService">
+    <property name="featureStore"
+      ref="org.hisp.dhis.gis.FeatureStore"/>
+  </bean>
+  
+  
+  
+  <bean id="org.hisp.dhis.gis.LegendService"
+    class="org.hisp.dhis.gis.DefaultLegendService">
+    <property name="legendStore"
+      ref="org.hisp.dhis.gis.LegendStore"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.gis.GISConfigurationService"
+    class="org.hisp.dhis.gis.DefaultGISConfigurationService">
+    <property name="gisConfigurationStore"
+      ref="org.hisp.dhis.gis.GISConfigurationStore"/>
+  </bean>
+  
+  
+  <bean id="org.hisp.dhis.gis.hibernate.JDBCIndicatorService"
+    class="org.hisp.dhis.gis.hibernate.JDBCIndicatorService">
+    <property name="statementManager"
+      ref="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+  </bean>
+  
+  <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="advice" ref="readWriteTransactionInterceptor"/>
+    <property name="patterns">
+      <list>       
+        <value>.*\.FeatureStore\.add.*</value>
+        <value>.*\.FeatureStore\.update.*</value>
+        <value>.*\.FeatureStore\.save.*</value>
+        <value>.*\.FeatureStore\.delete.*</value>
+        <value>.*\.LegendStore\.add.*</value>
+        <value>.*\.LegendStore\.update.*</value>
+        <value>.*\.LegendStore\.save.*</value>
+        <value>.*\.LegendStore\.remove.*</value>
+        <value>.*\.LegendStore\.delete.*</value>
+		<value>.*\.GISConfigurationStore\.add.*</value>
+        <value>.*\.GISConfigurationStore\.update.*</value>
+        <value>.*\.GISConfigurationStore\.save.*</value>
+        <value>.*\.GISConfigurationStore\.remove.*</value>
+        <value>.*\.GISConfigurationStore\.delete.*</value>	
+      </list>
+    </property>
+  </bean>	
+  
+</beans>

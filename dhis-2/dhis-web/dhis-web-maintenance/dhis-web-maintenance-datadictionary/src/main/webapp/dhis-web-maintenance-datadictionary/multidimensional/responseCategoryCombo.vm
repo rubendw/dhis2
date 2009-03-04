@@ -1,0 +1,5 @@
+<dataElementCategoryCombo>
+  <id>$dataElementCategoryCombo.id</id>
+  <name>$encoder.xmlEncode( $dataElementCategoryCombo.name )</name>
+  <dataElementCategoryCount>$dataElementCategories.size()</dataElementCategoryCount>  
+</dataElementCategoryCombo>

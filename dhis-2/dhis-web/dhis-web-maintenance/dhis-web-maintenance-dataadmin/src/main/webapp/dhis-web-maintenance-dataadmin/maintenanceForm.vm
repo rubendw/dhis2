@@ -1,0 +1,39 @@
+
+<h3>$i18n.getString( "maintenance" )</h3>
+    
+<p>
+	<input type="checkbox" id="hierarchyHistory">
+	<label for="hierarchyHistory">$i18n.getString( "clear_hierarchy_history" )</label>
+</p>
+
+<p>
+	<input type="checkbox" id="aggregatedDataValues">
+	<label for="aggregatedDataValues">$i18n.getString( "clear_aggregated_datavalues" )</label>
+</p>
+
+<p>
+	<input type="checkbox" id="aggregatedIndicatorValues">
+	<label for="aggregatedIndicatorValues">$i18n.getString( "clear_aggregated_indicatorvalues" )</label>
+</p>
+
+<p>
+	<input type="checkbox" id="zeroValues">
+	<label for="zeroValues">$i18n.getString( "clear_zero_values" )</label>
+</p>
+
+<p>
+	<input type="checkbox" id="dataSetCompleteness">
+	<label for="dataSetCompleteness">$i18n.getString( "clear_dataset_completeness" )</label>
+</p>		
+
+<p>
+	<input type="button" value='$i18n.getString( "perform_maintenance" )' onclick="performMaintenance()" style="width:170px">
+</p>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+	var i18n_select_options = '$encoder.jsEscape( $i18n.getString( "select_options" ), "'" )';
+	var i18n_performing_maintenance = '$encoder.jsEscape( $i18n.getString( "performing_maintenance" ), "'" )';
+	var i18n_maintenance_performed = '$encoder.jsEscape( $i18n.getString( "maintenance_performed" ), "'" )';
+</script>

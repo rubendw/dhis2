@@ -1,0 +1,56 @@
+
+<h3>$i18n.getString( "define_dataset_associations" )</h3>
+
+<h4>$encoder.htmlEncode( $dataSet.name )</h4>
+
+<form id="defineDataSetAssociationsForm" action="defineDataSetAssociations.action" method="post">
+  <div style="display:inline">
+	<input type="hidden" name="dataSetId" value="$dataSetId">
+  </div>
+  <table id="selectionTable">
+	<tr>
+	  <td>
+		<input type="button" value="$i18n.getString( "remove_all" )" onclick="window.location.href='unselectAll.action?dataSetId=$dataSetId'" style="width:12em">
+     	<input type="button" value="$i18n.getString( "select_all_at_level" )" onclick="selectAllAtLevel( $dataSetId )" style="width:12em">
+		<select id="levelList" name="levelList" style="width:12em">
+			#foreach( $level in $levels )
+				<option value="$level.level" #if ( $selectLevel == $level.level )selected="selcted"#end>$encoder.htmlEncode( $level.name )</option>
+			#end
+		</select>
+		<input type="button" value="$i18n.getString( "unselect_all_at_level" )" onclick="unselectAllAtLevel( $dataSetId )" style="width:12em">
+	  </td>
+	</tr>
+    <tr>
+      <td>
+        <div id="selectionTree" style="width:50em;height:30em;overflow:auto;border:1px solid #cccccc"></div>
+
+        <script type="text/javascript">
+
+          selectionTreeSelection.setMultipleSelectionAllowed( true );
+          selectionTreeSelection.setOnSelectFunction( treeClicked );
+          selectionTreeSelection.setListenerFunction( selectCompleted );
+          selectionTree.buildSelectionTree();
+
+        </script>
+        
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <input type="submit" id="submitButton" value="$i18n.getString( "save" )" style="width:10em"><input type="button"
+            onclick="window.location.href='index.action'" value="$i18n.getString( "cancel" )" style="width:10em">
+      </td>
+    </tr>
+  </table>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+  var levelMustBeInt = '$encoder.jsEncode( $i18n.getString( "level_must_be_int" ) )';
+  var i18n_loading = '$encoder.jsEncode( $i18n.getString( "loading" ) )';
+
+</script>

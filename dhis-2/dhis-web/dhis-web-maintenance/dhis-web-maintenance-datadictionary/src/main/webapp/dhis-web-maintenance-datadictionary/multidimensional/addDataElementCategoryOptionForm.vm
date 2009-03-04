@@ -1,0 +1,30 @@
+
+<h3>$i18n.getString( "create_new_data_element_category_option" )</h3>
+
+<form id="addDataElementCategoryOptionForm" action="addDataElementCategoryOption.action" method="post" onsubmit="return validateAddDataElementCategoryOption()">
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "details" )</th>
+	</tr>
+	<tr>
+		<td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="name" name="name" onchange="nameChanged()" style="width:20em"></td>
+	</tr>
+</table>
+
+<p class="cleared">
+	<input type="submit" value="$i18n.getString( "add" )" style="width:10em"><input type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='categoryOption.action'" style="width:10em">
+</p>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+	
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+
+</script>

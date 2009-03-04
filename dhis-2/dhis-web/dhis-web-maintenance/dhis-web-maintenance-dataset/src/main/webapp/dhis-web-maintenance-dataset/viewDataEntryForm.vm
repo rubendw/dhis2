@@ -1,0 +1,76 @@
+
+<script type="text/javascript" src="javascript/FCK/fckeditor.js"></script>
+<script type="text/javascript">
+    var stat = '$status';
+    var dataEntryFormId = -1;
+    var i18n_confirm_delete = '$encoder.jsEscape( $i18n.getString( "dataentryform_confirm_delete" ) , "'" )';
+    	
+    #if($status == "EDIT")
+        dataEntryFormId = $dataEntryForm.id;
+    #end
+    
+    var FCKConfig;
+    var FCK;
+    window.onload = function()
+    {
+        var oFCKeditor = new FCKeditor( 'designTextarea' ) ;
+        oFCKeditor.BasePath = "javascript/FCK/";
+        oFCKeditor.ReplaceTextarea();
+    }
+</script>
+
+
+<h3>$i18n.getString( "dataentryform_management" )</h3>
+
+<form id="saveDataEntryForm" name="saveDataEntryForm" action="saveDataEntryForm.action" method="post" onsubmit="return validateDataEntryForm()">
+  <table id="detailsList">
+    <col> ## Labels
+    <col> ## Input
+    <thead>
+      <tr>
+        <th colspan="2">$i18n.getString( "dataentryform_details" )</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><label>$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" id="nameField" name="nameField" value='#if($status == "EDIT")$dataEntryForm.name#end' style="width:20em"></td>
+      </tr>
+      <tr>
+        <td><label>$i18n.getString( "dataset" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+        <td><input type="text" value="$dataSet.name" style="width:20em" disabled></td>
+      </tr>
+      <tr>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+    
+   <table>
+      <col width="700">  
+      <tr>
+        <th>$i18n.getString( "dataentryform_design" )</th>
+      </tr>
+      <tr>
+        <td><textarea id="designTextarea" name="designTextarea" >#if($status == "EDIT") $dataEntryForm.htmlCode #end</textarea></td>
+      </tr>
+      <tr><td><span id="message"></span></td></tr>
+      <tr>
+      <td>
+      <table id="cde_buttontable">
+      <tr>
+        <td>
+          <input type="submit" name="save" value="$i18n.getString( "save" )">
+          <input type="button" name="cancel" value="$i18n.getString( "cancel" )" onclick="window.location.href='index.action'">
+        </td>
+        <td id="cde_deletebuttoncell">
+          <input type="button" name="delete" value="$i18n.getString( "delete" )" onclick="removeDataEntryForm( $dataEntryForm.id, '$dataEntryForm.name' )" #if($status == "ADD") disabled #end>
+        </td>
+        </tr>
+        </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="hidden" name="dataSetIdField" id="dataSetIdField" value="$dataSet.id" />
+</form>

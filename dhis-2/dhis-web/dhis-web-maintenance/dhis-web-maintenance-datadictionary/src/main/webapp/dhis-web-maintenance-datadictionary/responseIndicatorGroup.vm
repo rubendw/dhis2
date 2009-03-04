@@ -1,0 +1,5 @@
+<indicatorGroup>
+	<id>$indicatorGroup.id</id>
+	<name>$encoder.xmlEncode( $indicatorGroup.name )</name>
+	<memberCount>$memberCount</memberCount>
+</indicatorGroup>

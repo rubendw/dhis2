@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<!-- Import                                                        -->
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<bean id="org.hisp.dhis.importexport.action.imp.ImportAction"
+		class="org.hisp.dhis.importexport.action.imp.ImportAction"
+    scope="prototype">
+    <property name="internalProcessCoordinator"
+      ref="org.hisp.dhis.system.process.InternalProcessCoordinator"/>
+    <property name="currentUserService"
+      ref="org.hisp.dhis.user.CurrentUserService"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.importexport.action.imp.GetImportOptionsAction"
+		class="org.hisp.dhis.importexport.action.imp.GetImportOptionsAction"
+    scope="prototype">
+    <property name="configurationManager"
+      ref="org.hisp.dhis.importexport.IbatisConfigurationManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.importexport.action.imp.GetImportStatusAction"
+    class="org.hisp.dhis.importexport.action.imp.GetImportStatusAction"
+    scope="prototype">    
+    <property name="internalProcessCoordinator"
+      ref="org.hisp.dhis.system.process.InternalProcessCoordinator"/>
+  </bean>
+	
+  <bean id="org.hisp.dhis.importexport.action.imp.SetImportTypeAction"
+    class="org.hisp.dhis.importexport.action.imp.SetImportTypeAction"
+    scope="prototype"/>
+  
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<!-- Object Ajax                                                   -->
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		
+	<bean id="org.hisp.dhis.importexport.action.object.MatchObjectAction"
+		class="org.hisp.dhis.importexport.action.object.MatchObjectAction"
+    scope="prototype">
+		<property name="importObjectService"
+			ref="org.hisp.dhis.importexport.ImportObjectService"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.importexport.action.object.DiscardObjectAction"
+		class="org.hisp.dhis.importexport.action.object.DiscardObjectAction"
+    scope="prototype">
+		<property name="importObjectService"
+			ref="org.hisp.dhis.importexport.ImportObjectService"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.importexport.action.object.DiscardObjectsOfTypeAction"
+		class="org.hisp.dhis.importexport.action.object.DiscardObjectsOfTypeAction"
+    scope="prototype">
+		<property name="importObjectService"
+			ref="org.hisp.dhis.importexport.ImportObjectService"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.importexport.action.object.DiscardAllObjectsAction"
+		class="org.hisp.dhis.importexport.action.object.DiscardAllObjectsAction"
+    scope="prototype">
+		<property name="importObjectService"
+			ref="org.hisp.dhis.importexport.ImportObjectService"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.importexport.action.object.ImportAllObjectsAction"
+		class="org.hisp.dhis.importexport.action.object.ImportAllObjectsAction"
+    scope="prototype">
+    <property name="internalProcessCoordinator"
+      ref="org.hisp.dhis.system.process.InternalProcessCoordinator"/>
+    <property name="currentUserService"
+      ref="org.hisp.dhis.user.CurrentUserService"/>
+	</bean>
+	
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<!-- Preview                                                       -->
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<bean id="org.hisp.dhis.importexport.action.imp.GetPreviewOptionsAction"
+		class="org.hisp.dhis.importexport.action.imp.GetPreviewOptionsAction"
+    scope="prototype">
+		<property name="importObjectService"
+			ref="org.hisp.dhis.importexport.ImportObjectService"/>
+		<property name="importDataValueService"
+			ref="org.hisp.dhis.importexport.ImportDataValueService"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.importexport.action.imp.GetMatchOptionsAction"
+		class="org.hisp.dhis.importexport.action.imp.GetMatchOptionsAction"
+    scope="prototype">
+		<property name="importObjectService"
+			ref="org.hisp.dhis.importexport.ImportObjectService"/>
+		<property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+		<property name="indicatorService"
+      ref="org.hisp.dhis.indicator.IndicatorService"/>
+    <property name="dataDictionaryService"
+      ref="org.hisp.dhis.datadictionary.DataDictionaryService"/>
+		<property name="dataSetService"
+			ref="org.hisp.dhis.dataset.DataSetService"/>
+		<property name="organisationUnitService"
+			ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+		<property name="organisationUnitGroupService"
+			ref="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    <property name="validationRuleService"
+      ref="org.hisp.dhis.validation.ValidationRuleService"/>
+    <property name="reportTableStore"
+      ref="org.hisp.dhis.reporttable.ReportTableStore"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.importexport.action.imp.GetCompareOptionsAction"
+		class="org.hisp.dhis.importexport.action.imp.GetCompareOptionsAction"
+    scope="prototype">
+		<property name="importObjectService"
+			ref="org.hisp.dhis.importexport.ImportObjectService"/>
+	</bean>
+	
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<!-- Export                                                        -->
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<bean id="org.hisp.dhis.importexport.action.exp.MetaDataExportAction"
+		class="org.hisp.dhis.importexport.action.exp.MetaDataExportAction"
+    scope="prototype">
+		<property name="serviceManager"
+			ref="org.hisp.dhis.importexport.ImportExportServiceManager"/>
+    <property name="categoryService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryService"/>
+    <property name="categoryComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryComboService"/>
+    <property name="categoryOptionService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionService"/>
+    <property name="categoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>    
+		<property name="dataElementService"
+      ref="org.hisp.dhis.dataelement.DataElementService"/>
+    <property name="indicatorService"
+      ref="org.hisp.dhis.indicator.IndicatorService"/>
+    <property name="dataDictionaryService"
+      ref="org.hisp.dhis.datadictionary.DataDictionaryService"/>
+		<property name="dataSetService"
+			ref="org.hisp.dhis.dataset.DataSetService"/>
+		<property name="organisationUnitService"
+			ref="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+		<property name="organisationUnitGroupService"
+			ref="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    <property name="validationRuleService"
+      ref="org.hisp.dhis.validation.ValidationRuleService"/>
+    <property name="reportTableStore"
+      ref="org.hisp.dhis.reporttable.ReportTableStore"/>
+		<property name="importDataValueService"
+			ref="org.hisp.dhis.importexport.ImportDataValueService"/>
+		<property name="importObjectService"
+			ref="org.hisp.dhis.importexport.ImportObjectService"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.importexport.action.exp.DataValueExportAction"
+		class="org.hisp.dhis.importexport.action.exp.DataValueExportAction"
+    scope="prototype">
+		<property name="selectionTreeManager"
+			ref="org.hisp.dhis.oust.manager.SelectionTreeManager"/>
+		<property name="serviceManager"
+			ref="org.hisp.dhis.importexport.ImportExportServiceManager"/>
+    <property name="categoryService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryService"/>
+    <property name="categoryComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryComboService"/>
+    <property name="categoryOptionService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionService"/>
+    <property name="categoryOptionComboService"
+      ref="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+		<property name="dataSetService"
+			ref="org.hisp.dhis.dataset.DataSetService"/>
+    <property name="registrationService"
+      ref="org.hisp.dhis.dataset.CompleteDataSetRegistrationService"/>
+		<property name="organisationUnitService"
+			ref="org.hisp.dhis.organisationunit.OrganisationUnitService" />
+		<property name="periodService"
+			ref="org.hisp.dhis.period.PeriodService"/>
+		<property name="importDataValueService"
+			ref="org.hisp.dhis.importexport.ImportDataValueService"/>
+		<property name="importObjectService"
+			ref="org.hisp.dhis.importexport.ImportObjectService"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.importexport.action.exp.GetExportOptionsAction"
+		class="org.hisp.dhis.importexport.action.exp.GetExportOptionsAction"
+    scope="prototype">
+		<property name="dataSetService"
+			ref="org.hisp.dhis.dataset.DataSetService"/>
+		<property name="selectionTreeManager"
+			ref="org.hisp.dhis.oust.manager.SelectionTreeManager"/>
+	</bean>
+	
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<!-- IXF Configuration                                             -->
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+	<bean id="org.hisp.dhis.importexport.action.ixf.GetIXFConfigurationAction"
+		class="org.hisp.dhis.importexport.action.ixf.GetIXFConfigurationAction"
+    scope="prototype">
+		<property name="configurationManager"
+			ref="org.hisp.dhis.importexport.ixf.config.IXFConfigurationManager"/>
+	</bean>
+	
+	<bean id="org.hisp.dhis.importexport.action.ixf.SetIXFConfigurationAction"
+		class="org.hisp.dhis.importexport.action.ixf.SetIXFConfigurationAction"
+    scope="prototype">
+		<property name="configurationManager"
+			ref="org.hisp.dhis.importexport.ixf.config.IXFConfigurationManager"/>
+	</bean>
+	
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<!-- Dhis 1.4 Configuration                                        -->
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	
+  <bean id="org.hisp.dhis.importexport.action.dhis14.GetDhis14ConfigurationAction"
+    class="org.hisp.dhis.importexport.action.dhis14.GetDhis14ConfigurationAction"
+    scope="prototype">
+    <property name="configurationManager"
+      ref="org.hisp.dhis.importexport.IbatisConfigurationManager"/>
+  </bean>
+  
+  <bean id="org.hisp.dhis.importexport.action.dhis14.SetDhis14ConfigurationAction"
+    class="org.hisp.dhis.importexport.action.dhis14.SetDhis14ConfigurationAction"
+    scope="prototype">
+    <property name="configurationManager"
+      ref="org.hisp.dhis.importexport.IbatisConfigurationManager"/>
+  </bean>
+  
+</beans>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
+  "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+  <include file="dhis-web-commons.xml"/>
+  
+  <package name="dhis-web-maintenance-settings" extends="dhis-web-commons"
+    namespace="/dhis-web-maintenance-settings">
+        
+    <action name="index" class="org.hisp.dhis.settings.action.NoAction">
+      <result name="success" type="redirect">userSettings.action</result>
+    </action>
+    
+    <!-- System settings -->
+    
+    <action name="getSystemSettings" class="org.hisp.dhis.settings.action.system.GetSystemSettingsAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-settings/systemSettings.vm</param>
+      <param name="menu">/dhis-web-maintenance-settings/settingsMenu.vm</param>
+    </action>
+    
+    <action name="setSystemSettings" class="org.hisp.dhis.settings.action.system.SetSystemSettingsAction">
+      <result name="success" type="redirect">getSystemSettings.action</result>
+    </action>
+    
+    <!-- User settings -->
+    
+    <action name="userSettings" class="org.hisp.dhis.settings.action.user.GetAvailableLocalesAction">
+      <result name="success" type="chain">getAvailableLocalesDb</result>
+    </action>
+
+    <action name="getAvailableLocalesDb" class="org.hisp.dhis.settings.action.user.GetAvailableLocalesDbAction">
+			<result name="success" type="chain">getAvailableSortOrders</result>
+		</action>
+
+    <action name="getAvailableSortOrders" class="org.hisp.dhis.settings.action.user.GetAvailableSortOrdersAction">
+      <result name="success" type="chain">getAvailableDisplayProperties</result>
+    </action>
+
+    <action name="getAvailableDisplayProperties" class="org.hisp.dhis.settings.action.user.GetAvailableDisplayPropertiesAction">
+      <result name="success" type="chain">getAvailableDataDictionaryModes</result>
+    </action>
+    
+    <action name="getAvailableDataDictionaryModes" class="org.hisp.dhis.settings.action.user.GetAvailableDataDictionaryModesAction">
+      <result name="success" type="chain">getAvailableStyles</result>
+    </action>
+    
+    <action name="getAvailableStyles" class="org.hisp.dhis.settings.action.user.GetAvailableStylesAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-settings/userSettings.vm</param>
+      <param name="menu">/dhis-web-maintenance-settings/settingsMenu.vm</param>
+    </action>
+    
+    <action name="setCurrentLocale" class="org.hisp.dhis.settings.action.user.SetCurrentLocaleAction">
+      <result name="success" type="redirect">userSettings.action</result>
+    </action>
+
+    <action name="setCurrentLocaleDb" class="org.hisp.dhis.settings.action.user.SetCurrentLocaleDbAction">
+      <result name="success" type="redirect">userSettings.action</result>
+    </action>
+
+    <action name="setCurrentSortOrder" class="org.hisp.dhis.settings.action.user.SetCurrentSortOrderAction">
+      <result name="success" type="redirect">userSettings.action</result>
+    </action>
+
+    <action name="setCurrentDisplayProperty" class="org.hisp.dhis.settings.action.user.SetCurrentDisplayPropertyAction">
+      <result name="success" type="redirect">userSettings.action</result>
+    </action>    
+    
+    <action name="setCurrentDataDictionaryMode" class="org.hisp.dhis.settings.action.user.SetCurrentDataDictionaryModeAction">
+      <result name="success" type="redirect">userSettings.action</result>
+    </action>    
+    
+    <action name="setCurrentStyle" class="org.hisp.dhis.settings.action.user.SetCurrentStyleAction">
+      <result name="success" type="redirect">userSettings.action</result>
+    </action>    
+    
+  </package>
+</xwork>

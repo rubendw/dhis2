@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.hisp.dhis</groupId>
+    <artifactId>dhis</artifactId>
+    <version>2.0</version>
+  </parent>
+  
+  <artifactId>dhis-i18n</artifactId>
+  <packaging>pom</packaging>
+  <name>DHIS I18n Parent Project</name>
+  
+  <modules>
+    <module>dhis-i18n-translationstore-hibernate</module>
+    <module>dhis-i18n-static</module>
+    <module>dhis-i18n-db</module>
+    <module>dhis-i18n-upgrader</module>
+  </modules>
+  
+  <dependencies>
+    
+    <!-- DHIS -->
+    
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hisp.dhis</groupId>
+      <artifactId>dhis-support-test</artifactId>
+    </dependency>
+  </dependencies>
+</project>

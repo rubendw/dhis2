@@ -1,0 +1,79 @@
+<h3>$i18n.getString( "data_element_category_management" )</h3>
+
+<table class="mainPageTable">
+  <tr>
+    <td style="vertical-align:top">
+      <table id="list" style="width:100%">
+          <col> ## Name
+          <col width="20">
+          <col width="20">
+          <col width="20">
+          <col width="20">
+
+		  <tr>
+			<td></td>
+			<td colspan="5" style="text-align:right"><input type="button" value="$i18n.getString( "add_new" )" onclick="window.location.href='showAddDataElementCategoryForm.action'"></td>
+		  </tr>
+
+          <tr>
+            <th>$i18n.getString( "name" )</th>
+            <th colspan="5">$i18n.getString( "operations" )</th>
+          </tr>
+
+          <tbody>
+            #set( $mark = false )
+            #foreach( $dataElementCategory in $dataElementCategories )
+              <tr #if( $mark ) style="background-color:#dddddd" #end>
+                <td style="text-align:left">$encoder.htmlEncode( $dataElementCategory.name )</td>
+                <td style="text-align:center">
+                  <a href="showUpdateDataElementCategoryForm.action?dataElementCategoryId=$dataElementCategory.id" title="$i18n.getString( "edit" )"><img src="../images/edit.png" alt="$i18n.getString( "edit" )"></a>
+                </td>
+                <td style="text-align:center">
+                   <a href="$i18n.getString( "translation_translate" )" title="$i18n.getString( "translation_translate" )" onclick="this.href='javascript:location.href= \'../dhis-web-commons/i18n.action?className=DataElementCategory&amp;objectId=$dataElementCategory.id&amp;returnUrl=\' + location.href'"><img src="../images/i18n.png" alt="$i18n.getString( "translation_translate" )"></a>
+                </td>
+				#if( $dataElementCategory.id != $defaultCategory.id )
+                <td style="text-align:center">
+                  <a href="javascript:removeDataElementCategory( '$dataElementCategory.id', '$encoder.jsEncode( $dataElementCategory.name )' )" title="$i18n.getString( "remove" )"><img src="../images/delete.png" alt="$i18n.getString( "remove" )"></a>
+                </td>
+				#end
+                <td style="text-align:center">
+                  <a href="javascript:showDataElementCategoryDetails( $dataElementCategory.id )" title="$i18n.getString( "show_details" )"><img src="../images/information.png" alt="$i18n.getString( "show_details" )"></a>
+                </td>
+              </tr>
+			  #if( $mark )
+				#set( $mark = false )
+			  #else
+				#set( $mark = true )
+			  #end
+            #end
+
+          </tbody>
+
+        </table>
+    </td>
+		<td style="width:20em; padding-left:2em; vertical-align:top">
+
+			<div id="detailsArea" style="display:none">
+				<div style="float:right">
+					<a href="javascript:hideDetails()" title="$i18n.getString( "hide_details" )"><img src="../images/close.png" alt="$i18n.getString( "hide_details" )"></a>
+				</div>				
+				<p><label>$i18n.getString( "id" ):</label><br><span id="idField"></span></p>
+				<p><label>$i18n.getString( "name" ):</label><br><span id="nameField"></span></p>
+				<p><label>$i18n.getString( "number_of_category_options" ):</label><br><span id="categoryOptionsCountField"></span></p>
+			</div>
+
+            <div id="warningArea" style="display:none">
+                <div style="float:right">
+                    <a href="javascript:hideWarning()" title="$i18n.getString( "hide_warning" )"><img src="../images/close.png" alt="$i18n.getString( "hide_warning" )"></a>
+                </div>
+                <p><span id="warningField"></span></p>
+            </div>
+
+		</td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+
+	var i18n_confirm_delete = '$encoder.jsEscape( $i18n.getString( "confirm_delete" ) , "'" )';
+</script>

@@ -1,0 +1,172 @@
+
+<html>
+	    <head>
+		        <title>Survey Analyser</title>
+        		
+		        <script>
+		            // Global Variables
+		            var selriRadioButton = "indicatorsRadio";
+		            var selCategory = "";
+		            var selFacility = "";
+		            
+		            // OrganisationUnit ids and its Names
+			            var orgUnits = new HashTable();
+			            #foreach($orgUnit in $organisationUnits)
+			                var orgUnitId = ""+$orgUnit.getId();
+			                orgUnits.put(orgUnitId,"$orgUnit.getShortName()");
+			            #end			            
+			        </script>
+	    </head>
+	    <body>
+	        <h1>$i18n.getString( "sa_survey_analyser" )</h1>
+	        <hr />	        
+	        <form id="ChartGenerationForm" name="ChartGenerationForm" action="generateSurveyData.action" method="post" onsubmit="return formValidations()" target="chartWindow1">	
+		            		<table align="center" style=" border-collapse: collapse; margin-top: 0;" cellpadding="0" cellspacing="0" width="730" border=0>
+		                <colgroup>
+                    		<col width="325">
+  		                  <col width="80">
+ 		                   <col width="325">
+  	              </colgroup>
+		                <tr>
+    			                <td class="NormalB">$i18n.getString( "ga_filter_by_degroup" )<br>
+                    				    <select id="dataElementGroupId" name="dataElementGroupId" style="width:325px" onchange="getDataElements()">
+                            <option value="$ALL">[ Select DataElementGroup / All ]</option>				
+                            				#foreach ( $group in $dataElementGroups )
+            					                    <option value="$group.id" title="$group.name">$group.name</option>
+        				                    #end
+     		                   	</select>
+                    </td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">&nbsp;</td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">$i18n.getString( "ga_available_delist" )<br>
+                        				<select multiple size="5" id="availableDataElements" name="availableDataElements" style="width:325px; height:100px" ondblclick="moveSelectedById( 'availableDataElements', 'selectedDataElements' )">
+				                            #foreach ( $element in $dataElements )
+                                			    <option value="$element.id" title="$element.name">$element.name</option>
+    				                        #end
+			                        	</select>
+				                    </td>
+    			                <td class="NormalB" align="center">
+    			                    <br />
+    			 								                   <input type="button" value="&gt;" style="width:40px" onclick="moveSelectedById( 'availableDataElements', 'selectedDataElements' )"><br>
+                        			<input type="button" value="&lt;" style="width:40px" onclick="moveSelectedById( 'selectedDataElements', 'availableDataElements' )"><br>
+                        			<input type="button" value="&gt;&gt;" style="width:40px" onclick="moveAllById( 'availableDataElements', 'selectedDataElements' )"><br>
+                        			<input type="button" value="&lt;&lt;" style="width:40px" onclick="moveAllById( 'selectedDataElements', 'availableDataElements' )">		
+                    			</td>
+    			                <td class="NormalB">
+    			                    $i18n.getString( "ga_selected_delist" )<br />
+    				                    <select multiple id="selectedDataElements" name="selectedDataElements" style="width:325px; height:100px" ondblclick="moveSelectedById( 'selectedDataElements', 'availableDataElements' )">
+                        				</select>
+                    			</td>
+  			              </tr>
+  			              <tr>
+    			                <td class="NormalB">&nbsp;<br/></td>   
+                    			<td class="NormalB">&nbsp;<br/></td>
+                    			<td class="NormalB">&nbsp;<br/></td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">$i18n.getString( "ga_filter_by_indicatorgroup" )<br>
+                    				    <select id="indicatorGroupId" name="indicatorGroupId" style="width:325px" onchange="getIndicators()">
+                            				<option value="$ALL">[ Select IndicatorGroup / All ]</option>
+                            				#foreach ( $group in $indicatorGroups )
+                                					<option value="$group.id">$group.name</option>
+                            				#end
+                        			</select>
+                    </td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                <tr>
+    			                <td class="NormalB">&nbsp;</td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">$i18n.getString( "ga_available_indicatorlist" )<br>
+                        				<select multiple size="5" id="availableIndicators" name="availableIndicators" style="width:325px; height:100px" ondblclick="moveSelectedById( 'availableIndicators', 'selectedIndicators' )">
+				                            #foreach ( $indicator in $indicators )
+                                			    <option value="$indicator.id">$indicator.name</option>
+                            				#end
+			                        </select>
+				                    </td>
+    			                <td class="NormalB" align="center">
+    			                    <br />
+    			 								                   <input type="button" value="&gt;" style="width:40px" onclick="moveSelectedById( 'availableIndicators', 'selectedIndicators' )"><br>
+                        			<input type="button" value="&lt;" style="width:40px" onclick="moveSelectedById( 'selectedIndicators', 'availableIndicators' )"><br>		
+                        			<input type="button" value="&gt;&gt;" style="width:40px" onclick="moveAllById( 'availableIndicators', 'selectedIndicators' )"><br>
+                        			<input type="button" value="&lt;&lt;" style="width:40px" onclick="moveAllById( 'selectedIndicators', 'availableIndicators' )">		
+                    			</td>
+    			                <td class="NormalB">
+    			                    $i18n.getString( "ga_selected_indicatorlist" ) <br />
+			                        <select multiple id="selectedIndicators" name="selectedIndicators" style="width:325px; height:100px" ondblclick="moveSelectedById( 'selectedIndicators', 'availableIndicators' )">
+                        			</select>
+		                    	</td>
+  			              </tr>
+  			              <tr>
+    			                <td class="NormalB">&nbsp;</td>   
+                    			<td class="NormalB">&nbsp;</td>
+                    			<td class="NormalB">&nbsp;</td>
+                			</tr>
+                			<tr>
+    			                <td class="NormalB">
+    			                    $i18n.getString( "ga_orgunit" )<br>    			                    	
+                        					<select name="orgUnitListCB" id="orgUnitListCB" multiple style="width: 325px;height: 100px">
+                        					</select>                    				                                                
+    			                </td>   
+                    			<td class="NormalB" align="center">
+                    			    <input type="button" name="remOUButton" id="remOUButton" value=" > " onclick="remOUFunction()" />
+                    			</td>
+                    			<td class="NormalB" align="center">
+                    			    <table>                    			        
+                    			        <tr>
+                    			            <td class="NormalB">
+                    			                $i18n.getString( "ga_from" )<br>
+        					                            <select id="sDateLB" name="sDateLB">												
+								                                    #foreach($period in $monthlyPeriods)
+  									                                      <option value="$period.id">$simpleDateFormat.format($period.startDate)</option>
+								                                    #end
+			  				                                  </select>	
+                    			            </td>
+                    			            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    			            <td align="right" class="NormalB">
+                    			                $i18n.getString( "ga_to" )<br>
+						              	                      <select id="eDateLB" name="eDateLB">
+								                                    #foreach($period in $monthlyPeriods)
+  									                                      <option value="$period.id">$simpleDateFormat.format($period.endDate)</option>
+								                                    #end			  							
+			  				                                  </select>			
+			  				                              </td>
+                    			        </tr>
+                    			        <tr>
+                    			            <td>&nbsp;</td>
+                    			            <td>&nbsp;</td>
+                    			            <td>&nbsp;</td>
+                    			        </tr>
+                    			        <tr>
+                    			            <td class="NormalB">
+                    			                Facility By<br>
+                        		            <select id="facilityLB" name="facilityLB" onchange="facilityChangeFunction(event)">
+			                                        <option value="children">Children</option>
+			                                        <option value="random">Selected</option>
+                                    </select>              				                      
+			                    			            </td>
+			                    			            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    			            <td align="right">
+                    			                <br />
+              				                      <input type="submit" name="ViewChart" value="$i18n.getString( 'ga_viewchart' )" style="width: 120; height: 25; font-family:Arial; font-weight:bold; color:#000000">
+							  				                              </td>
+                    			        </tr>                            
+                            <input type="hidden" name="selectedButton" id="selectedButton">
+                        </table>    
+                    			</td>
+                			</tr>
+            </table>							
+        </form>
+    </body>
+</html>            

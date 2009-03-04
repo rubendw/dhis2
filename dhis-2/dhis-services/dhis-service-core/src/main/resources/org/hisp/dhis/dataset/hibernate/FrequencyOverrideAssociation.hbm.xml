@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.dataset.FrequencyOverrideAssociation"
+    table="frequencyoverrideassociation">
+    <composite-id>
+      <!--
+      The source relationship is made not lazy so that Hibernate won't put a
+      proxy on the reference which cannot be casted to the desired subclass.
+      -->
+      <key-many-to-one name="source" class="org.hisp.dhis.source.Source" lazy="false" 
+          column="sourceid" foreign-key="fk_freqoverride_sourceid"/>
+      <key-many-to-one name="dataSet" class="org.hisp.dhis.dataset.DataSet"
+          column="datasetid" foreign-key="fk_freqoverride_datasetid"/>
+    </composite-id>
+    <many-to-one name="periodType" class="org.hisp.dhis.period.PeriodType" lazy="false" 
+        column="periodtypeid" not-null="true" foreign-key="fk_freqoverride_peiodtypeid"/>
+  </class>
+</hibernate-mapping>

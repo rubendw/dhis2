@@ -1,0 +1,54 @@
+<h2>$i18n.getString( "Edit" )</h2>
+<form name="editLegend" action="editLegend.action" method="post" onsubmit="return validateUpdateLegend();">
+	 <table id="list" style="width:50%">
+	 	<tr>
+			<td><label>$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+			<td>$encoder.xmlEncode( $legend.name )<input type="hidden" name="legendId" value="$legend.id"/><input type="hidden" id="name" name="nameField" value="$legend.name" style="width:20em"/></td>
+		</tr>
+		<tr>
+			<td><label>$i18n.getString( "color" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+			<td><input type="text" id="color" name="colorField" readonly=true style="width:20em;background:#$legend.color" value="$legend.color"/>
+			<a href="javascript:TCP.popup(document.getElementById('color'))">
+   				 <img width="15" height="13" border="0" src="images/sel.gif"></a></td>
+		</tr>
+		<tr>
+			<td><label>$i18n.getString( "min" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+			<td><input type="text" id="min" name="minField" style="width:20em" value="$legend.min"/></td>
+		</tr>
+		<tr>
+			<td><label>$i18n.getString( "max" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+			<td><input type="text" id="max" name="maxField" style="width:20em" value="$legend.max" #if($legend.autoCreateMax==1) disabled=true #end/>
+			<input type="hidden" name="autoCreateMax" id="autoCreateMaxId"/>
+			<input type="checkbox" id="automax" #if($legend.autoCreateMax==1) checked=true  #end onclick="javascript:check('automax','max');"/>&nbsp;&nbsp;$i18n.getString( "auto_create_max" )
+			</td>
+		</tr>
+	<script>
+			function check(checkBoxId, otherInputId){
+				var check = document.getElementById(checkBoxId).checked;	
+			
+				if(check){
+					document.getElementById('autoCreateMaxId').value = true;
+					document.getElementById(otherInputId).disabled=true;
+				}else{
+					document.getElementById('autoCreateMaxId').value = false;
+					document.getElementById(otherInputId).disabled=false;
+				}
+			}
+		</script>
+		 <tr>
+			<td colspan="4">
+			  <span id="message"></span>
+			</td>
+     	 </tr>	
+		 <tr>
+        <td colspan="4">
+          <input  type="submit" value="    $i18n.getString( 'Update' )    "/>
+          <!--
+            Cancel and go back to the overview
+          -->
+          <input type="button" name="cancel"
+            onclick="window.location.href='listLegends.action'" value="$i18n.getString( "cancel" )">
+        </td>
+      </tr>		
+</table>
+</form>

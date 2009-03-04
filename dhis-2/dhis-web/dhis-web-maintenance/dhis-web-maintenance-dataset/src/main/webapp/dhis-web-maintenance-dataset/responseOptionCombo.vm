@@ -1,0 +1,11 @@
+#set($count = 0)
+
+<optionCombo>
+  <categoryOptions>
+    #foreach( $optionComboId in $optionComboIds )
+      #set($optionComboName = $optionComboNames.get($count))	
+      <categoryOption id="$optionComboId">$encoder.xmlEncode( $optionComboName )</categoryOption>
+      #set($count = $count + 1)
+    #end
+  </categoryOptions>
+</optionCombo>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.dataelement.DataElementDimensionColumnOrder" table="columnorder">
+
+    <composite-id>
+      <key-many-to-one name="category" class="org.hisp.dhis.dataelement.DataElementCategory"
+        column="categoryid" foreign-key="fk_columnorder_categoryid"/>
+      <key-many-to-one name="categoryOption" class="org.hisp.dhis.dataelement.DataElementCategoryOption"
+        column="categoryoptionid" foreign-key="fk_columnorder_categoryoptionid"/>		
+    </composite-id>       
+
+    <property name="displayOrder" column="displayorder"/>
+
+  </class>
+</hibernate-mapping>

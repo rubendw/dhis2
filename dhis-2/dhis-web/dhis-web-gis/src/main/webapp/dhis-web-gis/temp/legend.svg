@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:attrib='http://www.carto.net/attrib/' viewBox='0 0 1 5'>
+<rect x='0' y='0' height='1' width='1' fill='#00FFFF' stroke='#000000' stroke-width='0.01'/>
+<rect x='0' y='1' height='1' width='1' fill='#00CCFF' stroke='#000000' stroke-width='0.01'/>
+<rect x='0' y='2' height='1' width='1' fill='#0066FF' stroke='#000000' stroke-width='0.01'/>
+<rect x='0' y='3' height='1' width='1' fill='#0000FF' stroke='#000000' stroke-width='0.01'/>
+<rect x='0' y='4' height='1' width='1' fill='#3300CC' stroke='#000000' stroke-width='0.01'/>
+
+</svg>

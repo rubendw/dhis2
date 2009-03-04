@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN" "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+	<include file="dhis-web-commons.xml"/>
+	
+	<package name="dhis-web-datamart" extends="dhis-web-commons" namespace="/dhis-web-datamart">
+	
+    <!-- DataMart -->
+    
+		<action name="index" class="org.hisp.dhis.datamart.action.NoAction">
+			<result name="success" type="redirect">getDataMartExports.action</result>
+		</action>	
+		
+		<action name="getOptions" class="org.hisp.dhis.datamart.action.GetOptionsAction">
+			<result name="success" type="velocity">/main.vm</result>
+			<param name="page">/dhis-web-datamart/exportForm.vm</param>
+			<param name="menu">/dhis-web-datamart/menu.vm</param>
+			<param name="javascripts">../dhis-web-commons/util/commons.js,../dhis-web-commons/lists/lists.js,javascript/datamart.js</param>
+			<interceptor-ref name="transactionStack"/>
+		</action>
+		
+		<!-- Ajax requests -->
+		
+		<action name="export" class="org.hisp.dhis.datamart.action.ExportAction">
+			<result name="success" type="velocity">/dhis-web-datamart/responseExport.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+		</action>
+    
+    <action name="exportDataMartExport" class="org.hisp.dhis.datamart.action.ExportDataMartExportAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-datamart/exportStatus.vm</param>
+      <param name="javascripts">../dhis-web-commons/util/commons.js,javascript/datamart.js</param>  
+    </action>
+    
+    <action name="getExportStatus" class="org.hisp.dhis.datamart.action.GetExportStatusAction">
+      <result name="success" type="velocity">/dhis-web-datamart/responseExportStatus.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+		
+    <action name="cancelExport" class="org.hisp.dhis.datamart.action.CancelExportAction">
+			<result name="success" type="velocity">/dhis-web-datamart/responseExport.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+		
+    <!-- DataMartExports -->
+    
+    <action name="removeDataMartExport" class="org.hisp.dhis.datamart.action.RemoveDataMartExportAction">
+      <result name="success" type="redirect">getDataMartExports.action</result>
+    </action>
+    
+    <action name="getDataMartExports" class="org.hisp.dhis.datamart.action.GetAllDataMartExportsAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-datamart/viewExportForm.vm</param>
+      <param name="menu">/dhis-web-datamart/menu.vm</param>
+      <param name="javascripts">../dhis-web-commons/util/commons.js,javascript/datamart.js</param>
+    </action>
+    
+    <!-- Ajax requests -->
+    
+    <action name="getDataMartExport" class="org.hisp.dhis.datamart.action.GetDataMartExportAction">
+      <result name="success" type="velocity">/dhis-web-datamart/responseDataMartExport.vm</result>
+    </action>
+    
+    <action name="saveDataMartExport" class="org.hisp.dhis.datamart.action.SaveDataMartExportAction">
+      <result name="success" type="velocity">/dhis-web-datamart/responseSuccess.vm</result>
+    </action>
+    
+    <action name="validateDataMartExport" class="org.hisp.dhis.datamart.action.ValidateDataMartExportAction">
+      <result name="success" type="velocity">/dhis-web-datamart/responseSuccess.vm</result>
+      <result name="input" type="velocity">/dhis-web-datamart/responseInput.vm</result>
+    </action>
+    
+	</package>
+</xwork>

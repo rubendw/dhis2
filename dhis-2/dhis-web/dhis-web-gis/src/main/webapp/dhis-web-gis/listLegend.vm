@@ -1,0 +1,87 @@
+<h2>$i18n.getString( "legend" )</h2>
+<form name="listLegend" action="addLegend.action" method="POST">
+<table class="mainPageTable">
+	<tr>
+		<td></td>
+		<td> 
+			
+		</td>
+		<td align="right">
+			<input type="submit" value="$i18n.getString( "add" )" />
+		</td>		
+	</tr>
+  <tr>
+    <td style="vertical-align:top" colspan=3>
+      <table id="list" style="width:100%">
+	  	  <tr>
+            <th>$i18n.getString( "name" )</th>
+			<th>$i18n.getString( "color" )</th>
+			<th>$i18n.getString( "min" )</th>
+			<th>$i18n.getString( "max" )</th>
+            <th>$i18n.getString( "operations" )</th>
+          </tr>
+		  <tbody>
+            #set( $mark = false )
+            #foreach( $legend in $legends )
+				<tr #if( $mark ) style="background-color:#dddddd" #end>
+					<td>$encoder.htmlEncode( $legend.name )</td>
+					<td bgcolor="#$legend.color">#$encoder.htmlEncode( $legend.color )</td>
+					<td>$encoder.htmlEncode( $legend.min )</td>
+					<td>#if($legend.autoCreateMax==1) $i18n.getString( "auto_create_max" ) #else $encoder.htmlEncode( $legend.max ) #end</td>
+					<td>
+						<a href="javascript:editLegend('$legend.id');" title="$i18n.getString( "edit" )"><img src="../images/edit.png" width="16" height="16" alt="$i18n.getString( "edit" )"></a> &nbsp;
+						<a href="javascript:removeLegend( '$legend.id' )" title="$i18n.getString( "remove" )"><img src="../images/delete.png" width="16" height="16" alt="$i18n.getString( "remove" )"></a>
+						<a href="javascript:showLegendDetails( $legend.id )" title="$i18n.getString( "show_details" )"><img src="../images/information.png" width="16" height="16" alt="$i18n.getString( "show_details" )"></a>
+					</td>
+				</tr>
+				#if( $mark )
+				#set( $mark = false )
+			  #else
+				#set( $mark = true )
+			  #end
+			#end
+		  </tbody>
+	  </table>
+	 </td>
+	 <td>
+	 	<div style="position:fixed; width:200px; height:300px; border:#0000CC thin solid; background-color:#6699FF;display:none">
+		  <table width="100%" border="0">
+			<tr>
+			  <td colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+			  <td>&nbsp;</td>
+			  <td><div id="name" style="width:100%"></div></td>
+			</tr>
+			<tr>
+			  <td>&nbsp;</td>
+			  <td><div id="color" style="width:100%"></div></td>
+			</tr>
+			<tr>
+			  <td>&nbsp;</td>
+			  <td><div id="min" style="width:100%"></div></td>
+			</tr>
+			<tr>
+			  <td>&nbsp;</td>
+			  <td><div id="max" style="width:100%"></div></td>
+			</tr>
+			<tr>
+			  <td colspan="2"><div id="indicators" style="width:100%">
+			    </div></td>
+			</tr>
+		  </table>
+		</div>
+	 </td>
+  </tr>
+  
+</table>
+</form>
+
+<script type="text/javascript">
+function removeLegend(id){
+	window.location = "deleteLegend.action?legendId=" + id;
+}
+function editLegend(id){
+	window.location = "updateLegend.action?legendId=" + id;
+}
+</script>

@@ -1,0 +1,68 @@
+
+<h3>$i18n.getString( 'create_new_report' )</h3>
+
+<form id="reportForm" action="addReport.action" method="post" enctype="multipart/form-data">
+
+<input type="hidden" name="id" value="$!report.id">
+<input type="hidden" name="currentDesign" value="$!report.design">
+
+<table>
+    <tr>
+        <th colspan="2">$i18n.getString( "details" )</th>
+    </tr>
+    <tr>
+        <td><label for="name">$i18n.getString( "name" )</label></td>
+        <td><input type="text" id="name" name="name" style="width:95%" value="$!report.name"></td>
+    </tr>
+	<tr>
+		<td><label for="upload">$i18n.getString( "design" )</label></td>
+		<td><input type="file" id="upload" name="upload" size="35"></td>
+	</tr>
+	<tr>
+		<td colspan="2" height="7px"></td>
+	</tr>
+	<tr>
+		<th colspan="2">$i18n.getString( "available_report_tables" )</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<select multiple size="5" id="availableReportTables" name="availableReportTables" style="min-width:325px" ondblclick="moveSelectedById( 'availableReportTables', 'selectedReportTables' )">
+			#foreach( $table in $reportTables )
+				<option value="$table.id">$table.name</option>
+			#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<input type="button" value="$i18n.getString( 'add' )" title="$i18n.getString( 'add' )" style="width:10em" onclick="moveSelectedById( 'availableReportTables', 'selectedReportTables' )"><input
+                   type="button" value="$i18n.getString( 'remove' )" title="$i18n.getString( 'remove' )" style="width:10em" onclick="moveSelectedById( 'selectedReportTables', 'availableReportTables' )"> 
+		</td>
+	</tr>
+	<tr>
+        <th colspan="2">$i18n.getString( "selected_report_tables" )</th>
+    </tr>
+	<tr>
+        <td colspan="2">
+            <select multiple size="5" id="selectedReportTables" name="selectedReportTables" style="min-width:325px" ondblclick="moveSelectedById( 'selectedReportTables', 'availableReportTables' )">
+            #foreach( $table in $selectedReportTables )
+                <option value="$table.id">$table.name</option>
+            #end
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" height="7px"></td>
+    </tr>
+	<tr>
+		<td colspan="2"><input type="button" value="$i18n.getString( 'save' )" style="width:10em" onclick="addReport()"><input
+		           type="button" value="$i18n.getString( 'cancel' )" style="width:10em" 
+		           onclick="window.location.href='displayViewReportForm.action'"></td>
+	</tr>
+</table>
+	
+</form>
+
+<span id="info">$i18n.getString( "omit_report_table_explanation" ).</span>
+
+<span id="message"#if ( $message ) style="display:block"#end>$!message</span>

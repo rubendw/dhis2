@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.reporttable.ReportTable" table="reporttable">
+    
+    <id name="id" column="reporttableid">
+      <generator class="native"/>
+    </id>
+    
+    <property name="name">
+      <column name="name" not-null="true" unique="true"/>
+    </property>
+    
+    <property name="tableName">
+      <column name="tablename" not-null="true" unique="true"/>
+    </property>
+    
+    <property name="existingTableName"/>
+    
+    <property name="mode"/>
+    
+    <list name="dataElements" table="reporttable_dataelements">
+      <key column="reporttableid"/>
+      <list-index column="sort_order" base="0"/>
+      <many-to-many column="dataelementid"
+        class="org.hisp.dhis.dataelement.DataElement"/>
+    </list>
+
+    <list name="indicators" table="reporttable_indicators">
+      <key column="reporttableid"/>
+      <list-index column="sort_order" base="0"/>
+      <many-to-many column="indicatorid"
+        class="org.hisp.dhis.indicator.Indicator"/>
+    </list>
+
+    <list name="dataSets" table="reporttable_datasets">
+      <key column="reporttableid"/>
+      <list-index column="sort_order" base="0"/>
+      <many-to-many column="datasetid"
+        class="org.hisp.dhis.dataset.DataSet"/>
+    </list>
+    
+    <list name="periods" table="reporttable_periods">
+      <key column="reporttableid"/>
+      <list-index column="sort_order" base="0"/>
+      <many-to-many column="periodid"
+        class="org.hisp.dhis.period.Period"/>
+    </list>
+
+    <list name="units" table="reporttable_organisationunits">
+      <key column="reporttableid"/>
+      <list-index column="sort_order" base="0"/>
+      <many-to-many column="organisationunitid"
+        class="org.hisp.dhis.organisationunit.OrganisationUnit"/>
+    </list>
+
+    <property name="doIndicators"/>
+    
+    <property name="doPeriods"/>
+    
+    <property name="doUnits"/>
+    
+    <component name="relatives">
+      <property name="reportingMonth"/>
+      <property name="last3Months"/>
+      <property name="last6Months"/>
+      <property name="last9Months"/>
+      <property name="last12Months"/>
+      <property name="soFarThisYear"/>
+      <property name="soFarThisFinancialYear"/>
+      <property name="last3To6Months"/>
+      <property name="last6To9Months"/>
+      <property name="last9To12Months"/>
+      <property name="last12IndividualMonths"/>
+      <property name="individualMonthsThisYear"/>
+      <property name="individualQuartersThisYear"/>
+    </component>
+    
+    <component name="reportParams">
+      <property name="paramReportingMonth"/>
+      <property name="paramParentOrganisationUnit"/>
+      <property name="paramOrganisationUnit"/>
+    </component>
+    
+  </class>
+</hibernate-mapping>

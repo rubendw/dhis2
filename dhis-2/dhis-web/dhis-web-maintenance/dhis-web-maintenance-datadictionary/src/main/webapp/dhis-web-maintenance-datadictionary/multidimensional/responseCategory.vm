@@ -1,0 +1,5 @@
+<dataElementCategory>
+  <id>$dataElementCategory.id</id>
+  <name>$encoder.xmlEncode( $dataElementCategory.name )</name>
+  <categoryOptionCount>$dataElementCategoryOptions.size()</categoryOptionCount>  
+</dataElementCategory>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+#set($count1 = 0)
+<dataElements>
+#if($deOptionValue.equals("optioncombo"))
+#foreach( $optionComboName in $optionComboNames )
+	<dataElement>
+		<id>$optionComboIds.get($count1)</id>
+		<name>$encoder.xmlEncode( $optionComboName )</name>
+	</dataElement>
+    #set($count1 = $count1 + 1)
+#end
+#else
+#foreach( $dataElement in $dataElements )
+	<dataElement>
+		<id>$dataElement.id</id>
+		<name>$encoder.xmlEncode( $dataElement.name )</name>
+	</dataElement>
+#end
+#end
+</dataElements>

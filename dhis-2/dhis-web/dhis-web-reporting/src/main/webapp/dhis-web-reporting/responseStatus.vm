@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<status>
+	<percentageCompleted>$percentageCompleted</percentageCompleted>
+	<statusMessage>$statusMessage</statusMessage>
+	<finished>$finished</finished>
+</status>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN" "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<xwork>
+	<include file="dhis-web-commons.xml"/>
+	
+	<package name="dhis-web-maintenance-dataadmin" extends="dhis-web-commons" 
+    namespace="/dhis-web-maintenance-dataadmin">
+	
+    <action name="index" class="org.hisp.dhis.commons.action.NoAction">
+      <result name="success" type="redirect">displayLockingForm.action</result>
+    </action>
+    
+    <!-- Locking -->
+    
+    <action name="displayLockingForm" class="org.hisp.dhis.dataadmin.action.datalocking.GetPeriodTypesAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-dataadmin/lockingForm.vm</param>
+      <param name="menu">/dhis-web-maintenance-dataadmin/menu.vm</param>
+      <param name="javascripts">javascript/locking.js,../dhis-web-commons/lists/lists.js</param>
+      <param name="requiredAuthorities">F_DATASET_LOCK</param>
+    </action>
+    
+    <action name="lockDataSets" class="org.hisp.dhis.dataadmin.action.datalocking.LockDataSetsAction">
+      <result name="success" type="redirect">displayLockingForm.action</result>
+      <param name="requiredAuthorities">F_DATASET_LOCK</param>
+    </action>
+		
+    <action name="getDataSets" class="org.hisp.dhis.dataadmin.action.datalocking.GetDataSetsAction">
+      <result name="success" type="velocity">/dhis-web-maintenance-dataadmin/responseDataSet.vm</result>
+        <interceptor-ref name="transactionStack"/>
+        <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <!-- Maintenance -->
+  
+    <action name="displayMaintenanceForm" class="org.hisp.dhis.dataadmin.action.NoAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-dataadmin/maintenanceForm.vm</param>
+      <param name="menu">/dhis-web-maintenance-dataadmin/menu.vm</param>
+      <param name="javascripts">javascript/maintenance.js,../dhis-web-commons/util/commons.js</param>
+    </action>
+    
+    <action name="performMaintenance" class="org.hisp.dhis.dataadmin.action.maintenance.PerformMaintenanceAction">
+      <result name="success" type="velocity">/dhis-web-maintenance-dataadmin/responseSuccess.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+    <!-- Resource table -->
+    
+    <action name="displayResourceTableForm" class="org.hisp.dhis.dataadmin.action.NoAction">
+      <result name="success" type="velocity">/main.vm</result>
+      <param name="page">/dhis-web-maintenance-dataadmin/resourceTableForm.vm</param>
+      <param name="menu">/dhis-web-maintenance-dataadmin/menu.vm</param>
+      <param name="javascripts">javascript/resourceTable.js,../dhis-web-commons/util/commons.js</param>
+    </action>
+    
+    <action name="generateResourceTable" class="org.hisp.dhis.dataadmin.action.resourcetable.GenerateResourceTableAction">
+      <result name="success" type="velocity">/dhis-web-maintenance-dataadmin/responseSuccess.vm</result>
+      <param name="onExceptionReturn">plainTextError</param>
+    </action>
+    
+	</package>
+</xwork>

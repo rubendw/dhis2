@@ -1,0 +1,9 @@
+<indicators>
+	#foreach( $indicator in $indicators )
+		<indicator>
+			<id></id>
+			<name></name>
+		</indicator>
+		
+	#end	
+</indicators>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="org.hisp.dhis.dataset.CompleteDataSetRegistration" table="completedatasetregistration">
+    <composite-id>
+      <key-many-to-one name="dataSet" class="org.hisp.dhis.dataset.DataSet"
+          column="datasetid" foreign-key="fk_datasetcompleteregistration_datasetid"/>
+      <key-many-to-one name="period" class="org.hisp.dhis.period.Period" 
+          column="periodid" foreign-key="fk_datasetcompleteregistration_periodid"/>
+      <!--
+        The source relationship is made not lazy so that Hibernate won't put a
+        proxy on the reference which cannot be casted to the desired subclass.
+      -->
+      <key-many-to-one name="source" class="org.hisp.dhis.source.Source" lazy="false"
+          column="sourceid" foreign-key="fk_datasetcompleteregistration_sourceid"/>    
+    </composite-id>
+    <property name="date" type="date" column="date"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>DHIS 2</title>
+    <link type="text/css" rel="stylesheet" media="screen" href="../dhis-web-commons/css/$stylesheet">
+    <link type="text/css" rel="stylesheet" media="screen" href="../dhis-web-commons/css/widgets.css">
+    <link type="image/png" rel="icon" href="../images/favicon.png">    
+    
+    #parse( "settings.vm" )
+    
+    <!-- Conditional comment, supported only by IE. The second stylesheet will overwrite some of the normal CSS with IE specific workarounds -->
+    <!--[if lt IE 7]>
+    <link type="text/css" rel="stylesheet" href="../ie6.css">
+    <![endif]-->
+    
+    #foreach ( $style in $stylesheets )
+      <link type="text/css" rel="stylesheet" href="$style">
+	#end
+	
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    #if ( $refresh && "$refresh" != "false" )
+      #if ( !$refreshInterval )
+        #set( $refreshInterval = 10 ) <!-- Default time in seconds -->
+	  #end
+      <meta http-equiv="refresh" content="$refreshInterval;url=$refresh"/>
+    #end
+    
+    <script type="text/javascript" src="../main.js"></script>
+    <script type="text/javascript">
+      var i18n_show_menu = '$encoder.jsEscape( $i18n.getString( "show_menu" ) , "'")';
+      var i18n_hide_menu = '$encoder.jsEscape( $i18n.getString( "hide_menu" ) , "'")';
+    </script>
+    <script type="text/javascript" src="../request.js"></script>
+    #foreach( $javascript in $javascripts )
+      <script type="text/javascript" src="$javascript"></script>
+    #end
+  </head>
+  
+  <body>
+  	
+    <div id="header">
+      <img id="header1" src="../dhis-web-commons/css/$stylesheetDirectory/logo_left.png">
+      <img id="header2" src="../dhis-web-commons/css/$stylesheetDirectory/logo_banner.png">
+      <img id="header3" src="../dhis-web-commons/css/$stylesheetDirectory/logo_right.png">
+
+      <span id="headerText">
+      	#if ( $applicationTitle )
+      	  $applicationTitle
+	    #else
+      	  District Health Information Software 2
+      	#end
+      </span>
+
+      <a id="about" href="../dhis-web-commons-about/about.action">$i18n.getString('about') DHIS 2</a>
+
+      <span id="currentUser">      
+        #if( $currentUsername )
+          $i18n.getString( "logged_in" ): $currentUsername &nbsp;
+          <a href="../dhis-web-commons-security/logout.action?$currentUsername">$i18n.getString( "log_out" )</a>
+        #else
+          $i18n.getString( "not_logged_in" )
+        #end      	
+      </span>
+    </div>
+
+    <div id="mainMenu">
+      <img id="mainMenuIcon" src="../images/main_menu.png" alt="$i18n.getString( 'main_menu' )"
+      	onclick="javascript:window.location.href='../dhis-web-portal/mainMenu.action'">
+      <a id="mainMenuLink" href="../dhis-web-portal/mainMenu.action">$i18n.getString( "main_menu" )</a>
+    </div>
+    
+	<div id="leftBar">    
+      <span id="leftBarToggle">
+        <a id="leftbarToggleLink" href="javascript:leftBar.toggleVisible()" title="$i18n.getString( "hide_menu" )">
+          <img id="leftbarToggleImage" src="../images/hide_menu.png" width="16" height="16" alt="$i18n.getString( "hide_menu" )"></a>
+      </span>
+      
+	  <div id="leftBarContents">
+	    #parse( $menu )
+	  </div>	  
+	</div>
+	
+    <div class="page" id="mainPage">
+      #if( !$page )
+        <p>$i18n.getString( "no_page_specified" )</p>
+      #else
+        #parse( $page )
+      #end
+    </div>
+    #if( !$menuState.visible )
+      <script type="text/javascript">
+        leftBar.hide();
+      </script>
+    #end
+    
+  </body>
+</html>

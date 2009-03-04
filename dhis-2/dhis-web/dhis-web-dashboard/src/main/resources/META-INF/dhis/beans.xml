@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+  <bean id="org.hisp.dhis.dashboard.action.DashBoardHomePageAction"
+    class="org.hisp.dhis.dashboard.action.DashBoardHomePageAction"
+    scope="prototype">
+  </bean>
+  
+  <!-- Graphical Analyser -->
+  
+  <bean
+    id="org.hisp.dhis.dashboard.ga.action.GenerateGraphicalAnalyserFormAction"
+    class="org.hisp.dhis.dashboard.ga.action.GenerateGraphicalAnalyserFormAction"
+    scope="prototype">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+    <property name="organisationUnitGroupService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dashboard.ga.action.charts.GenerateChartDataAction"
+    class="org.hisp.dhis.dashboard.ga.action.charts.GenerateChartDataAction"
+    scope="prototype">
+    <property name="aggregationService">
+      <ref bean="org.hisp.dhis.aggregation.AggregationService"/>
+    </property>
+    <property name="dataElementCategoryOptionComboService">
+      <ref
+        bean="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+    </property>
+    <property name="dashBoardService">
+      <ref bean="org.hisp.dhis.dashboard.util.DashBoardService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+    <property name="statementManager">
+      <ref bean="org.hisp.dhis.aggregation.batch.statement.StatementManager"/>
+    </property>
+    <property name="organisationUnitGroupService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    </property>
+    <property name="targetService">
+      <ref bean="org.hisp.dhis.target.TargetService"/>
+    </property>      
+  </bean>
+  
+  <bean id="org.hisp.dhis.dashboard.ga.action.charts.GenerateChartAction"
+    class="org.hisp.dhis.dashboard.ga.action.charts.GenerateChartAction"
+    scope="prototype">
+  </bean>
+  
+  <!-- Annual Analyser -->
+  
+  <bean id="org.hisp.dhis.dashboard.aa.action.GenerateAnnualAnalyserFormAction"
+    class="org.hisp.dhis.dashboard.aa.action.GenerateAnnualAnalyserFormAction"
+    scope="prototype">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dashboard.aa.action.GenerateAnnualAnalysisDataAction"
+    class="org.hisp.dhis.dashboard.aa.action.GenerateAnnualAnalysisDataAction"
+    scope="prototype">
+    <property name="aggregationService">
+      <ref bean="org.hisp.dhis.aggregation.AggregationService"/>
+    </property>
+    <property name="dashBoardService">
+      <ref bean="org.hisp.dhis.dashboard.util.DashBoardService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+  </bean>
+  
+  <!-- Survey Analyser -->
+  
+  <bean id="org.hisp.dhis.dashboard.sa.action.GenerateSurveyAnalysisFormAction"
+    class="org.hisp.dhis.dashboard.sa.action.GenerateSurveyAnalysisFormAction"
+    scope="prototype">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dashboard.sa.action.GenerateSurveyAnalysisDataAction"
+    class="org.hisp.dhis.dashboard.sa.action.GenerateSurveyAnalysisDataAction"
+    scope="prototype">
+    <property name="aggregationService">
+      <ref bean="org.hisp.dhis.aggregation.AggregationService"/>
+    </property>
+    <property name="dashBoardService">
+      <ref bean="org.hisp.dhis.dashboard.util.DashBoardService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+  </bean>
+  
+  <!-- DataStatus -->
+  
+  <bean id="org.hisp.dhis.dashboard.ds.action.GenerateDataStatusFormAction"
+    class="org.hisp.dhis.dashboard.ds.action.GenerateDataStatusFormAction"
+    scope="prototype">
+    <property name="dataSetStore">
+      <ref bean="org.hisp.dhis.dataset.DataSetStore"/>
+    </property>
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dashboard.ds.action.GenerateDataStatusResultAction"
+    class="org.hisp.dhis.dashboard.ds.action.GenerateDataStatusResultAction"
+    scope="prototype">
+    <property name="dataValueService">
+      <ref bean="org.hisp.dhis.datavalue.DataValueService"/>
+    </property>
+    <property name="dashBoardService">
+      <ref bean="org.hisp.dhis.dashboard.util.DashBoardService"/>
+    </property>
+    <property name="dataSetStore">
+      <ref bean="org.hisp.dhis.dataset.DataSetStore"/>
+    </property>
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+		<property name="organisationUnitGroupService">
+			<ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+		</property>    
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+  </bean>
+
+
+<!-- DashBoard Matrix -->
+	
+	<bean id="org.hisp.dhis.dashboard.dm.action.DashBoardMatrixFormAction"
+		class="org.hisp.dhis.dashboard.dm.action.DashBoardMatrixFormAction"
+		scope="prototype">		
+		<property name="indicatorService">
+			<ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+		</property>
+		<property name="periodStore">
+			<ref bean="org.hisp.dhis.period.PeriodStore"/>
+		</property>
+		<property name="organisationUnitService">
+			<ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+		</property>
+		<property name="organisationUnitGroupService">
+			<ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+		</property>
+	</bean>
+
+	<bean id="org.hisp.dhis.dashboard.dm.action.DashBoardMatrixResultAction"
+		class="org.hisp.dhis.dashboard.dm.action.DashBoardMatrixResultAction"
+		scope="prototype">		
+		<property name="aggregationService">
+			<ref bean="org.hisp.dhis.aggregation.AggregationService"/>
+		</property>
+		<property name="indicatorService">
+			<ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+		</property>
+		<property name="periodStore">
+			<ref bean="org.hisp.dhis.period.PeriodStore"/>
+		</property>
+		<property name="sourceStore">
+			<ref bean="org.hisp.dhis.source.SourceStore"/>
+		</property>
+		<property name="organisationUnitService">
+			<ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+		</property>
+		<property name="organisationUnitGroupService">
+			<ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+		</property>
+    <property name="targetService">
+			<ref bean="org.hisp.dhis.target.TargetService"/>
+		</property>
+	</bean>
+		
+  
+
+  
+  <!-- Tabular Analyser -->
+  
+  <bean id="org.hisp.dhis.dashboard.ta.action.GenerateTabularAnalysisFormAction"
+    class="org.hisp.dhis.dashboard.ta.action.GenerateTabularAnalysisFormAction"
+    scope="prototype">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+  </bean>
+  
+  <bean
+    id="org.hisp.dhis.dashboard.ta.action.GenerateTabularAnalysisResultAction"
+    class="org.hisp.dhis.dashboard.ta.action.GenerateTabularAnalysisResultAction"
+    scope="prototype">
+    <property name="aggregationService">
+      <ref bean="org.hisp.dhis.aggregation.AggregationService"/>
+    </property>
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+  </bean>
+  
+  <!-- OrganisationUnit Profile -->
+  
+  
+  <!-- Ajax -->
+  
+  <bean id="org.hisp.dhis.dashboard.action.GetDataElementsAction"
+    class="org.hisp.dhis.dashboard.action.GetDataElementsAction" scope="prototype">
+    <property name="dataElementService">
+      <ref bean="org.hisp.dhis.dataelement.DataElementService"/>
+    </property>
+    <property name="dataElementCategoryOptionComboService">
+      <ref
+        bean="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dashboard.action.GetIndicatorsAction"
+    class="org.hisp.dhis.dashboard.action.GetIndicatorsAction" scope="prototype">
+    <property name="indicatorService">
+      <ref bean="org.hisp.dhis.indicator.IndicatorService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dashboard.action.GetOrgUnitGroupsAction"
+    class="org.hisp.dhis.dashboard.action.GetOrgUnitGroupsAction" scope="prototype">
+    <property name="organisationUnitGroupService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitGroupService"/>
+    </property>
+  </bean>
+
+  <bean id="org.hisp.dhis.dashboard.action.GetOrgUnitsAction"
+    class="org.hisp.dhis.dashboard.action.GetOrgUnitsAction" scope="prototype">
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+  </bean>
+  
+  <!-- DashBoard Utilities -->
+  
+  <bean id="org.hisp.dhis.dashboard.util.DashBoardService"
+    class="org.hisp.dhis.dashboard.util.DashBoardService" scope="prototype">
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+  </bean>
+  
+  <!-- TopTen Disease Analysis -->
+  <bean
+    id="org.hisp.dhis.dashboard.topten.action.GenerateTopTenAnalyserFormAction"
+    class="org.hisp.dhis.dashboard.topten.action.GenerateTopTenAnalyserFormAction"
+    scope="prototype">
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <bean
+    id="org.hisp.dhis.dashboard.topten.action.GenerateTopTenAnalysisDataAction"
+    class="org.hisp.dhis.dashboard.topten.action.GenerateTopTenAnalysisDataAction"
+    scope="prototype">
+    <property name="periodStore">
+      <ref bean="org.hisp.dhis.period.PeriodStore"/>
+    </property>
+    <property name="organisationUnitService">
+      <ref bean="org.hisp.dhis.organisationunit.OrganisationUnitService"/>
+    </property>
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+    <property name="aggregationService">
+      <ref bean="org.hisp.dhis.aggregation.AggregationService"/>
+    </property>
+    <property name="dataElementCategoryOptionComboService">
+      <ref
+        bean="org.hisp.dhis.dataelement.DataElementCategoryOptionComboService"/>
+    </property>
+  </bean>
+  
+  <bean id="org.hisp.dhis.dashboard.topten.action.GetOptionCombosAction"
+    class="org.hisp.dhis.dashboard.topten.action.GetOptionCombosAction"
+    scope="prototype">
+    <property name="dataSetService">
+      <ref bean="org.hisp.dhis.dataset.DataSetService"/>
+    </property>
+  </bean>
+  
+  <!-- Export to Excel -->
+  <bean id="org.hisp.dhis.dashboard.action.ExportToExcelAction"
+    class="org.hisp.dhis.dashboard.action.ExportToExcelAction" scope="prototype">
+    <property name="locationManager"
+      ref="org.hisp.dhis.external.location.LocationManager"/>
+  </bean>
+
+  <bean id="org.hisp.dhis.dashboard.action.GetSortedDataAction"
+    class="org.hisp.dhis.dashboard.action.GetSortedDataAction" scope="prototype">
+  </bean>
+  
+</beans>

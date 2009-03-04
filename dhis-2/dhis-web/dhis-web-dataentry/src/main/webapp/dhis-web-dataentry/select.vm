@@ -1,0 +1,93 @@
+
+<div id="currentSelection">
+	#if ( $organisationUnit ) $encoder.htmlEncode( $organisationUnit.name )#else $i18n.getString( "no_organisationunit_selected" ) #end - 
+	#if ( $period ) $format.formatPeriod( $period ) #else $i18n.getString( "no_period_selected" ) #end <br>				
+	<span id="currentDataElement">$i18n.getString( "no_dataelement_selected" )</span> -
+	<span id="currentOptionCombo">$i18n.getString( "no_option_selected" )</span>	
+</div>
+
+<br>
+
+<form id="selectForm" name="selectForm" method="post" action="select.action">
+
+<div id="actions" style="width:200px text-align:right">
+	
+    <input type="button" value="$i18n.getString( "change_order" )" onclick="changeOrder()" style="width:150px" #if( !$selectedDataSetId || !$auth.hasAccess( "dhis-web-dataentry", "getDataElementOrder" ) || !$useDefaultForm) disabled="disabled" #end><br>
+    <input type="button" value="$i18n.getString( "generate_min_max" )" onclick="javascript:generateMinMaxValues();" style="width:150px" #if( !$selectedPeriodIndex || !$auth.hasAccess( "dhis-web-dataentry", "minMaxGeneration" )) disabled="disabled" #end><br>
+    <input type="button" value="$i18n.getString( "run_validation" )" onclick="javascript:validate();" style="width:150px" #if( !$selectedPeriodIndex ) disabled="disabled" #end><br>
+    <input type="button" id="calculateCDEs" value="$i18n.getString( "save_calculated" )" name="calculateCDEs" onclick="calculateAndSaveCDEs();" style="width:150px" #if( !$selectedPeriodIndex ) disabled="disabled" #end><br>
+
+	<input type="checkbox" id="useDefaultForm" name="useDefaultForm" #if( $useDefaultForm || !$customDataEntryFormExists ) checked="checked" #end #if( !$customDataEntryFormExists ) disabled="disabled" #end onchange="document.getElementById( 'selectForm' ).submit();">
+	<label>$i18n.getString( "use_default_form" )</label><br>
+
+	<input type="checkbox" id="useSectionForm" name="useSectionForm" #if( $useSectionForm ) checked="checked" #end  #if(!$haveSection) disabled="disabled" #end onchange="document.getElementById( 'selectForm' ).submit();">
+	<label>$i18n.getString( "use_section_form" )</label><br>
+
+	<input type="checkbox" id="useShortName" name="useShortName" #if( $useShortName ) checked="checked" #end  #if( $customDataEntryFormExists && !$useDefaultForm ) disabled="disabled" #end onchange="document.getElementById( 'selectForm' ).submit();">
+	<label>$i18n.getString( "use_short_names" )</label><br><br>
+
+</div>
+
+<table>
+	
+	<tr>
+		<td><label>$i18n.getString( "organisation_unit" )</label></td>
+		<td><input type="text" readonly="readonly" #if( $organisationUnit ) value="$encoder.htmlEncode( $organisationUnit.name )" #else value="[$i18n.getString( "select" )]" #end style="min-width:350px"></td>
+	</tr>
+	
+	<tr>
+		<td><label for="selectedDataSetId">$i18n.getString( "data_set" )</label></td>
+		<td>
+		    <select id="selectedDataSetId" name="selectedDataSetId" style="min-width:350px" onchange="document.getElementById( 'selectForm' ).submit();" #if( $dataSets.size() == 0 ) disabled="disabled" #end>
+				<option value="null">[$i18n.getString( "select" )]</option>
+			    #foreach( $dataSet in $dataSets )
+				<option value="$dataSet.id" #if( $selectedDataSetId && $dataSet.id == $selectedDataSetId ) selected="selected" #end>$encoder.htmlEncode( $dataSet.name )</option>
+			    #end
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td><label for="selectedPeriodIndex">$i18n.getString( "period" )</label></td>
+		<td>
+			<input type="button" value="&lt;&lt;" title="$i18n.getString('earlier_periods')" onclick="window.location.href='previousPeriods.action'" #if( $periods.size() == 0 ) disabled="disabled" #end>
+			<input type="button" value="&gt;&gt;" title="$i18n.getString('later_periods')" onclick="window.location.href='nextPeriods.action'" #if( $periods.size() == 0 ) disabled="disabled" #end><br>
+			<select id="selectedPeriodIndex" name="selectedPeriodIndex" style="min-width:350px" onchange="document.getElementById( 'selectForm' ).submit();" #if( $periods.size() == 0 ) disabled="disabled" #end>
+				<option value="null">[$i18n.getString( "select" )]</option>
+			    #foreach( $period in $periods )
+				#set( $index = $velocityCount - 1 )
+				<option value="$index" #if( $index && $selectedPeriodIndex && $index == $selectedPeriodIndex ) selected="selected" #end>$format.formatPeriod( $period )</option>
+			    #end
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td><label for="completeButton">$i18n.getString( "complete" )</label></td>
+		<td>
+			<input type="button" id="completeButton" name="completeButton" value="$i18n.getString( 'complete' )" onclick="registerCompleteDataSet()"#if( $registration || $periods.size() == 0 ) disabled="disabled"#end>
+			<input type="button" id="undoButton" name="undoButton" value="$i18n.getString( 'undo' )" onclick="undoCompleteDataSet()"#if( !$registration || $periods.size() == 0 ) disabled="disabled"#end>
+			<input type="text" id="dateField" name="dateField" value="$!format.formatDate( $registrationDate )" style="width:160px"#if( $registration || $periods.size() == 0 ) disabled="disabled"#end>
+			<div id="dateDiv" name="dateDiv" #if( $registration || $periods.size() == 0 ) style="display:none"#else style="display:inline"#end>
+			<img src="../images/calendar_icon.gif" width="16" height="16" id="getDateField" cursor: pointer;" title="$i18n.getString( "date_selector" )" onmouseover="this.style.background='orange';" onmouseout="this.style.background=''">
+			</div>
+		</td>
+	</tr>
+</table>
+
+</form>
+
+<hr style="clear:both">
+
+<script type="text/javascript">
+    Calendar.setup({
+        inputField     :    "dateField",      // id of the input field
+        ifFormat       :    "$i18n.getString("format.date.label")",       // format of the input field
+        button         :    "getDateField"   // trigger for the calendar (button ID)
+    });
+</script>
+  
+<script type="text/javascript">
+    var i18n_confirm_complete = '$encoder.jsEscape( $i18n.getString( "confirm_complete" ) , "'")';
+    var i18n_confirm_undo = '$encoder.jsEscape( $i18n.getString( "confirm_undo" ) , "'")';
+</script>

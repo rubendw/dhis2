@@ -1,0 +1,7 @@
+<periodSet>
+  <periods>
+  #foreach( $period in $periods )
+    <period id="$period.id">$period.startDate - $period.endDate</period>
+  #end
+  </periods>
+</periodSet>

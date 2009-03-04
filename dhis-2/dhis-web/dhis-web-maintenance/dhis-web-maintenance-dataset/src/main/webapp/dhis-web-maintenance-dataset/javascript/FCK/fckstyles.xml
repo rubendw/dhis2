@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ *
+ * == BEGIN LICENSE ==
+ *
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ *
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ *
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ *
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * == END LICENSE ==
+ *
+ * This is the sample style definitions file. It makes the styles combo
+ * completely customizable.
+ *
+ * See FCKConfig.StylesXmlPath in the configuration file.
+-->
+<Styles>
+	<Style name="Image on Left" element="img">
+		<Attribute name="style" value="padding: 5px; margin-right: 5px" />
+		<Attribute name="border" value="2" />
+		<Attribute name="align" value="left" />
+	</Style>
+	<Style name="Image on Right" element="img">
+		<Attribute name="style" value="padding: 5px; margin-left: 5px" />
+		<Attribute name="border" value="2" />
+		<Attribute name="align" value="right" />
+	</Style>
+	<Style name="Header 1" element="h1">
+		<Attribute name="class" value="dhis-cde_form_h1" />
+	</Style>
+	<Style name="Header 2" element="h2">
+		<Attribute name="class" value="dhis-cde_form_h2" />
+	</Style>
+	<Style name="Header 3" element="h3">
+		<Attribute name="class" value="dhis-cde_form_h3" />
+	</Style>
+	<Style name="Header 4" element="h4">
+		<Attribute name="class" value="dhis-cde_form_h4" />
+	</Style>
+	<Style name="Standard label" element="span">
+		<Attribute name="class" value="dhis-cde_form_stlabel" />
+	</Style>
+	<Style name="Small label" element="span">
+		<Attribute name="class" value="dhis-cde_form_smlabel" />
+	</Style>
+	<Style name="Annontations" element="span">
+		<Attribute name="class" value="dhis-cde_form_anno" />
+	</Style>
+</Styles>

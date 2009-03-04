@@ -1,0 +1,73 @@
+
+<h3>$i18n.getString( "user_management" )</h3>
+
+<table class="mainPageTable">
+	<tr>
+		<td style="vertical-align:top">
+
+			<table style="width:100%">
+				<col>
+				<col>
+				<col width="20">
+				<col width="20">
+				<col width="20">
+				<tr>
+					<td>$i18n.getString( "filter_by_username" ): <form style="display:inline" action="none" onsubmit="return false"><div style="display:inline"><input type="text" onkeyup="filterValues( this.value )"></div></form></td>
+					<td></td>
+					<td colspan="3" style="text-align:right"><input type="button" value="$i18n.getString( "add_new" )" onclick="window.location.href='showAddUserForm.action'"></td>
+				</tr>
+				<tr>
+					<th>$i18n.getString( "username" )</th>
+					<th>$i18n.getString( "name" )</th>
+					<th colspan="3">$i18n.getString( "operations" )</th>
+				</tr>
+				<tbody id="list">
+				#set( $mark = false )
+				#foreach( $userCredentials in $userCredentialsList )
+				<tr #if( $mark ) style="background-color:#dddddd" #end>
+					<td>$encoder.htmlEncode( $userCredentials.username )</td>
+					<td>$encoder.htmlEncode( $userCredentials.user.surname ), $encoder.htmlEncode( $userCredentials.user.firstName )</td>
+					
+					<td style="text-align:center"><a href="showUpdateUserForm.action?id=$userCredentials.id" title="$i18n.getString( "edit" )"><img src="../images/edit.png" alt="$i18n.getString( "edit" )"></a></td>
+					<td style="text-align:center"><a href="javascript:removeUser( $userCredentials.id, '$encoder.jsEncode( $userCredentials.username )' )" title="$i18n.getString( "remove" )"><img src="../images/delete.png" alt="$i18n.getString( "remove" )"></a></td>
+					<td style="text-align:center"><a href="javascript:showUserDetails( $userCredentials.id )" title="$i18n.getString( "show_details" )"><img src="../images/information.png" alt="$i18n.getString( "show_details" )"></a></td>
+				</tr>
+					#if( $mark )
+						#set( $mark = false )
+					#else
+						#set( $mark = true )
+					#end
+				#end
+				</tbody>
+			</table>
+
+		</td>
+		<td style="width:20em; padding-left:2em; vertical-align:top">
+
+			<div id="detailsArea" style="display:none">
+				<div style="float:right">
+					<a href="javascript:hideDetails()" title="$i18n.getString( "hide_details" )"><img src="../images/close.png" alt="$i18n.getString( "hide_details" )"></a>
+				</div>	
+				<p><label>$i18n.getString( "username" ):</label><br><span id="usernameField"></span></p>
+				<p><label>$i18n.getString( "surname" ):</label><br><span id="surnameField"></span></p>
+				<p><label>$i18n.getString( "firstName" ):</label><br><span id="firstNameField"></span></p>
+				<p><label>$i18n.getString( "organisation_unit" ):</label><br><span id="organisationNameField"></span></p>
+				<p><label>$i18n.getString( "email" ):</label><br><span id="emailField"></span></p>			
+			</div>
+
+		</td>
+	</tr>
+</table>
+
+<script type="text/javascript">
+	var i18n_confirm_delete = '$encoder.jsEscape( $i18n.getString( "confirm_delete_user" ) , "'")';
+	var i18n_none = '$encoder.jsEscape( $i18n.getString( "none" ) , "'")';
+
+	function orgUnitSelected( orgUnitIds )
+	{
+		window.location.href = "user.action";
+	}
+
+	selection.setListenerFunction( orgUnitSelected );
+
+</script>

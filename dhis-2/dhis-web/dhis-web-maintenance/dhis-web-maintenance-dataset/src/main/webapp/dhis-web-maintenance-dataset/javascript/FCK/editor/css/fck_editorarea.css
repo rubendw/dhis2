@@ -1,0 +1,123 @@
+/*
+ * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+ * Copyright (C) 2003-2007 Frederico Caldeira Knabben
+ *
+ * == BEGIN LICENSE ==
+ *
+ * Licensed under the terms of any of the following licenses at your
+ * choice:
+ *
+ *  - GNU General Public License Version 2 or later (the "GPL")
+ *    http://www.gnu.org/licenses/gpl.html
+ *
+ *  - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ *    http://www.gnu.org/licenses/lgpl.html
+ *
+ *  - Mozilla Public License Version 1.1 or later (the "MPL")
+ *    http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * == END LICENSE ==
+ *
+ * This is the default CSS file used by the editor area. It defines the
+ * initial font of the editor and background color.
+ *
+ * A user can configure the editor to use another CSS file. Just change
+ * the value of the FCKConfig.EditorAreaCSS key in the configuration
+ * file.
+ */
+
+/*
+    The "body" styles should match your editor web site, mainly regarding
+    background color and font family and size.
+*/
+
+body
+{
+	background-color: #ffffff;
+	padding: 5px 5px 5px 5px;
+	margin: 0px;
+}
+
+body, td
+{
+	font-family: Arial, Verdana, Sans-Serif;
+	font-size: 12px;
+}
+
+a[href]
+{
+	color: #0000FF !important;	/* For Firefox... mark as important, otherwise it becomes black */
+}
+
+/*
+	Just uncomment the following block if you want to avoid spaces between
+	paragraphs. Remember to apply the same style in your output front end page.
+*/
+
+/*
+p, ul, li
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+*/
+
+/*
+    The following are some sample styles used in the "Styles" toolbar command.
+    You should instead remove them, and include the styles used by the site
+    you are using the editor in.
+*/
+
+/* ---- DHIS 2 Styles ---- */
+
+input {
+	font-style: italic;
+	font-size: 10px;
+	color: #666;
+	}
+
+
+/*
+	NOTE: these styles only affect how the styled elements look when they are
+	used in the FCK editor area. In order for the elements to look the same 
+	when presented on the data entry page, all style rules below need to be
+	copied into the file: 
+	dhis-2/dhis-web/dhis-web-dataentry/src/main/webapp/
+	dhis-web-dataentry/style/custom_data_entry_form_styles.css
+
+*/
+
+h1.dhis-cde_form_h1, h2.dhis-cde_form_h2, h3.dhis-cde_form_h3,
+h4.dhis-cde_form_h4 {
+	margin: 0 0 5px 0;
+	padding: 0;
+}
+
+h1.dhis-cde_form_h1 {
+	font: normal normal bold 22px arial,sans-serif;
+	}
+
+h2.dhis-cde_form_h2 {
+	font: normal normal bold 18px arial,sans-serif;
+	}
+	
+h3.dhis-cde_form_h3 {
+	font: normal normal bold 16px arial,sans-serif;
+	}
+
+h4.dhis-cde_form_h4 {
+	font: normal normal bold 14px arial,sans-serif;
+	}
+
+span.dhis-cde_form_stlabel {
+	font: normal normal bold 12px arial,sans-serif;
+	}
+
+span.dhis-cde_form_smlabel {
+	font: normal normal bold 10px arial, sans-serif;
+	}
+
+span.dhis-cde_form_anno {
+	font: italic normal normal 10px arial,sans-serif;
+	color: #666;
+	}

@@ -1,0 +1,63 @@
+
+<h3>$encoder.htmlEncode( $i18n.getString( "create_new_validation_rule" ) )</h3>
+
+<form id="addValidationRuleForm" action="addValidationRule.action" method="post" onsubmit="return validateAddValidationRule()">
+
+<div>
+	<input type="hidden" id="leftSideDescription" name="leftSideDescription"/>
+	<input type="hidden" id="leftSideExpression" name="leftSideExpression"/>
+	<input type="hidden" id="leftSideTextualExpression" name="leftSideTextualExpression"/>
+	<input type="hidden" id="rightSideDescription" name="rightSideDescription"/>
+	<input type="hidden" id="rightSideExpression" name="rightSideExpression"/>
+	<input type="hidden" id="rightSideTextualExpression" name="rightSideTextualExpression"/>
+</div>
+
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "details" )</th>
+	</tr>
+	<tr>
+		<td><label for="name">$encoder.htmlEncode( $i18n.getString( "name" ) ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="name" name="name" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="description">$encoder.htmlEncode( $i18n.getString( "description" ) )</label></td>
+		<td><input type="text" id="description" name="description" style="width:20em"></td>
+	</tr>
+	<tr>
+		<td><label for="operatorId">$encoder.htmlEncode( $i18n.getString( "operator" ) ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td>
+			<select id="operator" name="operator" style="width:20em">
+				<option value="none">[ $i18n.getString( "select_operator" ) ]</option>
+				<option value="equal_to">$encoder.htmlEncode( $i18n.getString( "equal_to" ) )</option>
+				<option value="not_equal_to">$encoder.htmlEncode( $i18n.getString( "not_equal_to" ) )</option>
+				<option value="greater_than">$encoder.htmlEncode( $i18n.getString( "greater_than" ) )</option>
+				<option value="greater_than_or_equal_to">$encoder.htmlEncode( $i18n.getString( "greater_than_or_equal_to" ) )</option>
+				<option value="less_than">$encoder.htmlEncode( $i18n.getString( "less_than" ) )</option>
+				<option value="less_than_or_equal_to">$encoder.htmlEncode( $i18n.getString( "less_than_or_equal_to" ) )</option>			
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="button" value="$i18n.getString( 'edit_left_side' )" style="width:10em" onclick="showEditLeftSideExpressionForm()"><input 
+		           type="button" value="$i18n.getString( 'edit_right_side' )" style="width:10em" onclick="showEditRightSideExpressionForm()"></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="submit" value="$i18n.getString( 'save' )" style="width:10em"><input 
+				   type="button" value="$i18n.getString( 'cancel' )" id="cancel" name="cancel" onclick="window.location.href='showValidationRuleForm.action'" style="width:10em"></td>		
+	</tr>
+</table>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+
+</script>

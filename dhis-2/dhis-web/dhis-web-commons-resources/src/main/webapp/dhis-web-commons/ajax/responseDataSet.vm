@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSets>
+#foreach ( $dataSet in $dataSets )
+	<dataSet>
+		<id>$dataSet.id</id>
+		<name>$dataSet.name</name>
+	</dataSet>
+#end
+</dataSets>

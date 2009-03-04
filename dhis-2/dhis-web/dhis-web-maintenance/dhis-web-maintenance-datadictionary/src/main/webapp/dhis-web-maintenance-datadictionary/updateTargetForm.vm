@@ -1,0 +1,52 @@
+
+<h3>$i18n.getString( "edit_target" )</h3>
+
+<form id="updateTargetForm" action="updateTarget.action" method="post" onsubmit="return validateUpdateTarget()">
+
+<div>
+	<input type="hidden" id="targetId" name="targetId" value="$target.id">
+	<input type="hidden" id="sourceId" name="sourceId" value="$target.source.id">
+	<input type="hidden" id="indicatorId" name="indicatorId" value="$target.indicator.id">
+	<input type="hidden" id="periodId" name="periodId" value="$target.period.id">
+</div>
+	
+<table>
+	<tr>
+		<th colspan="2">$i18n.getString( "details" )</th>
+	</tr>
+	<tr>
+		<td><label for="name">$i18n.getString( "name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="name" name="name" style="width:20em" value="$target.name"></td>
+	</tr>
+	<tr>
+		<td><label for="shortName">$i18n.getString( "short_name" ) <em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="shortName" name="shortName" maxlength="20" style="width:20em" value="$target.shortName"></td>
+	</tr>
+	<tr>
+		<td><label for="value">$i18n.getString( "value" )<em title="$i18n.getString( "required" )" class="required">*</em></label></td>
+		<td><input type="text" id="value" name="value" style="width:20em" value="$target.value"></td>
+	</tr>
+	<tr>
+		<td><label for="description">$i18n.getString( "description" )</label></td>
+		<td><input type="text" id="description" name="description" style="width:20em" value="$target.description"></td>
+	</tr>
+	
+	<tr>
+		<td></td>
+		<td><input type="submit" value="$i18n.getString( "update" )" style="width:10em"><input type="button" value="$i18n.getString( "cancel" )" onclick="window.location.href='target.action'" style="width:10em"></td>
+	</tr>
+</table>
+
+</form>
+
+<span id="message"></span>
+
+<script type="text/javascript">
+
+	var previousName = '';
+	
+	var nameField = document.getElementById( 'name' );
+	nameField.select();
+	nameField.focus();
+
+</script>
